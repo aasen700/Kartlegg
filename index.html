@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Kartlegg – en norsk prototype for samlet registrering av målinger og beregning av NEWS2 og qSOFA.">
+  <title>Kartlegg | Kliniske verktøy samlet</title>
+  <style>
+    :root{color-scheme:light;--ink:#142743;--muted:#667991;--line:#e7ecf3;--bg:#f5f8fc;--paper:#fff;--coral:#f25761;--coral-deep:#db3d4d;--teal:#0ca99a;--blue:#2786c5;--orange:#dd8b20;--shadow:0 8px 30px rgba(26,50,79,.055)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(39,134,197,.4);outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.5}
+    .shell{min-height:100vh;display:grid;grid-template-columns:216px minmax(0,1fr);grid-template-rows:76px 1fr}
+    .header{grid-column:1/-1;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:26px;padding:0 32px;z-index:3}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:25px;font-weight:800;letter-spacing:-1px;white-space:nowrap}.logo{display:grid;place-items:center;height:40px;width:40px;border-radius:13px;background:linear-gradient(150deg,#ff7777,#e94c57);color:#fff;box-shadow:0 5px 16px #f2576127}.brand-small{font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:700;background:#f1f4f8;border-radius:25px;padding:5px 9px;margin-left:3px}.header-right{display:flex;align-items:center;gap:16px;margin-left:auto;color:var(--muted);font-size:13px}.header-note{display:flex;gap:7px;align-items:center}.avatar{display:grid;place-items:center;background:#e3f5f4;color:#247d80;border-radius:50%;font-size:12px;font-weight:800;width:35px;height:35px}
+    .sidebar-backdrop{display:none}.mobile-toggle{display:none;background:none;border:0;padding:8px;margin-left:-7px;color:var(--ink)}
+    .sidebar{background:#fff;border-right:1px solid var(--line);padding:24px 12px;display:flex;flex-direction:column;gap:7px;z-index:2}.nav{display:flex;align-items:center;gap:12px;padding:13px;border-radius:10px;text-decoration:none;color:#4b607b;font-weight:600;font-size:13px}.nav:hover,.nav:focus-visible{background:#f5f9fd}.nav.active{color:#df4754;background:#fff0f1}.nav .ico{width:20px;height:20px;flex:none}.sidebar-bottom{margin-top:auto;padding:15px 13px;border:1px solid #d9edea;background:#f3fbf9;border-radius:12px}.sidebar-bottom strong{font-size:13px}.sidebar-bottom p{font-size:12px;line-height:1.55;color:#657d84;margin:7px 0 0}
+    .main{width:100%;max-width:1360px;margin:0 auto;padding:28px clamp(14px,2.8vw,42px) 48px;min-width:0}
+    .intro{margin-bottom:19px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}.eyebrow{font-size:11px;letter-spacing:.09em;font-weight:800;color:#e45761;text-transform:uppercase;margin:0 0 7px}.intro h1{font-size:clamp(25px,2.7vw,34px);line-height:1.18;letter-spacing:-.9px;margin:0}.intro p{color:var(--muted);font-size:14px;margin:8px 0 0}.chip{border:1px solid #dce6ed;background:#fff;color:#566b81;border-radius:22px;font-size:12px;padding:7px 11px;white-space:nowrap}
+    .section{border:1px solid var(--line);background:var(--paper);border-radius:16px;box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}.section-header{display:flex;align-items:center;gap:13px;padding:22px 25px 18px}.section-header h2{font-size:20px;letter-spacing:-.55px;margin:0 0 4px}.section-header p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.section-symbol{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}.section-symbol.coral{background:#fff0f1;color:var(--coral)}.section-symbol.cyan{background:#eaf8fc;color:#079bb5}.section-symbol.teal{background:#e9f9f5;color:#099f90}
+    .subtle-note{font-size:12px;color:#6b7e94;margin-left:auto;white-space:nowrap}.form-inner{padding:0 25px 24px}.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.field{min-width:0;border:1px solid var(--line);border-radius:12px;padding:15px 13px 12px;background:#fff;transition:border-color .18s,box-shadow .18s}.field:focus-within{border-color:#84d3d2;box-shadow:0 0 0 3px #a0e4df33}.field-head{display:flex;gap:7px;align-items:center;margin-bottom:10px}.field-icon{color:var(--blue);background:#eaf6fd;height:27px;width:27px;border-radius:9px;display:grid;place-items:center;flex:none;font-size:16px;font-weight:800}.field:nth-child(3n) .field-icon{background:#fff0f1;color:var(--coral)}.field:nth-child(4n) .field-icon{background:#ecf8f5;color:#13998a}.field label,.field .field-label{font-size:12px;font-weight:750;line-height:1.3}.field .required{color:var(--coral)}.control-wrap{display:flex;align-items:stretch;border:1px solid #d9e2ed;border-radius:8px;overflow:hidden;background:#fbfcfe;min-height:42px}.control-wrap input,.control-wrap select{width:100%;border:0;background:transparent;color:#162f4b;font-size:16px;font-weight:650;min-width:0;padding:9px 10px;outline:none}.control-wrap:focus-within{outline:2px solid #a6dddf;outline-offset:1px}.control-wrap select{font-weight:600;font-size:12px;cursor:pointer}.unit{display:flex;align-items:center;padding:0 10px;color:#7890a6;font-size:12px;white-space:nowrap;background:#f7f9fc;border-left:1px solid #e5ebf2}.hint{margin:8px 0 0;color:#8693a6;font-size:11px;line-height:1.4}.field.wide{grid-column:span 2}.toggle-group{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:block;text-align:center;border:1px solid #dfe6ef;padding:10px 7px;border-radius:9px;color:#65778c;font-size:13px;font-weight:700;background:#fbfcfe}.choice input:checked+span{color:#bc4350;background:#fff0f1;border-color:#fac0c4}.choice input:focus-visible+span{outline:3px solid #80c9eb;outline-offset:1px}
+    .form-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-top:19px}.btn{border:0;border-radius:10px;min-height:45px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:14px;transition:transform .15s,filter .15s}.btn:hover{filter:brightness(.98);transform:translateY(-1px)}.btn-primary{background:var(--coral);color:#fff;min-width:245px;box-shadow:0 6px 15px #f2576120}.btn-secondary{background:#fff;color:#486079;border:1px solid #dce5ef}.notice{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5;background:#fff4e7;color:#99530c;border:1px solid #ffdfae}.notice.visible{display:block}
+    .scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;padding:0 25px 24px}.score{border:1px solid #e8edf3;border-radius:13px;padding:18px;background:#fff;min-height:193px}.score-top{display:flex;align-items:center;gap:9px;margin-bottom:16px}.score-icon{width:35px;height:35px;display:grid;place-items:center;background:#e8f6fc;border-radius:10px;color:#1e99bc;font-size:18px}.score-top strong{font-size:15px}.score-top small{font-size:11px;color:var(--muted);display:block;margin-top:3px}.score-number{font-size:42px;font-weight:850;line-height:1;letter-spacing:-1px;margin:0 0 9px}.score-number.muted{color:#9aabbc}.score-status{display:inline-block;padding:6px 11px;border-radius:7px;font-size:12px;font-weight:800}.score p{font-size:12px;color:var(--muted);line-height:1.55;margin:12px 0 0}.score-bottom{padding-top:10px;margin-top:12px;border-top:1px solid #e9eef3;font-size:12px;color:#516985}.score.warning{background:#fff9f0;border-color:#fae6c3}.score.danger{background:#fff5f6;border-color:#f6dadf}.score.ok{background:#f4fcf9;border-color:#d4eee6}.score.neutral{background:#f9fbfd}.score.warning .score-number{color:#cf8a22}.score.danger .score-number{color:#de4453}.score.ok .score-number{color:#098c78}.score.neutral .score-number{color:#677d91}.score.warning .score-status{background:#ffebc9;color:#97600d}.score.danger .score-status{background:#ffe0e3;color:#ba3441}.score.ok .score-status{background:#daf4e9;color:#087963}.score.neutral .score-status{background:#e8eef4;color:#64788e}
+    .info-layout{padding:0 25px 24px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.info-panel{border-radius:12px;padding:17px;line-height:1.6;font-size:13px}.info-panel strong{display:block;margin-bottom:5px;font-size:14px}.info-panel p{margin:0}.info-panel.safety{background:#fff3f4;color:#73353d;border:1px solid #f7dde0}.info-panel.education{background:#ecfaf7;color:#35665d;border:1px solid #d6efe7}.details{border:1px solid #e8edf3;margin:0 25px 24px;border-radius:10px;padding:0 15px}.details summary{padding:14px 0;cursor:pointer;font-size:13px;font-weight:800}.details ul{font-size:12px;color:#566b80;line-height:1.8;margin:0 0 15px;padding-left:19px}.links a{color:#197aa8}.footer{font-size:12px;line-height:1.6;color:#75879a;padding:5px 3px}.footer a{color:#357ba0}
+    @media(max-width:1100px){.fields{grid-template-columns:repeat(3,minmax(0,1fr))}.field.wide{grid-column:span 1}.subtle-note{display:none}.shell{grid-template-columns:185px minmax(0,1fr)}}
+    @media(max-width:770px){.shell{display:block}.header{height:64px;padding:0 15px;gap:7px;position:sticky;top:0}.brand{font-size:22px}.logo{width:34px;height:34px;border-radius:11px}.mobile-toggle{display:block}.header-right{gap:9px}.header-note{display:none}.brand-small{font-size:9px}.sidebar{display:none;position:fixed;top:64px;left:0;bottom:0;width:min(300px,80vw);box-shadow:8px 20px 50px #1e334729;overflow:auto}.sidebar.open{display:flex}.sidebar-backdrop{display:none;position:fixed;inset:64px 0 0;background:#13243865;z-index:1}.sidebar-backdrop.open{display:block}.main{padding:20px 13px 40px}.intro{align-items:flex-start}.intro h1{font-size:25px}.intro p{font-size:12px}.chip{font-size:10px}.section-header{padding:17px 15px 15px}.section-header h2{font-size:18px}.section-header p{font-size:12px}.section-symbol{height:37px;width:37px}.form-inner{padding:0 14px 15px}.fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.field{padding:11px 9px}.field.wide{grid-column:span 2}.field-head{margin-bottom:8px}.field label,.field .field-label{font-size:11px}.field-icon{width:22px;height:22px;font-size:13px}.control-wrap input{font-size:16px}.control-wrap select{font-size:12px}.hint{font-size:10px}.scores{padding:0 14px 15px;gap:9px}.score{padding:14px;min-height:185px}.score-number{font-size:34px}.info-layout{padding:0 14px 15px;grid-template-columns:1fr}.details{margin:0 14px 17px}.form-actions{flex-direction:column-reverse;align-items:stretch}.btn-primary,.btn-secondary{width:100%}}
+    @media(max-width:410px){.intro .chip{display:none}.brand-small{display:none}.scores{grid-template-columns:1fr}.score{min-height:unset}.field.wide{grid-column:span 2}.control-wrap input,.control-wrap select{padding:8px 7px}.unit{padding:0 5px;font-size:11px}.field-icon{display:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="header">
+      <button class="mobile-toggle" id="menuButton" aria-label="Åpne meny" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <a href="#top" class="brand" aria-label="Kartlegg – til toppen">
+        <span class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M2 14h5l3-8 5 15 3-9 2 2h4" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Kartlegg <span class="brand-small">PROTOTYPE</span>
+      </a>
+      <div class="header-right"><span class="header-note">✦ Ingen lagring av målinger</span><span class="avatar" aria-hidden="true">K</span></div>
+    </header>
+    <div class="sidebar-backdrop" id="backdrop"></div>
+    <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
+      <a href="#vurdering" class="nav active" id="nav-new"><span class="ico">✚</span> Ny vurdering</a>
+      <a href="#resultater" class="nav"><span class="ico">▥</span> Beregnede skårer</a>
+      <a href="#forklaring" class="nav"><span class="ico">◉</span> Om verktøyet</a>
+      <a href="#kilder" class="nav"><span class="ico">▤</span> Kilder</a>
+      <div class="sidebar-bottom"><strong>Fra målinger til oversikt</strong><p>Én registrering, flere skårer. Denne versjonen er laget for utprøving med fiktive data.</p></div>
+    </nav>
+    <main class="main" id="top">
+      <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer vitale målinger én gang og få flere skårer automatisk.</p></div><span class="chip">v0.1 · Kun demonstrasjon</span></div>
+      <section class="section" id="vurdering" aria-labelledby="input-heading">
+        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Alle feltene nedenfor må fylles ut før skårer kan beregnes.</p></div></div>
+        <form id="vitalsForm" novalidate autocomplete="off">
+          <div class="form-inner">
+            <div class="fields">
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◍</span><label for="rr">Respirasjonsfrekvens <span class="required">*</span></label></div><div class="control-wrap"><input id="rr" name="rr" inputmode="numeric" type="number" min="1" max="150" step="1" placeholder="18" required><span class="unit">/min</span></div><p class="hint">Antall åndedrag per minutt</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">O₂</span><label for="spo2">Oksygenmetning (SpO₂) <span class="required">*</span></label></div><div class="control-wrap"><input id="spo2" name="spo2" inputmode="numeric" type="number" min="1" max="100" step="1" placeholder="97" required><span class="unit">%</span></div><p class="hint">Målt med pulsoksymeter</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">↓</span><label for="sbp">Systolisk blodtrykk <span class="required">*</span></label></div><div class="control-wrap"><input id="sbp" name="sbp" inputmode="numeric" type="number" min="1" max="350" step="1" placeholder="120" required><span class="unit">mmHg</span></div><p class="hint">Overtrykk, ikke diastolisk</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♥</span><label for="hr">Puls <span class="required">*</span></label></div><div class="control-wrap"><input id="hr" name="hr" inputmode="numeric" type="number" min="1" max="300" step="1" placeholder="80" required><span class="unit">/min</span></div><p class="hint">Hjertefrekvens</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♧</span><label for="temp">Temperatur <span class="required">*</span></label></div><div class="control-wrap"><input id="temp" name="temp" inputmode="decimal" type="number" min="25" max="45" step="0.1" placeholder="37,0" required><span class="unit">°C</span></div><p class="hint">Bruk én desimal</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◉</span><label for="conscious">Bevissthetsnivå (AVPU) <span class="required">*</span></label></div><div class="control-wrap"><select id="conscious" name="conscious" required><option value="">Velg nivå …</option><option value="A">A – våken</option><option value="V">V – reagerer på tiltale</option><option value="P">P – reagerer på smerte</option><option value="U">U – ingen respons</option></select></div><p class="hint">V/P/U gir 3 poeng i NEWS2</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">O₂</span><label for="oxygen">Tilført oksygen <span class="required">*</span></label></div><div class="control-wrap"><select id="oxygen" name="oxygen" required><option value="">Velg …</option><option value="no">Nei – romluft</option><option value="yes">Ja – tilført O₂</option></select></div><p class="hint">NEWS2: +2 ved tilført O₂</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◉</span><label for="scale">NEWS2 SpO₂-skala <span class="required">*</span></label></div><div class="control-wrap"><select id="scale" name="scale" required><option value="1">Skala 1 – standard</option><option value="2">Skala 2 – særskilt indikasjon</option></select></div><p class="hint">Skala 2 kun etter klinisk beslutning ved mål 88–92 %</p></div>
+              <div class="field wide"><div class="field-head"><span class="field-icon" aria-hidden="true">?</span><span class="field-label" id="confusion-label">Nyoppstått forvirring / endret mental status <span class="required">*</span></span></div><div class="toggle-group" role="radiogroup" aria-labelledby="confusion-label"><label class="choice"><input name="confusion" type="radio" value="yes" required><span>Ja</span></label><label class="choice"><input name="confusion" type="radio" value="no" required><span>Nei</span></label></div><p class="hint">Gjelder nyoppstått forvirring, ikke kronisk kognitiv svikt alene</p></div>
+            </div>
+            <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+            <div class="form-actions"><button class="btn btn-secondary" type="reset">↻ &nbsp; Nullstill</button><button class="btn btn-primary" type="submit">▦ &nbsp; Beregn skårer &nbsp; →</button></div>
+          </div>
+        </form>
+      </section>
+      <section class="section" id="resultater" aria-labelledby="result-heading">
+        <div class="section-header"><div class="section-symbol cyan" aria-hidden="true">▥</div><div><h2 id="result-heading">Automatisk beregnede skårer</h2><p>NEWS2 og qSOFA vises når registreringen er komplett.</p></div><span class="subtle-note" id="scoreTime">Venter på målinger</span></div>
+        <div class="scores" aria-live="polite">
+          <article class="score neutral" id="newsCard"><div class="score-top"><span class="score-icon">▤</span><div><strong>NEWS2</strong><small>National Early Warning Score 2</small></div></div><div class="score-number muted" id="newsNumber">–</div><span class="score-status" id="newsStatus">Ikke beregnet</span><p id="newsDesc">Fyll inn målingene ovenfor for å se NEWS2-skåren.</p><div class="score-bottom" id="newsBreakdown">Skårens delpoeng vises her.</div></article>
+          <article class="score neutral" id="qCard"><div class="score-top"><span class="score-icon">◉</span><div><strong>qSOFA</strong><small>Quick Sequential Organ Failure Assessment</small></div></div><div class="score-number muted" id="qNumber">–</div><span class="score-status" id="qStatus">Ikke beregnet</span><p id="qDesc">Fyll inn målingene ovenfor for å se qSOFA-skåren.</p><div class="score-bottom" id="qBreakdown">Kriteriene vises her.</div></article>
+        </div>
+        <details class="details"><summary>Hvorfor vises ikke GCS og 4AT automatisk?</summary><ul><li>GCS krever vurdering av øyeåpning, verbal og motorisk respons. AVPU alene gir ikke en presis GCS-skår.</li><li>4AT krever særskilte vurderinger av våkenhet, orientering, oppmerksomhet og akutt endring.</li><li>Begge kan legges til senere med egne nødvendige spørsmål, uten å gjette ut fra vitale målinger.</li></ul></details>
+      </section>
+      <section class="section" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tolkning og videre vurdering</h2><p>Dette er et utviklingsutkast for testing med fiktive opplysninger.</p></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Ikke registrer navn, fødselsnummer eller andre identifiserbare helseopplysninger. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
+      <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a>.<br>Kartlegg v0.1 · All beregning skjer lokalt i nettleseren · Ingen analyse- eller sporingstjenester.</footer>
+    </main>
+  </div>
+  <script>
+    'use strict';
+    // Pure score functions – source: RCP NEWS2 (2017/2018) and Sepsis-3 (2016).
+    function calculateNEWS2(v) {
+      const rr = v.rr <= 8 ? 3 : v.rr <= 11 ? 1 : v.rr <= 20 ? 0 : v.rr <= 24 ? 2 : 3;
+      let spo;
+      if (v.scale === 1) spo = v.spo2 <= 91 ? 3 : v.spo2 <= 93 ? 2 : v.spo2 <= 95 ? 1 : 0;
+      else if (v.spo2 <= 83) spo = 3;
+      else if (v.spo2 <= 85) spo = 2;
+      else if (v.spo2 <= 87) spo = 1;
+      else if (v.spo2 <= 92 || !v.oxygen) spo = 0;
+      else if (v.spo2 <= 94) spo = 1;
+      else if (v.spo2 <= 96) spo = 2;
+      else spo = 3;
+      const sbp = v.sbp <= 90 ? 3 : v.sbp <= 100 ? 2 : v.sbp <= 110 ? 1 : v.sbp <= 219 ? 0 : 3;
+      const hr = v.hr <= 40 ? 3 : v.hr <= 50 ? 1 : v.hr <= 90 ? 0 : v.hr <= 110 ? 1 : v.hr <= 130 ? 2 : 3;
+      const temp = v.temp <= 35 ? 3 : v.temp <= 36 ? 1 : v.temp <= 38 ? 0 : v.temp <= 39 ? 1 : 2;
+      const consciousness = v.conscious !== 'A' || v.confusion ? 3 : 0;
+      const oxygen = v.oxygen ? 2 : 0;
+      const parts = { rr, spo, sbp, hr, temp, consciousness, oxygen };
+      return { total: Object.values(parts).reduce((a,b) => a+b,0), parts };
+    }
+    function calculateQSOFA(v) {
+      const parts = { rr: v.rr >= 22 ? 1 : 0, sbp: v.sbp <= 100 ? 1 : 0, mentation: (v.conscious !== 'A' || v.confusion) ? 1 : 0 };
+      return { total: Object.values(parts).reduce((a,b) => a+b,0), parts };
+    }
+    const $ = id => document.getElementById(id);
+    const form = $('vitalsForm');
+    const notice = $('formNotice');
+    function readVitals() {
+      const ids = ['rr','spo2','sbp','hr','temp'];
+      const ranges = {rr:[1,150],spo2:[1,100],sbp:[1,350],hr:[1,300],temp:[25,45]};
+      const data = {};
+      for (const id of ids) {
+        const element = $(id);
+        if (!element.value.trim()) return null;
+        const number = Number(element.value.replace(',','.'));
+        if (!Number.isFinite(number) || number < ranges[id][0] || number > ranges[id][1]) return null;
+        if (id !== 'temp' && !Number.isInteger(number)) return null;
+        data[id] = number;
+      }
+      const conscious = $('conscious').value;
+      const oxygen = $('oxygen').value;
+      const scale = $('scale').value;
+      const confusion = form.querySelector('input[name="confusion"]:checked')?.value;
+      if (!['A','V','P','U'].includes(conscious) || !['yes','no'].includes(oxygen) || !['1','2'].includes(scale) || !['yes','no'].includes(confusion)) return null;
+      return {...data,conscious,oxygen:oxygen==='yes',scale:Number(scale),confusion:confusion==='yes'};
+    }
+    function showNotice(message) {notice.textContent=message;notice.classList.toggle('visible',Boolean(message));}
+    function setCard(prefix,style,number,status,desc,breakdown) {
+      const card = $(prefix==='news'?'newsCard':'qCard');
+      card.className='score '+style;
+      $(prefix+'Number').textContent=number;
+      $(prefix+'Number').className='score-number'+(style==='neutral'?' muted':'');
+      $(prefix+'Status').textContent=status;
+      $(prefix+'Desc').textContent=desc;
+      $(prefix+'Breakdown').textContent=breakdown;
+    }
+    function clearResults(){
+      setCard('news','neutral','–','Ikke beregnet','Fyll inn målingene ovenfor for å se NEWS2-skåren.','Skårens delpoeng vises her.');
+      setCard('q','neutral','–','Ikke beregnet','Fyll inn målingene ovenfor for å se qSOFA-skåren.','Kriteriene vises her.');
+      $('scoreTime').textContent='Venter på målinger';
+    }
+    function updateScores() {
+      const v=readVitals();
+      if (!v) {clearResults();return false;}
+      const news=calculateNEWS2(v), q=calculateQSOFA(v);
+      const nStyle=news.total>=7?'danger':news.total>=5?'warning':news.total===0?'ok':'neutral';
+      const newsSingle3=Object.values(news.parts).some(n=>n===3);
+      const nLabel=news.total>=7?'Høy skår':news.total>=5?'Middels skår':news.total===0?'0 poeng':news.total===1||news.total<=4?'Lav totalskår':'Skår';
+      setCard('news',nStyle,news.total,nLabel+(news.total<5&&newsSingle3?' · enkeltparameter 3':''),
+        'NEWS2 er en sammensatt observasjonsskår. Vurder totalskår og enkeltparametere sammen med klinisk tilstand.',
+        `RF ${news.parts.rr} · SpO₂ ${news.parts.spo} · BT ${news.parts.sbp} · puls ${news.parts.hr} · temp ${news.parts.temp} · bevissthet ${news.parts.consciousness} · O₂ ${news.parts.oxygen}`);
+      setCard('q',q.total>=2?'warning':'neutral',q.total,q.total>=2?'2 eller flere kriterier':'Under 2 kriterier',
+        'Ved mistenkt infeksjon gir qSOFA ≥2 grunn til særlig oppmerksomhet. Lav qSOFA utelukker ikke sepsis.',
+        `RF ≥22: ${q.parts.rr?'ja':'nei'} · systolisk BT ≤100: ${q.parts.sbp?'ja':'nei'} · endret mental status: ${q.parts.mentation?'ja':'nei'}`);
+      $('scoreTime').textContent='Oppdatert fra målingene';
+      return true;
+    }
+    form.addEventListener('input',()=>{showNotice('');updateScores();});
+    form.addEventListener('change',()=>{showNotice('');updateScores();});
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      if (!updateScores()) {showNotice('Fyll ut alle målingene med gyldige verdier og velg bevissthet, oksygen og mental status.');$('vurdering').scrollIntoView({behavior:'smooth',block:'start'});return;}
+      showNotice('');$('resultater').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    form.addEventListener('reset',()=>{setTimeout(()=>{showNotice('');clearResults();},0);});
+    const menu=$('sidebar'),backdrop=$('backdrop'),menuBtn=$('menuButton');
+    function closeMenu(){menu.classList.remove('open');backdrop.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}
+    menuBtn.addEventListener('click',()=>{const open=menu.classList.toggle('open');backdrop.classList.toggle('open',open);menuBtn.setAttribute('aria-expanded',String(open));});
+    backdrop.addEventListener('click',closeMenu);
+    menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+    window.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+    clearResults();
+  </script>
+</body>
+</html>
