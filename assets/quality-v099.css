@@ -1,0 +1,49 @@
+/* Kartlegg v0.99: card categories, ABCDE assessment and portrait-bankcard calibration.
+   The v0.8.2 NEWS2 main form is intentionally not styled or rearranged here.
+ */
+#page-verktoy .toolbox[hidden],#page-verktoy .v099-category-heading[hidden]{display:none!important}
+.v099-categories{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.v099-category-button{border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px;background:var(--paper);color:var(--ink);font:inherit;font-size:12px;font-weight:800;display:flex;align-items:center;gap:8px}
+.v099-category-button[aria-pressed=true]{border-color:var(--accent);background:var(--accent-bg);color:var(--accent)}
+.v099-category-button:focus-visible{outline:3px solid var(--accent-border);outline-offset:2px}
+.v099-category-count{display:grid;place-items:center;background:var(--bg);border-radius:100px;min-width:25px;height:25px;padding:0 5px;font-size:11px;color:var(--muted)}
+.v099-category-button[aria-pressed=true] .v099-category-count{background:var(--paper);color:var(--accent)}
+.v099-category-status{margin:0 0 15px;color:var(--muted);font-size:11px}
+.v099-category-heading{grid-column:1/-1;border-bottom:1px solid var(--line);padding:9px 0 10px;margin-top:9px}
+.v099-category-heading h3{font-size:17px;color:var(--ink);margin:0 0 5px}
+.v099-category-heading p{font-size:12px;color:var(--muted);margin:0}
+.v099-timer-card .hc-card-icon{font-size:24px}
+.abcde-v099-dialog{width:min(720px,calc(100vw - 16px))}
+.abcde-v099-content{display:flex;flex-direction:column;gap:16px}
+.abcde-v099-emergency{background:#fff3f4;color:#8e2d43;border:1px solid #dd879b;padding:15px;border-radius:11px}
+.abcde-v099-emergency strong{font-size:14px}
+.abcde-v099-emergency p{font-size:12px;line-height:1.6;margin:7px 0 0}
+:root[data-theme=dark] .abcde-v099-emergency{background:#422736;color:#ffd5df;border-color:#9d6275}
+.abcde-v099-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+.abcde-v099-tab{min-height:55px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);font-size:22px;font-weight:900}
+.abcde-v099-tab[aria-selected=true]{border:2px solid var(--accent);background:var(--accent-bg);color:var(--accent)}
+.abcde-v099-tab:focus-visible{outline:3px solid var(--accent-border);outline-offset:2px}
+.abcde-v099-panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:17px}
+.abcde-v099-current{display:flex;align-items:center;gap:14px;padding-bottom:13px}
+.abcde-v099-current-letter{height:52px;min-width:52px;display:grid;place-items:center;border-radius:12px;color:var(--accent);background:var(--accent-bg);font-size:27px;font-weight:900}
+.abcde-v099-current h3{font-size:18px;margin:0 0 4px;letter-spacing:-.25px}
+.abcde-v099-current p{font-size:12px;color:var(--muted);margin:0}
+.abcde-v099-section{padding:13px 0;border-top:1px solid var(--line)}
+.abcde-v099-section h4{font-size:13px;color:var(--ink);margin:0 0 8px}
+.abcde-v099-section ul{padding-left:20px;margin:0}
+.abcde-v099-section li{font-size:12px;line-height:1.7;margin:0 0 7px}
+.abcde-v099-reassess{border-left:3px solid var(--accent);background:var(--bg);padding:10px 13px;margin:7px 0 0;font-size:12px;line-height:1.6;color:var(--ink)}
+.abcde-v099-actions{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.abcde-v099-actions .btn{min-height:44px;font-size:12px}
+.abcde-v099-step{font-size:11px;color:var(--muted);text-align:center}
+.times-v091-reference{height:auto;min-height:170px;max-height:none;border:3px solid var(--accent);border-radius:10px;margin:12px 0;padding:10px 7px;background:linear-gradient(145deg,var(--accent-bg),var(--paper));box-shadow:0 4px 12px #0c29451a;display:flex;align-items:center;justify-content:center}
+.times-v091-reference span{font-size:12px;text-align:center;white-space:normal;overflow-wrap:break-word;line-height:1.6}
+.times-v091-ruler .hc-field{margin-bottom:10px}
+.times-v091-ruler .hc-hint strong{font-weight:850}
+@media(max-width:720px){.v099-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.v099-category-button{justify-content:space-between;min-width:0;font-size:11px;line-height:1.3;padding:9px}.abcde-v099-actions{flex-wrap:wrap}.abcde-v099-actions .btn{flex:1}.abcde-v099-step{order:-1;flex-basis:100%}}
+@media(max-width:420px){.v099-category-heading h3{font-size:15px}.abcde-v099-tab{min-height:49px}.abcde-v099-current h3{font-size:16px}.abcde-v099-panel{padding:12px}}
+@media(prefers-reduced-motion:reduce){.v099-category-button,.abcde-v099-tab{transition:none!important;animation:none!important}}
+
+/* v0.99 calibration: keep physical pixel dimensions even if card exceeds dialog width. */
+.times-v099-reference-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 1px 8px}
+.times-v099-reference-scroll .times-v091-reference{max-width:none!important;min-height:0;flex-shrink:0}

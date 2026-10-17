@@ -1,42 +1,48 @@
-# Kartlegg v0.2
+# Kartlegg 1.0
 
-En mobiltilpasset prototype av Kartlegg med verktøybibliotek, skårer, tidsserie for målinger og en ISBAR-mal. **Kun fiktive data. Ikke validert for klinisk bruk.**
+**Kliniske verktøy samlet på ett sted – en norsk, nettbasert demonstrasjonsversjon.**
 
-## Kom i gang
+[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md)
 
-Åpne `index.html` i en nettleser. All kode ligger i én fil. Ingen installasjon, database eller kontoregistrering er nødvendig.
+Kartlegg er utviklet av **Philip Aasen**, sykepleierstudent ved Høgskulen på Vestlandet. Prosjektet startet med ønsket om en oversiktlig NEWS2-/qSOFA-kalkulator og har utviklet seg til et bibliotek med kliniske beregninger, kartleggingsverktøy og pedagogiske veiledere, med særlig oppmerksomhet på hjemmesykepleie og akuttobservasjon.
 
-## Hva er nytt?
+## Funksjoner
 
-- **Kliniske verktøy:** NEWS2- og qSOFA-kriterier; oversikt over GCS og 4AT (ikke implementert som automatiske skårer).
-- **Målinger over tid:** Velg dato og klokkeslett i vurderingsskjemaet og trykk **Lagre måling**. Flere målinger gir tabell, NEWS2-graf og endringer fra første til siste tidspunkt. Velg **Åpne** for å hente gamle målinger inn igjen. **Ny måling** oppretter et tomt skjema.
-- **ISBAR:** Trykk **ISBAR** ved siden av Beregn skårer. Malen setter inn vitale målinger, måletidspunkt, NEWS2, eventuell qSOFA og tidligere NEWS2. Fritekstdeler kan redigeres, og du kan kopiere hele manuset.
-- **Footer:** «Laget av Philip Aasen» med e-post og telefon.
+- **NEWS2 og qSOFA**, med delpoeng, forklaringer, tydelig skåringsfeedback og særskilte varsler for NEWS2-enkeltparametere med 3 poeng. qSOFA krever separat vurdert GCS.
+- **16 kliniske verktøy**, blant annet GCS, 4AT, NRS, MST, TUG, ESAS, FAST, ortostatisk blodtrykk, SKUV, TIMES, ABCDE, BMI/BSA og respirasjonstimer.
+- **Fire tjenestetemaer** for sykehus/akuttmottak, ambulanse/prehospital, legevakt/akuttmedisin og hjemmesykepleie, i tillegg til egendefinerte lys-/mørktemaer.
+- Mobiltilpasset søk, kategorier og tilgjengelig navigasjon.
+- «Om Kartlegg»-side med prosjektbakgrunn og informasjon om lagring.
 
-## Viktig om skåring
+## Slik bruker du Kartlegg
 
-- NEWS2 støtter både SpO₂-skala 1 og 2. **Skala 2 skal bare velges etter relevant klinisk beslutning.**
-- qSOFA krever oppgitt GCS-totalskår (3–15), som må vurderes separat. GCS beregnes *ikke* fra AVPU.
-- qSOFA kan ikke utelukke sepsis.
-- ISBAR-teksten er et redigerbart **utkast**; den kan ikke erstatte kliniske vurderinger eller lokale rutiner.
-- Oppgitte kilder og poenggrenser må kvalitetssikres før klinisk anvendelse. Regelverket for medisinsk utstyr og personvern må avklares.
+Åpne [Kartlegg](https://aasen700.github.io/Kartlegg/) i nettleseren. NEWS2 ligger på startsiden; øvrige verktøy finnes via søk eller «Kliniske verktøy». Alle demonstrasjoner skal bruke **fiktive data**.
 
-## Personvern og historikk
+### Profil og midlertidig historikk
 
-Vitale målinger kan være helseopplysninger dersom de kan knyttes til en identifiserbar person. Prototypen skal derfor bare brukes med **fiktive målinger**. Skårene beregnes lokalt. Ingen målinger sendes fra koden til en server eller lagres i nettleserens permanente lager. Tidsserien beholdes *kun i minnet i den åpne fanen* og går tapt ved oppdatering, navigering bort eller lukking av fanen. Dette er bevisst valgt fremfor å lagre identifiserbare data.
+- Du kan velge å **huske en avsenderprofil lokalt i nettleseren**. Profilen er ikke en pasientprofil.
+- Vitale målinger og enkelte kalkulatorresultater kan legges i en **midlertidig historikk i fanen**. De lagres **ikke permanent** og forsvinner ved omlasting eller lukking.
+- **Ikke registrer ekte pasientopplysninger.** Kartlegg er ikke et journalsystem eller en sikker tjeneste for behandling/lagring av helseopplysninger.
 
-## Legg ut på GitHub Pages
+## Viktig om klinisk bruk
 
-1. Opprett et repository, for eksempel `kartlegg`.
-2. Velg **Add file → Upload files** i GitHub og last opp `index.html` og gjerne `README.md` (eller erstatt de eksisterende filene).
-3. Trykk **Commit changes**.
-4. Åpne **Settings → Pages** → **Deploy from a branch** → `main` og `/(root)`.
-5. Publiseringsadressen blir typisk `https://BRUKERNAVN.github.io/kartlegg/`.
+**Kartlegg 1.0 er en offentlig tilgjengelig demonstrasjonsversjon, ikke en klinisk godkjent eller uavhengig validert løsning.** Verktøyene er ment for læring, utprøving og utvikling med fiktive opplysninger. Beregninger, veiledere og legemiddelinformasjon erstatter ikke faglig skjønn, godkjente lokale prosedyrer, behandlende lege eller ordinær dokumentasjon. Klinisk og regulatorisk vurdering må gjennomføres før eventuell bruk i pasientbehandling.
 
-## Faglige kilder
+Faglige referanser og avgrensninger vises i de enkelte verktøyene.
 
-- [Royal College of Physicians – NEWS2](https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/)
-- [Sepsis-3 – qSOFA](https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/)
-- [Helsebiblioteket – ISBAR](https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje)
+## Kvalitetssikring
 
-NEWS2-attribusjon og oversettelsesforbehold fra RCP er oppført på nettsiden.
+Automatiske tester kjøres med GitHub Actions:
+
+```sh
+node --test tests/*.test.cjs
+python3 tests/browser-smoke.py
+```
+
+Ved lansering ble **133 automatiske enhets-/kontraktstester** samt nettlesertester på desktop, nettbrett og tre mobilbredder bestått. Automatiske tester innebærer **ikke klinisk validering**.
+
+## Utvikling
+
+Utvikler: **Philip Aasen**. Dette er et selvstendig student-/utviklingsprosjekt, ikke et produkt levert eller godkjent av Høgskulen på Vestlandet eller kommunale helsetjenester.
+
+Utviklingshistorikken finnes i [Kartlegg-test](https://github.com/aasen700/Kartlegg-test) og [versjonshistorikken](CHANGELOG.md).

@@ -1,0 +1,22 @@
+:root[data-theme=dark]{color-scheme:dark;--ink:#e9f2fb;--muted:#acc0d4;--line:#344e68;--bg:#091727;--paper:#13283d;--shadow:0 10px 26px #0005}
+.theme-switch{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--paper);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+.detail-button{width:100%;margin-top:13px;border:1px solid #bbdce9;color:#177696;background:#eaf8ff;border-radius:9px;padding:11px;font-weight:750;cursor:pointer}
+.toolgrid:has(details[open]){grid-template-columns:minmax(0,1fr)}.toolbox .score-table{table-layout:auto;width:100%}.toolbox .score-table td{line-height:1.7;font-size:13px;overflow-wrap:anywhere}
+.live-note{margin:-5px 25px 17px;font-size:12px;color:var(--muted)}
+.metric-select{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);font-weight:700}.metric-select select{padding:8px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:9px}
+#scoreDialog{position:fixed;inset:0;margin:auto;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:17px;padding:0;width:min(700px,calc(100vw - 20px));max-height:90dvh;overflow:auto;box-shadow:0 24px 80px #071a315c}#scoreDialog::backdrop{background:#071628ad}#scoreDialog .dialog-head{background:var(--paper)}.breakdown-table{width:100%;border-collapse:collapse}.breakdown-table th,.breakdown-table td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:left}.breakdown-table td:last-child,.breakdown-table th:last-child{text-align:right;font-weight:800}.breakdown-table tfoot{font-weight:800;background:var(--bg)}
+[data-theme=dark] .header,[data-theme=dark] .sidebar,[data-theme=dark] .section,[data-theme=dark] .field,[data-theme=dark] .toolbox,[data-theme=dark] #isbarDialog,[data-theme=dark] .score,[data-theme=dark] .diff-box,[data-theme=dark] .trend-wrap,[data-theme=dark] .script-paper,[data-theme=dark] .dialog-head{background:var(--paper);border-color:var(--line);color:var(--ink)}
+[data-theme=dark] .nav{color:#d3e1ef}[data-theme=dark] .nav.active,[data-theme=dark] .nav[aria-current=page]{background:#422d42;color:#ff9da5}[data-theme=dark] .nav:hover{background:#1e3c53}
+[data-theme=dark] .meta-line,[data-theme=dark] .chip,[data-theme=dark] .control-wrap,[data-theme=dark] .unit,[data-theme=dark] .history-table th,[data-theme=dark] .score-table th,[data-theme=dark] .details,[data-theme=dark] .choice span{background:#1b344d;color:#dbe7f2;border-color:var(--line)}
+[data-theme=dark] input,[data-theme=dark] select,[data-theme=dark] textarea,[data-theme=dark] .btn-secondary,[data-theme=dark] .btn-inline{background:#172e45;color:#f0f6ff;border-color:#40607d}
+[data-theme=dark] input::placeholder,[data-theme=dark] textarea::placeholder{color:#b3c4d2}
+[data-theme=dark] .score.danger,[data-theme=dark] .info-panel.safety{background:#402838;color:#ffced7;border-color:#845165}
+[data-theme=dark] .score.warning{background:#413527;color:#ffe3b9;border-color:#736042}[data-theme=dark] .score.ok,[data-theme=dark] .info-panel.education{background:#1b3f36;color:#cbf6df;border-color:#376959}
+[data-theme=dark] .score.neutral{background:#193247;color:#dce9f5;border-color:#395671}
+[data-theme=dark] .score-status{background:#36536a;color:#ecf5ff}[data-theme=dark] .score.danger .score-status{background:#653a4d;color:#ffe5e9}[data-theme=dark] .score.warning .score-status{background:#654e30;color:#ffdfab}
+[data-theme=dark] .isbar-output,[data-theme=dark] .spoken-script{color:#f2f7ff}[data-theme=dark] .sidebar-bottom{background:#1b3f36;border-color:#386454;color:#c5e9dd}
+[data-theme=dark] .detail-button{background:#194761;color:#bde9fc;border-color:#39728c}[data-theme=dark] .btn-isbar{background:#16425b;color:#caeeff;border-color:#39718e}
+[data-theme=dark] .btn-tertiary{background:#1d4b40;color:#c4f6dc;border-color:#39795e}
+[data-theme=dark] .script-paper{background:#1b324a;box-shadow:none}[data-theme=dark] .score-table td,[data-theme=dark] .history-table td{border-color:var(--line)}
+@media(max-width:770px){.theme-switch{padding:7px;font-size:11px}.live-note{margin:0 14px 14px}.metric-select{width:100%;margin:5px 0 0;justify-content:space-between}.metric-select select{flex:1}#scoreDialog .dialog-body{padding:14px}}
+@media(max-width:480px){.fields{grid-template-columns:1fr}.field.wide{grid-column:span 1}.field-icon{display:grid}.scores{grid-template-columns:1fr}.score{min-height:0}.header .avatar{display:none}.toolbox .score-table{font-size:11px}}

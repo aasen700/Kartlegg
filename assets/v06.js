@@ -1,0 +1,111 @@
+/* Kartlegg v0.6: brukerinnstillinger og oversiktlige skåringskriterier. */
+'use strict';
+(()=>{
+const $=id=>document.getElementById(id), one=s=>document.querySelector(s);
+const html=document.documentElement, key='kartlegg.appearance.v06';
+const media=window.matchMedia?.('(prefers-color-scheme: dark)');
+const modes=['light','dark','system'], accents=['coral','blue','green'];
+const services=['custom','hospital','ambulance','urgent','homecare'];
+const serviceNames={custom:'Egendefinert',hospital:'Sykehus / akuttmottak',ambulance:'Ambulanse / prehospital',urgent:'Legevakt / akuttmedisin',homecare:'Hjemmesykepleie'};
+const serviceModes={hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'};
+let prefs={mode:'system',accent:'coral',service:'custom'};
+try{const p=JSON.parse(localStorage.getItem(key)||'null');if(p&&modes.includes(p.mode)&&accents.includes(p.accent))prefs={mode:p.mode,accent:p.accent,service:services.includes(p.service)?p.service:'custom'};else{const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}}catch(_){}
+const avatar= document.createElement('button');avatar.className='avatar profile-trigger';avatar.id='profileTrigger';avatar.type='button';avatar.setAttribute('aria-label','Åpne profil og utseende');avatar.textContent='K';
+one('.header-right .avatar')?.replaceWith(avatar);
+const drawer=document.createElement('dialog');drawer.id='profileDialog';drawer.className='profile-dialog';drawer.setAttribute('aria-labelledby','profileDialogTitle');
+drawer.innerHTML='<div class="profile-dialog-head"><div><h2 id="profileDialogTitle">Min profil</h2><p>Din avsenderprofil og utseende</p></div><button id="closeProfile" type="button" class="dialog-close" aria-label="Lukk">×</button></div><div class="profile-dialog-scroll"><section class="profile-dialog-section"><h3>Profil for ISBAR</h3><p>Ikke skriv inn pasientopplysninger her.</p><div id="profileMount"></div></section><section class="profile-dialog-section"><h3>Utseende</h3><p id="appearanceSummary"></p><fieldset class="appearance-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> ☀ Dag</label><label><input type="radio" name="appearanceMode" value="dark"> ☾ Natt</label><label><input type="radio" name="appearanceMode" value="system"> ◐ System</label></fieldset><fieldset class="appearance-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="coral"><i class="swatch coral"></i> Korall</label><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i> Blå</label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i> Grønn</label></fieldset><p class="personalization-note">Valgt tema endrer ikke kliniske risiko- og skåringsfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p></section></div>';
+document.body.append(drawer);
+// Add the four service presets without removing the original six appearance combinations.
+const serviceOptions=document.createElement('fieldset');serviceOptions.className='service-theme-options';
+const serviceLegend=document.createElement('legend');serviceLegend.textContent='Tjenestetemaer';serviceOptions.append(serviceLegend);
+const serviceIntro=document.createElement('p');serviceIntro.className='service-theme-intro';
+serviceIntro.textContent='Velg en fargeprofil for tjenesten. Faglige risiko- og skåringsfarger påvirkes ikke.';
+serviceOptions.append(serviceIntro);
+const serviceGrid=document.createElement('div');serviceGrid.className='service-theme-grid';
+const colorPair={custom:['#f25761','#185cab'],hospital:['#002244','#0077ee'],ambulance:['#222222','#ffff00'],urgent:['#005544','#ffcc00'],homecare:['#12675f','#36b5a8']};
+for(const id of services){
+ const option=document.createElement('label');option.className='service-theme-option';option.dataset.serviceOption=id;
+ const radio=document.createElement('input');radio.type='radio';radio.name='serviceTheme';radio.value=id;
+ const sample=document.createElement('span');sample.className='service-theme-preview';sample.setAttribute('aria-hidden','true');
+ sample.style.setProperty('--preview-base',colorPair[id][0]);sample.style.setProperty('--preview-highlight',colorPair[id][1]);
+ const label=document.createElement('span');label.className='service-theme-label';label.textContent=serviceNames[id];
+ const detail=document.createElement('small');detail.textContent=({
+  custom:'Lys/mørk + egen aksent',hospital:'Klinisk blå og hvit',ambulance:'Mørk med neongul kontrast',urgent:'Dyp grønn med tydelig gul',homecare:'Rolig, moderne grønnblå'
+ })[id];
+ option.append(radio,sample,label,detail);serviceGrid.append(option);
+}
+serviceOptions.append(serviceGrid);
+drawer.querySelector('.personalization-note')?.before(serviceOptions);
+const profile=one('#page-profil .profile-body');if(profile)$('profileMount').append(profile);
+const placeholder=one('#page-profil .section');if(placeholder){const b=document.createElement('button');b.type='button';b.className='btn btn-primary';b.textContent='Åpne profilinnstillinger';b.addEventListener('click',openProfile);placeholder.append(b)}
+function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
+function apply(){
+ const resolved=serviceModes[prefs.service]||(prefs.mode==='system'?(media?.matches?'dark':'light'):prefs.mode);
+ html.dataset.theme=resolved;html.dataset.accent=prefs.accent;html.dataset.serviceTheme=prefs.service;
+ const toggle=$('themeToggle');if(toggle){toggle.textContent=resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus';toggle.setAttribute('aria-label',resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus')}
+ drawer.querySelectorAll('[name=appearanceMode]').forEach(x=>x.checked=x.value===prefs.mode);
+ drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=x.value===prefs.accent);
+ drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
+ $('appearanceSummary').textContent=prefs.service==='custom'?(resolved==='dark'?'Mørkt':'Lyst')+' tema · '+({coral:'korall',blue:'blå',green:'grønn'}[prefs.accent]):serviceNames[prefs.service]+' · '+(resolved==='dark'?'mørkt':'lyst')+' tjenestetema';
+ try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
+}
+function openProfile(){initials();apply();drawer.showModal()}
+avatar.addEventListener('click',openProfile);
+$('closeProfile').addEventListener('click',()=>drawer.close());
+drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.close()});
+$('profileName')?.addEventListener('input',initials);
+$('clearProfile')?.addEventListener('click',initials);
+const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();openProfile()},true);
+drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.service='custom';apply()}));
+drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.service='custom';apply()}));
+drawer.querySelectorAll('[name=serviceTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.service=el.value;apply()}));
+// Prevent the previous v0.5 click listener from immediately toggling the theme back.
+$('themeToggle')?.addEventListener('click',e=>{e.stopImmediatePropagation();prefs.mode=html.dataset.theme==='dark'?'light':'dark';prefs.service='custom';apply()},true);
+media?.addEventListener?.('change',()=>{if(prefs.mode==='system')apply()});
+initials();apply();
+
+const news=[
+ ['Respirasjonsfrekvens','/min',[['0','12–20'],['1','9–11'],['2','21–24'],['3','≤8 eller ≥25']]],
+ ['SpO₂ – skala 1','%',[['0','≥96'],['1','94–95'],['2','92–93'],['3','≤91']]],
+ ['SpO₂ – skala 2','%',[['0','88–92, eller ≥93 uten O₂'],['1','86–87, eller 93–94 med O₂'],['2','84–85, eller 95–96 med O₂'],['3','≤83, eller ≥97 med O₂']],'Bare ved særskilt indikasjon. Skår ved >92 % avhenger av oksygentilførsel.'],
+ ['Systolisk blodtrykk','mmHg',[['0','111–219'],['1','101–110'],['2','91–100'],['3','≤90 eller ≥220']]],
+ ['Puls','/min',[['0','51–90'],['1','41–50 eller 91–110'],['2','111–130'],['3','≤40 eller ≥131']]],
+ ['Temperatur','°C',[['0','36,1–38,0'],['1','35,1–36,0 eller 38,1–39,0'],['2','≥39,1'],['3','≤35,0']]],
+ ['Bevissthet / ny forvirring','',[['0','A uten ny forvirring'],['3','V, P, U eller ny forvirring']]],
+ ['Tilført oksygen','',[['0','Nei – romluft'],['2','Ja – tilført O₂']]]
+];
+const qs=[
+ ['Respirasjonsfrekvens','/min',[['0','<22'],['1','≥22']]],
+ ['Systolisk blodtrykk','mmHg',[['0','>100'],['1','≤100']]],
+ ['Mental status – GCS','',[['0','GCS 15'],['1','GCS <15']],'GCS må vurderes separat; AVPU alene er ikke tilstrekkelig.']
+];
+function renderCriteria(items){
+ const wrap=document.createElement('div');wrap.className='criteria-wrap';const title=document.createElement('p');title.className='criteria-title';title.textContent='Trykk på en parameter for å se poenggrensene';wrap.append(title);
+ const stack=document.createElement('div');stack.className='criteria-stack';
+ for(const [name,unit,rows,note] of items){
+  const detail=document.createElement('details');detail.className='criterion';
+  const summary=document.createElement('summary');const strong=document.createElement('strong');strong.textContent=name;const small=document.createElement('small');small.textContent=rows.length+' nivåer';summary.append(strong,small);detail.append(summary);
+  const content=document.createElement('div');content.className='criterion-content';
+  if(note){const p=document.createElement('p');p.className='criterion-note';p.textContent=note;content.append(p)}
+  for(const [points,value] of rows){const row=document.createElement('div');row.className='criterion-row';const badge=document.createElement('span');badge.className='point-badge point-'+points;badge.textContent=points+' poeng';const val=document.createElement('span');val.textContent=value+(unit?' '+unit:'');row.append(badge,val);content.append(row)}
+  detail.append(content);stack.append(detail);
+ }
+ wrap.append(stack);return wrap;
+}
+const boxes=one('#page-verktoy .toolgrid')?.querySelectorAll('.toolbox');
+if(boxes?.length>=2)for(const [i,items] of [[0,news],[1,qs]]){const old=boxes[i].querySelector('details');if(!old)continue;const link=old.querySelector('a[href]')?.cloneNode(true);const replacement=renderCriteria(items);if(link){const source=document.createElement('p');source.className='criteria-source';source.append('Kilde: ',link);replacement.append(source)}old.replaceWith(replacement)}
+// Validation with explicit field names, preserving the existing submit/save logic.
+const form=$('vitalsForm');const fieldnames={rr:'Respirasjonsfrekvens',spo2:'Oksygenmetning',sbp:'Systolisk blodtrykk',hr:'Puls',temp:'Temperatur',conscious:'Bevissthet',oxygen:'Tilført oksygen',scale:'SpO₂-skala',gcs:'GCS'};
+function validate(){
+ const invalid=[];for(const [id,name] of Object.entries(fieldnames)){const input=$(id);if(!input)continue;const bad=!(id==='gcs'&&!input.value.trim())&&!input.checkValidity();input.closest('.field')?.classList.toggle('field-invalid',bad);input.setAttribute('aria-invalid',String(bad));if(bad)invalid.push({el:input,name})}
+ if(!form.querySelector('[name=confusion]:checked'))invalid.push({el:form.querySelector('[name=confusion]'),name:'Nyoppstått forvirring'});
+ if(invalid.length){$('formNotice').textContent='Kontroller: '+invalid.map(x=>x.name).join(', ')+'.';$('formNotice').classList.add('visible');if(window.KartleggFinalPolish)window.KartleggFinalPolish.report(false);else invalid[0].el?.focus()}
+ return !invalid.length;
+}
+form?.addEventListener('submit',e=>{if(!validate()){e.preventDefault();e.stopImmediatePropagation()}},true);
+$('saveMeasurement')?.addEventListener('click',e=>{if(!validate()){e.preventDefault();e.stopImmediatePropagation()}},true);
+form?.addEventListener('reset',()=>{form.querySelectorAll('.field-invalid').forEach(el=>el.classList.remove('field-invalid'))});
+$('historyRows')?.addEventListener('click',e=>{const b=e.target.closest('button[aria-label^="Slett måling"]');if(b&&!confirm('Slette denne målingen fra tidslinjen?')){e.preventDefault();e.stopImmediatePropagation()}},true);
+form?.querySelector('button[type=reset]')?.addEventListener('click',e=>{if(Object.keys(fieldnames).some(id=>$(id)?.value.trim())&&!confirm('Nullstille registreringsskjemaet?')){e.preventDefault();e.stopImmediatePropagation()}},true);
+const isbar=$('openIsbar');if(isbar){isbar.textContent='☎ Åpne ISBAR-manus';isbar.setAttribute('aria-label','Åpne ferdig ISBAR-manus')};
+})();
