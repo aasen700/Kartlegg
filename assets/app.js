@@ -84,7 +84,7 @@ function updateScores() {
   return true;
 }
 function showPage(page, setHash=true) {
-  if(!['vurdering','historikk','verktoy','profil','om'].includes(page)) page='vurdering';
+  if(!['vurdering','historikk','verktoy','simulering','profil','om'].includes(page)) page='vurdering';
   currentPage=page;
   document.querySelectorAll('.page').forEach(el=>{el.hidden=el.id!==`page-${page}`;});
   document.querySelectorAll('[data-page]').forEach(button=>{
