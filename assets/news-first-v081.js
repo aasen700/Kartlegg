@@ -34,7 +34,7 @@
  surface.append(label,inputWrap,all,result,status);intro.after(surface);
  const registry=[
   {name:'NEWS2',detail:'Vitale målinger og samlet skår',terms:'news2 news score respirasjon oksygen blodtrykk temperatur',run:()=>{document.getElementById('rr')?.focus()}},
-  {name:'qSOFA',detail:'Infeksjon, respirasjon, blodtrykk og GCS',terms:'qsofa sepsis infeksjon gcs',run:()=>{document.getElementById('gcs')?.focus()}},
+  {name:'qSOFA',detail:'Infeksjon, respirasjon, blodtrykk og GCS',terms:'qsofa sepsis infeksjon gcs',run:()=>{const optional=$('optionalGCS');if(optional)optional.open=true;const gcs=$('gcs');gcs?.scrollIntoView({block:'center',behavior:'auto'});gcs?.focus({preventScroll:true})}},
   {name:'GCS',detail:'Glasgow Coma Scale',terms:'gcs glasgow koma bevissthet øyne motor verbal',run:()=>launch('GCS')},
   {name:'4AT',detail:'Delirium og kognitiv vurdering',terms:'4at delirium kognisjon forvirring',run:()=>launch('4AT')},
   {name:'NRS',detail:'Numerisk smerteskala',terms:'nrs smerte smerter smerteskala',run:()=>launch('NRS')},
