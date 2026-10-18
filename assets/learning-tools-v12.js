@@ -244,9 +244,19 @@
     li.append(h('small','',row.rule||'Sammenlign funnet med området i poengskjemaet.'));list.append(li);
    }
    panel.append(list);
+   text(panel,interpretation(grade),'learn12-explanation');
    const nextButton=[...footer.querySelectorAll('button')].at(-1);nextButton.textContent=state.caseIndex===list.length-1?'Se oppsummeringen →':'Fortsett til neste case →';
    root.append(panel);
   }
+ }
+ function interpretation(grade){
+  if(state.tool==='four')return grade.truth.interpretation+' Dette er en screeningvurdering, ikke en diagnose.';
+  const red=Object.entries(grade.truth.parts).filter(([key,score])=>score===3).map(([key])=>
+   ({rr:'respirasjon',spo:'SpO₂',sbp:'systolisk BT',hr:'puls',temp:'temperatur',
+    consciousness:'bevissthet / ny forvirring',oxygen:'tilført oksygen'})[key]);
+  return 'Fasit NEWS2 '+grade.truth.total+'. '+(red.length?
+   'Husk enkeltparametere med 3 poeng: '+red.join(', ')+'. ':'')+
+   'Vurder alltid pasienten klinisk og følg lokale rutiner; skåren er ikke en diagnose.';
  }
  function summary(){
   const cases=subset(),results=cases.map(q=>D.grade(collections().type,q.id,state.answers[q.id]));
@@ -264,7 +274,7 @@
     const val=state.answers[q.id][row.id],correct=r.truth.parts[row.id];
     ul.append(h('li','', (val===correct?'✓':'○')+' '+(row.name||row.title)+': valgt '+val+' / fasit '+correct));
    }
-   card.append(ul);root.append(card);
+   card.append(ul);text(card,interpretation(r),'learn12-explanation');root.append(card);
   }
   const bar=h('div','learn12-actions');
   bar.append(button('Prøv igjen','learn12-secondary',()=>setMode(state.mode)),
