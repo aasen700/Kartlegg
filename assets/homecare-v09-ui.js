@@ -16,7 +16,7 @@
   skuv:'https://www.ntnu.no/ism/kurs/skuv'
  };
  const defs=[
-  {id:'mst',name:'MST',sub:'Ernæringsscreening',desc:'To spørsmål om ufrivillig vekttap og redusert matinntak.',tag:'Ernæring',icon:'◉'},
+  {id:'mst',name:'MST',sub:'Risikovurdering for underernæring',desc:'To spørsmål om ufrivillig vekttap og redusert matinntak.',tag:'Ernæring',icon:'◉'},
   {id:'tug',name:'TUG',sub:'Timed Up and Go',desc:'3-meters mobilitetstest med stoppeklokke og valgfri manuell tid.',tag:'Fall og mobilitet',icon:'◷'},
   {id:'esas',name:'ESAS-r',sub:'Symptomkartlegging',desc:'Ni symptomskalaer (0–10) og ett valgfritt tilleggssymptom.',tag:'Palliasjon',icon:'♡'},
   {id:'ortho',name:'Ortostatisk BT',sub:'Blodtrykksendring',desc:'Se systolisk og diastolisk endring fra liggende til stående.',tag:'Sirkulasjon',icon:'↕'},
@@ -81,7 +81,13 @@
   const a=elem('p',cls,txt);a.setAttribute('role','status');container.append(a);return a;
  }
  function resultArea(content){
-  const div=elem('div','hc-output');div.id='hcResult';div.setAttribute('role','status');div.setAttribute('aria-live','polite');div.hidden=true;content.append(div);return div;
+  const div=elem('div','hc-output');div.id='hcResult';div.setAttribute('role','status');div.setAttribute('aria-live','polite');div.hidden=true;content.append(div);
+  // Old results must never remain visible after the user changes a measurement.
+  const inputs=content.querySelector('form');
+  const invalidate=()=>{div.hidden=true;div.replaceChildren()};
+  inputs?.addEventListener('input',invalidate);
+  inputs?.addEventListener('change',invalidate);
+  return div;
  }
  function field(id,label,min=0,max=300,required=true){
   const wrap=elem('label','hc-field');
@@ -102,7 +108,7 @@
   ({mst:showMST,tug:showTUG,esas:showESAS,ortho:showOrtho,fast:showFAST,skuv:showSKUV})[id](content);
  }
  function showMST(content){
-  para(content,'MST er et anbefalt screeningsverktøy for risiko for underernæring hos voksne. Resultatet er ikke en ernæringsdiagnose.');
+  para(content,'MST er Helsedirektoratets anbefalte verktøy for vurdering av risiko for underernæring hos voksne. Det er ikke en ernæringsdiagnose. Ved kjent underernæring eller i terminal fase må individuell vurdering komme først.');
   const form=formWrap(content,'hcMstForm');
   const weight=elem('label','hc-field');
   weight.append(elem('span','','Ufrivillig vekttap den siste tiden (omtrent seks måneder)'));
