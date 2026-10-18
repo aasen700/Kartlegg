@@ -68,7 +68,7 @@
   // contacting appropriate help. This is narrative logic, not a medical forecast.
   const worsened=s.worsened||(!has(s,'contact')&&id!=='contact'&&minutes>=12);
   const now={...s,minutes,worsened,done:Object.freeze([...s.done,id]),
-   lastVitals:(id==='vitals'||id==='reevaluate')?Object.freeze({...worsened?worse:vitals}):s.lastVitals};
+   lastVitals:(id==='vitals'||id==='reevaluate')?Object.freeze({...(worsened?worse:vitals)}):s.lastVitals};
   const update={...now,timeline:Object.freeze([...s.timeline,Object.freeze({
    minute:minutes,id,label:action.label,text:narrative(now,id)
   })])};
