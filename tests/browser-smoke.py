@@ -74,7 +74,8 @@ script=r"""
   assert(!!document.querySelector('#homeToolSearch'),'homepage tool search missing');
   assert(!!document.querySelector('#toolSearch'),'library search missing');
   put('toolSearch','smerte');
-  assert(document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length===1,'library search filter incorrect');
+  const painMatches=[...document.querySelectorAll('#page-verktoy .toolbox:not([hidden])')];
+  assert(painMatches.length>=1&&painMatches.some(card=>/NRS/.test(card.querySelector('h3')?.textContent||'')),'library pain search must include NRS');
   put('toolSearch','');
   assert(document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length===16,'library search did not reset: total='+document.querySelectorAll('#page-verktoy .toolbox').length+',visible='+document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length+',errors='+errors.join('|'));
   put('homeToolQuery','gcs');
