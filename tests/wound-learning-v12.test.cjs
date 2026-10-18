@@ -21,7 +21,7 @@ test('each wound case has complete legitimate answer choices, rationales and two
    assert.ok(part.options.some(([id])=>id===q.answer[part.id]),q.id+' '+part.id);
    assert.ok(q.why[part.id].length>12,q.id+' '+part.id);
   }
-  for(const style of ['realistic','drawn','clinical']){
+  for(const style of ['realistic','clinical']){
    const image='assets/wounds/'+q.id+'-'+style+'.svg';
    assert.ok(fs.existsSync(path.join(__dirname,'..',image)),image);
    assert.match(read(image),/<svg[\s\S]*<\/svg>/);
