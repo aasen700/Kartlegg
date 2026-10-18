@@ -84,13 +84,14 @@ script=r"""
   assert(document.querySelector('#clinicalToolDialog').open,'search did not open GCS calculator');
   document.querySelector('#closeClinicalTool').click();
   // v1.0.1: opening qSOFA from compact search must reveal optional GCS before focusing.
+  document.querySelector('[data-page=vurdering]').click(); // The compact search is on the home page.
   const quickGCS=document.querySelector('#optionalGCS');
   quickGCS.open=false;
   put('homeToolQuery','qsofa');
   assert(document.querySelector('#homeToolResults button').textContent.includes('qSOFA'),'qSOFA search result missing');
   document.querySelector('#homeToolResults button').click();
   assert(quickGCS.open,'qSOFA shortcut must expand hidden GCS');
-  assert(document.activeElement===document.querySelector('#gcs'),'qSOFA shortcut must focus visible GCS; active='+document.activeElement?.outerHTML.slice(0,210)+'; gcsVisible='+document.querySelector('#gcs').getClientRects().length+'; disclosureOpen='+quickGCS.open+'; mainInert='+document.querySelector('main').inert);
+  assert(document.activeElement===document.querySelector('#gcs')&&document.querySelector('#gcs').getClientRects().length>0,'qSOFA shortcut must focus visible GCS on the assessment page');
   assert(document.querySelector('#homeToolResults').hidden,'qSOFA search dropdown should close');
   put('homeToolQuery','smerte');
   assert(document.querySelector('#homeToolResults').textContent.includes('NRS'),'NRS not discoverable by pain search');
