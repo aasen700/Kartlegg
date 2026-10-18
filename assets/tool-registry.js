@@ -44,6 +44,8 @@
  function linkFor(url,id){
   if(!get(id)&&id!=='isbar')return null;
   const u=new URL(url);
+  // Share only the canonical tool ID; never carry arbitrary query parameters.
+  u.search='';
   u.searchParams.set('tool',id);
   u.hash=(id==='news2'||id==='qsofa'||id==='isbar')?'vurdering':'verktoy';
   return u.href;
