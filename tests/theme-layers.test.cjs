@@ -51,3 +51,18 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
  assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1101/);
  assert.match(read('index.html'),/assets\/theme-layers-v11\.css\?v=1101/);
 });
+
+test('immersive atmosphere remains independent and excludes clinical scores',()=>{
+ const css=read('assets/visual-atmospheres-v112.css');
+ const html=read('index.html');
+ assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1121/);
+ assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
+ for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])
+  assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
+ for(const name of ['season-halloween-web.svg','season-christmas-snow.svg'])
+  assert.ok(fs.existsSync(path.join(__dirname,'..','assets',name)),'Missing seasonal ornament '+name);
+ for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])
+  assert.ok(!css.includes(clinical),'Must preserve clinical presentation: '+clinical);
+ assert.match(css,/prefers-reduced-motion:reduce/);
+ assert.match(css,/pointer-events:none/);
+});
