@@ -756,6 +756,11 @@ script=r"""
   assert(document.querySelector('#page-simulering').hidden,'training page not hidden when navigating away');
   assert(!errors.length,'simulation JS errors: '+errors.join(';'));
   // Kartlegg Lær: guided E/V/M/NT lessons, nine exercises and four full-case exam.
+  const gcsTutorial=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"] .gcs-learn-card-button');
+  assert(!!gcsTutorial,'GCS library card must link to its tutorial');
+  gcsTutorial.click();
+  assert(!document.querySelector('#page-laer').hidden,'GCS library tutorial link failed');
+  assert(window.KartleggLearnPilot.mode==='learn','GCS shortcut should open guided learning');
   document.querySelector('[data-page=laer]').click();
   assert(!document.querySelector('#page-laer').hidden,'GCS learning route missing');
   const learn=window.KartleggLearnPilot,model=window.KartleggGcsLearning;
