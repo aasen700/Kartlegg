@@ -257,7 +257,7 @@
  if(toolsBar&&!toolsBar.querySelector('.gcs-learn-card-button')){
   const shortcut=btn('✦ Lær GCS','gcs-learn-card-button',()=>{
    document.querySelector('[data-page="laer"]')?.click();
-   open('learn');
+   if(!window.KartleggLearningHub?.setTool('gcs','learn'))open('learn');
   });
   shortcut.setAttribute('aria-label','Åpne interaktiv GCS-opplæring');
   toolsBar.append(shortcut);
