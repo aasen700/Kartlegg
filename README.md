@@ -2,7 +2,7 @@
 
 **Kliniske verktøy samlet på ett sted – norsk demonstrasjonsversjon.**
 
-[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Klinisk og teknisk kvalitetssikring](KLINISK-KVALITET.md)
+[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 16 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
 
 ## Oppdatering 1.0.2
 - Rettet overlapp mellom toppbanner og Kartlegg-/profilikon i de personlige temaene; kontrollert med automatiske geometritester på fem visningsbredder.
@@ -19,6 +19,13 @@
 - Presisert hvilke NEWS2-felt som er obligatoriske, og at GCS er valgfritt.
 - Optimalisert NEWS2-delpoengene: én beregning oppdaterer både hovedresultat og delpoeng, i stedet for dobbelt beregningsarbeid.
 - Utvidet tester for disse konkrete funksjonene. **Ingen NEWS2-grenser, behandlingstekster eller lagringsregler er endret.**
+
+## Oppdatering av arbeidsflyt – oktober 2026
+- Stjernemerk alle 16 verktøy og åpne favoritter fra forsiden. Bare verktøy-ID-er lagres lokalt; kliniske målinger lagres fortsatt ikke permanent.
+- Hvert verktøy kan deles med en direkte lenke, for eksempel [GCS](https://aasen700.github.io/Kartlegg/?tool=gcs#verktoy), [NEWS2](https://aasen700.github.io/Kartlegg/?tool=news2#vurdering) og [ABCDE](https://aasen700.github.io/Kartlegg/?tool=abcde#verktoy).
+- Bytt direkte mellom NEWS2, GCS og ISBAR fra forsiden og relevante dialoger.
+- Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
+- Se [Kontrollmatrisen](KONTROLLMATRISE.md) for kilder, grenser, testdekning, uavklarte spørsmål og klinisk kontrollstatus. Ingen klinisk godkjenning er utført.
 
 ## Funksjoner
 
