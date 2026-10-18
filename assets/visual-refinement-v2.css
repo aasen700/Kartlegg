@@ -34,7 +34,7 @@
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .theme-top-ribbon{height:17px!important;opacity:.84;filter:none}
 
 /* Movement communicates state changes without persistent decoration. */
-:where(body,.header,.sidebar,.section,.toolbox,.field,.profile-dialog,.base-theme-option,.service-theme-option,.appearance-options label){
+:where(.nav,.btn,.base-theme-option,.service-theme-option,.appearance-options label){
  transition:background-color .28s var(--ui-ease),border-color .28s var(--ui-ease),box-shadow .28s var(--ui-ease),color .2s ease;
 }
 @media(hover:hover) and (pointer:fine){
@@ -104,6 +104,6 @@
  .appearance-options label::after{height:25px}
 }
 @media(prefers-reduced-motion:reduce){
- :where(body,.header,.sidebar,.section,.toolbox,.field,.profile-dialog,.base-theme-option,.service-theme-option,.appearance-options label){transition:none!important}
+ :where(.nav,.btn,.base-theme-option,.service-theme-option,.appearance-options label){transition:none!important}
  .toolbox:hover{transform:none!important}
 }
