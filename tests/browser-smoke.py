@@ -450,6 +450,35 @@ script=r"""
   document.querySelector('#clearProfile').click();
   assert(root.dataset.marithaMode!=='on','clearing profile should disable Easter egg');
   assert(!document.querySelector('#marithaPopup').open,'clearing profile must close Maritha popup');
+  // Name-based cosmetic modes are exclusive, activate only on explicit save, and preserve risk visuals.
+  const personalPopup=document.querySelector('#personalModePopup');
+  assert(!!personalPopup&&!!window.KartleggPersonalModes,'personal mode module missing');
+  const initialRiskScore=getComputedStyle(document.querySelector('.score.danger')).backgroundColor;
+  for(const [name,mode,title] of [
+   ['Kristian Bøe','kristian','Kristian-modus aktivert'],
+   ['Kent Ole Hansen','kent','Kent-modus aktivert'],
+   ['Philip Aasen','philip','Philip-modus aktivert']
+  ]){
+   put('profileName',name);
+   assert(root.dataset.personalMode!==mode,'typing cannot activate '+mode);
+   document.querySelector('#saveProfile').click();
+   assert(root.dataset.personalMode===mode,'wrong activated personal mode '+mode);
+   assert(personalPopup.open,'missing personal mode popup '+mode);
+   assert(document.querySelector('#personalModeTitle').textContent===title,'wrong personal popup title');
+   assert(getComputedStyle(ribbon).backgroundImage.includes('svg'),'missing SVG ribbon '+mode);
+   assert(Math.abs(ribbon.getBoundingClientRect().width-headerWidth)<2,'personal ribbon not full header width '+mode);
+   assert(getComputedStyle(document.querySelector('.score.danger')).backgroundColor===initialRiskScore,'personal mode changed clinical severity state '+mode);
+   document.querySelector('#closePersonalMode').click();
+  }
+  put('profileName','Kristian');
+  document.querySelector('#saveProfile').click();
+  assert(!root.dataset.personalMode,'partial name must not trigger personal mode');
+  put('profileName','Kristian Bøe');
+  document.querySelector('#saveProfile').click();
+  assert(root.dataset.personalMode==='kristian','matching full name must work again');
+  document.querySelector('#closePersonalMode').click();
+  document.querySelector('#clearProfile').click();
+  assert(!root.dataset.personalMode&&!personalPopup.open,'clearing profile must disable personal decoration');
   assert(!!document.querySelector('#newsCard')&&!!document.querySelector('#qCard'),'theme decorations must not disturb clinical score cards');
   document.querySelector('#closeProfile').click();
   assert(!profileDialog.open,'profile drawer did not close');
