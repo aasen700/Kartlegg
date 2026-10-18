@@ -526,6 +526,7 @@ script=r"""
     assert(glassPanel.backdropFilter.includes('blur'),'glass must blur the backdrop');
     assert(glassPanel.backgroundColor.startsWith('rgba('),'Philip panel must remain genuinely translucent');
     assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'Philip needs layered cobalt light');
+    assert(getComputedStyle(document.querySelector('.meta-line label')).color==='rgb(247, 251, 255)','Philip date and time labels need readable glass contrast');
     if(!matchMedia('(max-width:770px)').matches)assert(parseFloat(getComputedStyle(document.querySelector('.shell')).borderRadius)>=20,'desktop Philip frame must use liquid rounded geometry');
    }
    assert(getComputedStyle(document.querySelector('.sidebar')).backgroundImage.includes('linear-gradient'),'side navigation should switch theme for '+mode);
