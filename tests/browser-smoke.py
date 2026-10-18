@@ -974,7 +974,9 @@ try:
    raise SystemExit(1)
   status=html.unescape(match.group(1))
   print(f"Browser integration smoke {width}×{height}:",status)
-  if status!="PASS":raise SystemExit(1)
+  if status!="PASS":
+   print(f"::error title=Browser smoke {width}x{height}::{status}")
+   raise SystemExit(1)
  # Independently load bookmarked URL routes after a hard refresh in Chrome.
  # This catches a common bug where generated links look correct but do not launch.
  deep_script=r"""
