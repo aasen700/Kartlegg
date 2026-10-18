@@ -83,6 +83,15 @@ script=r"""
   document.querySelector('#homeToolResults button').click();
   assert(document.querySelector('#clinicalToolDialog').open,'search did not open GCS calculator');
   document.querySelector('#closeClinicalTool').click();
+  // v1.0.1: opening qSOFA from compact search must reveal optional GCS before focusing.
+  const quickGCS=document.querySelector('#optionalGCS');
+  quickGCS.open=false;
+  put('homeToolQuery','qsofa');
+  assert(document.querySelector('#homeToolResults button').textContent.includes('qSOFA'),'qSOFA search result missing');
+  document.querySelector('#homeToolResults button').click();
+  assert(quickGCS.open,'qSOFA shortcut must expand hidden GCS');
+  assert(document.activeElement===document.querySelector('#gcs'),'qSOFA shortcut must focus visible GCS');
+  assert(document.querySelector('#homeToolResults').hidden,'qSOFA search dropdown should close');
   put('homeToolQuery','smerte');
   assert(document.querySelector('#homeToolResults').textContent.includes('NRS'),'NRS not discoverable by pain search');
   put('homeToolQuery','xyzzynotfound');
@@ -324,6 +333,9 @@ script=r"""
   // v0.99.1: service themes are visual presets in the profile; NEWS2 structure unchanged.
   const profileButton=document.querySelector('#profileTrigger');
   assert(!!profileButton,'profile trigger missing');
+  assert(profileButton.tagName==='BUTTON'&&profileButton.type==='button','profile shortcut must be a native button');
+  assert(profileButton.getAttribute('aria-label')==='Åpne profil og utseende','profile shortcut needs meaningful accessible name');
+  assert(profileButton.getAttribute('aria-hidden')!=='true','profile shortcut must not be hidden from assistive technology');
   profileButton.click();
   const profileDialog=document.querySelector('#profileDialog');
   assert(profileDialog.open,'profile drawer did not open');
@@ -502,6 +514,12 @@ script=r"""
    assert(!document.querySelector('#page-om').hidden,'mobile navigation could not open About page');
    assert(!sidebar.classList.contains('open')&&!main.inert,'navigating must close mobile menu cleanly');
    document.querySelector('[data-page=vurdering]').click();
+   toggle.click();
+   sidebar.querySelector('[data-page=profil]').click();
+   assert(!sidebar.classList.contains('open'),'opening profile should close the mobile navigation');
+   assert(!main.inert&&!document.body.classList.contains('mobile-menu-open'),'profile dialog should restore mobile background state');
+   assert(document.querySelector('#profileDialog').open,'profile navigation should open profile dialog');
+   document.querySelector('#closeProfile').click();
    const actionWidth=dock.getBoundingClientRect().width;
    if(matchMedia('(max-width:620px)').matches){
     assert(Math.abs(actionWidth-document.documentElement.clientWidth)<4,'phone action bar should match viewport width');
