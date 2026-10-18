@@ -36,7 +36,7 @@
  }
  // The scoring module reports ENT/VNT/MNT. Show E-NT/V-NT/M-NT in
  // teaching copy to avoid confusing non-testability with a numeric score.
- const readableReport=report=>report.replace(/([EVM])NT\\b/g,'$1-NT');
+ const readableReport=report=>report.replace(/([EVM])NT\b/g,'$1-NT');
  const readablePart=(part,value)=>({eyes:'E',verbal:'V',motor:'M'})[part]+(value==='NT'?'-NT':value);
  function heading(title,subtitle,mode){
   const wrap=h('div','gcs-learn-title');
