@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Kartlegg Lær – 4AT og NEWS2 (18. oktober 2026)
+
+- GCS, 4AT og NEWS2 samles i ett opplæringspanel. GCS-opplevelsen og den gamle avanserte pasientcasen er beholdt.
+- 4AT: seks læringssteg, tre øvingscaser med forklaringer og tre testcaser. Skåring bruker eksisterende `KartleggTools.fourAT`.
+- NEWS2: fem læringssteg og et nytegnet, interaktivt poengskjema med trykkbare poengfelt for alle syv komponenter. Tre veiledede og tre uveiledede caser.
+- NEWS2 inkluderer dokumentert SpO₂-skala 2, tilført oksygen, nye mentale forandringer, grenseverdier og isolerte 3-poengs parametere. Fasit bruker `Scoring.news2`.
+- Nytt valg av læringsverktøy, mobiltilpasset skjema og direkte «Lær 4AT/NEWS2»-knapper i verktøybiblioteket.
+- Ingen AI-API, registrering av reelle pasientdata eller ny persistering. Faglig kvalitetssikring er fortsatt nødvendig før enhver klinisk bruk.
+
+
 ## Kartlegg Lær – GCS v0.1 (18. oktober 2026)
 
 - Ny førsteside for verktøyopplæring, med GCS som første komplette læringsmodul. Den gamle pasientsimuleringen er flyttet ned til «Avansert case – pilot».
