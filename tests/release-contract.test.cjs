@@ -68,8 +68,10 @@ test('optional GCS shortcut is accessible and profile trigger is semantic',()=>{
  assert.doesNotMatch(html,/<span class="avatar" aria-hidden="true">/);
  assert.match(html,/Fyll ut de obligatoriske observasjonene for NEWS2\. GCS er valgfritt/);
  const search=read('assets/news-first-v081.js');
- assert.match(search,/if\(optional\)optional\.open=true/);
- assert.match(search,/gcs\?\.focus/);
+ assert.match(search,/KartleggToolNavigation/);
+ const nav=read('assets/tool-navigation.js');
+ assert.match(nav,/if\\(extra\\)extra\\.open=true/);
+ assert.match(nav,/gcs\\?\\.focus/);
 });
 test('NEWS2 is computed once and reused for the visible partial-score breakdown',()=>{
  const scoringUI=read('assets/final-polish-v10.js');
@@ -120,4 +122,21 @@ test('appearance toggle has a single controller and homecare outputs invalidate 
  assert.match(settings,/\$\('themeToggle'\)\?\.addEventListener\('click'/);
  assert.match(homecare,/inputs\?\.addEventListener\('input',invalidate\)/);
  assert.match(homecare,/inputs\?\.addEventListener\('change',invalidate\)/);
+});
+
+test('single canonical registry drives search and direct-linkable 16 tools',()=>{
+ const R=require('../assets/tool-registry.js');
+ assert.equal(R.all.length,16);
+ assert.equal(new Set(R.all.map(x=>x.id)).size,16);
+ assert.equal(R.search('gcs')[0].id,'gcs');
+ assert.equal(R.search('smerte')[0].id,'nrs');
+ assert.equal(R.linkFor('https://example.test/Kartlegg/?abc=1','gcs'),'https://example.test/Kartlegg/?abc=1&tool=gcs#verktoy');
+ assert.equal(R.linkFor('https://example.test/Kartlegg/','isbar'),'https://example.test/Kartlegg/?tool=isbar#vurdering');
+ assert.equal(R.linkFor('https://example.test/Kartlegg/','made-up'),null);
+ assert.deepEqual(R.sanitizeFavorites(['gcs','gcs','nrs','bogus']),['gcs','nrs']);
+ assert.match(read('assets/news-first-v081.js'),/KartleggToolRegistry/);
+ assert.match(read('assets/tool-categories-v099.js'),/search\.addEventListener\('input',sync\)/);
+ assert.doesNotMatch(read('assets/modern-v08-body.js'),/stopImmediatePropagation\(\)/);
+ assert.match(html,/assets\/tool-navigation\.js\?v=1110/);
+ assert.match(html,/assets\/tool-registry\.js\?v=1110/);
 });
