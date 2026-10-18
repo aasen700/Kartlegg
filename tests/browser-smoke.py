@@ -622,7 +622,7 @@ script=r"""
   document.querySelector('[data-page=vurdering]').click();
   assert(!document.querySelector('#page-vurdering').hidden,'returning to NEWS2 from About failed');
   assert(document.querySelector('#homeToolSearch').nextElementSibling.id==='vurdering','About changes must not reorder NEWS2 form');
-  // v1.0 RC1 – mobile navigation must be above search and sticky actions.
+  // Mobile regression: navigation, compact header, quick tools and content must never overlap.
   if(matchMedia('(max-width:770px)').matches){
    const toggle=document.querySelector('#menuButton'),sidebar=document.querySelector('#sidebar'),backdrop=document.querySelector('#backdrop');
    const dock=document.querySelector('#actionDock'),main=document.querySelector('main');
