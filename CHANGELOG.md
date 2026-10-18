@@ -1,5 +1,16 @@
 # Versjonshistorikk – Kartlegg
 
+## 1.0.1 – 18. oktober 2026
+
+Mindre stabilitets- og tilgjengelighetsoppdatering før oppkobling av eget domene.
+
+- qSOFA-søk åpner GCS-seksjonen før fokusering.
+- Tilgjengelig HTML-profilknapp og riktig lukking av mobilmeny ved åpning av profilen.
+- Tydeligere tekst om NEWS2-felt og valgfri GCS.
+- Felles skåringsresultat brukes til visning av NEWS2-delpoeng; unødvendig dobbelberegning fjernet.
+- Utvidede nettleser- og kontrakttester. **Ingen endringer i kliniske skåringsgrenser eller datalagring.**
+
+
 ## 1.0 – 17. oktober 2026
 
 Første offentlige **demonstrasjonsversjon** av Kartlegg, godkjent for publisering med fiktive data, **ikke klinisk validert for reell pasientbehandling**.
