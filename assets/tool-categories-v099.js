@@ -31,6 +31,7 @@
   return 'guide';
  }
  const cards=[...grid.querySelectorAll('.toolbox')];let active='all';
+ const registry=window.KartleggToolRegistry;
  for(const card of cards)card.dataset.toolCategory=category(card);
  const toolbar=h('nav','v099-categories');toolbar.id='libraryCategories';toolbar.setAttribute('aria-label','Filtrer verktøy etter kategori');
  const buttons=[],options=[{id:'all',name:'Alle verktøy'},...classification.map(x=>({id:x.id,name:x.name}))];
@@ -41,8 +42,7 @@
   button.append(count);
   button.addEventListener('click',()=>{
    active=cat.id;
-   // The verified baseline search re-applies textual matches and emits kartlegg:library-filtered.
-   search.dispatchEvent(new Event('input',{bubbles:true}));
+   sync();
   });buttons.push(button);toolbar.append(button);
  }
  const status=h('p','v099-category-status','');status.id='libraryCategoryStatus';status.setAttribute('role','status');
@@ -60,7 +60,10 @@
   let total=0;
   const visibleCounts={assess:0,calc:0,guide:0};
   for(const card of cards){
-   const textMatched=!card.hidden;
+   const q=search.value.trim().toLocaleLowerCase('nb-NO');
+   const entry=registry?.all.find(item=>item.id===card.dataset.toolId);
+   const terms=entry?(entry.name+' '+entry.detail+' '+entry.terms):'';
+   const textMatched=!q||(card.textContent+' '+terms).toLocaleLowerCase('nb-NO').includes(q);
    const rightCat=active==='all'||card.dataset.toolCategory===active;
    card.hidden=!textMatched||!rightCat;
    if(!card.hidden){visibleCounts[card.dataset.toolCategory]++;total++}
@@ -72,10 +75,18 @@
   if(count)count.textContent=total+' av '+cards.length+' verktøy';
   const empty=document.getElementById('toolNoMatches');if(empty)empty.hidden=total!==0;
  }
- // Important: lexical search dispatches this after resetting .hidden for all cards.
- search.addEventListener('kartlegg:library-filtered',sync);
- // Initialize search after all 16 cards exist; fixes stale 6/12 count on first load.
- search.dispatchEvent(new Event('input',{bubbles:true}));
+ // Search and category choice have one filter owner.
+ for(const item of registry?.all||[]){
+  const card=['news2','qsofa','gcs','4at','nrs'].includes(item.id)
+   ?cards.find(c=>{
+      const title=c.querySelector('h3')?.textContent||'';
+      return ({news2:/NEWS2/i,qsofa:/qSOFA/i,gcs:/GCS/i,'4at':/4AT/i,nrs:/NRS/i})[item.id].test(title);
+    })
+   :document.querySelector(item.launchSelector)?.closest('.toolbox');
+  if(card)card.dataset.toolId=item.id;
+ }
+ search.addEventListener('input',sync);
+ sync();
  const chip=library.querySelector('.intro .chip');if(chip)chip.textContent=cards.length+' tilgjengelige verktøy';
  const description=library.querySelector('.intro p:not(.eyebrow)');
  if(description)description.textContent='Finn en kalkulator, et kartleggingsverktøy eller en klinisk veileder. Filtrer etter kategori eller søk på navn og symptomer.';
