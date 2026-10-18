@@ -142,3 +142,20 @@ test('NEWS2 UI uses explicit check and next actions, not reveal only at final su
  assert.match(css,/learn12-news-cell\.is-selected\.is-score-3/);
  assert.match(css,/background:#fff!important/);
 });
+
+test('4AT and NEWS2 both provide GCS-level learning home screens without changing scoring',()=>{
+ const ui=read('assets/learning-tools-v12.js'),css=read('assets/learning-tools-v12.css');
+ assert.match(ui,/function landingArtwork\(\)/);
+ assert.match(ui,/learn12-hero learn12-hero-/);
+ assert.match(ui,/learn12-four-grid/);
+ assert.match(ui,/learn12-monitor-vital/);
+ assert.match(ui,/learn12-hero-tags/);
+ assert.match(ui,/learn12-premium-modes/);
+ assert.match(ui,/learn12-mode-subtitle/);
+ assert.match(ui,/count\.lessons\.length\+' læringssteg'/);
+ assert.match(ui,/count\.cases\.filter\(c=>c\.level==='Øv'\)\.length/);
+ assert.match(css,/@media\(max-width:710px\)\{\.learn12-hero\{grid-template-columns:1fr/);
+ assert.doesNotMatch(ui,/localStorage|sessionStorage|\bfetch\(/);
+ const gcs=read('assets/gcs-learning-ui.js');
+ assert.doesNotMatch(gcs,/4AT og NEWS2 er aktuelle neste steg/);
+});
