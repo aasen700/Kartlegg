@@ -455,6 +455,14 @@ script=r"""
   assert(!!personalPopup&&!!window.KartleggPersonalModes,'personal mode module missing');
   const riskCard=document.querySelector('#newsCard');
   const initialRiskScore=getComputedStyle(riskCard).backgroundColor;
+  const riskAlert=document.querySelector('#newsClinicalAlert');
+  const initialRiskAlert=getComputedStyle(riskAlert).backgroundColor;
+  const primaryButton=document.querySelector('#launchABCDE');
+  const pageColors={
+   kristian:{header:'rgb(100, 15, 37)',button:'rgb(255, 255, 255)',panel:'rgb(255, 253, 253)'},
+   kent:{header:'rgb(10, 37, 73)',button:'rgb(248, 204, 71)',panel:'rgb(248, 252, 251)'},
+   philip:{header:'rgb(8, 28, 45)',panel:'rgb(248, 251, 250)'}
+  };
   for(const [name,mode,title] of [
    ['Kristian Bøe','kristian','Kristian-modus aktivert'],
    ['Kent Ole Hansen','kent','Kent-modus aktivert'],
@@ -468,7 +476,18 @@ script=r"""
    assert(document.querySelector('#personalModeTitle').textContent===title,'wrong personal popup title');
    assert(getComputedStyle(ribbon).backgroundImage.includes('svg'),'missing SVG ribbon '+mode);
    assert(Math.abs(ribbon.getBoundingClientRect().width-headerWidth)<2,'personal ribbon not full header width '+mode);
-   assert(getComputedStyle(riskCard).backgroundColor===initialRiskScore,'personal mode changed clinical severity state '+mode);
+   const palette=pageColors[mode];
+   assert(getComputedStyle(document.querySelector('.header')).backgroundColor===palette.header,'header must switch to immersive '+mode+' palette');
+   assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'main page must have substantial '+mode+' colored backdrop');
+   assert(getComputedStyle(document.querySelector('#vurdering')).backgroundColor===palette.panel,'content surface wrong for '+mode);
+   assert(getComputedStyle(document.querySelector('.sidebar')).backgroundImage.includes('linear-gradient'),'side navigation should switch theme for '+mode);
+   if(mode==='philip'){
+    assert(getComputedStyle(primaryButton).backgroundImage.includes('linear-gradient'),'founder gold action gradient missing');
+   }else{
+    assert(getComputedStyle(primaryButton).backgroundColor===palette.button,'primary button color wrong for '+mode);
+   }
+   assert(getComputedStyle(riskCard).backgroundColor===initialRiskScore,'personal mode changed clinical score background '+mode);
+   assert(getComputedStyle(riskAlert).backgroundColor===initialRiskAlert,'personal mode changed clinical alert background '+mode);
    document.querySelector('#closePersonalMode').click();
   }
   put('profileName','Kristian');

@@ -9,9 +9,9 @@
  if(root&&root.document)api.init(root.document,root);
 })(typeof globalThis==='undefined'?this:globalThis,function(){
  const profiles=Object.freeze({
-  'kristian bøe':Object.freeze({id:'kristian',title:'Kristian-modus aktivert',subtitle:'Tribunestemning i toppbanneret, røde knapper og hvite detaljer. Heia Brann!',signature:'TRIBUNEN // KB',symbol:'⚽'}),
-  'kent ole hansen':Object.freeze({id:'kent',title:'Kent-modus aktivert',subtitle:'Et stilrent banner med nordlig landskap og fargespill inspirert av samiske farger.',signature:'NORDLYS // KENT',symbol:'☀'}),
-  'philip aasen':Object.freeze({id:'philip',title:'Philip-modus aktivert',subtitle:'FOUNDER EDITION. Fjellformasjoner møter en EKG-kurve i et mørkt, eksklusivt Kartlegg-tema.',signature:'FOUNDER // PA',symbol:'✦'})
+  'kristian bøe':Object.freeze({id:'kristian',title:'Kristian-modus aktivert',subtitle:'Rød stadionstemning over hele Kartlegg, hvite kontrastknapper og tribune i toppbanneret. Heia Brann!',signature:'TRIBUNEN // KB',symbol:'⚽'}),
+  'kent ole hansen':Object.freeze({id:'kent',title:'Kent-modus aktivert',subtitle:'Nordlys-inspirert landskap, dype blågrønne bakgrunner og gullgule knapper med samisk-inspirerte fargedetaljer.',signature:'NORDLYS // KENT',symbol:'☀'}),
+  'philip aasen':Object.freeze({id:'philip',title:'Philip-modus aktivert',subtitle:'FOUNDER EDITION. Et mørkt ekspedisjonstema med fjell og EKG i toppbanneret, turkise detaljer og gullknapper.',signature:'FOUNDER // PA',symbol:'✦'})
  });
  function resolvePersonalMode(value){
   if(typeof value!=='string')return null;
