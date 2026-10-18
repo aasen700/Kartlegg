@@ -82,3 +82,7 @@
 @media(prefers-reduced-motion:reduce){
  .v10-optional-gcs,.v10-now-button,.mobile-toggle{transition:none!important}
 }
+
+/* v1.0.1: native profile shortcut is keyboard- and screen-reader accessible. */
+.header .profile-trigger{border:0;font:inherit;font-size:12px;font-weight:800;cursor:pointer;appearance:none}
+.header .profile-trigger:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
