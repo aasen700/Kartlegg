@@ -70,8 +70,8 @@ test('optional GCS shortcut is accessible and profile trigger is semantic',()=>{
  const search=read('assets/news-first-v081.js');
  assert.match(search,/KartleggToolNavigation/);
  const nav=read('assets/tool-navigation.js');
- assert.match(nav,/if\\(extra\\)extra\\.open=true/);
- assert.match(nav,/gcs\\?\\.focus/);
+ assert.ok(nav.includes('if(extra)extra.open=true'));
+ assert.ok(nav.includes('gcs?.focus'));
 });
 test('NEWS2 is computed once and reused for the visible partial-score breakdown',()=>{
  const scoringUI=read('assets/final-polish-v10.js');
