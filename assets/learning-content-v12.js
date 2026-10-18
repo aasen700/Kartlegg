@@ -123,10 +123,64 @@
    match:Object.freeze(match)
   });
  }
+
+ // Visual teaching grid uses the official NEWS2 score order (3,2,1,0,1,2,3).
+ // These positions identify an interval, while the authoritative clinical score
+ // is still calculated exclusively by Scoring.news2.
+ const newsChartColumns=Object.freeze([3,2,1,0,1,2,3]);
+ function newsChartRow(rowId,v){
+  if(!v||typeof v!=='object')throw new TypeError('NEWS2-case mangler');
+  const labels={
+   rr:['≤8','','9–11','12–20','','21–24','≥25'],
+   spo:v.scale===1?['≤91','92–93','94–95','≥96','','','']:
+    v.oxygen?['≤83','84–85','86–87','88–92','93–94','95–96','≥97']:
+    ['≤83','84–85','86–87','≥88 på romluft','','',''],
+   sbp:['≤90','91–100','101–110','111–219','','','≥220'],
+   hr:['≤40','','41–50','51–90','91–110','111–130','≥131'],
+   temp:['≤35,0','','35,1–36,0','36,1–38,0','38,1–39,0','≥39,1',''],
+   consciousness:['','','','A uten ny forvirring','','','V/P/U eller ny forvirring'],
+   oxygen:['','','','Romluft','','Tilført O₂','']
+  }[rowId];
+  if(!labels)throw new RangeError('Ukjent NEWS2-rad');
+  let answerIndex;
+  switch(rowId){
+   case 'rr':answerIndex=v.rr<=8?0:v.rr<=11?2:v.rr<=20?3:v.rr<=24?5:6;break;
+   case 'spo':
+    answerIndex=v.scale===1?(v.spo2<=91?0:v.spo2<=93?1:v.spo2<=95?2:3):
+     v.spo2<=83?0:v.spo2<=85?1:v.spo2<=87?2:v.spo2<=92||!v.oxygen?3:v.spo2<=94?4:v.spo2<=96?5:6;
+    break;
+   case 'sbp':answerIndex=v.sbp<=90?0:v.sbp<=100?1:v.sbp<=110?2:v.sbp<=219?3:6;break;
+   case 'hr':answerIndex=v.hr<=40?0:v.hr<=50?2:v.hr<=90?3:v.hr<=110?4:v.hr<=130?5:6;break;
+   case 'temp':answerIndex=v.temp<=35?0:v.temp<=36?2:v.temp<=38?3:v.temp<=39?4:5;break;
+   case 'consciousness':answerIndex=v.conscious!=='A'||v.confusion?6:3;break;
+   case 'oxygen':answerIndex=v.oxygen?5:3;break;
+  }
+  const clinicalPart=S.news2(v).parts[rowId];
+  if(!labels[answerIndex]||newsChartColumns[answerIndex]!==clinicalPart)
+   throw new Error('NEWS2-læringsintervallet samsvarer ikke med klinisk skår');
+  return Object.freeze({labels:Object.freeze(labels),answerIndex});
+ }
+ function gradeNewsChart(caseId,answer,cells){
+  const q=newsCases.find(x=>x.id===caseId);
+  if(!q)throw new RangeError('Ukjent NEWS2-case');
+  const scored=grade('news2',caseId,answer);
+  if(!cells||typeof cells!=='object')throw new RangeError('Mangler cellevalg');
+  const matched={};
+  for(const row of newsRows){
+   const index=cells[row.id],chart=newsChartRow(row.id,q.v);
+   if(!Number.isInteger(index)||index<0||index>=newsChartColumns.length||
+      !chart.labels[index]||newsChartColumns[index]!==answer[row.id])
+    throw new RangeError('Ugyldig NEWS2-cellevalg');
+   matched[row.id]=index===chart.answerIndex;
+  }
+  return Object.freeze({...scored,score:Object.values(matched).filter(Boolean).length,
+   exact:Object.values(matched).every(Boolean),match:Object.freeze(matched)});
+ }
+
  const source=Object.freeze({
   news2:'https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/',
   fourAT:'https://www.the4at.com/userguide',
   license:'https://www.the4at.com/attribution'
  });
- return Object.freeze({fourParts,fourLessons,fourCases,newsRows,newsLessons,newsCases,source,expected,grade});
+ return Object.freeze({fourParts,fourLessons,fourCases,newsRows,newsLessons,newsCases,source,expected,grade,newsChartColumns,newsChartRow,gradeNewsChart});
 });
