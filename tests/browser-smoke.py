@@ -765,6 +765,7 @@ script=r"""
   assert(!document.querySelector('#page-laer').hidden,'GCS learning route missing');
   const learn=window.KartleggLearnPilot,model=window.KartleggGcsLearning;
   assert(!!learn&&!!model,'GCS learning module failed to initialize');
+  learn.open('home');
   assert(learn.mode==='home','GCS landing should show learning tracks');
   assert(document.querySelectorAll('#gcsLearningRoot .gcs-learn-mode-card').length===3,'expected three learning levels');
   learn.open('learn');
