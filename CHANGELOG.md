@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Simulering v0.1 – pilot (18. oktober 2026)
+
+- Egen «Simulering»-side med én forhåndsdefinert øvingscase i hjemmesykepleien.
+- Fritt valg av kartlegginger, symptomhistorie, tidsforløp, ny måling og strukturert kontakt. ISBAR-utkast og NEWS2-oppgave inngår.
+- Delt NEWS2-motor; ingen egen duplisert skåring i simuleringen.
+- Manusstyrt forverring er *kun pedagogikk*, ikke medisinsk prognose. Skjulte målinger forblir skjult til de tas på nytt.
+- Ingen AI-API, ekstern lagring eller nye driftskostnader. Klinisk kontroll og brukertesting er åpne punkter.
+
+
 ## Funksjons- og kvalitetssikringsoppdatering – 18. oktober 2026
 
 - Alle 16 kliniske verktøy har faste delbare ID-lenker og stjernefavoritter, lagret som kun ID-er lokalt.
