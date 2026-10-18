@@ -688,6 +688,40 @@ script=r"""
   assert(document.documentElement.dataset.baseTheme==='standard','standard theme not restored');
   document.querySelector('#closeProfile').click();
   assert(!dlg.open,'theme dialog did not close');
+  // v1.1: full registry, favorite toggle, direct URLs and NEWS2↔GCS↔ISBAR switching.
+  const tools=window.KartleggToolRegistry,nav=window.KartleggToolNavigation;
+  assert(!!tools&&!!nav,'navigation registry or controller not initialized');
+  assert(tools.all.length===16,'expected 16 canonical tools');
+  assert(document.querySelectorAll('#page-verktoy .toolbox[data-tool-id]').length===16,
+    'every clinical card needs one canonical tool id');
+  const gcsCard=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"]');
+  const star=gcsCard?.querySelector('.tool-card-favorite');
+  assert(!!star,'GCS favorite control missing');
+  const wasFavorite=nav.favorites.includes('gcs');
+  star.click();
+  assert(nav.favorites.includes('gcs')!==wasFavorite,'favorite click not saved to current state');
+  assert(document.querySelector('#toolFavorites').textContent.includes('GCS')||wasFavorite,
+    'favorites panel not updated');
+  star.click();
+  assert(nav.favorites.includes('gcs')===wasFavorite,'favorite toggle not reversible');
+  assert(tools.all.every(item=>nav.directLink(item.id)?.includes('tool='+item.id)),
+    'every tool requires a shareable direct link');
+  assert(nav.directLink('isbar').includes('tool=isbar'),'ISBAR workflow requires direct link');
+  assert(nav.open('gcs'),'quick GCS launch failed');
+  assert(document.querySelector('#clinicalToolDialog').open,'GCS dialog did not open');
+  const toIsbar=[...document.querySelectorAll('#clinicalToolDialog .tool-dialog-switch')].find(b=>b.textContent==='ISBAR');
+  assert(!!toIsbar,'GCS to ISBAR switch missing');toIsbar.click();
+  assert(document.querySelector('#isbarDialog').open&&!document.querySelector('#clinicalToolDialog').open,
+    'GCS to ISBAR switch failed to close original dialog');
+  const back=[...document.querySelectorAll('#isbarDialog .tool-dialog-switch')].find(b=>b.textContent==='NEWS2');
+  assert(!!back,'ISBAR to NEWS2 switch missing');back.click();
+  assert(!document.querySelector('#isbarDialog').open&&!document.querySelector('#page-vurdering').hidden,
+    'ISBAR to NEWS2 switch failed');
+  assert(nav.open('qsofa'),'qSOFA shortcut failed');
+  assert(document.querySelector('#optionalGCS').open&&document.activeElement===document.querySelector('#gcs'),
+    'qSOFA should reveal and focus the GCS field');
+  assert(!nav.open('fake-tool'),'invalid tool ID must not launch');
+  assert(!errors.length,'navigation JS errors: '+errors.join(';'));
   status='PASS';
  } catch(err) {status='FAIL: '+String(err.message||err)+'; '+errors.join('; ');}
  const el=document.createElement('output');el.id='kartlegg-smoke';el.textContent=status;document.body.append(el);
