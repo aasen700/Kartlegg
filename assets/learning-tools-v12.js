@@ -89,24 +89,107 @@
   text(refs,'Øv kun med fiktive data. Ingen klinisk godkjenning, pasientdata, serverlagring eller AI-API. Resultatene viser skåring, ikke en diagnose eller behandlingsplan.','learn12-disclaimer');
   root.append(refs);
  }
- function landing(){
-  heading('Kartlegg Lær · interaktivt','Lær '+titles[state.tool]+' steg for steg');
-  const lead=h('div','learn12-intro');
-  text(lead,state.tool==='four'?'Lær hvordan du skårer 4ATs fire områder, inkludert forskjellen mellom «vil ikke forsøke» og «kan ikke testes».':
-   'Les en fiktiv pasients vitale verdier og trykk på poengfeltet du mener passer i hver rad. Tren også på oksygentilførsel og SpO₂-skala 2.');
-  root.append(lead);
-  const boxes=h('div','learn12-modes');
-  for(const [mode,n,title,sub] of [
-   ['learn','01','Lær','Kort introduksjon til hvert poengområde'],
-   ['practice','02','Øv','Tre caser med poengvis forklaring etter hvert skjema'],
-   ['test','03','Test deg selv','Tre caser med resultatkontroll per oppgave']
-  ]){
-   const block=h('article','learn12-mode');
-   block.append(h('span','learn12-stepnumber',n),h('h4','',title),h('p','',sub));
-   block.append(button('Start '+title.toLowerCase()+' →','learn12-primary',()=>setMode(mode)));
-   boxes.append(block);
+ function landingArtwork(){
+  // Illustrations are intentionally non-interactive and use fictional examples only.
+  const figure=h('figure','learn12-visual learn12-visual-'+state.tool);
+  figure.setAttribute('role','img');
+  figure.setAttribute('aria-label',state.tool==='four'
+   ?'Illustrasjon av de fire delene i 4AT: årvåkenhet, AMT4, oppmerksomhet og akutt endring.'
+   :'Illustrasjon av et NEWS2-observasjonspanel med fiktive eksempelverdier, uten beregnet skår.');
+  const surface=h('div','learn12-visual-surface');surface.setAttribute('aria-hidden','true');
+  if(state.tool==='four'){
+   const heading=h('div','learn12-visual-heading');
+   heading.append(h('span','learn12-visual-mark','4AT'),h('span','learn12-visual-label','Fire vurderinger · én samlet skår'));
+   surface.append(heading);
+   const grid=h('div','learn12-four-grid');
+   const icons=['◉','◇','◎','↗'];
+   const labels=['Årvåkenhet','AMT4','Oppmerksomhet','Akutt endring'];
+   for(let i=0;i<D.fourParts.length;i++){
+    const row=D.fourParts[i],card=h('div','learn12-four-tile');
+    const top=h('div','learn12-four-top');
+    top.append(h('span','learn12-four-icon',icons[i]),h('span','learn12-four-index','0'+(i+1)));
+    card.append(top,h('strong','',labels[i]),
+     h('small','',row.options.map(x=>x.score).join(' / ')+' poeng'));
+    grid.append(card);
+   }
+   surface.append(grid);
+   surface.append(h('p','learn12-visual-foot','Observer · vurder · skår · forstå'));
+  }else{
+   const heading=h('div','learn12-visual-heading');
+   heading.append(h('span','learn12-visual-mark','NEWS2'),h('span','learn12-visual-label','Fiktive observasjoner'));
+   surface.append(heading);
+   const monitor=h('div','learn12-monitor');
+   const line=h('div','learn12-monitor-line');
+   for(const [name,value,unit] of [['RF','18','/min'],['SpO₂','97','%'],['Puls','76','/min']]){
+    const box=h('div','learn12-monitor-vital');
+    box.append(h('span','',name),h('strong','',value),h('small','',unit));line.append(box);
+   }
+   monitor.append(line);
+   const pulse=h('div','learn12-monitor-wave');
+   const bars=[14,23,19,12,29,52,18,11,26,45,16,12,22,30,19,13,25,43,15,10,20,28,18,13];
+   for(const height of bars){
+    const bar=h('span','learn12-monitor-bar');bar.style.height=height+'px';pulse.append(bar);
+   }
+   monitor.append(pulse);
+   const strip=h('div','learn12-monitor-strip');
+   strip.append(h('span','', 'Syv parametere'),h('span','', 'Skala 1 / 2'),h('span','', 'Delpoeng'));
+   monitor.append(strip);surface.append(monitor);
+   surface.append(h('p','learn12-visual-foot','Illustrasjon · ingen NEWS2-skår beregnet'));
   }
-  root.append(boxes);
+  figure.append(surface);
+  return figure;
+ }
+ function landing(){
+  const isFour=state.tool==='four';
+  heading('Kartlegg Lær · interaktivt',isFour?'4AT – lær deliriumvurdering':'NEWS2 – lær poengskåring');
+  const hero=h('section','learn12-hero learn12-hero-'+state.tool);
+  const copy=h('div','learn12-hero-copy');
+  copy.append(h('span','learn12-hero-pill','Tilgjengelig nå · '+titles[state.tool]));
+  copy.append(h('h4','',isFour?'Fra observasjon til en presis 4AT-skår':
+   'Bli tryggere på skåring av vitale observasjoner'));
+  text(copy,isFour
+   ?'Forstå de fire vurderingsområdene, se forskjellen på ulike poengalternativer, og prøv deg på fiktive pasientsituasjoner.'
+   :'Lær NEWS2-grensene, øv på å velge riktig felt i poengskjemaet, og test deg på ulike vitale observasjoner og SpO₂-skalaer.',
+   'learn12-hero-description');
+  const stats=h('div','learn12-hero-tags');
+  const count=collections();
+  for(const label of [
+   count.lessons.length+' læringssteg',
+   count.cases.filter(c=>c.level==='Øv').length+' øvingscaser',
+   count.cases.filter(c=>c.level==='Test').length+' testcaser',
+   'Ingen AI-kostnad'
+  ])stats.append(h('span','',label));
+  copy.append(stats);
+  hero.append(copy,landingArtwork());
+  root.append(hero);
+  const specs=isFour?[
+   {mode:'learn',number:'01',name:'Lær',subtitle:'Bli kjent med de fire delene',
+    desc:'Seks korte læringssteg: årvåkenhet, AMT4, oppmerksomhet, akutt endring og tolkning.',action:'Start læringen →'},
+   {mode:'practice',number:'02',name:'Øv',subtitle:'Skår med forklaringer',
+    desc:'Tre fiktive pasientsituasjoner. Sjekk svar og lær hvorfor hvert poeng er riktig.',action:'Start øving →'},
+   {mode:'test',number:'03',name:'Test deg selv',subtitle:'Finn poengene på egen hånd',
+    desc:'Tre caser med fire vurderinger hver og tydelig tilbakemelding etter hver oppgave.',action:'Ta testen →'}
+  ]:[
+   {mode:'learn',number:'01',name:'Lær',subtitle:'Forstå grensene og skalaene',
+    desc:'Fem steg om delpoeng, SpO₂-skala 1 og 2, oksygen og klinisk helhetsvurdering.',action:'Start læringen →'},
+   {mode:'practice',number:'02',name:'Øv',subtitle:'Finn riktig poengfelt',
+    desc:'Tre fiktive caser i et klikkbart NEWS2-skjema. Se fasit og forklaring underveis.',action:'Start øving →'},
+   {mode:'test',number:'03',name:'Test deg selv',subtitle:'Skår alle observasjonene',
+    desc:'Tre caser med sju delområder. Kontroller poeng og intervallvalg etter hvert skjema.',action:'Ta testen →'}
+  ];
+  const modes=h('div','learn12-modes learn12-premium-modes');
+  for(const spec of specs){
+   const card=h('section','learn12-mode learn12-premium-mode');
+   card.append(h('span','learn12-stepnumber',spec.number),
+    h('h4','',spec.name),h('strong','learn12-mode-subtitle',spec.subtitle),
+    h('p','',spec.desc));
+   card.append(button(spec.action,'learn12-primary',()=>setMode(spec.mode)));
+   modes.append(card);
+  }
+  root.append(modes);
+  const note=h('p','learn12-landing-note');
+  note.textContent='Kun pedagogiske øvelser med fiktive data. Ikke klinisk validering eller kompetansebevis.';
+  root.append(note);
  }
  function lessonPage(){
   const list=collections().lessons,q=list[state.lesson];

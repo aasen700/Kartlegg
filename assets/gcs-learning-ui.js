@@ -226,11 +226,7 @@
    modes.append(card);
   }
   root.append(modes);
-  const soon=h('section','gcs-learn-soon');
-  soon.append(h('h4','','Neste læringsmoduler'));
-  para(soon,'4AT og NEWS2 er aktuelle neste steg. De er ikke lansert som øvingsmoduler ennå.');
-  const labels=h('div','gcs-learn-tags');labels.append(h('span','','4AT · planlagt'),h('span','','NEWS2 · planlagt'));
-  soon.append(labels);root.append(soon);
+
  }
  function footer(){
   const box=h('section','gcs-learn-source');
