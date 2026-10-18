@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/personal-modes.css?v=1022">
   <link rel="stylesheet" href="assets/tool-navigation.css?v=1110">
   <link rel="stylesheet" href="assets/visual-atmospheres-v112.css?v=1121">
+  <link rel="stylesheet" href="assets/simulation-v01.css?v=101">
 </head>
 <body>
   <div class="shell">
@@ -41,6 +42,7 @@
       <button class="nav active" data-page="vurdering" aria-current="page"><span class="ico">✚</span> Ny vurdering</button>
       <button class="nav" data-page="historikk"><span class="ico">◷</span> Målinger over tid</button>
       <button class="nav" data-page="verktoy"><span class="ico">▤</span> Kliniske verktøy</button>
+      <button class="nav" data-page="simulering"><span class="ico">✧</span> Simulering <small class="sim-nav-tag">NY</small></button>
       <button class="nav" data-page="om"><span class="ico">ⓘ</span> Om Kartlegg</button>
       <button class="nav" data-page="profil"><span class="ico">♙</span> Min profil</button>
       <div class="sidebar-bottom"><strong>Fra målinger til oversikt</strong><p>Én registrering, flere skårer. Denne versjonen er laget for utprøving med fiktive data.</p></div>
@@ -132,6 +134,20 @@
           </div></div>
         </section>
       </div><!-- /page-verktoy -->
+      <div class="page" id="page-simulering" hidden>
+        <div class="intro"><div><p class="eyebrow">Kartlegg · pedagogisk pilot</p><h1>Pasientsimulering</h1>
+          <p>Tren på klinisk observasjon, NEWS2 og ISBAR i én interaktiv, forhåndsdefinert situasjon fra hjemmesykepleien – helt uten AI eller abonnement.</p></div>
+          <span class="chip">Pilot · Kun fiktive data</span></div>
+        <section class="section" aria-labelledby="simHeading">
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">✧</div>
+            <div><h2 id="simHeading">Scenario 01 · Akutt forverring</h2>
+            <p>Utforsk hva pasienten forteller, velg undersøkelser og vurder hvordan du vil prioritere. Dette er ikke en klinisk godkjent simulering.</p></div>
+          </div>
+          <div id="simulationRoot" aria-label="Interaktiv pasientsimulering">
+            <p class="helper">Simuleringen lastes lokalt i nettleseren. Ingen pasientopplysninger sendes til en server.</p>
+          </div>
+        </section>
+      </div><!-- /page-simulering -->
       <div class="page" id="page-profil" hidden>
         <div class="intro"><div><p class="eyebrow">Dine innstillinger</p><h1>Min profil</h1><p>Brukes til introduksjonen i ISBAR-manuset – aldri til å identifisere pasienten.</p></div><span class="chip">Valgfri lagring lokalt</span></div>
         <section class="section"><div class="section-header"><div class="section-symbol teal">♙</div><div><h2>Avsender i telefonsamtalen</h2><p>Fyll inn eget navn, stilling og arbeidssted. ISBAR bruker dette automatisk.</p></div></div>
@@ -256,5 +272,7 @@
   <script src="assets/final-polish-v10.js?v=1011"></script>
   <script src="assets/personal-modes.js?v=1020"></script>
   <script src="assets/tool-navigation.js?v=1111"></script>
+  <script src="assets/simulation-engine.js?v=101"></script>
+  <script src="assets/simulation-ui.js?v=101"></script>
 </body>
 </html>
