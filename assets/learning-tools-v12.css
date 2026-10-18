@@ -138,3 +138,46 @@
 
 .learn12-explanation{font-size:12px;font-weight:650;line-height:1.7;color:var(--ink);border-left:3px solid var(--accent);padding:8px 10px;margin:11px 0;background:var(--paper);border-radius:5px}
 :root[data-base-theme="philip"] .learn12-explanation{background:rgba(11,38,83,.77);color:#eef6ff}
+
+/* NEWS2 learning chart: white until chosen; scoring hues never indicate correctness. */
+.learn12-vital-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:15px}
+.learn12-vital-tile{display:flex;flex-direction:column;gap:5px;border:1px solid #d8e0e9;background:#fff;color:#182b40;border-radius:10px;padding:11px;min-width:0}
+.learn12-vital-tile small{font-size:11px;color:#536579}.learn12-vital-tile strong{font-size:16px;overflow-wrap:anywhere;color:#182b40}
+.learn12-news-scroll{max-width:100%;overflow-x:auto;border:1px solid #dde3eb;border-radius:12px;scrollbar-gutter:stable}
+.learn12-score-grid.learn12-news-chart{width:100%;min-width:820px;border:0;border-radius:0;background:#fff}
+.learn12-news-chart .learn12-score-head,.learn12-news-chart .learn12-score-row{display:grid;grid-template-columns:190px repeat(7,minmax(86px,1fr))}
+.learn12-news-chart .learn12-score-head{display:grid!important;background:#f4f6fa!important;color:#253448}
+.learn12-news-chart .learn12-score-head span{font-size:12px;border-color:#e3e7ed}
+.learn12-news-chart .learn12-row-name{background:#f8fafc;border-color:#e0e6ef}
+.learn12-news-chart .learn12-row-name strong{color:#253448}.learn12-news-chart .learn12-row-name small{color:#5b677a}
+.learn12-news-chart .learn12-score-row{min-height:78px;border-color:#e0e6ef}
+.learn12-news-chart .learn12-score-option.learn12-news-cell{background:#fff!important;color:#243244!important;border-right:1px solid #e0e6ef;box-shadow:none!important;min-height:70px;position:relative}
+.learn12-news-chart .learn12-news-cell:not(:disabled):hover{background:#f0f5fa!important}
+.learn12-news-chart .learn12-news-cell.is-selected{box-shadow:inset 0 0 0 3px #20354f!important;z-index:1}
+.learn12-news-chart .learn12-news-cell.is-selected.is-score-0{background:#dcebe2!important}
+.learn12-news-chart .learn12-news-cell.is-selected.is-score-1{background:#f3df6f!important}
+.learn12-news-chart .learn12-news-cell.is-selected.is-score-2{background:#f4ad6e!important}
+.learn12-news-chart .learn12-news-cell.is-selected.is-score-3{background:#ef7777!important}
+.learn12-news-chart .learn12-news-range{font-size:11px;font-weight:700;text-align:center;line-height:1.35;color:#253448}
+.learn12-news-chart .learn12-score-void{background:#f5f7fa;color:#99a5b1;border-color:#e3e7ed;min-height:70px}
+.learn12-check{border-color:var(--accent);font-weight:850}
+@media(max-width:960px){.learn12-vital-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:710px){
+ .learn12-news-scroll{margin:0;overflow-x:auto}
+ .learn12-score-grid.learn12-news-chart{min-width:820px}
+ .learn12-news-chart .learn12-score-row{grid-template-columns:190px repeat(7,minmax(86px,1fr))}
+ .learn12-news-chart .learn12-row-name{grid-column:auto;border-right:1px solid #e0e6ef;border-bottom:0;padding:10px}
+ .learn12-news-chart .learn12-score-option.learn12-news-cell{min-height:70px}
+ .learn12-news-chart .learn12-score-void{min-height:70px}
+}
+:root[data-base-theme="philip"] .learn12-news-chart .learn12-score-option.learn12-news-cell,
+:root[data-personal-mode] .learn12-news-chart .learn12-score-option.learn12-news-cell{background:#fff!important;color:#253448!important}
+:root[data-personal-mode] .learn12-news-chart .learn12-news-range{color:#253448!important}
+:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-0,
+:root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-0{background:#dcebe2!important}
+:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-1,
+:root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-1{background:#f3df6f!important}
+:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-2,
+:root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-2{background:#f4ad6e!important}
+:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-3,
+:root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-3{background:#ef7777!important}

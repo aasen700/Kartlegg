@@ -835,18 +835,25 @@ script=r"""
    for(const q of materials[definition].filter(x=>x.level==='Øv')){
     const answer=materials.expected(engine,q.id).parts;
     for(const [part,value] of Object.entries(answer)){
-     const selector='#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]';
-     const b=document.querySelector(selector);
+     let b;
+     if(tool==='news'){
+      const index=materials.newsChartRow(part,q.v).answerIndex;
+      b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-column="'+index+'"]');
+     }else b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]');
      assert(!!b,tool+' missing clickable cell '+part+'='+value);
      b.click();
-     assert(b===b,'button click must not throw');
     }
-    const submit=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Neste case')||b.textContent.includes('Fullfør øvingen'));
-    assert(!!submit&&!submit.disabled,tool+' case action unavailable');
-    submit.click();
-    assert(document.querySelector('#learnToolExerciseRoot .learn12-feedback'),tool+' guided feedback missing');
-    const next=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Fortsett til neste')||b.textContent.includes('Se oppsummeringen'));
-    assert(!!next,'guided next case missing');next.click();
+    if(tool==='news'){
+     const selected=[...document.querySelectorAll('#learnToolExerciseRoot .learn12-news-cell.is-selected')];
+     assert(selected.length===7,'exactly one NEWS2 cell per row should be selected');
+     assert(document.querySelectorAll('.learn12-vital-tile').length===8,'case vitals should be in eight readable tiles');
+    }
+    const check=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Sjekk resultat'));
+    assert(!!check&&!check.disabled,tool+' check-result button unavailable');
+    check.click();
+    assert(document.querySelector('#learnToolExerciseRoot .learn12-feedback'),tool+' per-case feedback missing');
+    const next=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Gå videre')||b.textContent.includes('Se oppsummeringen'));
+    assert(!!next&&!next.disabled,tool+' next-case action unavailable');next.click();
    }
    assert(hub.finished,'guided '+tool+' session should finish');
    assert(document.querySelector('#learnToolExerciseRoot .learn12-big-score'),'guided '+tool+' results missing');
@@ -854,12 +861,19 @@ script=r"""
    for(const q of materials[definition].filter(x=>x.level==='Test')){
     const answer=materials.expected(engine,q.id).parts;
     for(const [part,value] of Object.entries(answer)){
-     const b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]');
+     let b;
+     if(tool==='news'){
+      const index=materials.newsChartRow(part,q.v).answerIndex;
+      b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-column="'+index+'"]');
+     }else b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]');
      assert(!!b,'test scoring cell missing '+tool+' '+part);b.click();
     }
-    assert(!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'test must not reveal immediate feedback');
-    const action=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Neste case')||b.textContent.includes('Lever testen'));
-    assert(!!action&&!action.disabled,'cannot submit '+tool+' test case');action.click();
+    assert(!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'result must not appear before checking');
+    const check=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Sjekk resultat'));
+    assert(!!check&&!check.disabled,'cannot check '+tool+' test case');check.click();
+    assert(!!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'test case feedback unavailable');
+    const action=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Gå videre')||b.textContent.includes('Se oppsummeringen'));
+    assert(!!action&&!action.disabled,'cannot move to next '+tool+' case');action.click();
    }
    assert(hub.finished,'test '+tool+' must finish');
    assert(document.querySelectorAll('#learnToolExerciseRoot .learn12-report').length===3,'three graded test cases expected');
