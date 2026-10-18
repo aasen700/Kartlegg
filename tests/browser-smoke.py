@@ -405,6 +405,7 @@ script=r"""
   const profileDialog=document.querySelector('#profileDialog');
   assert(profileDialog.open,'profile drawer did not open');
   assert(profileDialog.querySelectorAll('[name=serviceTheme]').length===5,'4 service presets plus custom are required');
+  assert(profileDialog.querySelectorAll('[name=surfaceStyle]').length===2,'solid and liquid glass choices are required');
   const root=document.documentElement;
   const preset=(id,mode,accent)=>{
    const radio=profileDialog.querySelector('[name=serviceTheme][value="'+id+'"]');
@@ -450,6 +451,7 @@ script=r"""
   assert(profileDialog.querySelectorAll('.base-theme-preview').length===2,'base theme gallery previews missing');
   assert(profileDialog.querySelectorAll('[data-preview-mode]').length===3,'appearance mode previews missing');
   assert(profileDialog.querySelectorAll('[data-preview-accent]').length===3,'accent previews missing');
+  assert(profileDialog.querySelectorAll('.surface-style-preview').length===2,'surface material previews missing');
   assert(!!profileDialog.querySelector('#seasonThemePreview'),'season preview missing');
   // v0.99.2: header identity patterns and replacement of old blue utility surfaces.
   const ribbon=document.getElementById('themeTopRibbon');
@@ -759,6 +761,11 @@ script=r"""
   };
   const season=dlg.querySelector('#seasonThemeSelect');
   assert(!!season,'season selector missing');
+  setRadio('surfaceStyle','glass');
+  assert(document.documentElement.dataset.surfaceStyle==='glass','liquid glass not applied');
+  assert(getComputedStyle(document.querySelector('#vurdering')).backdropFilter!=='none'||getComputedStyle(document.querySelector('#vurdering')).webkitBackdropFilter!=='none','liquid glass blur missing');
+  setRadio('surfaceStyle','solid');
+  assert(document.documentElement.dataset.surfaceStyle==='solid','solid surfaces not restored');
   const beforeScore=document.querySelector('#newsNumber').textContent;
   assert(dlg.querySelector('.base-theme-options').hidden,'secret theme must be hidden before matching name');
   setRadio('baseTheme','philip');
@@ -771,6 +778,7 @@ script=r"""
   assert(philipPreview&&philipPreview.getBoundingClientRect().width>0,'unlocked Philip preview must be visible');
   setRadio('baseTheme','philip');
   assert(document.documentElement.dataset.baseTheme==='philip'&&document.documentElement.dataset.theme==='dark','Philip glass not applied');
+  assert(document.documentElement.dataset.surfaceStyle==='glass','Philip easter egg should initially use liquid glass');
   setRadio('serviceTheme','homecare');
   assert(document.documentElement.dataset.serviceTheme==='homecare'&&document.documentElement.dataset.baseTheme==='philip','theme layers not independent');
   for(const value of ['halloween','christmas','breast-cancer','mental-health','pride']){

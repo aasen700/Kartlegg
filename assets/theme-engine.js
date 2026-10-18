@@ -10,8 +10,9 @@
  const SERVICES=Object.freeze(['custom','hospital','ambulance','urgent','homecare']);
  const MODES=Object.freeze(['light','dark','system']);
  const ACCENTS=Object.freeze(['coral','blue','green']);
+ const SURFACES=Object.freeze(['solid','glass']);
  const serviceModes=Object.freeze({hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'});
- const fallback=Object.freeze({mode:'system',accent:'coral',service:'custom',base:'standard',season:'off'});
+ const fallback=Object.freeze({mode:'system',accent:'coral',service:'custom',base:'standard',season:'off',surface:'solid'});
  function normalize(raw){
   const p=raw&&typeof raw==='object'?raw:{};
   return {
@@ -19,7 +20,8 @@
    accent:ACCENTS.includes(p.accent)?p.accent:fallback.accent,
    service:SERVICES.includes(p.service)?p.service:fallback.service,
    base:BASES.includes(p.base)?p.base:fallback.base,
-   season:SEASONS.includes(p.season)?p.season:fallback.season
+   season:SEASONS.includes(p.season)?p.season:fallback.season,
+   surface:SURFACES.includes(p.surface)?p.surface:(p.base==='philip'?'glass':fallback.surface)
   };
  }
  function autoSeason(date){
@@ -41,7 +43,7 @@
   // The premium cobalt theme is intentionally dark; standard service palettes retain
   // their established presentation. The season is an independent decorative overlay.
   const mode=p.base==='philip'?'dark':(serviceModes[p.service]||(p.mode==='system'?(systemDark?'dark':'light'):p.mode));
-  return Object.freeze({mode,accent:p.accent,service:p.service,base:p.base,season:activeSeason(p.season,date)});
+  return Object.freeze({mode,accent:p.accent,service:p.service,base:p.base,season:activeSeason(p.season,date),surface:p.surface});
  }
- return Object.freeze({BASES,SEASONS,SERVICES,normalize,autoSeason,activeSeason,resolve});
+ return Object.freeze({BASES,SEASONS,SERVICES,SURFACES,normalize,autoSeason,activeSeason,resolve});
 });

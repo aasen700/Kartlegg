@@ -1,0 +1,80 @@
+/* User-selectable surface material. This stylesheet is deliberately last so
+   the material can span every visual theme without changing clinical states. */
+.surface-style-options{border:0;border-top:1px solid var(--line);padding:18px 0 0;margin:18px 0 0;min-width:0}
+.surface-style-options legend{font-size:13px;font-weight:850;color:var(--ink);padding-right:8px}
+.surface-style-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:8px}
+.surface-style-option{
+ display:grid;grid-template-columns:18px 62px minmax(0,1fr);align-items:center;gap:9px;min-height:82px;padding:10px;
+ border:1px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);cursor:pointer;
+}
+.surface-style-option input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+.surface-style-option strong{display:block;font-size:12px;line-height:1.3}
+.surface-style-option small{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.35}
+.surface-style-option:has(input:checked){border:2px solid var(--accent);padding:9px;background:var(--accent-bg)}
+.surface-style-option:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.surface-style-preview{position:relative;width:62px;height:48px;border-radius:10px;overflow:hidden;border:1px solid rgba(68,91,117,.24)}
+.surface-style-preview::before,.surface-style-preview::after{content:"";position:absolute;border-radius:7px}
+.surface-style-preview::before{inset:7px 25px 7px 7px}
+.surface-style-preview::after{inset:7px 7px 7px 42px}
+.surface-style-preview[data-surface-preview="solid"]{background:linear-gradient(145deg,#dce8f3,#eef4f9)}
+.surface-style-preview[data-surface-preview="solid"]::before,.surface-style-preview[data-surface-preview="solid"]::after{background:#fff;box-shadow:0 3px 8px #27466224}
+.surface-style-preview[data-surface-preview="glass"]{background:radial-gradient(circle at 20% 10%,#8edfff,transparent 35%),linear-gradient(145deg,#1877e8,#6336c5 58%,#ec5d9b)}
+.surface-style-preview[data-surface-preview="glass"]::before,.surface-style-preview[data-surface-preview="glass"]::after{
+ background:linear-gradient(145deg,rgba(255,255,255,.52),rgba(218,241,255,.18));border:1px solid rgba(255,255,255,.72);
+ box-shadow:inset 0 1px 0 #fff,0 5px 12px rgba(15,34,93,.22);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+}
+
+:root[data-surface-style="glass"][data-theme="light"]{
+ --liquid-surface:linear-gradient(135deg,rgba(255,255,255,.62),rgba(238,248,255,.25) 52%,rgba(255,255,255,.34)),rgba(225,240,252,.20);
+ --liquid-control:rgba(255,255,255,.48);--liquid-edge:rgba(255,255,255,.78);--liquid-text-shadow:rgba(21,54,90,.10);
+}
+:root[data-surface-style="glass"][data-theme="dark"]{
+ --liquid-surface:linear-gradient(135deg,rgba(133,190,231,.20),rgba(15,43,75,.30) 52%,rgba(4,24,48,.42)),rgba(9,35,63,.24);
+ --liquid-control:rgba(10,34,61,.46);--liquid-edge:rgba(186,222,246,.42);--liquid-text-shadow:rgba(0,8,24,.34);
+}
+:root[data-surface-style="glass"] :is(
+ .header,.sidebar,.section,.toolbox,.hc-tool-card,.v081-tool-search,.tool-favorites,.profile-dialog,.profile-dialog-head,
+ .clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.dialog-head,.action-dock,.mobile-primary-nav,
+ .next-step-card,.info-panel,.learning-flow,.gcs-learn-mode-card,.learn12-course-card,.wound13-gallery-card
+){
+ background:var(--liquid-surface)!important;border-color:var(--liquid-edge)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.82),inset 1px 0 0 rgba(255,255,255,.22),0 18px 48px var(--liquid-text-shadow)!important;
+ -webkit-backdrop-filter:blur(26px) saturate(175%);backdrop-filter:blur(26px) saturate(175%);
+}
+:root[data-surface-style="glass"] :is(.field:not(.is-complete):not(.v10-field-error):not(.field-invalid),.meta-line,.season-theme-controls){
+ background:var(--liquid-control)!important;border-color:var(--liquid-edge)!important;
+ -webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);
+}
+:root[data-surface-style="glass"] :is(.control-wrap,.v081-search-field,.profile-field input,.profile-field select){
+ background:var(--liquid-control)!important;border-color:var(--liquid-edge)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.46),inset 0 2px 6px rgba(7,30,62,.12)!important;
+}
+:root[data-surface-style="glass"] .profile-dialog-scroll{background:transparent!important}
+
+/* The solid choice also gives the Philip palette an intentionally opaque
+   cobalt material; standard and service themes already own their solid cards. */
+:root[data-base-theme="philip"][data-surface-style="solid"] :is(
+ .header,.sidebar,.section,.toolbox,.profile-dialog,.profile-dialog-head,.clinical-tool-dialog,.tool-modal-head,
+ .v08-dialog,.v08-dialog-head,.v081-tool-search,.action-dock,.mobile-primary-nav,.next-step-card,.info-panel
+){
+ background:#0b3c97!important;border-color:#70a8e6!important;box-shadow:0 14px 36px rgba(0,20,72,.30)!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+:root[data-base-theme="philip"][data-surface-style="solid"] .field:not(.is-complete):not(.v10-field-error):not(.field-invalid){
+ background:#0b3c97!important;border-color:#70a8e6!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ :root[data-surface-style="glass"]{--liquid-surface:rgba(225,239,250,.94);--liquid-control:rgba(239,247,252,.96)}
+ :root[data-surface-style="glass"][data-theme="dark"]{--liquid-surface:rgba(14,42,70,.95);--liquid-control:rgba(12,36,62,.97)}
+}
+@media(prefers-reduced-transparency:reduce){
+ :root[data-surface-style="glass"]{--liquid-surface:var(--paper);--liquid-control:var(--paper)}
+ :root[data-surface-style="glass"] :is(.header,.sidebar,.section,.field,.toolbox,.profile-dialog,.clinical-tool-dialog,.v08-dialog){-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@media(max-width:520px){
+ .surface-style-grid{grid-template-columns:1fr}
+ .surface-style-option{min-height:72px}
+}
+@media(prefers-reduced-motion:reduce){.surface-style-option{transition:none!important}}

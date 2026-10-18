@@ -8,18 +8,21 @@ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 
 test('legacy preferences retain current standard appearance and safe defaults',()=>{
  assert.deepEqual(T.normalize({mode:'dark',accent:'green',service:'homecare'}),{
-  mode:'dark',accent:'green',service:'homecare',base:'standard',season:'off'
+  mode:'dark',accent:'green',service:'homecare',base:'standard',season:'off',surface:'solid'
  });
  assert.equal(T.normalize({base:'unsafe',season:'unknown'}).base,'standard');
  assert.equal(T.normalize({base:'unsafe',season:'unknown'}).season,'off');
+ assert.equal(T.normalize({surface:'unsafe'}).surface,'solid');
+ assert.equal(T.normalize({base:'philip'}).surface,'glass');
  assert.equal(T.normalize(null).mode,'system');
 });
 test('base, service and season are independent theme dimensions',()=>{
- for(const base of T.BASES)for(const service of T.SERVICES)for(const season of T.SEASONS){
-  const result=T.resolve({base,service,season},false,new Date(2026,9,29));
+ for(const base of T.BASES)for(const service of T.SERVICES)for(const season of T.SEASONS)for(const surface of T.SURFACES){
+  const result=T.resolve({base,service,season,surface},false,new Date(2026,9,29));
   assert.equal(result.base,base);
   assert.equal(result.service,service);
   assert.equal(result.season,season==='off'?'none':season==='auto'?'halloween':season);
+  assert.equal(result.surface,surface);
   assert.equal(result.mode,base==='philip'?'dark':service==='ambulance'||service==='urgent'?'dark':'light');
  }
 });
@@ -48,8 +51,24 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
  }
  assert.doesNotMatch(css,/--(?:coral|orange|teal|blue):/);
  assert.doesNotMatch(js,/Scoring\.|readVitals|localStorage|sessionStorage|fetch\(/);
- assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1101/);
+ assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1201/);
  assert.match(read('index.html'),/assets\/theme-layers-v11\.css\?v=1602/);
+});
+
+test('solid and liquid glass are explicit, persistent visual choices',()=>{
+ const css=read('assets/surface-styles-v12.css');
+ const js=read('assets/v06.js');
+ const html=read('index.html');
+ assert.match(html,/assets\/surface-styles-v12\.css\?v=1201/);
+ assert.match(html,/assets\/v06\.js\?v=1601/);
+ assert.ok(html.indexOf('assets/design-system-v4.css')<html.indexOf('assets/surface-styles-v12.css'));
+ assert.match(js,/name='surfaceStyle'/);
+ assert.match(js,/dataset\.surfaceStyle=state\.surface/);
+ assert.match(css,/data-surface-style="glass"/);
+ assert.match(css,/backdrop-filter:blur\(26px\) saturate\(175%\)/);
+ assert.match(css,/prefers-reduced-transparency:reduce/);
+ for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])
+  assert.ok(!css.includes(clinical),'Surface material must preserve clinical presentation: '+clinical);
 });
 
 test('immersive atmosphere remains independent and excludes clinical scores',()=>{

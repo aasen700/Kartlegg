@@ -90,13 +90,29 @@ const placeholder=one('#page-profil .section');if(placeholder){const b=document.
 function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
 for(const input of drawer.querySelectorAll('[name=appearanceMode]'))input.closest('label').dataset.previewMode=input.value;
 for(const input of drawer.querySelectorAll('[name=accentChoice]'))input.closest('label').dataset.previewAccent=input.value;
+const surfaceOptions=document.createElement('fieldset');surfaceOptions.className='surface-style-options';
+const surfaceLegend=document.createElement('legend');surfaceLegend.textContent='Kort og bokser';surfaceOptions.append(surfaceLegend);
+const surfaceGrid=document.createElement('div');surfaceGrid.className='surface-style-grid';
+for(const [id,title,info] of [
+ ['solid','Solide bokser','Hvite i dagmodus, mørke i nattmodus'],
+ ['glass','Liquid glass','Synlig gjennomsiktighet, lyskant og uskarp bakgrunn']
+]){
+ const label=document.createElement('label');label.className='surface-style-option';
+ const input=document.createElement('input');input.type='radio';input.name='surfaceStyle';input.value=id;
+ const preview=document.createElement('span');preview.className='surface-style-preview';preview.dataset.surfacePreview=id;preview.setAttribute('aria-hidden','true');
+ const copy=document.createElement('span');const heading=document.createElement('strong');heading.textContent=title;
+ const detail=document.createElement('small');detail.textContent=info;copy.append(heading,detail);
+ label.append(input,preview,copy);surfaceGrid.append(label);
+}
+surfaceOptions.append(surfaceGrid);
+drawer.querySelectorAll('.appearance-options')[1]?.after(surfaceOptions);
 function apply(){
  if(!philipUnlocked)prefs.base='standard';
  baseOptions.hidden=!philipUnlocked;
  const state=ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date());
  const resolved=state.mode;
  html.dataset.theme=resolved;html.dataset.accent=state.accent;html.dataset.serviceTheme=state.service;
- html.dataset.baseTheme=state.base;html.dataset.seasonTheme=state.season;
+ html.dataset.baseTheme=state.base;html.dataset.seasonTheme=state.season;html.dataset.surfaceStyle=state.surface;
  const toggle=$('themeToggle');
  if(toggle){
   toggle.textContent=state.base==='philip'?'☀ Standardmodus':(resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus');
@@ -107,6 +123,7 @@ function apply(){
  drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=x.value===prefs.accent);
  drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
  drawer.querySelectorAll('[name=baseTheme]').forEach(x=>x.checked=x.value===prefs.base);
+ drawer.querySelectorAll('[name=surfaceStyle]').forEach(x=>x.checked=x.value===prefs.surface);
  seasonSelect.value=prefs.season;
  seasonPreview.dataset.seasonPreview=state.season==='none'?'off':state.season;
  seasonNotice.hidden=state.season==='none';
@@ -116,7 +133,8 @@ function apply(){
   (state.season==='none'?'Ingen markering på denne datoen.':
    (prefs.season==='auto'?'Automatisk valgt: ':'Manuelt valgt: ')+seasonNames[state.season]+'.');
  const baseName=state.base==='philip'?'Philip liquid cobalt':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
- $('appearanceSummary').textContent=baseName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
+ const surfaceName=state.surface==='glass'?'Liquid glass':'Solide bokser';
+ $('appearanceSummary').textContent=baseName+' · '+surfaceName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
  try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
 }
 window.KartleggThemeLayers={get preferences(){return {...prefs}},get effective(){return ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date())}};
@@ -128,9 +146,10 @@ $('profileName')?.addEventListener('input',initials);
 $('clearProfile')?.addEventListener('click',initials);
 const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();if(one('#sidebar')?.classList.contains('open'))one('#menuButton')?.click();openProfile()},true);
 drawer.querySelectorAll('[name=baseTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.base=philipUnlocked?el.value:'standard';apply()}));
+drawer.querySelectorAll('[name=surfaceStyle]').forEach(el=>el.addEventListener('change',()=>{prefs.surface=el.value;apply()}));
 window.addEventListener('kartlegg:personal-mode',e=>{
  const wasUnlocked=philipUnlocked;philipUnlocked=e.detail?.id==='philip';
- if(philipUnlocked&&!wasUnlocked)prefs.base='philip';
+ if(philipUnlocked&&!wasUnlocked){prefs.base='philip';prefs.surface='glass'}
  apply();
 });
 drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.base='standard';prefs.service='custom';apply()}));

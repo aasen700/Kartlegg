@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Valgbart kortmateriale – 18. oktober 2026
+
+- La til et eget valg mellom solide bokser og Liquid Glass under «Utseende».
+- Liquid Glass bruker synlig gjennomsiktighet, bakgrunnsuskarphet, lyskanter og dybde på hovedkort, verktøykort, menyer og dialoger i alle temaer.
+- Solide bokser beholder dagens tydelige flater; i dagmodus er hovedkortene hvite. Valget lagres lokalt sammen med øvrige utseendeinnstillinger.
+- Kliniske risiko-, feil- og skåringsfarger påvirkes ikke. Redusert gjennomsiktighet i operativsystemet gir automatisk en ugjennomsiktig reservevisning.
+
 ## Sesongtema – 18. oktober 2026
 
 - Fornyet alle fem sesongtemaene som rene visuelle lag, uten endringer i navigasjon, innholdsrekkefølge, skjemaer eller funksjoner.
