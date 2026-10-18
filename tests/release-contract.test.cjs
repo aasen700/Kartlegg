@@ -78,3 +78,12 @@ test('NEWS2 is computed once and reused for the visible partial-score breakdown'
  assert.match(app,/CustomEvent\('kartlegg:news2-changed'/);
  assert.match(scoringUI,/addEventListener\('kartlegg:news2-changed',renderParts\)/);
 });
+
+test('NEWS2 alert reuses the single computed score and keeps validation',()=>{
+ const ui=read('assets/clinical-ui.js');
+ assert.match(app,/detail:\{total:news\.total,parts:news\.parts\}/);
+ assert.match(ui,/window\.addEventListener\('kartlegg:news2-changed',refreshAlert\)/);
+ assert.match(ui,/T\.newsAlert\(news\)/);
+ assert.doesNotMatch(ui,/Scoring\.news2\(/);
+ assert.doesNotMatch(ui,/updateScores=function/);
+});
