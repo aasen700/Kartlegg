@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Sesongtema – 18. oktober 2026
+
+- Fornyet alle fem sesongtemaene som rene visuelle lag, uten endringer i navigasjon, innholdsrekkefølge, skjemaer eller funksjoner.
+- Halloween bruker nå et roligere midnattsblått/plommefarget uttrykk med varme kobbertoner og diskret høsttekstur.
+- Jul har fått nordisk kobolt, furu, isblå glasskanter, auroragløtt og dempet bakgrunnssnø.
+- Brystkreftmåned, psykisk helse og Pride har fått egne, mer gjennomarbeidede uttrykk med rosekvarts, rolig salvie/teal og raffinert spektrumglød.
+- Temaforhåndsvisningene i profilen gjengir nå det faktiske uttrykket tydeligere. Kliniske risikofarger, varsler og skåringsflater er uendret.
+
 ## Mobilretting – 18. oktober 2026
 
 - Fjernet den synlige «Registrer → Resultat → Tiltak»-linjen. Gyldig beregning flytter fortsatt fokus til resultatet, og knappen for neste steg går fortsatt til klinisk respons.

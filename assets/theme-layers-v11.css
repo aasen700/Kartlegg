@@ -28,19 +28,24 @@
 .season-theme-message{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
 /* Decor-only seasonal palette variables; no general accent variables overridden. */
 :root[data-season-theme="halloween"]{
- --season-ink:#6f360d;--season-bg:#fff0d8;--season-edge:#d47c2f;--season-glow:#b95c1b;
+ --season-ink:#6f391b;--season-bg:#fff3e5;--season-edge:#bf7134;--season-glow:#d68945;
+ --season-glass-edge:rgba(225,151,84,.25);
 }
 :root[data-season-theme="christmas"]{
- --season-ink:#165139;--season-bg:#edfff5;--season-edge:#2b9561;--season-glow:#3da36d;
+ --season-ink:#125264;--season-bg:#eafaff;--season-edge:#3188a6;--season-glow:#75cfe5;
+ --season-glass-edge:rgba(144,220,242,.26);
 }
 :root[data-season-theme="breast-cancer"]{
- --season-ink:#772c58;--season-bg:#fff0f8;--season-edge:#b54d8c;--season-glow:#c75b9e;
+ --season-ink:#773154;--season-bg:#fff1f7;--season-edge:#bb5889;--season-glow:#d66f9f;
+ --season-glass-edge:rgba(219,111,163,.23);
 }
 :root[data-season-theme="mental-health"]{
- --season-ink:#254d59;--season-bg:#eafffa;--season-edge:#3a9995;--season-glow:#3e9893;
+ --season-ink:#24535a;--season-bg:#ebfaf7;--season-edge:#398f8b;--season-glow:#62ada3;
+ --season-glass-edge:rgba(74,160,153,.22);
 }
 :root[data-season-theme="pride"]{
- --season-ink:#35365d;--season-bg:#f2f3ff;--season-edge:#7d6eb6;--season-glow:#7d6eb6;
+ --season-ink:#3d3864;--season-bg:#f3f1ff;--season-edge:#7768ae;--season-glow:#7d6eb6;
+ --season-glass-edge:rgba(128,110,190,.22);
 }
 .season-notice{
  display:inline-flex;align-items:center;gap:7px;max-width:100%;
@@ -59,7 +64,17 @@
  opacity:.75;
 }
 :root[data-season-theme="halloween"] .season-highlight{
- background:linear-gradient(90deg,#6c428b,#e18a32,#6c428b);
+ background:linear-gradient(90deg,#503268,#bc6f3d 34%,#e2aa65 56%,#6f3d72);
+}
+:root[data-season-theme="christmas"] .season-highlight{
+ background:linear-gradient(90deg,#205b8f,#58b9c4 35%,#b9f2f4 54%,#3979b7);
+ opacity:.78;
+}
+:root[data-season-theme="breast-cancer"] .season-highlight{
+ background:linear-gradient(90deg,#a94777,#ef9dbd 50%,#a94777);
+}
+:root[data-season-theme="mental-health"] .season-highlight{
+ background:linear-gradient(90deg,#287a7b,#85b9a5 50%,#287a7b);
 }
 @media(max-width:480px){.base-theme-grid{grid-template-columns:1fr}.season-notice{font-size:11px}}
 @media(prefers-reduced-motion:reduce){

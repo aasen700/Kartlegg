@@ -81,12 +81,15 @@
  background:linear-gradient(145deg,var(--paper),var(--bg));position:relative;overflow:hidden;
 }
 .season-theme-preview::after{content:"";position:absolute;inset:auto 10px 8px;height:3px;border-radius:999px;background:#aeb8c4;opacity:.65}
-.season-theme-preview[data-season-preview="halloween"]{background:radial-gradient(circle at 82% 22%,#ffb14e66,transparent 30%),linear-gradient(145deg,#2f193d22,#e58a3426)}
-.season-theme-preview[data-season-preview="halloween"]::after{background:linear-gradient(90deg,#714083,#e98c35,#714083)}
-.season-theme-preview[data-season-preview="christmas"]{background:linear-gradient(160deg,#eefaff,#dbefff)}
-.season-theme-preview[data-season-preview="christmas"]::after{background:linear-gradient(90deg,#82bee0,#f8ffff,#74afd5)}
-.season-theme-preview[data-season-preview="breast-cancer"]::after{background:#d7609a}
-.season-theme-preview[data-season-preview="mental-health"]::after{background:#40a69c}
+.season-theme-preview[data-season-preview="halloween"]{background:radial-gradient(circle at 82% 18%,#e7a05b66,transparent 28%),linear-gradient(145deg,#18223a,#44294d 58%,#68412c)}
+.season-theme-preview[data-season-preview="halloween"]::after{background:linear-gradient(90deg,#523367,#c57942,#e0ac67,#6e3c72)}
+.season-theme-preview[data-season-preview="christmas"]{background:radial-gradient(circle at 78% 20%,#bff7ff88,transparent 33%),linear-gradient(145deg,#0d3765,#176985 58%,#50a7b1)}
+.season-theme-preview[data-season-preview="christmas"]::after{background:linear-gradient(90deg,#276e9d,#6ed0d2,#ddffff,#4b8dca)}
+.season-theme-preview[data-season-preview="breast-cancer"]{background:radial-gradient(circle at 80% 22%,#f2a8c766,transparent 33%),linear-gradient(145deg,#fff4f8,#eed7e3)}
+.season-theme-preview[data-season-preview="breast-cancer"]::after{background:linear-gradient(90deg,#a84a78,#ed94b9,#b74e84)}
+.season-theme-preview[data-season-preview="mental-health"]{background:radial-gradient(circle at 80% 20%,#7fc6ba55,transparent 34%),linear-gradient(145deg,#edf9f5,#d8e8df)}
+.season-theme-preview[data-season-preview="mental-health"]::after{background:linear-gradient(90deg,#327f80,#86b9a7,#4a9690)}
+.season-theme-preview[data-season-preview="pride"]{background:linear-gradient(145deg,#f4f1ff,#e2e6f8)}
 .season-theme-preview[data-season-preview="pride"]::after{background:linear-gradient(90deg,#d95b6d,#e4ab47,#6eac82,#6898cd,#9266b7)}
 
 @media(max-width:770px){
