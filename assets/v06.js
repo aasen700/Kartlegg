@@ -66,7 +66,7 @@ initials();apply();
 const news=[
  ['Respirasjonsfrekvens','/min',[['0','12–20'],['1','9–11'],['2','21–24'],['3','≤8 eller ≥25']]],
  ['SpO₂ – skala 1','%',[['0','≥96'],['1','94–95'],['2','92–93'],['3','≤91']]],
- ['SpO₂ – skala 2','%',[['0','88–92, eller ≥93 uten O₂'],['1','86–87, eller 93–94 med O₂'],['2','84–85, eller 95–96 med O₂'],['3','≤83, eller ≥97 med O₂']],'Bare ved særskilt indikasjon. Skår ved >92 % avhenger av oksygentilførsel.'],
+ ['SpO₂ – skala 2','%',[['0','88–92, eller ≥93 uten O₂'],['1','86–87, eller 93–94 med O₂'],['2','84–85, eller 95–96 med O₂'],['3','≤83, eller ≥97 med O₂']],'Skala 2 krever bekreftet hyperkapnisk respirasjonssvikt og en dokumentert klinisk beslutning om SpO₂-mål 88–92 %. Skår over 92 % avhenger av oksygentilførsel.'],
  ['Systolisk blodtrykk','mmHg',[['0','111–219'],['1','101–110'],['2','91–100'],['3','≤90 eller ≥220']]],
  ['Puls','/min',[['0','51–90'],['1','41–50 eller 91–110'],['2','111–130'],['3','≤40 eller ≥131']]],
  ['Temperatur','°C',[['0','36,1–38,0'],['1','35,1–36,0 eller 38,1–39,0'],['2','≥39,1'],['3','≤35,0']]],
