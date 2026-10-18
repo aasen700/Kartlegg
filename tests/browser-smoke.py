@@ -1064,7 +1064,7 @@ setTimeout(()=>{
   abcde:()=>Boolean(byId('abcdeDialog')?.open),
   isbar:()=>Boolean(byId('isbarDialog')?.open),
   abi:()=>Boolean(byId('abiDialog')?.open),
-  'medication-lab':()=>Boolean(!byId('page-laer')?.hidden&&!byId('learnMedicationModule')?.hidden)
+  'medication-lab':()=>Boolean(!byId('page-laer')?.hidden&&!byId('learnMedicationModule')?.hidden&&byId('learnGcsModule')?.hidden&&byId('learn4atModule')?.hidden&&byId('learnNews2Module')?.hidden&&byId('learnTimesModule')?.hidden)
  };
  const output=document.createElement('output');output.id='kartlegg-deep-link';
  output.textContent=opened[id]?.()?'PASS':'FAIL: '+id+' did not open';

@@ -137,6 +137,7 @@ test('single canonical registry drives search and direct-linkable 18 tools',()=>
  assert.match(read('assets/news-first-v081.js'),/KartleggToolRegistry/);
  assert.match(read('assets/tool-categories-v099.js'),/search\.addEventListener\('input',sync\)/);
  assert.doesNotMatch(read('assets/modern-v08-body.js'),/stopImmediatePropagation\(\)/);
+ assert.match(read('assets/tool-navigation.js'),/addEventListener\('load',openDeepLink/);
  assert.match(html,/assets\/tool-navigation\.js\?v=1111/);
  assert.match(html,/assets\/tool-registry\.js\?v=1111/);
 });
