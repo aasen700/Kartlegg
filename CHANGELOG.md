@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Funksjons- og kvalitetssikringsoppdatering – 18. oktober 2026
+
+- Alle 16 kliniske verktøy har faste delbare ID-lenker og stjernefavoritter, lagret som kun ID-er lokalt.
+- NEWS2 ↔ GCS ↔ ISBAR har egen hurtigflyt på forsiden og kontekstuelle bytter i dialoger.
+- Sentralisert verktøyregister og filtrering; fjernet konkurrerende søkelyttere.
+- [Kontrollmatrise for 16 verktøy](KONTROLLMATRISE.md) med kilder, versjoner, formler, tester og eksplisitt uavklart klinisk kontroll.
+- [Arkitekturdokument](ARKITEKTUR.md) med eiermoduler og gjenstående trinnvis CSS-opprydding.
+- Ingen endring i NEWS2/qSOFA/andre skåringsformler eller i oppbevaring av pasientmålinger.
+
+
 ## UI 1.1.2 – 18. oktober 2026 (forslag)
 
 - Forsterket Philip cobalt glass med dypere blå reflekser, glassflater og fokusmarkeringer.
