@@ -657,6 +657,36 @@ script=r"""
   // Ensure original SCORE, and all dialogs, still work after new tools.
   assert(!document.querySelector('#homecareDialog').open,'homecare dialog must close cleanly');
   assert(!errors.length,'JS errors: '+errors.join(';'));
+  // Independent theme layers tested at all five viewport widths.
+  assert(!!window.KartleggThemeLayers&&!!window.KartleggThemeEngine,'theme module missing');
+  document.querySelector('#profileTrigger').click();
+  const dlg=document.querySelector('#profileDialog');
+  assert(dlg.open,'theme drawer inaccessible');
+  const setRadio=(name,value)=>{
+   const el=dlg.querySelector('input[name="'+name+'"][value="'+value+'"]');
+   assert(!!el,'missing '+name+': '+value);el.checked=true;
+   el.dispatchEvent(new Event('change',{bubbles:true}));
+  };
+  const season=dlg.querySelector('#seasonThemeSelect');
+  assert(!!season,'season selector missing');
+  const beforeScore=document.querySelector('#newsNumber').textContent;
+  setRadio('baseTheme','philip');
+  assert(document.documentElement.dataset.baseTheme==='philip'&&document.documentElement.dataset.theme==='dark','Philip glass not applied');
+  setRadio('serviceTheme','homecare');
+  assert(document.documentElement.dataset.serviceTheme==='homecare'&&document.documentElement.dataset.baseTheme==='philip','theme layers not independent');
+  for(const value of ['halloween','christmas','breast-cancer','mental-health','pride']){
+   season.value=value;season.dispatchEvent(new Event('change',{bubbles:true}));
+   assert(document.documentElement.dataset.seasonTheme===value,'season '+value+' not applied');
+   assert(!document.querySelector('#seasonNotice').hidden,'season announcement missing');
+  }
+  season.value='off';season.dispatchEvent(new Event('change',{bubbles:true}));
+  assert(document.querySelector('#seasonNotice').hidden,'season off not respected');
+  assert(document.querySelector('#newsNumber').textContent===beforeScore,'theme changed NEWS2');
+  assert(document.querySelector('#newsClinicalAlert').textContent.includes('Respirasjonsfrekvens'),'theme changed clinical escalation');
+  setRadio('baseTheme','standard');
+  assert(document.documentElement.dataset.baseTheme==='standard','standard theme not restored');
+  document.querySelector('#closeProfile').click();
+  assert(!dlg.open,'theme dialog did not close');
   status='PASS';
  } catch(err) {status='FAIL: '+String(err.message||err)+'; '+errors.join('; ');}
  const el=document.createElement('output');el.id='kartlegg-smoke';el.textContent=status;document.body.append(el);
