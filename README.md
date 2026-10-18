@@ -27,7 +27,7 @@
 - Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
 - Se [Kontrollmatrisen](KONTROLLMATRISE.md) for kilder, grenser, testdekning, uavklarte spørsmål og klinisk kontrollstatus. Ingen klinisk godkjenning er utført.
 
-## Kartlegg Lær – tre interaktive læringsmoduler (pilot)
+## Kartlegg Lær – interaktive læringsmoduler (pilot)
 
 [Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. Velg mellom **GCS, 4AT og NEWS2**. Alle kan også åpnes fra egne «Lær»-knapper på kortene i verktøybiblioteket.
 
@@ -111,3 +111,10 @@ De automatiske testene er utvidet fra **133** ved den første lanseringen til **
 Utvikler: **Philip Aasen**. Dette er et selvstendig student-/utviklingsprosjekt, ikke et produkt levert eller godkjent av Høgskulen på Vestlandet eller kommunale helsetjenester.
 
 Utviklingshistorikken finnes i [Kartlegg-test](https://github.com/aasen700/Kartlegg-test) og [versjonshistorikken](CHANGELOG.md).
+
+
+## TIMES – kliniske undervisningsillustrasjoner (oktober 2026)
+- Seks fiktive anatomisk tilpassede SVG-illustrasjoner ligger i `assets/wounds/*-clinical.svg`. De er digitalt genererte undervisningsillustrasjoner, ikke pasientfotografier eller diagnostiske bilder. Eldre illustrasjoner er beholdt som fallback.
+- TIMES Lær har et responsivt todelt kasusoppsett med zoom til sårbunn/sårkant, analyse, systematisk T-I-M-E-S-vurdering, videre vurderingsmomenter og fasit.
+- Ingen kunstige tidspunkter eller sårprogresjonsdata vises. Fasit er sperret frem til innlevering (og samlet til slutt i testmodus).
+- Ingen endring i vurderingsalgoritme, pasientdatalagring eller øvrige kliniske verktøy. Illustrasjonenes medisinske detaljer krever faglig gjennomgang før annet enn pedagogisk demonstrasjon.

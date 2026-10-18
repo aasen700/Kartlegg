@@ -21,7 +21,7 @@ test('each wound case has complete legitimate answer choices, rationales and two
    assert.ok(part.options.some(([id])=>id===q.answer[part.id]),q.id+' '+part.id);
    assert.ok(q.why[part.id].length>12,q.id+' '+part.id);
   }
-  for(const style of ['realistic','drawn']){
+  for(const style of ['realistic','drawn','clinical']){
    const image='assets/wounds/'+q.id+'-'+style+'.svg';
    assert.ok(fs.existsSync(path.join(__dirname,'..',image)),image);
    assert.match(read(image),/<svg[\s\S]*<\/svg>/);
@@ -43,9 +43,12 @@ test('TIMES is installed as a fourth learning card with client-only state and no
  for(const name of ['wound-learning-data-v12.js','wound-learning-v12.js','wound-learning-v12.css','id="learnTimesModule"','id="woundLearningRoot"']){
   assert.ok(html.includes(name),name);
  }
- for(const text of ["dataset.learnTool='times'","switcher()","grades[q.id]=D.grade(q.id,answers[q.id])"]){
+ for(const text of ["dataset.learnTool='times'","-clinical.svg","grades[q.id]=D.grade(q.id,answers[q.id])"]){
   assert.ok(js.includes(text),text);
  }
  assert.doesNotMatch(js,/\blocalStorage\b|\bsessionStorage\b|\bindexedDB\b|\bfetch\s*\(|\bXMLHttpRequest\b|\bsendBeacon\b/);
- assert.match(js,/Ikke pasientfoto/);
+ assert.match(js,/ikke pasientfoto/);
+ assert.doesNotMatch(js,/realistic\s*=\s*false|function switcher\(/);
+ assert.match(js,/wound13-case-layout/);
+ assert.match(js,/Videre vurdering/);
 });
