@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="assets/visual-atmospheres-v112.css?v=1121">
   <link rel="stylesheet" href="assets/simulation-v01.css?v=101">
   <link rel="stylesheet" href="assets/gcs-learning.css?v=102">
+  <link rel="stylesheet" href="assets/learning-tools-v12.css?v=1201">
 </head>
 <body>
   <div class="shell">
@@ -139,13 +140,25 @@
       <div class="page" id="page-laer" hidden>
         <div class="intro"><div><p class="eyebrow">Kartlegg · interaktiv læring</p>
           <h1>Lær å bruke verktøyene</h1>
-          <p>Korte, illustrerte øvelser med ekte skåringsregler og fiktive pasientbeskrivelser. Start med GCS – Glasgow Coma Scale.</p></div>
+          <p>Lær kliniske skåringsverktøy gjennom interaktive eksempler. Velg mellom GCS, 4AT og et klikkbart NEWS2-poengskjema.</p></div>
           <span class="chip">Gratis · Ingen AI</span></div>
-        <section class="section" aria-labelledby="gcsLearningHeading">
+        <nav id="learningHubChooser" aria-label="Velg verktøy for opplæring"></nav>
+        <section class="section" id="learnGcsModule" aria-labelledby="gcsLearningHeading">
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">✦</div>
             <div><h2 id="gcsLearningHeading">GCS – interaktiv læringsmodul</h2>
               <p>Lær, øv og test deg selv. Faglig grunnlag: den offisielle Glasgow Coma Scale-veiledningen.</p></div></div>
           <div id="gcsLearningRoot"><p class="helper">Læringsmodulen lastes lokalt i nettleseren, uten konto eller pasientopplysninger.</p></div>
+        </section>
+        <section class="section" id="learn4atModule" aria-labelledby="fourLearningHeading" hidden>
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">◈</div>
+            <div><h2 id="fourLearningHeading">4AT – lær å vurdere delirium</h2>
+              <p>Fire deler med ulike poengverdier. Lær reglene, øv på fiktive funn og kontroller skåringen.</p></div></div>
+          <div id="learnToolExerciseRoot"></div>
+        </section>
+        <section class="section" id="learnNews2Module" aria-labelledby="newsLearningHeading" hidden>
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▦</div>
+            <div><h2 id="newsLearningHeading">NEWS2 – skår direkte i poengskjema</h2>
+              <p>Les pasientens vitale parametere og velg det riktige poengfeltet i hver rad. Øv på begge SpO₂-skalaer og oksygentilførsel.</p></div></div>
         </section>
       </div><!-- /page-laer -->
       <div class="page" id="page-simulering" hidden>
@@ -290,5 +303,7 @@
   <script src="assets/simulation-ui.js?v=101"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
   <script src="assets/gcs-learning-ui.js?v=103"></script>
+  <script src="assets/learning-content-v12.js?v=1201"></script>
+  <script src="assets/learning-tools-v12.js?v=1201"></script>
 </body>
 </html>
