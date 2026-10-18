@@ -137,3 +137,38 @@
  :root[data-base-theme="philip"] :is(.section,.field,.toolbox,.header,.sidebar,.profile-dialog,.clinical-tool-dialog,.v08-dialog){-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 @media(prefers-reduced-motion:reduce){:root[data-base-theme="philip"] .shell::before{filter:none}}
+
+/* v4 card hierarchy: transparent cobalt variants stay owned by the Philip theme. */
+:root[data-base-theme="philip"]{
+ --ui-card-action:linear-gradient(145deg,rgba(163,218,255,.18),rgba(2,34,108,.30));
+ --ui-card-result:linear-gradient(145deg,rgba(194,232,255,.23),rgba(7,49,137,.34));
+ --ui-card-info:linear-gradient(145deg,rgba(115,192,255,.13),rgba(2,28,93,.27));
+ --ui-field-rest:rgba(5,39,112,.29);--ui-field-done:rgba(8,81,122,.35);
+ --ui-action:#91d7ff;--ui-success:#5ee3bf;--ui-attention:#ffd36b;--ui-elevated:#ffad63;--ui-danger:#ff8da6;--ui-learning:#c5b6ff;
+}
+:root[data-base-theme="philip"] :is(.surface-action,.surface-result,.surface-info){
+ border-color:rgba(193,228,255,.58)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.72),inset 1px 0 0 rgba(220,241,255,.20),inset 0 -1px 0 rgba(0,16,68,.60),0 20px 52px rgba(0,22,83,.23)!important;
+ -webkit-backdrop-filter:blur(30px) saturate(175%);backdrop-filter:blur(30px) saturate(175%);
+}
+:root[data-base-theme="philip"] .surface-action{background:var(--ui-card-action)!important}
+:root[data-base-theme="philip"] .surface-result{background:var(--ui-card-result)!important}
+:root[data-base-theme="philip"] .surface-info{background:var(--ui-card-info)!important}
+:root[data-base-theme="philip"] :is(.surface-action,.surface-result,.surface-info)>.section-header{
+ background:linear-gradient(105deg,rgba(192,229,255,.11),transparent 70%);border-color:rgba(187,224,255,.28)
+}
+:root[data-base-theme="philip"] .field{background:var(--ui-field-rest)!important;border-color:rgba(184,223,255,.36)!important}
+:root[data-base-theme="philip"] .field.is-complete{background:var(--ui-field-done)!important;border-color:rgba(94,227,191,.68)!important}
+:root[data-base-theme="philip"] .score.neutral{background:linear-gradient(145deg,rgba(116,193,255,.18),rgba(0,28,95,.31))!important}
+:root[data-base-theme="philip"] .assessment-flow button{
+ background:linear-gradient(145deg,rgba(137,204,255,.14),rgba(2,31,98,.28));border-color:rgba(179,220,255,.38);
+ -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+}
+:root[data-base-theme="philip"] .assessment-flow button[aria-current="step"]{
+ background:linear-gradient(135deg,rgba(202,237,255,.29),rgba(39,112,225,.28));border-color:#a9deff;box-shadow:inset 0 1px 0 #fff9,0 0 28px rgba(72,190,255,.30)
+}
+:root[data-base-theme="philip"] :is(.next-step-card,.info-panel){background:rgba(2,31,96,.28)!important;border-color:rgba(179,220,255,.32)!important}
+@media(max-width:770px){
+ :root[data-base-theme="philip"] .mobile-primary-nav{background:linear-gradient(145deg,rgba(111,189,255,.24),rgba(2,28,93,.54));border-color:rgba(199,231,255,.62);box-shadow:inset 0 1px 0 #fff9,0 16px 42px rgba(0,18,73,.42)}
+ :root[data-base-theme="philip"] #vurdering>.assessment-flow{background:linear-gradient(145deg,rgba(111,189,255,.20),rgba(2,28,93,.52));border-color:rgba(199,231,255,.42)}
+}

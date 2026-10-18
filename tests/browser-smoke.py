@@ -12,7 +12,11 @@ import sys
 
 root=Path(__file__).resolve().parents[1]
 source=(root/"index.html").read_text(encoding="utf-8")
-chrome=next((v for v in ("google-chrome","google-chrome-stable","chromium","chromium-browser") if shutil.which(v)),None)
+chrome=next((v for v in (
+  "google-chrome","google-chrome-stable","chromium","chromium-browser",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "/Applications/Chromium.app/Contents/MacOS/Chromium"
+) if shutil.which(v)),None)
 if not chrome:
   raise SystemExit("Browser smoke check requires Google Chrome or Chromium on runner")
 script=r"""
@@ -27,9 +31,18 @@ script=r"""
   assert(!!window.KartleggTools,'scoring module did not load');
   assert(!!window.KartleggIconSystem,'shared icon system did not load');
   assert(!!window.KartleggAssessmentFlow,'v1.1 assessment flow did not load');
+  assert(!!window.KartleggDesignSystemV4,'v4 design interaction layer did not load');
   assert(document.querySelectorAll('.assessment-flow [data-assessment-step]').length===3,'assessment flow needs three steps');
   assert(document.querySelector('[data-assessment-step="input"]').getAttribute('aria-current')==='step','input step should start active');
   assert(!!document.querySelector('.skip-link'),'skip link missing');
+  assert(document.querySelectorAll('.mobile-primary-nav .mobile-primary-link').length===4,'mobile primary navigation needs four destinations');
+  assert(!!document.querySelector('.assessment-workspace'),'assessment workspace missing');
+  assert(!!document.querySelector('.surface-action')&&!!document.querySelector('.surface-result')&&!!document.querySelector('.surface-info'),'card roles missing');
+  const mobileTools=document.querySelector('.mobile-primary-link[data-page="verktoy"]');
+  mobileTools.click();
+  assert(!document.querySelector('#page-verktoy').hidden,'mobile primary navigation did not route to tools');
+  document.querySelector('.mobile-primary-link[data-page="vurdering"]').click();
+  assert(!document.querySelector('#page-vurdering').hidden,'mobile primary navigation did not return to assessment');
   const primaryIcons=[...document.querySelectorAll('.sidebar .nav .ui-icon-svg')];
   assert(primaryIcons.length===7,'every primary destination needs a shared line icon');
   assert(primaryIcons.every(icon=>icon.getAttribute('aria-hidden')==='true'),'decorative navigation icons must stay hidden from assistive technology');
@@ -184,6 +197,7 @@ script=r"""
   assert(!!document.querySelector('#newsCard')&&!!document.querySelector('#qCard'),'original scores must remain');
   // Entire NEWS2 with a single 3-point RF parameter must show red-parameter alert.
   put('rr','25');put('spo2','97');put('sbp','120');put('hr','80');put('temp','37');
+  assert(document.querySelector('#rr').closest('.field').classList.contains('is-complete'),'completed form field state missing');
   put('conscious','A');put('oxygen','no');put('scale','1');
   document.querySelector('input[name=confusion][value=no]').click();
   const alert=document.querySelector('#newsClinicalAlert');

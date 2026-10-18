@@ -49,7 +49,7 @@ const decorateButton=(button,name)=>{
 const glyphActions=Object.freeze({'＋':'plus','+':'plus','↻':'reset','▦':'calculator','▣':'document','◷':'clock','☰':'menu','×':'close','✓':'check','←':'arrowLeft','→':'arrowRight'});
 const toolIcons=Object.freeze({news2:'heart',qsofa:'brain',gcs:'brain','4at':'brain',nrs:'heart','bmi-bsa':'calculator','resp-timer':'clock',mst:'document',tug:'clock','esas-r':'chart','ortho-bt':'heart',fast:'brain',skuv:'document',times:'wound',palliasjon:'heart',abcde:'assessment'});
 const paint=(scope=document)=>{
- scope.querySelectorAll?.('.nav[data-page] .ico').forEach(icon=>replace(icon,navIcons[icon.closest('.nav').dataset.page]));
+ scope.querySelectorAll?.(':is(.nav,.mobile-primary-link)[data-page] .ico').forEach(icon=>replace(icon,navIcons[icon.closest('[data-page]').dataset.page]));
  scope.querySelectorAll?.('.section-symbol').forEach(icon=>replace(icon,symbolIcons[icon.textContent.trim()]||'spark'));
  scope.querySelectorAll?.('.score-icon').forEach(icon=>replace(icon,icon.closest('#qCard')?'brain':'chart'));
  scope.querySelectorAll?.('.about-v0993-card-icon').forEach(icon=>replace(icon,icon.textContent.includes('▣')?'document':'info'));

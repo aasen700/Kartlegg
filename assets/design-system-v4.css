@@ -1,0 +1,184 @@
+/* Kartlegg design system v4.
+ * One content hierarchy, card model, form language and navigation structure.
+ * Themes own atmosphere; clinical states keep fixed semantic meaning.
+ */
+:root{
+ --ui-action:#176fa6;--ui-success:#087b65;--ui-attention:#9a6500;
+ --ui-elevated:#b05b00;--ui-danger:#c3374e;--ui-learning:#6d55b7;
+ --ui-card-action:var(--paper);
+ --ui-card-result:color-mix(in srgb,var(--paper) 91%,var(--accent-bg) 9%);
+ --ui-card-info:color-mix(in srgb,var(--paper) 96%,var(--bg) 4%);
+ --ui-field-rest:color-mix(in srgb,var(--paper) 96%,var(--bg) 4%);
+ --ui-field-done:color-mix(in srgb,var(--paper) 93%,#d9f6ec 7%);
+ --ui-nav-height:64px;
+}
+
+/* Standard mode uses a warm blue-grey canvas by day and navy rather than black at night. */
+:root[data-base-theme="standard"][data-service-theme="custom"][data-theme="light"]{
+ color-scheme:light;--bg:#f3f7fb;--paper:#fff;--ink:#132f4a;--muted:#60758b;--line:#d8e3ed;
+ --ui-action:#176fa6;--ui-success:#087b65;--ui-attention:#8a6200;--ui-elevated:#a85200;--ui-danger:#bd334a;--ui-learning:#684fb2;
+}
+:root[data-base-theme="standard"][data-service-theme="custom"][data-theme="dark"]{
+ color-scheme:dark;--bg:#081827;--paper:#122b40;--ink:#edf5fb;--muted:#b4c7d7;--line:#35536c;
+ --accent-bg:#1b4059;--accent-border:#5e8eaa;
+ --ui-action:#72c6ef;--ui-success:#68d5b2;--ui-attention:#f0c66a;--ui-elevated:#f2a45e;--ui-danger:#ff8da1;--ui-learning:#b9a3ff;
+}
+:root[data-base-theme="standard"][data-service-theme="custom"] body{
+ background:
+  radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 31%),
+  linear-gradient(155deg,color-mix(in srgb,var(--bg) 92%,var(--paper) 8%),var(--bg));
+}
+
+/* Clear page hierarchy: task, result and supporting information. */
+.intro{padding:4px 2px 0}
+.intro>div{min-width:0}
+.intro h1{max-width:18ch}
+.intro p:not(.eyebrow){font-size:14px;color:var(--muted)}
+.eyebrow{color:var(--accent);font-weight:850}
+.section{isolation:isolate}
+.surface-action{background:var(--ui-card-action)}
+.surface-result{background:var(--ui-card-result);border-width:1px}
+.surface-info{background:var(--ui-card-info);box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 5%,transparent)}
+.surface-action>.section-header{border-bottom:1px solid var(--ui-border-soft);margin-bottom:18px}
+.surface-result>.section-header{border-bottom:1px solid var(--ui-border-soft);margin-bottom:2px}
+.surface-result>.live-note{margin:12px 25px 14px;font-size:12px;line-height:1.5;color:var(--muted)}
+.surface-info>.section-header{padding-bottom:14px}
+.surface-info .next-step-grid{padding-inline:25px}
+.section-header h2{font-weight:820}
+.section-header p{font-size:13px}
+
+/* The assessment reads as one dashboard at wide sizes and one calm stream elsewhere. */
+.assessment-workspace{min-width:0}
+.assessment-workspace>.section{min-width:0;scroll-margin-top:92px}
+#vurdering>.assessment-flow{margin:0;padding:16px 25px 0}
+#vurdering>.assessment-flow button{overflow:hidden}
+#vurdering>.assessment-flow button::after{
+ content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:transparent;
+}
+#vurdering>.assessment-flow button[aria-current="step"]::after{background:var(--accent)}
+#resultater.is-ready{background:var(--ui-card-result);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 11%,transparent),0 18px 48px color-mix(in srgb,var(--ink) 13%,transparent)}
+#resultater.is-ready .section-header{background:linear-gradient(90deg,color-mix(in srgb,var(--accent-bg) 65%,transparent),transparent)}
+
+@media(min-width:1280px){
+ .assessment-workspace{display:grid;grid-template-columns:minmax(570px,1.18fr) minmax(365px,.82fr);gap:0 18px;align-items:start}
+ .assessment-workspace>.intro,.assessment-workspace>.v081-tool-search,.assessment-workspace>#forklaring{grid-column:1/-1;width:100%}
+ .assessment-workspace>.section{margin-bottom:22px}
+ .assessment-workspace #vurdering .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .assessment-workspace #vurdering .field.wide{grid-column:1/-1}
+ .assessment-workspace #resultater .scores{grid-template-columns:1fr}
+ .assessment-workspace #resultater .section-header{padding-bottom:16px}
+ .assessment-workspace #resultater .subtle-note{display:none}
+ .assessment-workspace #resultater .score{min-height:0}
+}
+
+/* Three reusable card roles with shared geometry. */
+:is(.toolbox,.hc-tool-card,.gcs-learn-mode-card,.learn12-course-card,.wound13-gallery-card){
+ border-radius:var(--ui-radius-card);border-color:var(--ui-border-soft);background:var(--ui-card-action);
+}
+:is(.score,.tool-result,.hc-output,.learn12-report,.gcs-learn-summary){border-radius:var(--ui-radius-card)}
+:is(.next-step-card,.info-panel,.v08-formula-guide,.learn12-references){border-radius:var(--ui-radius-card)}
+.toolbox h3{font-size:17px}
+.toolbox .ui-icon-svg{color:var(--accent)}
+.next-step-card{min-height:132px;align-items:flex-start}
+.next-step-card strong{font-size:14px;color:var(--ink)}
+.next-step-card p{font-size:12px;color:var(--muted)}
+
+/* Forms: the label leads, the control is quiet, and completed/error states are explicit. */
+.field{position:relative;background:var(--ui-field-rest);border-color:var(--ui-border-soft);transition:border-color .16s,background-color .16s,box-shadow .16s}
+.field-head{align-items:flex-start}
+.field :is(label,.field-label){color:var(--ink)}
+.field .field-icon{margin-top:-2px;border:1px solid color-mix(in srgb,var(--accent) 18%,transparent)}
+.field .control-wrap{background:color-mix(in srgb,var(--paper) 92%,var(--bg) 8%);border-color:color-mix(in srgb,var(--line) 88%,var(--ink) 12%)}
+.field .control-wrap :is(input,select){min-height:46px;font-weight:680}
+.field .unit{min-width:48px;justify-content:center;color:var(--muted)}
+.field:focus-within{border-color:var(--accent);box-shadow:var(--ui-focus)!important;background:var(--paper)}
+.field.is-complete{background:var(--ui-field-done);border-color:color-mix(in srgb,var(--ui-success) 48%,var(--line));box-shadow:inset 3px 0 0 var(--ui-success)!important}
+.field.is-complete:not(.v10-field-error)::after{
+ content:"";position:absolute;right:13px;top:13px;width:10px;height:10px;border-radius:50%;
+ background:var(--ui-success);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-success) 18%,transparent);
+}
+.field.is-complete .field-head{padding-right:22px}
+.field.v10-field-error,.field.field-invalid{background:color-mix(in srgb,var(--paper) 91%,#ffe3e7 9%);border-color:var(--ui-danger)!important;box-shadow:inset 3px 0 0 var(--ui-danger)!important}
+.field.v10-field-error::after,.field.field-invalid::after{content:none}
+.meta-line{background:var(--ui-card-info)}
+.meta-line input{font-weight:680}
+.choice span{min-height:44px;display:grid;place-items:center}
+.choice input:checked+span{box-shadow:inset 0 0 0 1px currentColor}
+.form-actions{padding-top:18px;border-top:1px solid var(--ui-border-soft)}
+.form-actions .btn-primary{min-width:165px}
+
+/* Results are the strongest visual object after a completed calculation. */
+.score{position:relative;border-width:1px;overflow:hidden}
+.score::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:currentColor;opacity:.55}
+.score-top strong{text-transform:uppercase}
+.score-number{font-variant-numeric:tabular-nums;font-weight:900}
+.score-status{border-radius:999px}
+.score.ok{background:color-mix(in srgb,var(--paper) 85%,#d8f4e9 15%);border-color:color-mix(in srgb,var(--ui-success) 42%,var(--line))}
+.score.warning{background:color-mix(in srgb,var(--paper) 84%,#fff0cf 16%);border-color:color-mix(in srgb,var(--ui-attention) 42%,var(--line))}
+.score.danger{background:color-mix(in srgb,var(--paper) 84%,#ffe1e6 16%);border-color:color-mix(in srgb,var(--ui-danger) 42%,var(--line))}
+.score.neutral{background:color-mix(in srgb,var(--paper) 91%,var(--accent-bg) 9%);border-color:var(--ui-border-soft)}
+.result-actions .btn{flex:1 1 210px}
+
+/* Navigation: compact desktop rail and a four-destination mobile bar. */
+.sidebar{padding-inline:13px}
+.sidebar .nav{padding-inline:12px}
+.sidebar .nav:not(.active):not([aria-current="page"]){color:color-mix(in srgb,var(--ink) 78%,var(--muted) 22%)}
+.sidebar .nav:is(.active,[aria-current="page"]){position:relative}
+.sidebar .nav:is(.active,[aria-current="page"])::after{content:"";position:absolute;left:-7px;width:3px;height:22px;border-radius:3px;background:var(--accent)}
+.mobile-primary-nav{display:none}
+.mobile-primary-link{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;cursor:pointer}
+.mobile-primary-link .ico{display:grid;place-items:center}
+.mobile-primary-link .ui-icon-svg{width:21px;height:21px}
+
+/* Learning owns purple as a secondary product cue, never as a clinical state. */
+#page-laer .eyebrow,#page-laer .learn12-course-card .ui-icon-svg,#page-laer .gcs-learn-mode-num{color:var(--ui-learning)}
+#page-laer :is(.learning-flow button[aria-current="step"],.learn12-course-card[aria-pressed="true"]){border-color:var(--ui-learning)}
+
+@media(max-width:770px){
+ :root{--ui-nav-height:66px}
+ .main{padding-bottom:calc(82px + env(safe-area-inset-bottom))}
+ .intro{padding-top:1px}
+ .intro p:not(.eyebrow){font-size:13px}
+ #vurdering>.assessment-flow{position:sticky;top:70px;z-index:8;margin:0;padding:6px;border-bottom:1px solid var(--ui-border-soft);background:color-mix(in srgb,var(--paper) 92%,transparent);box-shadow:0 8px 22px color-mix(in srgb,var(--ink) 11%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+ .surface-info .next-step-grid{padding-inline:14px}
+ .surface-result>.live-note{margin:10px 14px 13px}
+ .next-step-card{min-height:0}
+ .mobile-primary-nav{
+  position:fixed;z-index:25;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));height:var(--ui-nav-height);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px;
+  border:1px solid var(--ui-border-soft);border-radius:18px;background:color-mix(in srgb,var(--paper) 93%,transparent);
+  box-shadow:0 14px 38px color-mix(in srgb,var(--ink) 24%,transparent);-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
+ }
+ .mobile-primary-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;border-radius:13px;font-size:10px;font-weight:780;line-height:1.1}
+ .mobile-primary-link:is(.active,[aria-current="page"]){background:var(--accent-bg);color:var(--accent)}
+ .mobile-primary-link:focus-visible{outline:3px solid var(--accent);outline-offset:-2px}
+ .action-dock{bottom:calc(var(--ui-nav-height) + 14px + env(safe-area-inset-bottom))}
+ body:has(dialog[open]) .mobile-primary-nav,.keyboard-open .mobile-primary-nav{display:none}
+ .keyboard-open .main{padding-bottom:35px}
+}
+
+@media(max-width:620px){
+ .action-dock{bottom:calc(var(--ui-nav-height) + 14px + env(safe-area-inset-bottom));border-radius:16px 16px 0 0;width:100vw;left:0;transform:none}
+}
+
+@media(max-width:480px){
+ .surface-action>.section-header,.surface-result>.section-header{margin-bottom:12px}
+ .field{padding:13px 11px}
+ .field .control-wrap :is(input,select){min-height:48px}
+ #vurdering>.assessment-flow{top:67px}
+}
+
+@media(max-width:360px){
+ .mobile-primary-nav{left:4px;right:4px;gap:2px}
+ .mobile-primary-link{font-size:9px}
+ #vurdering>.assessment-flow button{min-height:68px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ .field,.mobile-primary-link,.assessment-flow button{transition:none!important}
+}
+@media(forced-colors:active){
+ .mobile-primary-nav,.mobile-primary-link,.surface-action,.surface-result,.surface-info{border:1px solid CanvasText}
+ .field.is-complete{border:2px solid Highlight}
+ .score::before{background:CanvasText}
+}

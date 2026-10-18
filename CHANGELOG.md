@@ -2,6 +2,10 @@
 
 ## 1.1 – 18. oktober 2026
 
+- Visuelt system v4 samler tydelig sidehierarki, tre faste kortroller, ferdig-/feiltilstander i skjemaer og en bred førsteside med registrering og resultater i samme arbeidsflate.
+- Mobil har en fast hovedmeny for Vurdering, Verktøy, Lær og Profil, mens sidemenyen fortsatt gir tilgang til historikk, avansert case og prosjektinformasjon.
+- Dag- og nattmodus deler nå samme geometri og semantiske farger. Dagmodus har en roligere blågrå flate, nattmodus bruker marineblå flater, og læringsinnhold har en avgrenset lilla identitetsfarge.
+- Philip-temaet har fått tydeligere lagdeling, mer transparente koboltglassflater, sterkere lyskanter og egne glassvarianter for registrering, resultat og informasjon.
 - Ny synlig arbeidsflyt på førstesiden: Registrer → Resultat → Tiltak. Gyldig innsending flytter tastaturfokus til resultatene og åpner et tydelig neste steg.
 - Resultatkortene har sterkere visuell prioritet etter beregning, med direkte tilgang til tiltak/forbehold og ISBAR.
 - Ett lokalt SVG-ikonsystem dekker navigasjon, seksjoner, skårkort, verktøykort, handlingsknapper og dialoglukking; eldre tegnikoner ryddes også i dynamisk innhold.

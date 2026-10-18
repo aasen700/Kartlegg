@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="assets/score-meters.css?v=1501">
   <link rel="stylesheet" href="assets/visual-refinement-v2.css?v=1501">
   <link rel="stylesheet" href="assets/design-system-v3.css?v=1701">
+  <link rel="stylesheet" href="assets/design-system-v4.css?v=1801">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -58,9 +59,9 @@
       <div class="sidebar-bottom"><strong>Fra målinger til oversikt</strong><p>Én registrering, flere skårer. Denne versjonen er laget for utprøving med fiktive data.</p></div>
     </nav>
     <main class="main" id="top" tabindex="-1">
-      <div class="page" id="page-vurdering">
+      <div class="page assessment-page assessment-workspace" id="page-vurdering">
       <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer målinger, se skår og responsnivå, og vurder neste steg.</p></div><span class="chip">v1.1 · Kun demonstrasjon</span></div>
-      <section class="section" id="vurdering" aria-labelledby="input-heading">
+      <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
         <nav class="assessment-flow" aria-label="Arbeidsflyt for vurdering">
           <button type="button" data-assessment-step="input" aria-current="step"><span>1</span><strong>Registrer</strong><small>Målinger og observasjoner</small></button>
           <button type="button" data-assessment-step="result"><span>2</span><strong>Resultat</strong><small>Skår og responsnivå</small></button>
@@ -92,7 +93,7 @@
           </div>
         </form>
       </section>
-      <section class="section" id="resultater" aria-labelledby="result-heading">
+      <section class="section surface-result" id="resultater" aria-labelledby="result-heading">
         <div class="section-header"><div class="section-symbol cyan" aria-hidden="true">▥</div><div><h2 id="result-heading">Automatisk beregnede skårer</h2><p>NEWS2 beregnes fra vitale målinger. qSOFA krever i tillegg en separat vurdert GCS.</p></div><span class="subtle-note" id="scoreTime">Venter på målinger</span></div>
         <div class="scores" aria-live="polite">
           <article class="score neutral" id="newsCard"><div class="score-top"><span class="score-icon">▤</span><div><strong>NEWS2</strong><small>National Early Warning Score 2</small></div></div><div class="score-number muted" id="newsNumber">–</div><span class="score-status" id="newsStatus">Ikke beregnet</span><p id="newsDesc">Fyll inn målingene ovenfor for å se NEWS2-skåren.</p><div class="score-meter-block is-waiting" id="newsMeterBlock"><div class="score-meter-heading"><span>RCP-eskalering</span><strong id="newsMeterLabel">Venter på skår</strong></div><div class="score-meter news-meter" id="newsMeter" role="img" aria-label="NEWS2-eskalering: venter på skår"><span class="score-meter-segment band-routine"></span><span class="score-meter-segment band-low"></span><span class="score-meter-segment band-medium"></span><span class="score-meter-segment band-high"></span><span class="score-meter-marker" id="newsMeterMarker" aria-hidden="true"></span></div><div class="score-meter-scale news-meter-scale" aria-hidden="true"><span><b>0</b><small>12 t</small></span><span><b>1–4</b><small>4–6 t</small></span><span><b>5–6</b><small>≥ hver time</small></span><span><b>≥7</b><small>kontinuerlig</small></span></div><p class="score-meter-trigger" id="newsRedTrigger" hidden>3 i én parameter: minst hver time og rask klinisk vurdering.</p><small class="score-meter-note">RCPs responsnivåer for sykehus. Følg lokal prosedyre og klinisk skjønn.</small></div><div class="score-bottom" id="newsBreakdown">Skårens delpoeng vises her.</div></article>
@@ -103,7 +104,7 @@
           <button class="btn btn-secondary" type="button" id="resultIsbar" data-icon="document">Lag ISBAR-manus</button>
         </div>
       </section>
-      <section class="section" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Vitale målinger kan være personopplysninger når de knyttes til en pasient. Bruk kun fiktive data i denne prototypen. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
+      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Vitale målinger kan være personopplysninger når de knyttes til en pasient. Bruk kun fiktive data i denne prototypen. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
@@ -283,6 +284,12 @@
       </div><!-- /page-om -->
       <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/12654015/" target="_blank" rel="noopener noreferrer">Schultz mfl. – TIME</a> · <a href="https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf" target="_blank" rel="noopener noreferrer">IWII 2022</a>.<br>ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>Kartlegg v1.1 · Beregninger i nettleseren · Midlertidig målehistorikk i fanen · Ingen analyse- eller sporingstjenester.<br><span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a> · <a href="tel:+4795554040">955 54 040</a></span></footer>
     </main>
+    <nav class="mobile-primary-nav" aria-label="Hovedmeny på mobil">
+      <button type="button" class="mobile-primary-link" data-page="vurdering"><span class="ico" aria-hidden="true">✚</span><span>Vurdering</span></button>
+      <button type="button" class="mobile-primary-link" data-page="verktoy"><span class="ico" aria-hidden="true">▤</span><span>Verktøy</span></button>
+      <button type="button" class="mobile-primary-link" data-page="laer"><span class="ico" aria-hidden="true">✦</span><span>Lær</span></button>
+      <button type="button" class="mobile-primary-link" data-page="profil"><span class="ico" aria-hidden="true">♙</span><span>Profil</span></button>
+    </nav>
   </div>
   <dialog id="isbarDialog" aria-labelledby="isbarModalTitle">
     <div class="dialog-head"><div class="section-symbol coral">▣</div><div><h2 id="isbarModalTitle">ISBAR – klart til å lese høyt</h2><p>Et sammenhengende samtalemanus, ikke et huskekort.</p></div><button class="dialog-close" id="closeIsbar" type="button" aria-label="Lukk ISBAR">×</button></div>
@@ -338,5 +345,6 @@
   <script src="assets/mobile-ux.js?v=1401"></script>
   <script src="assets/icon-system.js?v=1701"></script>
   <script src="assets/assessment-flow-v11.js?v=1101"></script>
+  <script src="assets/design-system-v4.js?v=1801"></script>
 </body>
 </html>

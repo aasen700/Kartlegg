@@ -5,6 +5,8 @@
 [Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 16 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
 
 ## Oppdatering 1.1
+- Designspråket bruker tre faste kortroller for handling, resultat og forklaring, tydeligere skjema­tilstander og en samlet arbeidsflate på brede skjermer.
+- Mobilnavigasjonen har fire faste hovedvalg. Dag-, natt-, tjeneste- og Philip-temaene deler struktur, avstander og semantiske farger, mens Philip beholder et mer uttrykksfullt koboltglass.
 - Førstesiden viser én tydelig arbeidsflyt: **Registrer → Resultat → Tiltak**. Etter gyldig beregning flyttes fokus til skårkortene og neste steg blir tilgjengelig.
 - Handlingsknapper, dialoger, navigasjon og verktøykort bruker ett lokalt SVG-ikonsystem med tilgjengelige tekstetiketter.
 - Mobil og tilgjengelighet er kontrollert automatisk ved 320–1300 px, mobil landskap og 200 % enhetsskalering. Tastaturfokus, reflow, tilgjengelige navn og minimum 44 px kontroller inngår. Manuell skjermleser-/brukertest gjenstår.
