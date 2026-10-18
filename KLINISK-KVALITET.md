@@ -5,6 +5,8 @@
 Kartlegg er et studentutviklet, offentlig tilgjengelig demonstrasjonsverktøy. **Kun fiktive data. Ikke bruk til reell pasientbehandling.**
 Automatiske tester etterprøver deterministisk logikk, grenseverdier og konkrete brukerforløp, men kan ikke bekrefte at kliniske retningslinjer er fullstendige, at norske oversettelser er godkjente, at appen er medisinsk utstyr etter relevant regelverk, eller at et behandlingsråd er egnet for en bestemt pasient. En uavhengig faglig og regulatorisk vurdering gjenstår før eventuell klinisk bruk.
 
+Se også den mer detaljerte [kontrollmatrisen](KONTROLLMATRISE.md) med originalkilder, versjoner, konkrete grenseverditester, begrensninger og kontrollstatus for hvert av de 16 verktøyene.
+
 ## Kildestøttet gjennomgang av alle 16 verktøy
 
 | Verktøy | Kontrollpunkt / avgrensning | Kilde / kontrollgrunnlag | Status |
