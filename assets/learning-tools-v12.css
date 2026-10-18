@@ -135,3 +135,6 @@
 }
 @media(max-width:360px){.learn12-score-option small{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.learn12-course-card{transition:none}}
+
+.learn12-explanation{font-size:12px;font-weight:650;line-height:1.7;color:var(--ink);border-left:3px solid var(--accent);padding:8px 10px;margin:11px 0;background:var(--paper);border-radius:5px}
+:root[data-base-theme="philip"] .learn12-explanation{background:rgba(11,38,83,.77);color:#eef6ff}
