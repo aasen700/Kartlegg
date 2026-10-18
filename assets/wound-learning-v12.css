@@ -16,7 +16,7 @@
 .wound12-mode p{flex:1;color:var(--muted);font-size:13px;line-height:1.6;margin:0}
 .wound12-num{border-radius:10px;background:var(--accent-bg);color:var(--accent);font-weight:900;padding:7px 12px;width:max-content}
 .wound13-picture{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0;box-shadow:0 8px 28px rgba(15,23,42,.045)}
-.wound13-image-viewport{position:relative;overflow:hidden;background:#f6f7f9;aspect-ratio:860/550;display:block}
+.wound13-image-viewport{position:relative;overflow:hidden;background:#f6f7f9;aspect-ratio:4/5;display:block}
 .wound13-image{width:100%;height:100%;display:block;object-fit:contain;transform:scale(1);transform-origin:center;transition:transform .3s ease}
 .wound13-image.is-sarbunn{transform:scale(1.65)}
 .wound13-image.is-sarkant{transform:scale(1.32)}
