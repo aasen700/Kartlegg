@@ -90,7 +90,7 @@ script=r"""
   assert(document.querySelector('#homeToolResults button').textContent.includes('qSOFA'),'qSOFA search result missing');
   document.querySelector('#homeToolResults button').click();
   assert(quickGCS.open,'qSOFA shortcut must expand hidden GCS');
-  assert(document.activeElement===document.querySelector('#gcs'),'qSOFA shortcut must focus visible GCS');
+  assert(document.activeElement===document.querySelector('#gcs'),'qSOFA shortcut must focus visible GCS; active='+document.activeElement?.outerHTML.slice(0,210)+'; gcsVisible='+document.querySelector('#gcs').getClientRects().length+'; disclosureOpen='+quickGCS.open+'; mainInert='+document.querySelector('main').inert);
   assert(document.querySelector('#homeToolResults').hidden,'qSOFA search dropdown should close');
   put('homeToolQuery','smerte');
   assert(document.querySelector('#homeToolResults').textContent.includes('NRS'),'NRS not discoverable by pain search');
