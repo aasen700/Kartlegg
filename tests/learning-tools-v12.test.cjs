@@ -1,0 +1,106 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const D=require('../assets/learning-content-v12.js');
+const N=require('../assets/scoring.js');
+const C=require('../assets/clinical-tools.js');
+const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+
+test('4AT has exact four parts and legitimate item-specific point values',()=>{
+ assert.deepEqual(D.fourParts.map(x=>x.id),['alertness','orientation','attention','acute']);
+ assert.deepEqual(D.fourParts.map(x=>x.options.map(o=>o.score)),[[0,4],[0,1,2],[0,1,2],[0,4]]);
+ assert.equal(D.fourLessons.length,6);
+ assert.equal(D.fourCases.length,6);
+ assert.deepEqual(D.fourCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test']);
+});
+test('all 4AT reference case totals come from clinical scorer',()=>{
+ for(const q of D.fourCases){
+  const expected=C.fourAT(q.parts),fromModule=D.expected('4at',q.id);
+  assert.equal(expected.total,fromModule.total);
+  assert.deepEqual(expected.parts,fromModule.parts);
+  assert.deepEqual(D.grade('4at',q.id,{...q.parts}).match,
+   Object.fromEntries(Object.keys(q.parts).map(k=>[k,true])));
+  assert.equal(D.grade('4at',q.id,{...q.parts}).score,4);
+ }
+ assert.deepEqual(D.fourCases.map(x=>D.expected('4at',x.id).total),[0,2,12,7,4,4]);
+});
+test('4AT distinguishes unable to attempt (2) from refusing the attention test (1)',()=>{
+ const inability=D.fourCases.find(x=>x.id==='four-c');
+ const decline=D.fourCases.find(x=>x.id==='four-d');
+ assert.equal(inability.parts.attention,2);
+ assert.equal(decline.parts.attention,1);
+ assert.match(D.fourLessons[3].text,/avslag|Kan ikke/);
+});
+test('4AT rejects incomplete, out-of-range and incorrect item options',()=>{
+ const original=D.fourCases[1];
+ for(const wrong of [
+  {alertness:1,orientation:1,attention:1,acute:0},
+  {alertness:0,orientation:3,attention:1,acute:0},
+  {alertness:0,orientation:1,attention:4,acute:0},
+  {alertness:0,orientation:1,attention:1,acute:1},
+  {alertness:0,orientation:1,attention:'1',acute:0},
+  {alertness:0,orientation:1,attention:1}
+ ]) assert.throws(()=>D.grade('4at',original.id,wrong));
+ const marked=D.grade('4at',original.id,{alertness:0,orientation:0,attention:1,acute:0});
+ assert.equal(marked.score,3);assert.equal(marked.enteredTotal,1);assert.equal(marked.truth.total,2);
+});
+test('NEWS2 has seven rows with independent oxygen field and score column options',()=>{
+ assert.deepEqual(D.newsRows.map(x=>x.id),['rr','spo','sbp','hr','temp','consciousness','oxygen']);
+ assert.equal(D.newsLessons.length,5);
+ assert.equal(D.newsCases.length,6);
+ assert.deepEqual(D.newsCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test']);
+ assert.deepEqual(Object.keys(D.newsRows.find(x=>x.id==='oxygen').bands),['0','2']);
+ assert.deepEqual(Object.keys(D.newsRows.find(x=>x.id==='consciousness').bands),['0','3']);
+});
+test('NEWS2 answer key delegates unaltered to Scoring.news2 for each case',()=>{
+ const expectedTotals=[4,3,5,18,0,12];
+ for(let i=0;i<D.newsCases.length;i++){
+  const q=D.newsCases[i],r=N.news2(q.v),l=D.expected('news2',q.id);
+  assert.equal(r.total,expectedTotals[i],q.id);
+  assert.equal(l.total,r.total);
+  assert.deepEqual(l.parts,r.parts);
+  assert.equal(D.grade('news2',q.id,r.parts).score,7);
+ }
+});
+test('NEWS2 scale 2 oxygenated and non-oxygenated high saturation boundary is preserved',()=>{
+ const oxygen=D.newsCases.find(x=>x.id==='news-c'),air=D.newsCases.find(x=>x.id==='news-e');
+ assert.equal(oxygen.v.scale,2);assert.equal(oxygen.v.spo2,95);assert.equal(oxygen.v.oxygen,true);
+ assert.equal(air.v.scale,2);assert.equal(air.v.spo2,95);assert.equal(air.v.oxygen,false);
+ assert.equal(D.expected('news2',oxygen.id).parts.spo,2);
+ assert.equal(D.expected('news2',air.id).parts.spo,0);
+ assert.equal(D.expected('news2',oxygen.id).parts.oxygen,2);
+ assert.equal(D.expected('news2',air.id).parts.oxygen,0);
+});
+test('NEWS2 single parameter 3 and new confusion follow reference scorer',()=>{
+ const q=D.expected('news2','news-b');
+ assert.equal(q.total,3);assert.equal(q.parts.rr,3);
+ assert.deepEqual(Object.values(q.parts).filter(x=>x!==0),[3]);
+ const severe=D.expected('news2','news-d');
+ assert.equal(severe.parts.consciousness,3);assert.equal(severe.parts.oxygen,2);
+});
+test('NEWS2 refuses incomplete and illegal score combinations',()=>{
+ const q=D.newsCases[0],b={...D.expected('news2',q.id).parts};
+ for(const bad of [{...b,oxygen:1},{...b,consciousness:2},{...b,rr:4},{...b,rr:NaN},{...b,rr:'2'},((x)=>{delete x.spo;return x})({...b})])
+  assert.throws(()=>D.grade('news2',q.id,bad));
+ const wrong=D.grade('news2',q.id,{...b,rr:3});
+ assert.equal(wrong.score,6);assert.equal(wrong.enteredTotal,5);assert.equal(wrong.truth.total,4);
+});
+test('learning modules have exact asset references, clinician-origin sources and no persistence',()=>{
+ const html=read('index.html'),js=read('assets/learning-tools-v12.js'),data=read('assets/learning-content-v12.js');
+ for(const file of ['assets/learning-tools-v12.css','assets/learning-tools-v12.js','assets/learning-content-v12.js'])
+  assert.ok(fs.existsSync(path.join(__dirname,'..',file)),file);
+ for(const s of ['id="learningHubChooser"','id="learn4atModule"','id="learnNews2Module"','id="learnToolExerciseRoot"'])
+  assert.ok(html.includes(s),s);
+ assert.ok(html.includes('learning-content-v12.js?v=1201')&&html.includes('learning-tools-v12.js?v=1201'));
+ assert.ok(html.includes('learning-tools-v12.css?v=1201'));
+ assert.match(js,/data-part/);
+ assert.match(js,/aria-pressed/);
+ assert.match(js,/4AT v1\.2/);
+ assert.match(data,/the4at\.com\/userguide/);
+ assert.match(data,/rcp\.ac\.uk\/resources\/national-early-warning-score-news-2/);
+ for(const body of [data,js]){
+  assert.doesNotMatch(body,/\blocalStorage\b|\bsessionStorage\b|\bindexedDB\b|\bfetch\s*\(|\bXMLHttpRequest\b|\bsendBeacon\b/);
+ }
+});
