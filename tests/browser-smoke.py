@@ -742,5 +742,37 @@ try:
   status=html.unescape(match.group(1))
   print(f"Browser integration smoke {width}×{height}:",status)
   if status!="PASS":raise SystemExit(1)
+ # Independently load bookmarked URL routes after a hard refresh in Chrome.
+ # This catches a common bug where generated links look correct but do not launch.
+ deep_script=r"""
+<script>
+setTimeout(()=>{
+ const id=new URLSearchParams(location.search).get('tool');
+ const byId=x=>document.getElementById(x);
+ const opened={
+  gcs:()=>Boolean(byId('clinicalToolDialog')?.open&&byId('clinicalToolTitle')?.textContent.includes('GCS')),
+  qsofa:()=>Boolean(byId('optionalGCS')?.open&&document.activeElement===byId('gcs')),
+  abcde:()=>Boolean(byId('abcdeDialog')?.open),
+  isbar:()=>Boolean(byId('isbarDialog')?.open)
+ };
+ const output=document.createElement('output');output.id='kartlegg-deep-link';
+ output.textContent=opened[id]?.()?'PASS':'FAIL: '+id+' did not open';
+ document.body.append(output);
+},40);
+</script>
+"""
+ deep=root/".kartlegg-direct-link-smoke.html"
+ deep.write_text(source.replace("</body>",deep_script+"</body>"),encoding="utf-8")
+ try:
+  for tool,route in [("gcs","verktoy"),("qsofa","vurdering"),("abcde","verktoy"),("isbar","vurdering")]:
+   target=deep.as_uri()+"?tool="+tool+"#"+route
+   command=[shutil.which(chrome),"--headless","--disable-gpu","--disable-dev-shm-usage","--no-sandbox","--window-size=410,850","--virtual-time-budget=1200","--dump-dom",target]
+   result=subprocess.run(command,text=True,capture_output=True,timeout=45)
+   match=re.search(r'<output id="kartlegg-deep-link">(.*?)</output>',result.stdout)
+   status=html.unescape(match.group(1)) if match else "NO OUTPUT"
+   print(f"Direct-link smoke {tool}:",status)
+   if status!="PASS":raise SystemExit(1)
+ finally:
+  deep.unlink(missing_ok=True)
 finally:
  temp.unlink(missing_ok=True)
