@@ -106,3 +106,18 @@ test('the three optional personal modes are exact-name cosmetic decorations only
  assert.doesNotMatch(js,/localStorage|sessionStorage|indexedDB|fetch\(|sendBeacon/);
  assert.doesNotMatch(css,/\.score(?:\.|\s|\{|:)|\.news-alert|\.v10-part-score/);
 });
+
+test('NEWS2 scale 2 guidance requires confirmed hypercapnic respiratory failure',()=>{
+ const html=read('index.html'), criteria=read('assets/v06.js');
+ assert.match(html,/Skala 2 kun ved bekreftet hyperkapnisk respirasjonssvikt/);
+ assert.match(html,/ordinert mål 88–92 %/);
+ assert.match(criteria,/Skala 2 krever bekreftet hyperkapnisk respirasjonssvikt/);
+});
+test('appearance toggle has a single controller and homecare outputs invalidate on edit',()=>{
+ const enhancements=read('assets/enhancements.js'), settings=read('assets/v06.js');
+ const homecare=read('assets/homecare-v09-ui.js');
+ assert.doesNotMatch(enhancements,/theme\.addEventListener\('click'/);
+ assert.match(settings,/\$\('themeToggle'\)\?\.addEventListener\('click'/);
+ assert.match(homecare,/inputs\?\.addEventListener\('input',invalidate\)/);
+ assert.match(homecare,/inputs\?\.addEventListener\('change',invalidate\)/);
+});
