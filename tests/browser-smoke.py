@@ -476,6 +476,14 @@ script=r"""
    assert(document.querySelector('#personalModeTitle').textContent===title,'wrong personal popup title');
    assert(getComputedStyle(ribbon).backgroundImage.includes('svg'),'missing SVG ribbon '+mode);
    assert(Math.abs(ribbon.getBoundingClientRect().width-headerWidth)<2,'personal ribbon not full header width '+mode);
+   const strip=ribbon.getBoundingClientRect();
+   const logo=document.querySelector('.header .logo').getBoundingClientRect();
+   const avatar=document.querySelector('#profileTrigger').getBoundingClientRect();
+   const collision=box=>strip.left<box.right-1&&strip.right>box.left+1&&strip.top<box.bottom-1&&strip.bottom>box.top+1;
+   assert(!collision(logo),'header banner overlaps or clips Kartlegg logo in '+mode);
+   assert(!collision(avatar),'header banner overlaps or clips profile avatar in '+mode);
+   assert(strip.bottom<=document.querySelector('.header').getBoundingClientRect().bottom+1,'banner extends below header in '+mode);
+
    const palette=pageColors[mode];
    assert(getComputedStyle(document.querySelector('.header')).backgroundColor===palette.header,'header must switch to immersive '+mode+' palette');
    assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'main page must have substantial '+mode+' colored backdrop');
