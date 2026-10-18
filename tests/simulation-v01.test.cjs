@@ -1,0 +1,94 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const S=require('../assets/simulation-engine.js');
+const Scoring=require('../assets/scoring.js');
+const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+
+test('scenario begins without exposing unmeasured vitals or saving data',()=>{
+ const s=S.start();
+ assert.equal(s.minutes,0);assert.equal(s.lastVitals,null);assert.deepEqual(s.done,[]);
+ assert.ok(Object.isFrozen(s));assert.ok(Object.isFrozen(s.done));
+ const ui=read('assets/simulation-ui.js');
+ for(const forbidden of ['fetch(','XMLHttpRequest','sendBeacon(','indexedDB','localStorage.','sessionStorage.','document.cookie'])
+  assert.ok(!ui.includes(forbidden),'simulation must not persist or transmit data: '+forbidden);
+});
+test('pilot uses canonical NEWS2 arithmetic and an explicitly fictional case',()=>{
+ const state=S.step(S.start(),'vitals');
+ const reference=Scoring.news2(state.lastVitals);
+ assert.equal(reference.total,11);
+ assert.deepEqual(S.referenceNews(state),reference);
+ assert.equal(S.caseData.id,'home-acute-001');
+ assert.match(S.caseData.warning,/fiktive/);
+ assert.equal(S.actions.length,8);
+});
+test('observed measurements stay unchanged until user repeats them',()=>{
+ let s=S.step(S.start(),'vitals');
+ assert.equal(s.lastVitals.spo2,91);
+ for(const id of ['symptoms','history','abcde'])s=S.step(s,id);
+ assert.equal(s.worsened,true);
+ assert.equal(S.currentVitals(s).spo2,88);
+ assert.equal(s.lastVitals.spo2,91,'do not reveal unmeasured deterioration');
+ assert.equal(S.referenceNews(s).total,11);
+ s=S.step(s,'reevaluate');
+ assert.equal(s.lastVitals.spo2,88);
+ assert.equal(S.referenceNews(s).total,17);
+});
+test('escalation prevents scripted deterioration and actions have fixed costs',()=>{
+ let s=S.step(S.start(),'vitals');
+ s=S.step(s,'contact');
+ s=S.step(s,'symptoms');
+ s=S.step(s,'history');
+ s=S.step(s,'abcde');
+ assert.equal(s.worsened,false);
+ assert.equal(s.minutes,11);
+ assert.equal(S.can(s,'contact'),false);
+ assert.throws(()=>S.step(s,'contact'));
+});
+test('wait action is bounded; debrief marks gaps without automatic clinical credentialing',()=>{
+ let s=S.step(S.start(),'wait');
+ assert.equal(S.can(s,'wait'),true);
+ s=S.step(s,'wait');
+ assert.equal(s.worsened,false,'exactly 10 simulated minutes is before scenario trigger');
+ assert.equal(S.can(s,'wait'),false);
+ assert.throws(()=>S.step(s,'wait'));
+ s=S.step(s,'symptoms');
+ assert.equal(s.worsened,true);
+ const d=S.debrief(s);
+ assert.equal(d.items.find(x=>x.id==='contact').done,false);
+ assert.equal(d.items.find(x=>x.id==='isbar').done,false);
+ assert.match(d.note,/ikke vurdering av klinisk kompetanse/);
+});
+test('NEWS2 attempt is validated and not marked correct before debrief',()=>{
+ let s=S.start();
+ assert.throws(()=>S.recordNews(s,11));
+ s=S.step(s,'vitals');
+ for(const n of [-1,31,3.5,Infinity,NaN,'11'])assert.throws(()=>S.recordNews(s,n));
+ s=S.recordNews(s,11);
+ assert.equal(s.enteredNews,11);
+ const d=S.debrief(s);
+ assert.equal(d.items.find(x=>x.id==='news').done,true);
+ const wrong=S.debrief(S.recordNews(s,8));
+ assert.equal(wrong.items.find(x=>x.id==='news').done,false);
+});
+test('ISBAR text is mandatory but not machine-graded; case can finish early',()=>{
+ let s=S.start();
+ const fields={s:'Akutt tungpust',b:'Økende hoste',a:'Vitale parametere',r:'Ønsker vurdering'};
+ for(const input of [null,{}, {...fields,a:''},{...fields,r:'x'},{...fields,b:'y'.repeat(701)}])assert.throws(()=>S.recordIsbar(s,input));
+ s=S.recordIsbar(s,fields);
+ assert.equal(s.isbar.a,'Vitale parametere');
+ s=S.finish(s);
+ assert.equal(s.finished,true);
+ assert.equal(S.can(s,'vitals'),false);
+ assert.throws(()=>S.step(s,'vitals'));
+ assert.throws(()=>S.recordIsbar(s,fields));
+});
+test('a simulation route, source and front-end assets are integrated',()=>{
+ const html=read('index.html'),app=read('assets/app.js');
+ for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=101','assets/simulation-ui.js?v=101','assets/simulation-v01.css?v=101'])
+  assert.ok(html.includes(element),element);
+ assert.ok(app.includes("'simulering'"));
+ assert.doesNotMatch(read('assets/simulation-engine.js'),/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);
+});
