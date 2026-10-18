@@ -9,7 +9,7 @@ test('the shared visual system is loaded last and owns common structure',()=>{
  const html=read('index.html');
  const css=read('assets/design-system-v3.css');
  assert.match(html,/assets\/design-system-v3\.css\?v=1701/);
- assert.match(html,/assets\/icon-system\.js\?v=1701/);
+ assert.match(html,/assets\/icon-system\.js\?v=1802/);
  assert.ok(html.indexOf('assets/visual-refinement-v2.css')<html.indexOf('assets/design-system-v3.css'));
  for(const token of ['--ui-space-1:','--ui-radius-control:','--ui-control-height:','--ui-shadow-card:'])assert.ok(css.includes(token),token);
  for(const selector of ['data-service-theme="hospital"','data-service-theme="ambulance"','data-service-theme="urgent"','data-service-theme="homecare"'])assert.ok(css.includes(selector),selector);
