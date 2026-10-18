@@ -45,8 +45,8 @@ test('mobile drawer overlays search and dock and locks background scrolling',()=
  assert.match(app,/menuBtn\.setAttribute\('aria-expanded'/);
 });
 test('custom themes and service-theme choices are not replaced',()=>{
- const themes=read('assets/v06.js');
- for(const id of ['custom','hospital','ambulance','urgent','homecare'])assert.ok(themes.includes("'"+id+"'"),id);
+ const themes=require('../assets/theme-engine.js');
+ for(const id of ['custom','hospital','ambulance','urgent','homecare'])assert.ok(themes.SERVICES.includes(id),id);
  const cssThemes=read('assets/service-themes-v0991.css');
  assert.match(cssThemes,/--accent:#ffff00/);
  assert.match(cssThemes,/--accent:#ffcc00/);

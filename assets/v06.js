@@ -4,16 +4,40 @@
 const $=id=>document.getElementById(id), one=s=>document.querySelector(s);
 const html=document.documentElement, key='kartlegg.appearance.v06';
 const media=window.matchMedia?.('(prefers-color-scheme: dark)');
+const ThemeEngine=window.KartleggThemeEngine;
+if(!ThemeEngine)throw new Error('Kartlegg theme engine missing');
 const modes=['light','dark','system'], accents=['coral','blue','green'];
-const services=['custom','hospital','ambulance','urgent','homecare'];
+const services=ThemeEngine.SERVICES;
 const serviceNames={custom:'Egendefinert',hospital:'Sykehus / akuttmottak',ambulance:'Ambulanse / prehospital',urgent:'Legevakt / akuttmedisin',homecare:'Hjemmesykepleie'};
-const serviceModes={hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'};
-let prefs={mode:'system',accent:'coral',service:'custom'};
-try{const p=JSON.parse(localStorage.getItem(key)||'null');if(p&&modes.includes(p.mode)&&accents.includes(p.accent))prefs={mode:p.mode,accent:p.accent,service:services.includes(p.service)?p.service:'custom'};else{const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}}catch(_){}
+let prefs=ThemeEngine.normalize(null);
+try{
+ const saved=JSON.parse(localStorage.getItem(key)||'null');
+ if(saved&&modes.includes(saved.mode)&&accents.includes(saved.accent))prefs=ThemeEngine.normalize(saved);
+ else {const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}
+}catch(_){}
 const avatar=one('#profileTrigger'); // Accessible native button is rendered in index.html.
 const drawer=document.createElement('dialog');drawer.id='profileDialog';drawer.className='profile-dialog';drawer.setAttribute('aria-labelledby','profileDialogTitle');
 drawer.innerHTML='<div class="profile-dialog-head"><div><h2 id="profileDialogTitle">Min profil</h2><p>Din avsenderprofil og utseende</p></div><button id="closeProfile" type="button" class="dialog-close" aria-label="Lukk">×</button></div><div class="profile-dialog-scroll"><section class="profile-dialog-section"><h3>Profil for ISBAR</h3><p>Ikke skriv inn pasientopplysninger her.</p><div id="profileMount"></div></section><section class="profile-dialog-section"><h3>Utseende</h3><p id="appearanceSummary"></p><fieldset class="appearance-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> ☀ Dag</label><label><input type="radio" name="appearanceMode" value="dark"> ☾ Natt</label><label><input type="radio" name="appearanceMode" value="system"> ◐ System</label></fieldset><fieldset class="appearance-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="coral"><i class="swatch coral"></i> Korall</label><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i> Blå</label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i> Grønn</label></fieldset><p class="personalization-note">Valgt tema endrer ikke kliniske risiko- og skåringsfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p></section></div>';
 document.body.append(drawer);
+// Visual layers remain independently selectable; existing saved settings migrate safely.
+const baseOptions=document.createElement('fieldset');baseOptions.className='base-theme-options';
+const baseLegend=document.createElement('legend');baseLegend.textContent='1 · Grunntema';baseOptions.append(baseLegend);
+const baseGrid=document.createElement('div');baseGrid.className='base-theme-grid';
+for(const [id,title,info] of [
+ ['standard','Standard','Lys/mørk og aksentfarger'],
+ ['philip','Philip · cobalt glass','Mørk koboltblå med glassreflekser']
+]){
+ const label=document.createElement('label');label.className='base-theme-option';
+ const input=document.createElement('input');input.type='radio';input.name='baseTheme';input.value=id;
+ const body=document.createElement('span');const heading=document.createElement('strong');heading.textContent=title;
+ const detail=document.createElement('small');detail.textContent=info;body.append(heading,detail);
+ label.append(input,body);baseGrid.append(label);
+}
+baseOptions.append(baseGrid);
+const baseHint=document.createElement('p');baseHint.className='theme-layer-hint';
+baseHint.textContent='Grunntema gir den personlige stilen. Philip har fast mørkt glassuttrykk; lys/mørk og aksent gjelder Standard.';
+baseOptions.append(baseHint);
+drawer.querySelector('.appearance-options')?.before(baseOptions);
 // Add the four service presets without removing the original six appearance combinations.
 const serviceOptions=document.createElement('fieldset');serviceOptions.className='service-theme-options';
 const serviceLegend=document.createElement('legend');serviceLegend.textContent='Tjenestetemaer';serviceOptions.append(serviceLegend);
@@ -35,19 +59,59 @@ for(const id of services){
 }
 serviceOptions.append(serviceGrid);
 drawer.querySelector('.personalization-note')?.before(serviceOptions);
+const seasonOptions=document.createElement('fieldset');seasonOptions.className='season-theme-options';
+const seasonLegend=document.createElement('legend');seasonLegend.textContent='3 · Sesong og markering';seasonOptions.append(seasonLegend);
+const seasonControls=document.createElement('div');seasonControls.className='season-theme-controls';
+const seasonLabel=document.createElement('label');seasonLabel.htmlFor='seasonThemeSelect';seasonLabel.textContent='Sesonglag';
+const seasonSelect=document.createElement('select');seasonSelect.id='seasonThemeSelect';
+const seasonNames={
+ off:'Av – ingen pynt',auto:'Automatisk etter dato',halloween:'Halloween',
+ christmas:'Jul', 'breast-cancer':'Brystkreftmåned', 'mental-health':'Verdensdagen for psykisk helse',pride:'Pride'
+};
+for(const id of ThemeEngine.SEASONS){
+ const option=document.createElement('option');option.value=id;option.textContent=seasonNames[id];seasonSelect.append(option);
+}
+const seasonMessage=document.createElement('p');seasonMessage.className='season-theme-message';seasonMessage.id='seasonThemeMessage';
+seasonControls.append(seasonLabel,seasonSelect,seasonMessage);seasonOptions.append(seasonControls);
+const seasonHint=document.createElement('p');seasonHint.className='theme-layer-hint';
+seasonHint.textContent='Valgfri, diskret dekor. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
+seasonOptions.append(seasonHint);
+serviceOptions.querySelector('legend').textContent='2 · Tjenestetema';
+serviceOptions.after(seasonOptions);
+const seasonNotice=document.createElement('span');seasonNotice.className='season-notice';seasonNotice.id='seasonNotice';seasonNotice.hidden=true;
+one('#page-vurdering .intro > div')?.append(seasonNotice);
+const seasonHighlight=document.createElement('div');seasonHighlight.className='season-highlight';seasonHighlight.id='seasonHighlight';seasonHighlight.hidden=true;
+seasonHighlight.setAttribute('aria-hidden','true');one('.header')?.append(seasonHighlight);
 const profile=one('#page-profil .profile-body');if(profile)$('profileMount').append(profile);
 const placeholder=one('#page-profil .section');if(placeholder){const b=document.createElement('button');b.type='button';b.className='btn btn-primary';b.textContent='Åpne profilinnstillinger';b.addEventListener('click',openProfile);placeholder.append(b)}
 function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
 function apply(){
- const resolved=serviceModes[prefs.service]||(prefs.mode==='system'?(media?.matches?'dark':'light'):prefs.mode);
- html.dataset.theme=resolved;html.dataset.accent=prefs.accent;html.dataset.serviceTheme=prefs.service;
- const toggle=$('themeToggle');if(toggle){toggle.textContent=resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus';toggle.setAttribute('aria-label',resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus');toggle.setAttribute('aria-pressed',String(resolved==='dark'))}
+ const state=ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date());
+ const resolved=state.mode;
+ html.dataset.theme=resolved;html.dataset.accent=state.accent;html.dataset.serviceTheme=state.service;
+ html.dataset.baseTheme=state.base;html.dataset.seasonTheme=state.season;
+ const toggle=$('themeToggle');
+ if(toggle){
+  toggle.textContent=state.base==='philip'?'☀ Standardmodus':(resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus');
+  toggle.setAttribute('aria-label',state.base==='philip'?'Bytt fra Philip-tema til standard dagmodus':(resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus'));
+  toggle.setAttribute('aria-pressed',String(resolved==='dark'));
+ }
  drawer.querySelectorAll('[name=appearanceMode]').forEach(x=>x.checked=x.value===prefs.mode);
  drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=x.value===prefs.accent);
  drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
- $('appearanceSummary').textContent=prefs.service==='custom'?(resolved==='dark'?'Mørkt':'Lyst')+' tema · '+({coral:'korall',blue:'blå',green:'grønn'}[prefs.accent]):serviceNames[prefs.service]+' · '+(resolved==='dark'?'mørkt':'lyst')+' tjenestetema';
+ drawer.querySelectorAll('[name=baseTheme]').forEach(x=>x.checked=x.value===prefs.base);
+ seasonSelect.value=prefs.season;
+ seasonNotice.hidden=state.season==='none';
+ seasonHighlight.hidden=state.season==='none';
+ if(state.season!=='none')seasonNotice.textContent='✦ '+seasonNames[state.season]+' · dekorativt tema';
+ seasonMessage.textContent=prefs.season==='off'?'Sesonglaget er slått av.':
+  (state.season==='none'?'Ingen markering på denne datoen.':
+   (prefs.season==='auto'?'Automatisk valgt: ':'Manuelt valgt: ')+seasonNames[state.season]+'.');
+ const baseName=state.base==='philip'?'Philip cobalt glass':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
+ $('appearanceSummary').textContent=baseName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
  try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
 }
+window.KartleggThemeLayers={get preferences(){return {...prefs}},get effective(){return ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date())}};
 function openProfile(){initials();apply();drawer.showModal()}
 avatar.addEventListener('click',openProfile);
 $('closeProfile').addEventListener('click',()=>drawer.close());
@@ -55,12 +119,16 @@ drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.close()});
 $('profileName')?.addEventListener('input',initials);
 $('clearProfile')?.addEventListener('click',initials);
 const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();if(one('#sidebar')?.classList.contains('open'))one('#menuButton')?.click();openProfile()},true);
-drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.service='custom';apply()}));
-drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.service='custom';apply()}));
+drawer.querySelectorAll('[name=baseTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.base=el.value;apply()}));
+drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.base='standard';prefs.service='custom';apply()}));
+drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.base='standard';prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=serviceTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.service=el.value;apply()}));
+seasonSelect.addEventListener('change',()=>{prefs.season=seasonSelect.value;apply()});
 // Prevent the previous v0.5 click listener from immediately toggling the theme back.
-$('themeToggle')?.addEventListener('click',e=>{e.stopImmediatePropagation();prefs.mode=html.dataset.theme==='dark'?'light':'dark';prefs.service='custom';apply()},true);
+$('themeToggle')?.addEventListener('click',e=>{e.stopImmediatePropagation();prefs.mode=html.dataset.theme==='dark'?'light':'dark';prefs.base='standard';prefs.service='custom';apply()},true);
 media?.addEventListener?.('change',()=>{if(prefs.mode==='system')apply()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&prefs.season==='auto')apply()});
+window.addEventListener('pageshow',e=>{if(e.persisted&&prefs.season==='auto')apply()});
 initials();apply();
 
 const news=[
