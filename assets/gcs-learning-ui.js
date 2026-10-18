@@ -247,6 +247,17 @@
   footer();root.append(live);
  }
  render();
+ // Discoverability: open the tutorial directly from the GCS calculator card.
+ const gcsCard=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"]');
+ const toolsBar=gcsCard?.querySelector('.tool-card-actions');
+ if(toolsBar&&!toolsBar.querySelector('.gcs-learn-card-button')){
+  const shortcut=btn('✦ Lær GCS','gcs-learn-card-button',()=>{
+   document.querySelector('[data-page="laer"]')?.click();
+   open('learn');
+  });
+  shortcut.setAttribute('aria-label','Åpne interaktiv GCS-opplæring');
+  toolsBar.append(shortcut);
+ }
  window.KartleggLearnPilot=Object.freeze({
   open,get mode(){return state.mode},get lesson(){return state.lesson},
   get practiceIndex(){return state.practiceIndex},
