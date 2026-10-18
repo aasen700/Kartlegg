@@ -120,12 +120,12 @@
  // NEWS2 red-score and aggregate-score escalation. No patient data retention.
  const alerts=document.createElement('section');alerts.className='news-alert';alerts.id='newsClinicalAlert';alerts.hidden=true;alerts.setAttribute('role','status');
  document.querySelector('#resultater .scores')?.after(alerts);
- const oldUpdate=updateScores;
- function refreshAlert(){
-  const v=readVitals();alerts.replaceChildren();alerts.hidden=true;
-  if(!v)return;
+ function refreshAlert(event){
+  const news=event.detail;
+  alerts.replaceChildren();alerts.hidden=true;
+  if(!news)return;
   try{
-   const news=Scoring.news2(v), info=T.newsAlert(news);
+   const info=T.newsAlert(news);
    if(info.level==='routine')return;
    alerts.dataset.level=info.level;
    const h=document.createElement('h3');h.textContent='⚠ '+info.title;alerts.append(h);
@@ -136,7 +136,7 @@
    const note=document.createElement('small');note.textContent=info.notes;alerts.append(note);alerts.hidden=false;
   }catch(_){alerts.hidden=true}
  }
- updateScores=function(){const ok=oldUpdate();refreshAlert();return ok};
+ window.addEventListener('kartlegg:news2-changed',refreshAlert);
  document.querySelector('#vitalsForm')?.addEventListener('reset',()=>{alerts.hidden=true;alerts.replaceChildren()});
  document.querySelector('#page-verktoy .section-header h2')?.setAttribute('id','clinicalLibraryHeading');
 })();
