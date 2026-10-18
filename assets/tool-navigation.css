@@ -29,8 +29,8 @@
  background:rgba(27,64,115,.78);border-color:rgba(153,201,255,.45);color:#f0f6ff
 }
 :root[data-base-theme="philip"] .tool-favorites-empty{color:#c4d6f1}
-:root[data-personal-mode] :is(.tool-favorites,.tool-dialog-switches){background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
-:root[data-personal-mode] :is(.tool-card-favorite,.tool-card-copy,.tool-favorite-shortcut,.tool-workflow-button,.tool-dialog-switch){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.tool-favorites,.tool-dialog-switches){background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.tool-card-favorite,.tool-card-copy,.tool-favorite-shortcut,.tool-workflow-button,.tool-dialog-switch){
  background:var(--pm-soft-action)!important;color:var(--pm-soft-action-ink)!important;border-color:var(--pm-action-border)!important
 }
 :is(.tool-workflow-button,.tool-favorite-shortcut,.tool-card-favorite,.tool-card-copy,.tool-dialog-switch):focus-visible{

@@ -11,7 +11,7 @@
  const profiles=Object.freeze({
   'kristian bøe':Object.freeze({id:'kristian',title:'Kristian-modus aktivert',subtitle:'Rød stadionstemning over hele Kartlegg, hvite kontrastknapper og tribune i toppbanneret. Heia Brann!',signature:'TRIBUNEN // KB',symbol:'⚽'}),
   'kent ole hansen':Object.freeze({id:'kent',title:'Kent-modus aktivert',subtitle:'Nordlys-inspirert landskap, dype blågrønne bakgrunner og gullgule knapper med samisk-inspirerte fargedetaljer.',signature:'NORDLYS // KENT',symbol:'☀'}),
-  'philip aasen':Object.freeze({id:'philip',title:'Philip-modus aktivert',subtitle:'FOUNDER EDITION. Et mørkt ekspedisjonstema med fjell og EKG i toppbanneret, turkise detaljer og gullknapper.',signature:'FOUNDER // PA',symbol:'✦'})
+  'philip aasen':Object.freeze({id:'philip',title:'Philip-modus aktivert',subtitle:'FOUNDER EDITION. Koboltblå bakgrunn, halvgjennomsiktige glassflater og myke lysreflekser.',signature:'FOUNDER // PA',symbol:'✦'})
  });
  function resolvePersonalMode(value){
   if(typeof value!=='string')return null;
@@ -64,6 +64,7 @@
     info.textContent='';info.hidden=true;
     popup.removeAttribute('data-mode');
    }
+   win.dispatchEvent(new win.CustomEvent('kartlegg:personal-mode',{detail:{id:next}}));
    if(changed&&mode&&announce)popup.showModal();
   }
   // On reload, only an explicitly remembered sender profile can restore the mode.

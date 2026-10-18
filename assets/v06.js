@@ -20,7 +20,8 @@ const drawer=document.createElement('dialog');drawer.id='profileDialog';drawer.c
 drawer.innerHTML='<div class="profile-dialog-head"><div><h2 id="profileDialogTitle">Min profil</h2><p>Din avsenderprofil og utseende</p></div><button id="closeProfile" type="button" class="dialog-close" aria-label="Lukk">×</button></div><div class="profile-dialog-scroll"><section class="profile-dialog-section"><h3>Profil for ISBAR</h3><p>Ikke skriv inn pasientopplysninger her.</p><div id="profileMount"></div></section><section class="profile-dialog-section"><h3>Utseende</h3><p id="appearanceSummary"></p><fieldset class="appearance-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> ☀ Dag</label><label><input type="radio" name="appearanceMode" value="dark"> ☾ Natt</label><label><input type="radio" name="appearanceMode" value="system"> ◐ System</label></fieldset><fieldset class="appearance-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="coral"><i class="swatch coral"></i> Korall</label><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i> Blå</label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i> Grønn</label></fieldset><p class="personalization-note">Valgt tema endrer ikke kliniske risiko- og skåringsfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p></section></div>';
 document.body.append(drawer);
 // Visual layers remain independently selectable; existing saved settings migrate safely.
-const baseOptions=document.createElement('fieldset');baseOptions.className='base-theme-options';
+let philipUnlocked=false;
+const baseOptions=document.createElement('fieldset');baseOptions.className='base-theme-options';baseOptions.hidden=true;
 const baseLegend=document.createElement('legend');baseLegend.textContent='1 · Grunntema';baseOptions.append(baseLegend);
 const baseGrid=document.createElement('div');baseGrid.className='base-theme-grid';
 for(const [id,title,info] of [
@@ -35,7 +36,7 @@ for(const [id,title,info] of [
 }
 baseOptions.append(baseGrid);
 const baseHint=document.createElement('p');baseHint.className='theme-layer-hint';
-baseHint.textContent='Grunntema gir den personlige stilen. Philip har fast mørkt glassuttrykk; lys/mørk og aksent gjelder Standard.';
+baseHint.textContent='Velg glassuttrykket eller gå tilbake til standardtemaet.';
 baseOptions.append(baseHint);
 drawer.querySelector('.appearance-options')?.before(baseOptions);
 // Add the four service presets without removing the original six appearance combinations.
@@ -60,7 +61,7 @@ for(const id of services){
 serviceOptions.append(serviceGrid);
 drawer.querySelector('.personalization-note')?.before(serviceOptions);
 const seasonOptions=document.createElement('fieldset');seasonOptions.className='season-theme-options';
-const seasonLegend=document.createElement('legend');seasonLegend.textContent='3 · Sesong og markering';seasonOptions.append(seasonLegend);
+const seasonLegend=document.createElement('legend');seasonLegend.textContent='Sesong og markering';seasonOptions.append(seasonLegend);
 const seasonControls=document.createElement('div');seasonControls.className='season-theme-controls';
 const seasonLabel=document.createElement('label');seasonLabel.htmlFor='seasonThemeSelect';seasonLabel.textContent='Sesonglag';
 const seasonSelect=document.createElement('select');seasonSelect.id='seasonThemeSelect';
@@ -76,7 +77,7 @@ seasonControls.append(seasonLabel,seasonSelect,seasonMessage);seasonOptions.appe
 const seasonHint=document.createElement('p');seasonHint.className='theme-layer-hint';
 seasonHint.textContent='Valgfri, diskret dekor. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
 seasonOptions.append(seasonHint);
-serviceOptions.querySelector('legend').textContent='2 · Tjenestetema';
+serviceOptions.querySelector('legend').textContent='Tjenestetema';
 serviceOptions.after(seasonOptions);
 const seasonNotice=document.createElement('span');seasonNotice.className='season-notice';seasonNotice.id='seasonNotice';seasonNotice.hidden=true;
 one('#page-vurdering .intro > div')?.append(seasonNotice);
@@ -86,6 +87,8 @@ const profile=one('#page-profil .profile-body');if(profile)$('profileMount').app
 const placeholder=one('#page-profil .section');if(placeholder){const b=document.createElement('button');b.type='button';b.className='btn btn-primary';b.textContent='Åpne profilinnstillinger';b.addEventListener('click',openProfile);placeholder.append(b)}
 function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
 function apply(){
+ if(!philipUnlocked)prefs.base='standard';
+ baseOptions.hidden=!philipUnlocked;
  const state=ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date());
  const resolved=state.mode;
  html.dataset.theme=resolved;html.dataset.accent=state.accent;html.dataset.serviceTheme=state.service;
@@ -119,7 +122,12 @@ drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.close()});
 $('profileName')?.addEventListener('input',initials);
 $('clearProfile')?.addEventListener('click',initials);
 const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();if(one('#sidebar')?.classList.contains('open'))one('#menuButton')?.click();openProfile()},true);
-drawer.querySelectorAll('[name=baseTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.base=el.value;apply()}));
+drawer.querySelectorAll('[name=baseTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.base=philipUnlocked?el.value:'standard';apply()}));
+window.addEventListener('kartlegg:personal-mode',e=>{
+ const wasUnlocked=philipUnlocked;philipUnlocked=e.detail?.id==='philip';
+ if(philipUnlocked&&!wasUnlocked)prefs.base='philip';
+ apply();
+});
 drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.base='standard';prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.base='standard';prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=serviceTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.service=el.value;apply()}));

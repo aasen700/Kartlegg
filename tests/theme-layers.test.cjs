@@ -55,7 +55,7 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
 test('immersive atmosphere remains independent and excludes clinical scores',()=>{
  const css=read('assets/visual-atmospheres-v112.css');
  const html=read('index.html');
- assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1121/);
+ assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1122/);
  assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
  for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])
   assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');

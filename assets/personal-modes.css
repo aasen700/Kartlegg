@@ -1,7 +1,7 @@
 /* Kartlegg personlige easter eggs: presentation only, never clinical risk colors. */
 :root[data-personal-mode="kristian"]{--pm-primary:#b41730;--pm-tint:#fff0f2;--pm-text:#8f1228;--pm-border:#d74e65}
 :root[data-personal-mode="kent"]{--pm-primary:#19558c;--pm-tint:#eaf4fb;--pm-text:#174c78;--pm-border:#5390b1}
-:root[data-personal-mode="philip"]{--pm-primary:linear-gradient(115deg,#102a45,#126b71);--pm-tint:#e4f4f2;--pm-text:#125763;--pm-border:#b6a16e}
+:root[data-personal-mode="philip"]{--pm-primary:linear-gradient(115deg,#134cad,#2864cc);--pm-tint:#ffffff24;--pm-text:#eaf4ff;--pm-border:#b9dbff}
 :root[data-personal-mode] .header .theme-top-ribbon{
  display:block!important;height:19px!important;z-index:6!important;
  border:0!important;box-shadow:0 2px 9px #09172e28!important;
@@ -111,37 +111,37 @@
  --pm-soft-action:#eaf6f4;--pm-soft-action-ink:#0a5762;--pm-highlight:#164456;
  --pm-focus:#f3d783;--pm-surface-ink:#125d69;
 }
-:root[data-personal-mode] body{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) body{
  background:var(--pm-page)!important;background-attachment:fixed!important;
 }
-:root[data-personal-mode] .header{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header{
  background:var(--pm-header)!important;color:var(--pm-header-ink)!important;
  border-bottom:1px solid #ffffff37!important;
  box-shadow:0 7px 24px #08152535!important;
 }
-:root[data-personal-mode] .header :is(.brand,.header-right,.header-note){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header :is(.brand,.header-right,.header-note){
  color:var(--pm-header-ink)!important;
 }
-:root[data-personal-mode] .header .theme-top-ribbon{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .theme-top-ribbon{
  height:27px!important;filter:drop-shadow(0 3px 6px var(--pm-ribbon-glow));
 }
-:root[data-personal-mode] .header .brand-small{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .brand-small{
  background:#ffffff19!important;color:var(--pm-header-ink)!important;
  border:1px solid #ffffff4c!important;
 }
-:root[data-personal-mode] .sidebar{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar{
  background:var(--pm-sidebar)!important;color:var(--pm-sidebar-ink)!important;
  border-right:1px solid #ffffff32!important;
 }
-:root[data-personal-mode] .sidebar .nav{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar .nav{
  color:var(--pm-sidebar-ink)!important;
  border:1px solid transparent!important;
 }
-:root[data-personal-mode] .sidebar .nav:hover,
-:root[data-personal-mode] .sidebar .nav:focus-visible{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar .nav:hover,
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar .nav:focus-visible{
  background:#ffffff1f!important;color:#fff!important;
 }
-:root[data-personal-mode] .sidebar .nav:is(.active,[aria-current="page"]){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar .nav:is(.active,[aria-current="page"]){
  background:#ffffff!important;color:var(--pm-action-ink)!important;
  border-color:#ffffffa6!important;
  box-shadow:0 4px 15px #09162538!important;
@@ -149,19 +149,19 @@
 :root[data-personal-mode="kristian"] .sidebar .nav:is(.active,[aria-current="page"]){color:#95152c!important}
 :root[data-personal-mode="kent"] .sidebar .nav:is(.active,[aria-current="page"]){color:#164e48!important}
 :root[data-personal-mode="philip"] .sidebar .nav:is(.active,[aria-current="page"]){color:#0c5664!important}
-:root[data-personal-mode] .sidebar-bottom{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar-bottom{
  background:#ffffff13!important;color:var(--pm-sidebar-ink)!important;
  border:1px solid #ffffff50!important;
 }
-:root[data-personal-mode] .sidebar-bottom :is(p,strong){color:var(--pm-sidebar-ink)!important}
-:root[data-personal-mode] .main .intro :is(h1,p){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar-bottom :is(p,strong){color:var(--pm-sidebar-ink)!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .intro :is(h1,p){
  color:var(--pm-hero-ink)!important;text-shadow:0 2px 8px #06152525;
 }
-:root[data-personal-mode] .main .intro p:not(.eyebrow){color:var(--pm-hero-muted)!important}
-:root[data-personal-mode] .main .intro .eyebrow{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .intro p:not(.eyebrow){color:var(--pm-hero-muted)!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .intro .eyebrow{
  color:var(--pm-hero-muted)!important;letter-spacing:.14em;
 }
-:root[data-personal-mode] .main .intro .chip{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .intro .chip{
  background:#ffffffec!important;color:#293545!important;
  border:1px solid #ffffff!important;
  box-shadow:0 4px 18px #0b132033!important;
@@ -169,87 +169,87 @@
 :root[data-personal-mode="kristian"] .main .intro .chip{color:#85152b!important}
 :root[data-personal-mode="kent"] .main .intro .chip{color:#144e49!important}
 :root[data-personal-mode="philip"] .main .intro .chip{color:#155969!important}
-:root[data-personal-mode] :is(.section,.toolbox){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.section,.toolbox){
  background:var(--pm-panel)!important;color:var(--pm-card-ink)!important;
  border-color:var(--pm-card-border)!important;
  box-shadow:0 10px 32px #07132938!important;
 }
-:root[data-personal-mode] :is(.section-header h2,.toolbox h3,.v099-category-heading h3){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.section-header h2,.toolbox h3,.v099-category-heading h3){
  color:var(--pm-card-ink)!important;
 }
-:root[data-personal-mode] :is(.field,.meta-line,.v081-tool-search,.v10-optional-gcs){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.field,.meta-line,.v081-tool-search,.v10-optional-gcs){
  background:var(--pm-subpanel)!important;color:var(--pm-card-ink)!important;
  border-color:var(--pm-card-border)!important;
 }
-:root[data-personal-mode] :is(.field,.meta-line,.v10-optional-gcs,.v081-tool-search){box-shadow:none!important}
-:root[data-personal-mode] .meta-line :is(label,small){color:var(--pm-card-ink)!important}
-:root[data-personal-mode] :is(.v081-search-field,.field .control-wrap,.meta-line input){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.field,.meta-line,.v10-optional-gcs,.v081-tool-search){box-shadow:none!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .meta-line :is(label,small){color:var(--pm-card-ink)!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.v081-search-field,.field .control-wrap,.meta-line input){
  background:#fff!important;border-color:var(--pm-card-border)!important;
 }
-:root[data-personal-mode] :is(.v081-tool-search,.v081-search-field,.meta-line,.v10-optional-gcs) :is(input,select){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.v081-tool-search,.v081-search-field,.meta-line,.v10-optional-gcs) :is(input,select){
  color:#183244!important;
 }
-:root[data-personal-mode] .field .control-wrap :is(input,select){color:#173448!important}
-:root[data-personal-mode] .field .unit{color:#33566a!important;background:#f6f9f9!important}
-:root[data-personal-mode] .toolbox .tool-tag:not(.soon){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .field .control-wrap :is(input,select){color:#173448!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .field .unit{color:#33566a!important;background:#f6f9f9!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .toolbox .tool-tag:not(.soon){
  background:var(--pm-subpanel)!important;color:var(--pm-surface-ink)!important;
 }
-:root[data-personal-mode] :is(.v099-category-status,.main .v099-category-heading p){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.v099-category-status,.main .v099-category-heading p){
  color:var(--pm-card-ink)!important;
 }
-:root[data-personal-mode] :is(.btn-primary,.tool-launch,.hc-launch){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.btn-primary,.tool-launch,.hc-launch){
  background:var(--pm-action)!important;border:2px solid var(--pm-action-border)!important;
  color:var(--pm-action-ink)!important;
  box-shadow:0 4px 13px #0a27311f!important;
  font-weight:850!important;
 }
-:root[data-personal-mode] :is(.btn-primary,.tool-launch,.hc-launch):hover{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.btn-primary,.tool-launch,.hc-launch):hover{
  filter:brightness(.95)!important;transform:translateY(-1px);
 }
-:root[data-personal-mode] :is(.btn-secondary,.btn-inline,.btn-isbar,.detail-button,.v10-now-button,.v099-category-button,.v081-view-all,.v081-tool-result,.theme-switch,.mobile-toggle){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.btn-secondary,.btn-inline,.btn-isbar,.detail-button,.v10-now-button,.v099-category-button,.v081-view-all,.v081-tool-result,.theme-switch,.mobile-toggle){
  background:var(--pm-soft-action)!important;color:var(--pm-soft-action-ink)!important;
  border:1px solid var(--pm-action-border)!important;
 }
 :root[data-personal-mode="kristian"] :is(.btn-secondary,.btn-inline,.btn-isbar,.detail-button,.v10-now-button,.v099-category-button,.v081-view-all,.v081-tool-result,.theme-switch,.mobile-toggle){
  background:#fff!important;color:#84172a!important;
 }
-:root[data-personal-mode] :is(.v099-category-button[aria-pressed="true"],.v081-tool-result:hover){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.v099-category-button[aria-pressed="true"],.v081-tool-result:hover){
  background:var(--pm-subpanel)!important;color:var(--pm-surface-ink)!important;
  border-color:var(--pm-action-border)!important;
 }
-:root[data-personal-mode] .header :is(.theme-switch,.mobile-toggle){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header :is(.theme-switch,.mobile-toggle){
  background:#ffffff18!important;color:var(--pm-header-ink)!important;
  border:1px solid #ffffff72!important;
 }
-:root[data-personal-mode] .header .profile-trigger{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .profile-trigger{
  background:#fff!important;color:var(--pm-action-ink)!important;
  outline:2px solid var(--pm-action-border)!important;outline-offset:1px;
 }
 :root[data-personal-mode="kristian"] .header .profile-trigger{color:#95152c!important}
 :root[data-personal-mode="kent"] .header .profile-trigger{color:#164e48!important}
 :root[data-personal-mode="philip"] .header .profile-trigger{color:#0c5664!important}
-:root[data-personal-mode] :is(.header .mobile-toggle,.sidebar .nav,.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button):focus-visible{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.header .mobile-toggle,.sidebar .nav,.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button):focus-visible{
  outline:3px solid var(--pm-focus)!important;outline-offset:3px!important;
 }
-:root[data-personal-mode] .personal-mode-signature{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .personal-mode-signature{
  background:#ffffff18!important;color:var(--pm-header-ink)!important;
  border-color:#ffffff70!important;
 }
-:root[data-personal-mode] .profile-dialog{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog{
  background:var(--pm-panel)!important;color:var(--pm-card-ink)!important;
 }
-:root[data-personal-mode] .profile-dialog-head{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog-head{
  background:var(--pm-subpanel)!important;color:var(--pm-card-ink)!important;
  border-color:var(--pm-card-border)!important;
 }
-:root[data-personal-mode] .personal-mode-info{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .personal-mode-info{
  background:var(--pm-subpanel)!important;color:var(--pm-card-ink)!important;
  border-color:var(--pm-action-border)!important;
 }
-:root[data-personal-mode] .profile-dialog .service-theme-option:has(input:checked){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog .service-theme-option:has(input:checked){
  outline:2px solid var(--pm-action-border);outline-offset:1px;
 }
-:root[data-personal-mode] .personal-mode-popup .personal-mode-footnote{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .personal-mode-popup .personal-mode-footnote{
  color:#3e5663!important;
 }
 :root[data-personal-mode="kristian"] .personal-mode-popup[data-mode="kristian"]{
@@ -262,31 +262,31 @@
  border-top:8px solid #c5a65a;background:linear-gradient(155deg,#fff,#e1f5f3);
 }
 @media(max-width:770px){
- :root[data-personal-mode] .header .theme-top-ribbon{height:21px!important}
- :root[data-personal-mode] .sidebar{box-shadow:12px 0 30px #05162855!important}
- :root[data-personal-mode] .action-dock{background:var(--pm-header)!important;border-top:1px solid #ffffff44!important}
+ :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .theme-top-ribbon{height:21px!important}
+ :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar{box-shadow:12px 0 30px #05162855!important}
+ :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .action-dock{background:var(--pm-header)!important;border-top:1px solid #ffffff44!important}
 }
 @media(max-width:480px){
- :root[data-personal-mode] .header .theme-top-ribbon{height:16px!important}
- :root[data-personal-mode] .main .intro h1{font-size:clamp(22px,6.4vw,25px)}
+ :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .theme-top-ribbon{height:16px!important}
+ :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .intro h1{font-size:clamp(22px,6.4vw,25px)}
 }
 
 
 /* Readability on the light reading panels even if a user had previously selected
  * a dark service preset. Clinical score and alert text is deliberately excluded. */
-:root[data-personal-mode] :is(.section-header p,.toolbox p,.field .hint,.v099-category-heading p,.v10-optional-gcs>span,.helper){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.section-header p,.toolbox p,.field .hint,.v099-category-heading p,.v10-optional-gcs>span,.helper){
  color:#3d5966!important;
 }
-:root[data-personal-mode] .profile-dialog :is(.profile-dialog-head h2,.profile-dialog-head p,.profile-dialog-section h3,.profile-dialog-section>p,.service-theme-intro,.personalization-note,.service-theme-options legend){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog :is(.profile-dialog-head h2,.profile-dialog-head p,.profile-dialog-section h3,.profile-dialog-section>p,.service-theme-intro,.personalization-note,.service-theme-options legend){
  color:#243f4b!important;
 }
-:root[data-personal-mode] .main .footer{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .footer{
  color:var(--pm-hero-muted)!important;
 }
-:root[data-personal-mode] .main .footer a{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .main .footer a{
  color:#ffffff!important;text-underline-offset:3px;
 }
-:root[data-personal-mode] :is(.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button,.v081-view-all,.v10-now-button):focus-visible{
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button,.v081-view-all,.v10-now-button):focus-visible{
  outline:3px solid var(--pm-focus)!important;outline-offset:3px!important;
 }
 

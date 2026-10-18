@@ -466,6 +466,11 @@ script=r"""
   const initialRiskScore=getComputedStyle(riskCard).backgroundColor;
   const riskAlert=document.querySelector('#newsClinicalAlert');
   const initialRiskAlert=getComputedStyle(riskAlert).backgroundColor;
+  const riskPalette=()=>{const saved=riskCard.className;const colors=['ok','warning','danger'].map(level=>{riskCard.className='score '+level;const c=getComputedStyle(riskCard);return [c.backgroundColor,c.color,c.borderColor]});riskCard.className=saved;return JSON.stringify(colors)};
+  const originalMode=root.dataset.theme;root.dataset.theme='dark';
+  const darkRiskPalette=riskPalette();
+  const darkRiskScore=getComputedStyle(riskCard).backgroundColor,darkRiskAlert=getComputedStyle(riskAlert).backgroundColor;
+  root.dataset.theme=originalMode;
   const primaryButton=document.querySelector('#launchABCDE');
   const pageColors={
    kristian:{header:'rgb(100, 15, 37)',button:'rgb(255, 255, 255)',panel:'rgb(255, 253, 253)'},
@@ -494,17 +499,18 @@ script=r"""
    assert(strip.bottom<=document.querySelector('.header').getBoundingClientRect().bottom+1,'banner extends below header in '+mode);
 
    const palette=pageColors[mode];
-   assert(getComputedStyle(document.querySelector('.header')).backgroundColor===palette.header,'header must switch to immersive '+mode+' palette');
+   if(mode!=='philip')assert(getComputedStyle(document.querySelector('.header')).backgroundColor===palette.header,'header must switch to immersive '+mode+' palette');
    assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'main page must have substantial '+mode+' colored backdrop');
-   assert(getComputedStyle(document.querySelector('#vurdering')).backgroundColor===palette.panel,'content surface wrong for '+mode);
+   if(mode!=='philip')assert(getComputedStyle(document.querySelector('#vurdering')).backgroundColor===palette.panel,'content surface wrong for '+mode);
+   else {assert(root.dataset.baseTheme==='philip','name must activate cobalt glass');assert(getComputedStyle(document.querySelector('#vurdering')).backdropFilter.includes('blur'),'glass must blur the backdrop');}
    assert(getComputedStyle(document.querySelector('.sidebar')).backgroundImage.includes('linear-gradient'),'side navigation should switch theme for '+mode);
    if(mode==='philip'){
     assert(getComputedStyle(primaryButton).backgroundImage.includes('linear-gradient'),'founder gold action gradient missing');
    }else{
     assert(getComputedStyle(primaryButton).backgroundColor===palette.button,'primary button color wrong for '+mode);
    }
-   assert(getComputedStyle(riskCard).backgroundColor===initialRiskScore,'personal mode changed clinical score background '+mode);
-   assert(getComputedStyle(riskAlert).backgroundColor===initialRiskAlert,'personal mode changed clinical alert background '+mode);
+   assert(mode==='philip'?riskPalette()===darkRiskPalette:getComputedStyle(riskCard).backgroundColor===initialRiskScore,'personal mode changed clinical score colors '+mode);
+   assert(getComputedStyle(riskAlert).backgroundColor===(mode==='philip'?darkRiskAlert:initialRiskAlert),'personal mode changed clinical alert background '+mode);
    document.querySelector('#closePersonalMode').click();
   }
   put('profileName','Kristian');
@@ -671,6 +677,13 @@ script=r"""
   const season=dlg.querySelector('#seasonThemeSelect');
   assert(!!season,'season selector missing');
   const beforeScore=document.querySelector('#newsNumber').textContent;
+  assert(dlg.querySelector('.base-theme-options').hidden,'secret theme must be hidden before matching name');
+  setRadio('baseTheme','philip');
+  assert(document.documentElement.dataset.baseTheme==='standard','locked theme must reject stale selection');
+  put('profileName','  Philip   aasen  ');
+  document.querySelector('#saveProfile').click();
+  document.querySelector('#closePersonalMode').click();
+  assert(!dlg.querySelector('.base-theme-options').hidden,'matching saved name unlocks glass');
   setRadio('baseTheme','philip');
   assert(document.documentElement.dataset.baseTheme==='philip'&&document.documentElement.dataset.theme==='dark','Philip glass not applied');
   setRadio('serviceTheme','homecare');
