@@ -453,7 +453,8 @@ script=r"""
   // Name-based cosmetic modes are exclusive, activate only on explicit save, and preserve risk visuals.
   const personalPopup=document.querySelector('#personalModePopup');
   assert(!!personalPopup&&!!window.KartleggPersonalModes,'personal mode module missing');
-  const initialRiskScore=getComputedStyle(document.querySelector('.score.danger')).backgroundColor;
+  const riskCard=document.querySelector('#newsCard');
+  const initialRiskScore=getComputedStyle(riskCard).backgroundColor;
   for(const [name,mode,title] of [
    ['Kristian Bøe','kristian','Kristian-modus aktivert'],
    ['Kent Ole Hansen','kent','Kent-modus aktivert'],
@@ -467,7 +468,7 @@ script=r"""
    assert(document.querySelector('#personalModeTitle').textContent===title,'wrong personal popup title');
    assert(getComputedStyle(ribbon).backgroundImage.includes('svg'),'missing SVG ribbon '+mode);
    assert(Math.abs(ribbon.getBoundingClientRect().width-headerWidth)<2,'personal ribbon not full header width '+mode);
-   assert(getComputedStyle(document.querySelector('.score.danger')).backgroundColor===initialRiskScore,'personal mode changed clinical severity state '+mode);
+   assert(getComputedStyle(riskCard).backgroundColor===initialRiskScore,'personal mode changed clinical severity state '+mode);
    document.querySelector('#closePersonalMode').click();
   }
   put('profileName','Kristian');
