@@ -815,7 +815,7 @@ script=r"""
   document.querySelector('[data-page="laer"]').click();
   const hub=window.KartleggLearningHub,materials=window.KartleggLearningContent;
   assert(!!hub&&!!materials,'4AT/NEWS2 learning hub missing');
-  assert(document.querySelectorAll('#learningHubChooser [data-learn-tool]').length===3,'learning hub should have three tools');
+  assert(document.querySelectorAll('#learningHubChooser [data-learn-tool]').length===4,'learning hub should have four tools including TIMES');
   for(const [tool,definition,engine] of [
    ['four','fourCases','4at'],
    ['news','newsCases','news2']
