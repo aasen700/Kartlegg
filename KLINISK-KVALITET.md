@@ -24,7 +24,7 @@ Se også den mer detaljerte [kontrollmatrisen](KONTROLLMATRISE.md) med originalk
 | **Ortostatisk BT** | Systolisk fall ≥20 eller diastolisk ≥10 mmHg, normalt innen 3 min stående. Symptom, tidspunkt og kontekst avgjør vurdering. | [AHA 2024](https://professional.heart.org/en/science-news/orthostatic-hypotension-in-adults-with-hypertension/top-things-to-know) | Regning og grenseverdier testet; ikke diagnostisk verktøy |
 | **FAST** | Tegn på slag er grunn til å ringe 113 straks; negativ FAST utelukker ikke slag. | [Helsenorge – hjerneslag](https://www.helsenorge.no/sykdom/hjerneslag/) | Varseltekst og navigasjon testet; ingen diagnose |
 | **SKUV** | Strukturert observasjonsguide, ikke full opplæring i kliniske undersøkelsesteknikker. | [NTNU SKUV](https://www.ntnu.no/ism/kurs/skuv) | Struktur og navigasjon sjekket; faginnhold krever uavhengig klinisk redaksjon |
-| **TIMES** | Vev, inflammasjon, væske, sårkant og omkringliggende hud; lengde × bredde er rektangelestimat. Skjermlinjal er ikke medisinsk måleinstrument. | Lokale sårfaglige kilder må bekreftes i klinisk redaksjon | Regning/kalibreringslogikk testet; målevaliditet ikke fastslått |
+| **TIMES** | Det opprinnelige TIME-rammeverket dekker vev, infeksjon/inflammasjon, fukt og sårkant. S er Kartleggs pedagogiske tillegg for omkringliggende hud. Lengde × bredde er rektangelestimat; skjermlinjal er ikke medisinsk måleinstrument. | [Schultz mfl. 2003](https://pubmed.ncbi.nlm.nih.gov/12654015/), [IWII 2022](https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf), NICE-kilder for leggsår/trykksår/diabetisk fot/kirurgiske sår og ISTAP 2025 | Kasus, svarnøkler og begrunnelser kildekontrollert redaksjonelt; regning testet; uavhengig klinisk signering og målevaliditet gjenstår |
 | **Lindring ved livets slutt** | Observasjoner og pleietiltak med omtale av legemiddelgrupper; ingen dose, ordinasjon eller individuell terapianbefaling. | [Helsedirektoratet](https://www.helsedirektoratet.no/faglige-rad/lindrende-behandling-i-livets-sluttfase) og [Helse Bergen](https://www.helse-bergen.no/kompetansesenter-i-lindrande-behandling/palliasjon-verktoy-for-helsepersonell/) | Sikkerhetsavgrensninger gjennomgått; full redaksjonell kontroll av hvert symptomelement gjenstår |
 | **ABCDE** | Strukturert primærvurdering; håndter truet A/B/C før neste trinn, tilkall hjelp ved akutt forverring. | Faglige ABCDE-prinsipper/lokale prosedyrer | Navigasjon og akuttvarsler testet; ikke godkjent behandlingsalgoritme |
 
@@ -33,6 +33,8 @@ Se også den mer detaljerte [kontrollmatrisen](KONTROLLMATRISE.md) med originalk
 2. **NEWS2 SpO₂-skala 2:** tidligere tekst kunne leses som om ønsket metningsmål alene var tilstrekkelig. Presisert bekreftet hyperkapnisk respirasjonssvikt og dokumentert beslutning om ordinerte mål.
 3. **Gamle skåringsresultater i visning:** endring av inndata i selvstendige hjemmeverktøy skjuler nå tidligere resultat slik at brukeren ikke kan forveksle gammel tolkning med nytt inntastet grunnlag.
 4. **Dobbelt eierskap til temabryter:** fjernet gammel klikklytter og redundant tidligere tema-lagring; én kontroller eier nå dag/natt-modus.
+5. **Versjon 1.1 – vurderingsflyt:** lagt inn én synlig «Registrer → Resultat → Tiltak»-rekkefølge, tastaturfokus til resultatet etter beregning og eksplisitt kobling fra skår til responsnivå, klinisk helhetsvurdering og lokal prosedyre.
+6. **Tilgjengelighetskontroll:** automatisk nettleserkontroll dekker 320–1300 px, landskap, 200 % enhetsskalering, horisontal reflow, tastaturfokus, dialoglukking, fokusmål, tilgjengelige navn og dekorative SVG-ikoner. En manuell test med faktiske skjermlesere og brukere gjenstår.
 
 ## Gjenstående kontroll før klinisk bruk
 - Sykepleier/lege med relevant fagkompetanse må kontrollere **hver beregningsgrense, enhver tolkning og hvert pleie-/legemiddelutsagn** mot versjonerte originalkilder.
@@ -43,6 +45,6 @@ Se også den mer detaljerte [kontrollmatrisen](KONTROLLMATRISE.md) med originalk
 
 ## Teknisk teststrategi
 - `node --test tests/*.test.cjs` for grenseverdier, kontrakter og aritmetikk.
-- `python3 tests/browser-smoke.py` i GitHub Actions med headless Chromium på 1300, 768, 410, 375 og 360 piksler for navigasjon, dialoger, resultater, personlig tema, header-overlapping og horisontal scrolling.
+- `python3 tests/browser-smoke.py` i GitHub Actions med headless Chromium på 1300/768/410/375/360/320 px og mobil landskap, i tillegg til 200 % enhetsskalering, for navigasjon, dialoger, arbeidsflyt, resultater, tema, fokus og horisontal scrolling.
 - Ingen tredjeparts analytics/skript; målinger forblir i JavaScript-minnet i aktiv fane. Frivillig avsenderprofil og utseende kan beholdes lokalt.
-- Ekte manuell mobiltest og universell-utforming-audit er fortsatt anbefalt og ikke gjennomført her.
+- Automatisert kontroll kan ikke erstatte manuell prøving med VoiceOver/TalkBack, store systemfonter, ekte skjermtastatur og representative brukere. Dette står fortsatt åpent før bred bruk.

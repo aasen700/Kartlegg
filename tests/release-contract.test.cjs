@@ -1,5 +1,5 @@
 'use strict';
-// v1.0 release contracts guard key design/security decisions during later refactors.
+// Release contracts guard key design/security decisions during later refactors.
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -8,8 +8,8 @@ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const html=read('index.html');
 const css=read('assets/release-candidate-v10.css');
 const app=read('assets/app.js');
-test('official v1.0 clearly labelled as demonstration only',()=>{
- assert.match(html,/v1\.0\.2 · Kun demonstrasjon/);
+test('official v1.1 clearly labelled as demonstration only',()=>{
+ assert.match(html,/v1\.1 · Kun demonstrasjon/);
  assert.match(html,/Ikke for reell pasientbehandling/);
 });
 test('all local stylesheet and script references exist exactly once',()=>{

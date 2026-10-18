@@ -1,16 +1,15 @@
-# Kartlegg 1.0.2
+# Kartlegg 1.1
 
 **Kliniske verktøy samlet på ett sted – norsk demonstrasjonsversjon.**
 
 [Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 16 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
 
-## Oppdatering 1.0.2
-- Rettet overlapp mellom toppbanner og Kartlegg-/profilikon i de personlige temaene; kontrollert med automatiske geometritester på fem visningsbredder.
-- Presisert når SpO₂-skala 2 kan brukes i NEWS2.
-- Ryddet bort duplisert styring av temabryteren og gammel redundant tema-lagring.
-- Endret selvstendige hjemmetjenesteverktøy slik at gamle resultater skjules når målinger endres.
-- Utvidet kildedokumentasjon og dokumentert gjenstående klinisk/regulatorisk validering for samtlige 16 verktøy.
-- Ingen endringer i kliniske skåringsgrenser, behandlingsalgoritmer eller lagringsregler.
+## Oppdatering 1.1
+- Førstesiden viser én tydelig arbeidsflyt: **Registrer → Resultat → Tiltak**. Etter gyldig beregning flyttes fokus til skårkortene og neste steg blir tilgjengelig.
+- Handlingsknapper, dialoger, navigasjon og verktøykort bruker ett lokalt SVG-ikonsystem med tilgjengelige tekstetiketter.
+- Mobil og tilgjengelighet er kontrollert automatisk ved 320–1300 px, mobil landskap og 200 % enhetsskalering. Tastaturfokus, reflow, tilgjengelige navn og minimum 44 px kontroller inngår. Manuell skjermleser-/brukertest gjenstår.
+- TIMES forklarer nå skillet mellom det opprinnelige TIME-rammeverket og Kartleggs pedagogiske S for omkringliggende hud. Kasus, fasiter og begrunnelser er kontrollert mot original TIME, IWII og relevante NICE-/ISTAP-kilder.
+- Versjonstekst, «Om Kartlegg», kvalitetsdokumentasjon og versjonshistorikk er oppdatert. Ingen kliniske skåringsgrenser eller lagringsregler er endret.
 
 ## Oppdatering 1.0.1
 - Rettet qSOFA-hurtigsøk: den valgfrie GCS-seksjonen åpnes før fokus flyttes til skåringsfeltet.
@@ -91,7 +90,7 @@ Beregningslogikk og testspecifikasjon: `assets/simulation-engine.js` og `tests/s
 
 ## Viktig om klinisk bruk
 
-**Kartlegg 1.0.2 er en offentlig tilgjengelig demonstrasjonsversjon, ikke en klinisk godkjent eller uavhengig validert løsning.** Verktøyene er ment for læring, utprøving og utvikling med fiktive opplysninger. Beregninger, veiledere og legemiddelinformasjon erstatter ikke faglig skjønn, godkjente lokale prosedyrer, behandlende lege eller ordinær dokumentasjon. Klinisk og regulatorisk vurdering må gjennomføres før eventuell bruk i pasientbehandling.
+**Kartlegg 1.1 er en offentlig tilgjengelig demonstrasjonsversjon, ikke en klinisk godkjent eller uavhengig validert løsning.** Verktøyene er ment for læring, utprøving og utvikling med fiktive opplysninger. Beregninger, veiledere og legemiddelinformasjon erstatter ikke faglig skjønn, godkjente lokale prosedyrer, behandlende lege eller ordinær dokumentasjon. Klinisk og regulatorisk vurdering må gjennomføres før eventuell bruk i pasientbehandling.
 
 Faglige referanser og avgrensninger vises i de enkelte verktøyene.
 
@@ -104,7 +103,7 @@ node --test tests/*.test.cjs
 python3 tests/browser-smoke.py
 ```
 
-De automatiske testene er utvidet fra **133** ved den første lanseringen til **139** etter v1.0.2-oppdateringen, samt nettlesertester på desktop, nettbrett og tre mobilbredder. Automatiske tester innebærer **ikke klinisk validering**.
+Testantallet og kontrollerte visningsstørrelser rapporteres i den aktuelle GitHub Actions-kjøringen. Testpakken dekker rene beregningsfunksjoner, kontrakter og nettleserflyt på desktop, nettbrett, små mobiler, landskap og 200 % enhetsskalering. Automatiske tester innebærer **ikke klinisk validering**.
 
 ## Utvikling
 
@@ -114,7 +113,7 @@ Utviklingshistorikken finnes i [Kartlegg-test](https://github.com/aasen700/Kartl
 
 
 ## TIMES – kliniske undervisningsillustrasjoner (oktober 2026)
-- Seks fiktive anatomisk tilpassede SVG-illustrasjoner ligger i `assets/wounds/*-clinical.svg`. De er digitalt genererte undervisningsillustrasjoner, ikke pasientfotografier eller diagnostiske bilder. Ved bildeinnlastingsfeil vises kasusbeskrivelsen med en melding. Se `TIMES-KASUS.md` for bildesamsvar og fagkilder.
+- Seks fiktive anatomisk tilpassede SVG-illustrasjoner ligger i `assets/wounds/*-clinical.svg`. De er digitalt genererte undervisningsillustrasjoner, ikke pasientfotografier eller diagnostiske bilder. Ved bildeinnlastingsfeil vises kasusbeskrivelsen med en melding. TIME er originalrammeverket; Kartleggs S er et pedagogisk tillegg for omkringliggende hud. Se `TIMES-KASUS.md` for bildesamsvar og fagkilder.
 - TIMES Lær har et responsivt todelt kasusoppsett med zoom til sårbunn/sårkant, analyse, systematisk T-I-M-E-S-vurdering, videre vurderingsmomenter og fasit.
 - Ingen kunstige tidspunkter eller sårprogresjonsdata vises. Fasit er sperret frem til innlevering (og samlet til slutt i testmodus).
 - Ingen endring i vurderingsalgoritme, pasientdatalagring eller øvrige kliniske verktøy. Illustrasjonenes medisinske detaljer krever faglig gjennomgang før annet enn pedagogisk demonstrasjon.

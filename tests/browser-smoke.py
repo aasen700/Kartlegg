@@ -26,6 +26,10 @@ script=r"""
  try {
   assert(!!window.KartleggTools,'scoring module did not load');
   assert(!!window.KartleggIconSystem,'shared icon system did not load');
+  assert(!!window.KartleggAssessmentFlow,'v1.1 assessment flow did not load');
+  assert(document.querySelectorAll('.assessment-flow [data-assessment-step]').length===3,'assessment flow needs three steps');
+  assert(document.querySelector('[data-assessment-step="input"]').getAttribute('aria-current')==='step','input step should start active');
+  assert(!!document.querySelector('.skip-link'),'skip link missing');
   const primaryIcons=[...document.querySelectorAll('.sidebar .nav .ui-icon-svg')];
   assert(primaryIcons.length===7,'every primary destination needs a shared line icon');
   assert(primaryIcons.every(icon=>icon.getAttribute('aria-hidden')==='true'),'decorative navigation icons must stay hidden from assistive technology');
@@ -680,6 +684,17 @@ script=r"""
   put('gcs','15');
   form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(validation.hidden,'successful NEWS2 calculation must clear validation summary');
+  assert(document.querySelector('#resultater').classList.contains('is-ready'),'result section was not emphasized after scoring');
+  assert(!document.querySelector('#reviewResponse').disabled,'next-step action stayed disabled after scoring');
+  assert(document.activeElement===document.querySelector('#result-heading'),'keyboard focus did not move to result heading');
+  assert(document.querySelector('[data-assessment-step="result"]').getAttribute('aria-current')==='step','result step is not current');
+  assert(document.querySelector('[data-assessment-step="input"]').classList.contains('is-complete'),'input step is not marked complete');
+  document.querySelector('#reviewResponse').click();
+  assert(document.activeElement===document.querySelector('#info-heading'),'next-step action did not focus intervention heading');
+  assert(document.querySelector('[data-assessment-step="action"]').getAttribute('aria-current')==='step','action step is not current');
+  window.KartleggIconSystem.refresh();
+  assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===4,'form actions did not receive shared SVG icons');
+  assert(document.querySelectorAll('.dialog-close:not([data-ui-action-icon])').length===0,'dialog close controls still use legacy glyphs');
   const scoreParts=document.querySelector('#v10ClinicalParts');
   assert(!scoreParts.hidden,'NEWS2 subscore visualization missing');
   assert(scoreParts.querySelectorAll('.v10-part-score').length===7,'NEWS2 must display all 7 subscore dimensions');
@@ -990,6 +1005,13 @@ try:
   if status!="PASS":
    print(f"::error title=Browser smoke {width}x{height}::{status}")
    raise SystemExit(1)
+ # Repeat the smallest supported portrait viewport at 200% device scaling.
+ command=[shutil.which(chrome),"--headless","--disable-gpu","--disable-dev-shm-usage","--no-sandbox","--force-device-scale-factor=2","--window-size=360,780","--virtual-time-budget=5000","--dump-dom",temp.as_uri()]
+ result=subprocess.run(command,text=True,capture_output=True,timeout=45)
+ match=re.search(r'<output id="kartlegg-smoke">(.*?)</output>',result.stdout)
+ status=html.unescape(match.group(1)) if match else "NO OUTPUT"
+ print("Browser integration smoke 360×780 at 200%:",status)
+ if status!="PASS":raise SystemExit(1)
  # Independently load bookmarked URL routes after a hard refresh in Chrome.
  # This catches a common bug where generated links look correct but do not launch.
  deep_script=r"""

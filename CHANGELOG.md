@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## 1.1 – 18. oktober 2026
+
+- Ny synlig arbeidsflyt på førstesiden: Registrer → Resultat → Tiltak. Gyldig innsending flytter tastaturfokus til resultatene og åpner et tydelig neste steg.
+- Resultatkortene har sterkere visuell prioritet etter beregning, med direkte tilgang til tiltak/forbehold og ISBAR.
+- Ett lokalt SVG-ikonsystem dekker navigasjon, seksjoner, skårkort, verktøykort, handlingsknapper og dialoglukking; eldre tegnikoner ryddes også i dynamisk innhold.
+- Tilgjengelighetsforbedringer for hopp-lenke, fokus, tilgjengelige navn, 44 px berøringsmål, små skjermer, landskap, 200 % skalering, redusert bevegelse og tvungne systemfarger.
+- TIMES er redaksjonelt gjennomgått mot det opprinnelige TIME-rammeverket, IWII 2022 og sårtypespesifikke NICE-/ISTAP-kilder. S beskrives uttrykkelig som Kartleggs pedagogiske tillegg for omkringliggende hud.
+- «Om Kartlegg», README, kontrollmatrise og kvalitetsdokumentasjon viser versjon og kontrollstatus. Uavhengig klinisk signering og manuell skjermleser-/brukertest står fortsatt åpne.
+- Ingen endring i NEWS2-, qSOFA- eller andre skåringsformler, kliniske risikofarger eller lagringsregler.
+
 ## Kartlegg Lær – 4AT og NEWS2 (18. oktober 2026)
 
 - GCS, 4AT og NEWS2 samles i ett opplæringspanel. GCS-opplevelsen og den gamle avanserte pasientcasen er beholdt.
@@ -41,7 +51,7 @@
 - Ingen endring i NEWS2/qSOFA/andre skåringsformler eller i oppbevaring av pasientmålinger.
 
 
-## UI 1.1.2 – 18. oktober 2026 (forslag)
+## Tema- og UI-forarbeid – 18. oktober 2026
 
 - Forsterket Philip cobalt glass med dypere blå reflekser, glassflater og fokusmarkeringer.
 - Sesongtemaene fungerer som et separat visuelt lag på Standard, tjenestetemaer og personlige temaer.

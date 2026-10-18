@@ -12,7 +12,7 @@
     {
       "id": "tissue",
       "letter": "T",
-      "title": "Tissue – vev i sårbunnen",
+      "title": "Vev i sårbunnen",
       "prompt": "Hva beskriver sårbunnen best?",
       "options": [
         [
@@ -48,7 +48,7 @@
     {
       "id": "infection",
       "letter": "I",
-      "title": "Infection / inflammation",
+      "title": "Infeksjon / inflammasjon",
       "prompt": "Hvordan tolker du de oppgitte tegnene?",
       "options": [
         [
@@ -68,7 +68,7 @@
     {
       "id": "moisture",
       "letter": "M",
-      "title": "Moisture – fuktbalanse",
+      "title": "Fuktbalanse",
       "prompt": "Hva er den dominerende fuktsituasjonen?",
       "options": [
         [
@@ -92,7 +92,7 @@
     {
       "id": "edge",
       "letter": "E",
-      "title": "Edge – sårkant",
+      "title": "Sårkant",
       "prompt": "Hva kjennetegner sårkanten?",
       "options": [
         [
@@ -120,7 +120,7 @@
     {
       "id": "skin",
       "letter": "S",
-      "title": "Surrounding skin – omkringliggende hud",
+      "title": "Omkringliggende hud",
       "prompt": "Hva er hovedfunnet omkring såret?",
       "options": [
         [
@@ -157,15 +157,16 @@
   "lessons": [
     {
       "title": "TIMES – strukturer funnene",
-      "body": "TIMES er en huskeregel for observasjon av vev, inflammasjon/infeksjon, fuktbalanse, sårkanter og huden rundt. Først må du også vurdere sårårsak, sirkulasjon, smerter, allmenntilstand og endring over tid.",
+      "body": "Det opprinnelige TIME-rammeverket dekker vev, infeksjon/inflammasjon, fuktbalanse og sårkant. I Kartlegg er S lagt til som en pedagogisk påminnelse om å beskrive huden omkring såret separat. Først må du også vurdere sårårsak, sirkulasjon, smerter, allmenntilstand og endring over tid.",
       "tips": [
         "Samme sår kan inneholde flere vevstyper.",
         "Sårtype kan ikke avgjøres fra et bilde alene.",
-        "Modulen trener observasjonsbegreper – ikke ordinasjon eller valg av bandasje."
+        "Modulen trener observasjonsbegreper – ikke ordinasjon eller valg av bandasje.",
+        "Fasiten gjelder opplysningene i hvert fiktive kasus; et bilde alene kan ikke bekrefte årsak, infeksjon, dybde eller tilheling."
       ]
     },
     {
-      "title": "T – Tissue",
+      "title": "T – vev",
       "body": "Se etter granulasjon, fibrin/slough, epitelisering og nekrotisk vev. Beskriv gjerne andeler dersom flere vevstyper finnes i samme sår.",
       "tips": [
         "Rødt, kornet vev kan være granulasjon.",
@@ -175,7 +176,7 @@
       ]
     },
     {
-      "title": "I – Infection / inflammation",
+      "title": "I – infeksjon / inflammasjon",
       "body": "Vurder utvikling i smerter, lukt, sårvæske, rødhet, varme, hevelse, tilheling og eventuelle allmennsymptomer. Normal sårinflammasjon og lokal hudirritasjon må skilles fra mistanke om infeksjon.",
       "tips": [
         "Ingen enkeltindikator bekrefter infeksjon.",
@@ -184,7 +185,7 @@
       ]
     },
     {
-      "title": "M – Moisture",
+      "title": "M – fuktbalanse",
       "body": "Kartlegg fukt i sårbunn, sårvæskemengde og om omkringliggende hud blir oppbløtt. Både uttørking og for mye væske kan være uheldig.",
       "tips": [
         "Vurder bandasjens gjennomtrukking og lekkasje.",
@@ -194,7 +195,7 @@
       ]
     },
     {
-      "title": "E – Edge",
+      "title": "E – sårkant",
       "body": "Undersøk om sårkanten går fremover med epitelisering, står stille, er fortykket eller er underminert. Sårkanten sier noe om forløpet, men må sees sammen med målinger over tid.",
       "tips": [
         "Epitel fra kanten kan tyde på tilheling.",
@@ -203,7 +204,7 @@
       ]
     },
     {
-      "title": "S – Surrounding skin",
+      "title": "S – omkringliggende hud",
       "body": "Se systematisk etter macerasjon, rødhet, ødem, skjør hud, hudrifter, pigmentforandringer og hard hud. Beskriv huden omkring såret separat fra sårbunnen.",
       "tips": [
         "Fukt og tape kan irritere frisk hud.",
@@ -395,6 +396,14 @@
     }
   ],
   "sources": [
+    {
+      "label": "Schultz mfl. – det opprinnelige TIME-rammeverket (2003)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12654015/"
+    },
+    {
+      "label": "IWII – Wound Infection in Clinical Practice (2022)",
+      "url": "https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf"
+    },
     {
       "label": "NICE – infeksjon i leggsår",
       "url": "https://www.nice.org.uk/guidance/ng152/chapter/recommendations"
