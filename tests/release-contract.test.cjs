@@ -124,10 +124,10 @@ test('appearance toggle has a single controller and homecare outputs invalidate 
  assert.match(homecare,/inputs\?\.addEventListener\('change',invalidate\)/);
 });
 
-test('single canonical registry drives search and direct-linkable 16 tools',()=>{
+test('single canonical registry drives search and direct-linkable 18 tools',()=>{
  const R=require('../assets/tool-registry.js');
- assert.equal(R.all.length,16);
- assert.equal(new Set(R.all.map(x=>x.id)).size,16);
+ assert.equal(R.all.length,18);
+ assert.equal(new Set(R.all.map(x=>x.id)).size,18);
  assert.equal(R.search('gcs')[0].id,'gcs');
  assert.equal(R.search('smerte')[0].id,'nrs');
  assert.equal(R.linkFor('https://example.test/Kartlegg/?abc=1','gcs'),'https://example.test/Kartlegg/?tool=gcs#verktoy');

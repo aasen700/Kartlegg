@@ -4,7 +4,7 @@
 
 ## Prinsipper
 
-1. **Ett register for identitet og søk:** `assets/tool-registry.js` definerer nøyaktig 16 verktøy med ID, navn, søkeord, knappselektor og *eier av faglogikken*. Verktøysøk, kategorifilter og favoritter bruker dette i stedet for hver sine konkurrerende tabeller.
+1. **Ett register for identitet og søk:** `assets/tool-registry.js` definerer nøyaktig 18 verktøy med ID, navn, søkeord, knappselektor og *eier av faglogikken*. Verktøysøk, kategorifilter og favoritter bruker dette i stedet for hver sine konkurrerende tabeller.
 2. **Ett søkefilter:** `assets/tool-categories-v099.js` eier fritekst + kategorier og beregner synlige kort i samme funksjon (`sync`). Tidligere lyttere i `assets/ux-v071.js` og `assets/modern-v08-body.js` er fjernet. `assets/news-first-v081.js` søker i registeret, med egne undersøkbare undersymptomer for palliasjon.
 3. **Én åpnefunksjon:** `assets/tool-navigation.js` eier `open(id)`, favoritter, delbare lenker og arbeidsflyt NEWS2/GCS/ISBAR. Den **klikker eksisterende verktøys egne åpneknapper**; den kopierer ikke kalkulatorer eller doseringslogikk.
 4. **Dataskille:** Bare `kartlegg.tool-favorites.v1` med tillatte slug-strenger lagres som visuell preferanse. Vitale målinger og skåringshistorikk forblir i fanens RAM. Eksisterende, eksplisitt samtykket avsenderprofil og utseendepreferanser lagres etter gamle regler.
@@ -20,6 +20,8 @@
 | MST / TUG / ESAS-r / ortostatisk BT | `assets/homecare-v09-scoring.js` | **Nei** ved klinisk endring |
 | BMI / Mosteller BSA / respirasjonsfrekvens | `assets/modern-v08-scoring.js` | **Nei** ved formelendring |
 | TIMES-mål / kalibreringsmatematikk | `assets/wound-v091-scoring.js` | **Nei** ved beregningsendring |
+| Ankel–arm-indeks / rapporteringsintervaller | `assets/abi-v12-scoring.js` | **Nei** ved formel-, intervall- eller fortolkningsendring |
+| Fiktive legemiddeloppgaver / svarnøkler | `assets/medication-learning-data-v12.js` | **Nei** ved dose-, styrke-, enhets- eller svarendring |
 | Klinisk UI og dialoger | `assets/clinical-ui.js`, `assets/homecare-v09-ui.js`, `assets/modern-v08-body.js`, `assets/modern-v08-timer.js`, `assets/times-v091.js`, `assets/palliation-v091.js`, `assets/abcde-v099.js` | Bare ved rene layoutendringer uten endring av tekst, fortolkning eller flyt |
 | Indeksering, navn, direkte lenker | `assets/tool-registry.js` | Ja, for rent søke-/rutearbeid |
 | Favoritter, lenkekopiering, overgang mellom verktøy | `assets/tool-navigation.js` | Ja, men krev navigasjons-/tilgjengelighetstest |
@@ -87,7 +89,7 @@ GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester
 
 - `assets/interaction-polish.css` eier felles mobilgeometri, berøringsmål, læringsnavigasjon og dialogtilpasning. Den endrer ikke klinisk skåring.
 - `assets/mobile-ux.js` følger nettleserens visual viewport og skjuler handlingslinjen mens skjermtastaturet tar plass. Dialogene tilpasses synlig høyde, og fokuserte felt holdes synlige.
-- `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2 og TIMES. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
+- `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2, TIMES og Legemiddelverkstedet. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
 - `assets/theme-philip.css` er eneste eier av positive Philip-temaregler: palett, glassflater, kontroller og komponenttilpasning. Selektorene er avgrenset til aktivt Philip-tema og beholder prioritet over det senere felles strukturlaget. Gamle Philip-regler er fjernet fra tema-, lærings- og simuleringsfilene.
 - `assets/visual-refinement-v2.css` eier felles kortgeometri, tema- og sesongforhåndsvisninger, bevegelse og mobile dybdenivåer. Den skal ikke definere kliniske risiko-, poeng- eller fasitfarger.
 - `assets/design-system-v3.css` eier grunngeometri og fokus. `assets/design-system-v4.css` er siste felles lag og eier tre kortroller, skjema­tilstander, vurderingsgrid, mobil hovedmeny og semantiske farger. Ingen av dem endrer beregningsregler eller kliniske tekster.

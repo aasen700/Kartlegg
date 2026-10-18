@@ -2,7 +2,12 @@
 
 **Kliniske verktøy samlet på ett sted – norsk demonstrasjonsversjon.**
 
-[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 16 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
+[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 18 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
+
+## Nye moduler – oktober 2026
+- **Ankel–arm-indeks (AAI/ABI):** separat beregning for høyre og venstre bein fra høyeste systoliske armtrykk og høyeste trykk i dorsalis pedis/tibialis posterior. Verktøyet viser intervall, måleforbehold og direkte vei til TIMES. Det avgjør ikke diagnose eller kompresjonsbehandling.
+- **Legemiddelverkstedet:** fem læringstrinn og seks helt fiktive oppgaver der brukeren regner volum, velger den minste treningssprøyten som rommer volumet og drar stempelet til riktig mengde. Beregning, sprøytevalg og opptrekk vurderes hver for seg. Modulen gir ikke ordinasjon eller praktisk kompetansegodkjenning.
+- Begge modulene kjører lokalt uten konto, nettverk eller lagring av målinger og øvingssvar.
 
 ## Oppdatering 1.1
 - Designspråket bruker tre faste kortroller for handling, resultat og forklaring, tydeligere skjema­tilstander og en samlet arbeidsflate på brede skjermer.
@@ -22,7 +27,7 @@
 - Utvidet tester for disse konkrete funksjonene. **Ingen NEWS2-grenser, behandlingstekster eller lagringsregler er endret.**
 
 ## Oppdatering av arbeidsflyt – oktober 2026
-- Stjernemerk alle 16 verktøy og åpne favoritter fra forsiden. Bare verktøy-ID-er lagres lokalt; kliniske målinger lagres fortsatt ikke permanent.
+- Stjernemerk alle 18 verktøy og åpne favoritter fra forsiden. Bare verktøy-ID-er lagres lokalt; kliniske målinger lagres fortsatt ikke permanent.
 - Hvert verktøy kan deles med en direkte lenke, for eksempel [GCS](https://aasen700.github.io/Kartlegg/?tool=gcs#verktoy), [NEWS2](https://aasen700.github.io/Kartlegg/?tool=news2#vurdering) og [ABCDE](https://aasen700.github.io/Kartlegg/?tool=abcde#verktoy).
 - Bytt direkte mellom NEWS2, GCS og ISBAR fra forsiden og relevante dialoger.
 - Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
@@ -30,7 +35,7 @@
 
 ## Kartlegg Lær – interaktive læringsmoduler (pilot)
 
-[Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. Velg mellom **GCS, 4AT og NEWS2**. Alle kan også åpnes fra egne «Lær»-knapper på kortene i verktøybiblioteket.
+[Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. Velg mellom **GCS, 4AT, NEWS2, TIMES og Legemiddelverkstedet**. Modulene kan også åpnes fra relevante kort i verktøybiblioteket.
 
 - **Lær:** seks illustrerte, stegvis oppbygde temaer med små kunnskapssjekker (E, V, M, ikke-testbar komponent, dokumentasjon).
 - **Øv:** ni fiktive pasientsituasjoner med umiddelbar forklaring på hvert skåringsvalg.
@@ -57,7 +62,7 @@
 - **Fasit:** Eksisterende `Scoring.news2`; dekker ny forvirring, ekstra O₂-poeng og separat SpO₂-skala 2 ved dokumentert klinikerbeslutning.
 - **Kilde:** [Royal College of Physicians NEWS2 (2017)](https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/). Dette er et selvlaget pedagogisk poengskjema, **ikke** RCPs offisielle observasjonsskjema eller en autorisert oversettelse. NEWS2-kartet og originale tabeller skal ikke omtales som godkjent klinisk original.
 
-Den tidligere større pasientsimuleringen er fortsatt tilgjengelig som **«Avansert case – pilot»**. Alle de tre læringsmodulene fungerer uten AI-API, backend eller lagring av øvingssvar. Ingen modul er godkjent for klinisk beslutningsstøtte.
+Den tidligere større pasientsimuleringen er fortsatt tilgjengelig som **«Avansert case – pilot»**. Alle de fem læringsmodulene fungerer uten AI-API, backend eller lagring av øvingssvar. Ingen modul er godkjent for klinisk beslutningsstøtte.
 
 ## Øvingsmodus – første pilotcase
 
@@ -75,7 +80,7 @@ Beregningslogikk og testspecifikasjon: `assets/simulation-engine.js` og `tests/s
 ## Funksjoner
 
 - **NEWS2 og qSOFA**, med delpoeng, forklaringer, tydelig skåringsfeedback og særskilte varsler for NEWS2-enkeltparametere med 3 poeng. qSOFA krever separat vurdert GCS.
-- **16 kliniske verktøy**, blant annet GCS, 4AT, NRS, MST, TUG, ESAS, FAST, ortostatisk blodtrykk, SKUV, TIMES, ABCDE, BMI/BSA og respirasjonstimer.
+- **18 kliniske verktøy og læringsressurser**, blant annet GCS, 4AT, NRS, MST, TUG, ESAS, FAST, ortostatisk blodtrykk, AAI, SKUV, TIMES, ABCDE, BMI/BSA, respirasjonstimer og Legemiddelverkstedet.
 - **Fire tjenestetemaer** for sykehus/akuttmottak, ambulanse/prehospital, legevakt/akuttmedisin og hjemmesykepleie, i tillegg til egendefinerte lys-/mørktemaer.
 - Mobiltilpasset søk, kategorier og tilgjengelig navigasjon.
 - «Om Kartlegg»-side med prosjektbakgrunn og informasjon om lagring.

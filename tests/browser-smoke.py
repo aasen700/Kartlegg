@@ -103,7 +103,7 @@ script=r"""
   const painMatches=[...document.querySelectorAll('#page-verktoy .toolbox:not([hidden])')];
   assert(painMatches.length>=1&&painMatches.some(card=>/NRS/.test(card.querySelector('h3')?.textContent||'')),'library pain search must include NRS');
   put('toolSearch','');
-  assert(document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length===16,'library search did not reset: total='+document.querySelectorAll('#page-verktoy .toolbox').length+',visible='+document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length+',errors='+errors.join('|'));
+  assert(document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length===18,'library search did not reset: total='+document.querySelectorAll('#page-verktoy .toolbox').length+',visible='+document.querySelectorAll('#page-verktoy .toolbox:not([hidden])').length+',errors='+errors.join('|'));
   put('homeToolQuery','gcs');
   assert(!document.querySelector('#homeToolResults').hidden,'search suggestions not shown');
   assert(document.querySelector('#homeToolResults button').textContent.includes('GCS'),'exact GCS result must be ranked first');
@@ -222,7 +222,7 @@ script=r"""
 
   // v0.9: six new standalone home nursing tools. Test search, launch and scoring from actual UI.
   const expected=['mst','tug','esas','ortho','fast','skuv'];
-  assert(document.querySelectorAll('.hc-tool-card').length===10,'expected six homecare plus TIMES, palliation, ABCDE and respiration timer');
+  assert(document.querySelectorAll('.hc-tool-card').length===12,'expected homecare cards plus TIMES, palliation, ABCDE, respiration timer, AAI and medication training');
   for(const id of expected)assert(!!document.querySelector('[data-homecare="'+id+'"]'),'missing homecare tool '+id);
   assert(!document.querySelector('#page-vurdering .hc-tool-card'),'new tools must not expand NEWS2 page');
   assert(document.querySelector('#homeToolSearch').nextElementSibling.id==='vurdering','NEWS2 must remain first main form');
@@ -331,29 +331,41 @@ script=r"""
   assert(!document.querySelector('#palliationDialog').open,'palliation dialog failed to close');
   assert(!document.querySelector('#page-vurdering .times-v091-card')&&!document.querySelector('#page-vurdering .pall-v091-card'),'new cards must not appear on NEWS2-first landing page');
   // v0.99 categories: group counts, combined search, and previously hidden cards restored.
-  assert(document.querySelectorAll('#page-verktoy .v099-category-heading').length===3,'three category headings missing');
-  assert(document.querySelectorAll('#libraryCategories button').length===4,'category selector incomplete');
-  assert(window.KartleggToolCategories.total===16,'expected 16 tools including ABCDE and respiration timer');
+  assert(document.querySelectorAll('#page-verktoy .v099-category-heading').length===4,'four category headings missing');
+  assert(document.querySelectorAll('#libraryCategories button').length===5,'category selector incomplete');
+  assert(window.KartleggToolCategories.total===18,'expected 18 tools including AAI and medication training');
   const toolGrid=document.querySelector('#page-verktoy .toolgrid');
   const allCards=[...toolGrid.querySelectorAll('.toolbox')];
-  assert(allCards.every(x=>['assess','calc','guide'].includes(x.dataset.toolCategory)),'uncategorized cards found');
+  assert(allCards.every(x=>['assess','calc','guide','learn'].includes(x.dataset.toolCategory)),'uncategorized cards found');
   document.querySelector('[data-category=calc]').click();
   const calcCards=[...toolGrid.querySelectorAll('.toolbox:not([hidden])')];
-  const counts={assess:8,calc:3,guide:5};
+  const counts={assess:8,calc:4,guide:5,learn:1};
   for(const [id,want] of Object.entries(counts)){
     document.querySelector('[data-category="'+id+'"]').click();
     assert([...toolGrid.querySelectorAll('.toolbox:not([hidden])')].length===want,'category '+id+' expected '+want+' tools');
   }
   document.querySelector('[data-category=calc]').click();
-  assert(calcCards.length===3,'calculator group must include BMI, orthostatic BP and respiratory timer');
+  assert(calcCards.length===4,'calculator group must include BMI, orthostatic BP, respiratory timer and AAI');
   assert(calcCards.every(x=>x.dataset.toolCategory==='calc'),'wrong card shown in calculator category');
   put('toolSearch','ortostatisk');
   assert([...toolGrid.querySelectorAll('.toolbox:not([hidden])')].length===1,'category and text search must work together');
   assert(document.querySelector('[data-tool-category=calc]:not([hidden]) h3').textContent.includes('Ortostatisk'),'orthostatic tool missing in filtered category');
   document.querySelector('[data-category=all]').click();
   put('toolSearch','');
-  assert([...toolGrid.querySelectorAll('.toolbox:not([hidden])')].length===16,'re-filtering must restore all 16 cards');
+  assert([...toolGrid.querySelectorAll('.toolbox:not([hidden])')].length===18,'re-filtering must restore all 18 cards');
   assert(!document.querySelector('#page-vurdering .v099-categories'),'categories must not clutter NEWS2 front page');
+
+  // v1.2 AAI: uses both arm pressures and both ankle arteries, then invalidates stale output on edit.
+  document.querySelector('#launchAbi').click();
+  assert(document.querySelector('#abiDialog').open,'AAI dialog did not open');
+  put('abiArmRight','120');put('abiArmLeft','126');put('abiRightDp','100');put('abiRightPt','90');put('abiLeftDp','140');put('abiLeftPt','130');
+  document.querySelector('#abiForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+  assert(document.querySelector('#abiResult').textContent.includes('0,79'),'right AAI result incorrect');
+  assert(document.querySelector('#abiResult').textContent.includes('1,11'),'left AAI result incorrect');
+  put('abiRightDp','101');
+  assert(document.querySelector('#abiResult').hidden,'AAI result must be invalidated after a measurement changes');
+  document.querySelector('#abiDialog .dialog-close').click();
+  assert(!document.querySelector('#abiDialog').open,'AAI dialog did not close');
 
   // v0.99 ABCDE: launch from compact search and navigate A through E safely.
   put('homeToolQuery','abcde');
@@ -774,8 +786,8 @@ script=r"""
   // v1.1: full registry, favorite toggle, direct URLs and NEWS2↔GCS↔ISBAR switching.
   const tools=window.KartleggToolRegistry,nav=window.KartleggToolNavigation;
   assert(!!tools&&!!nav,'navigation registry or controller not initialized');
-  assert(tools.all.length===16,'expected 16 canonical tools');
-  assert(document.querySelectorAll('#page-verktoy .toolbox[data-tool-id]').length===16,
+  assert(tools.all.length===18,'expected 18 canonical tools');
+  assert(document.querySelectorAll('#page-verktoy .toolbox[data-tool-id]').length===18,
     'every clinical card needs one canonical tool id');
   const gcsCard=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"]');
   const star=gcsCard?.querySelector('.tool-card-favorite');
@@ -898,7 +910,20 @@ script=r"""
   document.querySelector('[data-page="laer"]').click();
   const hub=window.KartleggLearningHub,materials=window.KartleggLearningContent;
   assert(!!hub&&!!materials,'4AT/NEWS2 learning hub missing');
-  assert(document.querySelectorAll('#learningHubChooser [data-learn-tool]').length===4,'learning hub should have four tools including TIMES');
+  assert(document.querySelectorAll('#learningHubChooser [data-learn-tool]').length===5,'learning hub should have five tools including TIMES and medication training');
+  const medicationCourse=document.querySelector('#learningHubChooser [data-learn-tool="medication"]');
+  assert(!!medicationCourse,'medication course missing');medicationCourse.click();
+  assert(!document.querySelector('#learnMedicationModule').hidden,'medication module did not open');
+  const startMedication=[...document.querySelectorAll('#medicationLearningRoot button')].find(button=>button.textContent.includes('Start øv'));
+  assert(!!startMedication,'medication practice entry missing');startMedication.click();
+  put('medicationVolumeInput','0.6');
+  const oneMl=[...document.querySelectorAll('#medicationLearningRoot .medication12-syringe-choice')].find(button=>button.childNodes[0].textContent==='1 ml');
+  assert(!!oneMl,'1 ml training syringe missing');oneMl.click();
+  put('medicationPlungerInput','0.6');
+  const checkDraw=[...document.querySelectorAll('#medicationLearningRoot button')].find(button=>button.textContent.includes('Sjekk opptrekket'));
+  assert(!!checkDraw,'medication draw-up submit missing');checkDraw.click();
+  assert(document.querySelector('#medicationLearningRoot').textContent.includes('3 / 3 deler riktige'),'medication practice feedback incorrect');
+  assert(document.querySelector('#medicationLearningRoot .medication12-plunger').disabled,'graded syringe must be locked');
   for(const [tool,definition,engine] of [
    ['four','fourCases','4at'],
    ['news','newsCases','news2']
@@ -1037,7 +1062,9 @@ setTimeout(()=>{
   gcs:()=>Boolean(byId('clinicalToolDialog')?.open&&byId('clinicalToolTitle')?.textContent.includes('GCS')),
   qsofa:()=>Boolean(byId('optionalGCS')?.open&&byId('gcs')?.getClientRects().length>0),
   abcde:()=>Boolean(byId('abcdeDialog')?.open),
-  isbar:()=>Boolean(byId('isbarDialog')?.open)
+  isbar:()=>Boolean(byId('isbarDialog')?.open),
+  abi:()=>Boolean(byId('abiDialog')?.open),
+  'medication-lab':()=>Boolean(!byId('page-laer')?.hidden&&!byId('learnMedicationModule')?.hidden)
  };
  const output=document.createElement('output');output.id='kartlegg-deep-link';
  output.textContent=opened[id]?.()?'PASS':'FAIL: '+id+' did not open';
@@ -1048,7 +1075,7 @@ setTimeout(()=>{
  deep=root/".kartlegg-direct-link-smoke.html"
  deep.write_text(source.replace("</body>",deep_script+"</body>"),encoding="utf-8")
  try:
-  for tool,route in [("gcs","verktoy"),("qsofa","vurdering"),("abcde","verktoy"),("isbar","vurdering")]:
+  for tool,route in [("gcs","verktoy"),("qsofa","vurdering"),("abcde","verktoy"),("isbar","vurdering"),("abi","verktoy"),("medication-lab","laer")]:
    target=deep.as_uri()+"?tool="+tool+"#"+route
    command=[shutil.which(chrome),"--headless","--disable-gpu","--disable-dev-shm-usage","--no-sandbox","--window-size=410,850","--virtual-time-budget=1200","--dump-dom",target]
    result=subprocess.run(command,text=True,capture_output=True,timeout=45)

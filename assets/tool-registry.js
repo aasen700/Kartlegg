@@ -24,7 +24,9 @@
   ['skuv','SKUV','Systematisk klinisk undersøkelse og vurdering','systematisk klinisk undersøkelse vurdering sykepleie','[data-homecare="skuv"]','assets/homecare-v09-ui.js','guide'],
   ['times','TIMES','Sårvurdering og kalibrerbar skjermlinjal','sår sårbehandling sårvurdering linjal sårmål vev sårvæske','#launchTIMES','assets/wound-v091-scoring.js','guide'],
   ['palliasjon','Lindring ved livets slutt','Observasjonstegn, pleietiltak og legemiddelkunnskap','palliasjon terminalpleie medikamentskrin morfin midazolam haloperidol glykopyrronium symptomveileder','#launchPalliation','assets/palliation-v091.js','guide'],
-  ['abcde','ABCDE','Interaktiv primærvurdering – A, B, C, D og E','akutt luftvei airway respirasjon breathing sirkulasjon circulation nevrologi disability exposure undersøkelse primærvurdering','#launchABCDE','assets/abcde-v099.js','guide']
+  ['abcde','ABCDE','Interaktiv primærvurdering – A, B, C, D og E','akutt luftvei airway respirasjon breathing sirkulasjon circulation nevrologi disability exposure undersøkelse primærvurdering','#launchABCDE','assets/abcde-v099.js','guide'],
+  ['abi','Ankel–arm-indeks','Dopplermålte arm- og ankeltrykk for hvert bein','aai abi ankel arm indeks doppler perifer arteriesykdom sirkulasjon sår','#launchAbi','assets/abi-v12-scoring.js','calc'],
+  ['medication-lab','Legemiddelverkstedet','Fiktiv ferdighetstrening i regning, sprøytevalg og opptrekk','legemiddelregning dose styrke volum sprøyte opptrekk ampulle trening','#launchMedicationLab','assets/medication-learning-data-v12.js','learn']
  ];
  const ALL=Object.freeze(items.map(([id,name,detail,terms,launchSelector,owner,category])=>Object.freeze({id,name,detail,terms,launchSelector,owner,category})));
  const BY_ID=new Map(ALL.map(item=>[item.id,item]));
@@ -47,7 +49,7 @@
   // Share only the canonical tool ID; never carry arbitrary query parameters.
   u.search='';
   u.searchParams.set('tool',id);
-  u.hash=(id==='news2'||id==='qsofa'||id==='isbar')?'vurdering':'verktoy';
+  u.hash=id==='medication-lab'?'laer':(id==='news2'||id==='qsofa'||id==='isbar')?'vurdering':'verktoy';
   return u.href;
  }
  return Object.freeze({all:ALL,get,search,sanitizeFavorites,linkFor});

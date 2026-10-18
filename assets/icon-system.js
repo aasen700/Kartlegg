@@ -47,7 +47,7 @@ const decorateButton=(button,name)=>{
  button.dataset.uiActionIcon=name;
 };
 const glyphActions=Object.freeze({'＋':'plus','+':'plus','↻':'reset','▦':'calculator','▣':'document','◷':'clock','☰':'menu','×':'close','✓':'check','←':'arrowLeft','→':'arrowRight'});
-const toolIcons=Object.freeze({news2:'heart',qsofa:'brain',gcs:'brain','4at':'brain',nrs:'heart','bmi-bsa':'calculator','resp-timer':'clock',mst:'document',tug:'clock','esas-r':'chart','ortho-bt':'heart',fast:'brain',skuv:'document',times:'wound',palliasjon:'heart',abcde:'assessment'});
+const toolIcons=Object.freeze({news2:'heart',qsofa:'brain',gcs:'brain','4at':'brain',nrs:'heart','bmi-bsa':'calculator','resp-timer':'clock',mst:'document',tug:'clock','esas-r':'chart','ortho-bt':'heart',fast:'brain',skuv:'document',times:'wound',palliasjon:'heart',abcde:'assessment',abi:'heart','medication-lab':'calculator'});
 const paint=(scope=document)=>{
  scope.querySelectorAll?.(':is(.nav,.mobile-primary-link)[data-page] .ico').forEach(icon=>replace(icon,navIcons[icon.closest('[data-page]').dataset.page]));
  scope.querySelectorAll?.('.section-symbol').forEach(icon=>replace(icon,symbolIcons[icon.textContent.trim()]||'spark'));

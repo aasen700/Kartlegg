@@ -18,11 +18,13 @@
  const classification=[
   {id:'assess',name:'Kartleggingsverktøy og skårer',description:'Strukturerte vurderinger, skårer og standardiserte kartlegginger'},
   {id:'calc',name:'Kalkulatorer og målehjelp',description:'Beregninger og målinger som støtte for selvstendig observasjon'},
-  {id:'guide',name:'Kliniske veiledere',description:'Observasjonstegn, prioritering og faglige oppslagsguider'}
+  {id:'guide',name:'Kliniske veiledere',description:'Observasjonstegn, prioritering og faglige oppslagsguider'},
+  {id:'learn',name:'Læring og ferdighetstrening',description:'Interaktive oppgaver med fiktive data og tydelig tilbakemelding'}
  ];
  function category(card){
   const key=card.dataset.homecareCard||'';
-  if(['ortho','resp-timer'].includes(key))return 'calc';
+  if(['ortho','resp-timer','abi'].includes(key))return 'calc';
+  if(key==='medication-lab')return 'learn';
   if(['fast','skuv','times','pall','abcde'].includes(key))return 'guide';
   if(['mst','tug','esas'].includes(key))return 'assess';
   if(card.classList.contains('v08-bmi-card'))return 'calc';
@@ -58,7 +60,7 @@
  // All cards retain their original handlers despite reordering.
  function sync(){
   let total=0;
-  const visibleCounts={assess:0,calc:0,guide:0};
+  const visibleCounts={assess:0,calc:0,guide:0,learn:0};
   for(const card of cards){
    const q=search.value.trim().toLocaleLowerCase('nb-NO');
    const entry=registry?.all.find(item=>item.id===card.dataset.toolId);
@@ -89,7 +91,7 @@
  sync();
  const chip=library.querySelector('.intro .chip');if(chip)chip.textContent=cards.length+' tilgjengelige verktøy';
  const description=library.querySelector('.intro p:not(.eyebrow)');
- if(description)description.textContent='Finn en kalkulator, et kartleggingsverktøy eller en klinisk veileder. Filtrer etter kategori eller søk på navn og symptomer.';
+ if(description)description.textContent='Finn en kalkulator, et kartleggingsverktøy, en klinisk veileder eller ferdighetstrening. Filtrer etter kategori eller søk på navn og symptomer.';
  const sectionHeader=library.querySelector('.section-header p');
  if(sectionHeader)sectionHeader.textContent='Velg fagkategori, eller søk etter et konkret verktøy.';
  window.KartleggToolCategories={get active(){return active},get total(){return cards.length}};

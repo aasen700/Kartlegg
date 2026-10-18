@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, kliniske kalkulatorer, kartleggingsverktøy, ABCDE og veiledere for hjemmesykepleie. Kun fiktive data.">
+  <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/enhancements.css?v=05.2">
@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="assets/gcs-learning.css?v=1401">
   <link rel="stylesheet" href="assets/learning-tools-v12.css?v=1401">
   <link rel="stylesheet" href="assets/wound-learning-v12.css?v=1302">
+  <link rel="stylesheet" href="assets/abi-medication-v12.css?v=1201">
   <link rel="stylesheet" href="assets/theme-philip.css?v=1502">
   <link rel="stylesheet" href="assets/interaction-polish.css?v=1401">
   <link rel="stylesheet" href="assets/score-meters.css?v=1501">
@@ -157,7 +158,7 @@
       <div class="page" id="page-laer" hidden>
         <div class="intro"><div><p class="eyebrow">Kartlegg · interaktiv læring</p>
           <h1>Lær å bruke verktøyene</h1>
-          <p>Lær kliniske skåringsverktøy gjennom interaktive eksempler. Velg GCS, 4AT, NEWS2 eller TIMES – sårvurdering med fiktive kasus.</p></div>
+          <p>Lær kliniske skåringsverktøy og praktiske ferdigheter gjennom interaktive eksempler. Velg GCS, 4AT, NEWS2, TIMES eller Legemiddelverkstedet.</p></div>
           <span class="chip">Gratis · Ingen AI</span></div>
         <nav id="learningHubChooser" aria-label="Velg verktøy for opplæring"></nav>
         <section class="section" id="learnGcsModule" aria-labelledby="gcsLearningHeading">
@@ -180,6 +181,10 @@
         <section class="section" id="learnTimesModule" aria-labelledby="timesLearningHeading" hidden>
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▤</div><div><h2 id="timesLearningHeading">TIMES – lær sårvurdering</h2><p>Seks fiktive sårkasus med medisinske undervisningsillustrasjoner, Lær, Øv og Test deg selv.</p></div></div>
           <div id="woundLearningRoot"></div>
+        </section>
+        <section class="section" id="learnMedicationModule" aria-labelledby="medicationLearningHeading" hidden>
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▦</div><div><h2 id="medicationLearningHeading">Legemiddelverkstedet – regn og trekk opp</h2><p>Fiktive oppgaver med dose, styrke, sprøytevalg og et stempel du drar til riktig volum.</p></div></div>
+          <div id="medicationLearningRoot"></div>
         </section>
       </div><!-- /page-laer -->
       <div class="page" id="page-simulering" hidden>
@@ -328,6 +333,10 @@
   <script src="assets/times-v091.js?v=0992"></script>
   <script src="assets/palliation-v091.js?v=0911"></script>
   <script src="assets/abcde-v099.js?v=0992"></script>
+  <script src="assets/abi-v12-scoring.js?v=1201"></script>
+  <script src="assets/medication-learning-data-v12.js?v=1201"></script>
+  <script src="assets/abi-v12-ui.js?v=1201"></script>
+  <script src="assets/medication-learning-v12.js?v=1201"></script>
   <script src="assets/tool-categories-v099.js?v=0992"></script>
   <script src="assets/theme-finalize-v0992.js?v=09921"></script>
   <script src="assets/final-polish-v10.js?v=1011"></script>

@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Nye verktøy – 18. oktober 2026
+
+- La til ankel–arm-indeks med separat beregning for hvert bein, måletrinn, validering, kildehenvisninger og tydelige kliniske forbehold.
+- La til Legemiddelverkstedet med fiktive Lær–Øv–Test-oppgaver, enhetsomregning, sprøytevalg og et tilgjengelig, flyttbart sprøytestempel.
+- Utvidet verktøyregisteret fra 16 til 18 elementer og la til kategorien «Læring og ferdighetstrening».
+- La til automatiske grense-, beregnings- og nettlesertester på desktop, mobil, landskap og 200 % skalering.
+
 ## 1.1 – 18. oktober 2026
 
 - Visuelt system v4 samler tydelig sidehierarki, tre faste kortroller, ferdig-/feiltilstander i skjemaer og en bred førsteside med registrering og resultater i samme arbeidsflate.
@@ -50,7 +57,7 @@
 - Alle 16 kliniske verktøy har faste delbare ID-lenker og stjernefavoritter, lagret som kun ID-er lokalt.
 - NEWS2 ↔ GCS ↔ ISBAR har egen hurtigflyt på forsiden og kontekstuelle bytter i dialoger.
 - Sentralisert verktøyregister og filtrering; fjernet konkurrerende søkelyttere.
-- [Kontrollmatrise for 16 verktøy](KONTROLLMATRISE.md) med kilder, versjoner, formler, tester og eksplisitt uavklart klinisk kontroll.
+- [Kontrollmatrise for 18 verktøy](KONTROLLMATRISE.md) med kilder, versjoner, formler, tester og eksplisitt uavklart klinisk kontroll.
 - [Arkitekturdokument](ARKITEKTUR.md) med eiermoduler og gjenstående trinnvis CSS-opprydding.
 - Ingen endring i NEWS2/qSOFA/andre skåringsformler eller i oppbevaring av pasientmålinger.
 
