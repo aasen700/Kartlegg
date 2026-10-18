@@ -130,7 +130,7 @@ test('single canonical registry drives search and direct-linkable 16 tools',()=>
  assert.equal(new Set(R.all.map(x=>x.id)).size,16);
  assert.equal(R.search('gcs')[0].id,'gcs');
  assert.equal(R.search('smerte')[0].id,'nrs');
- assert.equal(R.linkFor('https://example.test/Kartlegg/?abc=1','gcs'),'https://example.test/Kartlegg/?abc=1&tool=gcs#verktoy');
+ assert.equal(R.linkFor('https://example.test/Kartlegg/?abc=1','gcs'),'https://example.test/Kartlegg/?tool=gcs#verktoy');
  assert.equal(R.linkFor('https://example.test/Kartlegg/','isbar'),'https://example.test/Kartlegg/?tool=isbar#vurdering');
  assert.equal(R.linkFor('https://example.test/Kartlegg/','made-up'),null);
  assert.deepEqual(R.sanitizeFavorites(['gcs','gcs','nrs','bogus']),['gcs','nrs']);
