@@ -1,5 +1,17 @@
 # Versjonshistorikk – Kartlegg
 
+## Kartlegg Lær – GCS v0.1 (18. oktober 2026)
+
+- Ny førsteside for verktøyopplæring, med GCS som første komplette læringsmodul. Den gamle pasientsimuleringen er flyttet ned til «Avansert case – pilot».
+- «Lær»: seks trinn med illustrasjon, relevante observasjonskriterier og interaktive kontrollspørsmål.
+- «Øv»: ni korte caseoppgaver om E, V, M og NT med forklaringer.
+- «Test deg selv»: fire fullstendige fiktive kasus. Fasiten holdes tilbake til hele testen er levert; resultatene viser E/V/M og sum bare når alle komponenter er testbare.
+- Fem selvstendige SVG-illustrasjoner, ingen eksterne bilde- eller AI-tjenester.
+- Bruker samme kliniske GCS-funksjon som Kartleggs ordinære kalkulator, og lar pasientvurderinger og øvingssvar være adskilt.
+- Egen knapp på GCS-verktøykortet for å starte opplæringen.
+- Støttet av offisiell norsk GCS-veiledning; pedagogisk/faglig ekstern kvalitetssikring gjenstår.
+
+
 ## Simulering v0.1 – pilot (18. oktober 2026)
 
 - Egen «Simulering»-side med én forhåndsdefinert øvingscase i hjemmesykepleien.
