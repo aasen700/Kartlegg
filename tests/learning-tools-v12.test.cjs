@@ -104,3 +104,41 @@ test('learning modules have exact asset references, clinician-origin sources and
   assert.doesNotMatch(body,/\blocalStorage\b|\bsessionStorage\b|\bindexedDB\b|\bfetch\s*\(|\bXMLHttpRequest\b|\bsendBeacon\b/);
  }
 });
+
+test('NEWS2 white chart uses seven positional columns and gives exact interval answers',()=>{
+ assert.deepEqual(D.newsChartColumns,[3,2,1,0,1,2,3]);
+ for(const q of D.newsCases){
+  const truth=D.expected('news2',q.id).parts;
+  const cells={};
+  for(const row of D.newsRows){
+   const chart=D.newsChartRow(row.id,q.v);
+   assert.equal(chart.labels.length,7);
+   assert.ok(chart.labels[chart.answerIndex]);
+   assert.equal(D.newsChartColumns[chart.answerIndex],truth[row.id],q.id+' '+row.id);
+   cells[row.id]=chart.answerIndex;
+  }
+  const graded=D.gradeNewsChart(q.id,truth,cells);
+  assert.equal(graded.score,7);
+  assert.equal(graded.truth.total,D.expected('news2',q.id).total);
+ }
+});
+test('NEWS2 duplicate score columns must not count the wrong interval as correct',()=>{
+ const q=D.newsCases.find(x=>x.id==='news-c');
+ const correct=D.expected('news2',q.id).parts;
+ const cells=Object.fromEntries(D.newsRows.map(row=>[row.id,D.newsChartRow(row.id,q.v).answerIndex]));
+ assert.equal(cells.spo,5); // SpO2 95% on scale 2 with supplemental oxygen
+ const wrong={...cells,spo:1}; // Same 2 score but incorrect saturation interval.
+ const result=D.gradeNewsChart(q.id,correct,wrong);
+ assert.equal(result.match.spo,false);
+ assert.equal(result.score,6);
+ assert.throws(()=>D.gradeNewsChart(q.id,correct,{...cells,spo:4})); // 1 point column does not match answer 2.
+});
+test('NEWS2 UI uses explicit check and next actions, not reveal only at final summary',()=>{
+ const js=read('assets/learning-tools-v12.js'),css=read('assets/learning-tools-v12.css');
+ assert.match(js,/Sjekk resultat/);
+ assert.match(js,/Gå videre/);
+ assert.match(js,/gradeNewsChart/);
+ assert.match(js,/learn12-vital-tiles/);
+ assert.match(css,/learn12-news-cell\.is-selected\.is-score-3/);
+ assert.match(css,/background:#fff!important/);
+});
