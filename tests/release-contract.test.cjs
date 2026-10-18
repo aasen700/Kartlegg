@@ -9,7 +9,7 @@ const html=read('index.html');
 const css=read('assets/release-candidate-v10.css');
 const app=read('assets/app.js');
 test('official v1.0 clearly labelled as demonstration only',()=>{
- assert.match(html,/v1\.0\.1 · Kun demonstrasjon/);
+ assert.match(html,/v1\.0\.2 · Kun demonstrasjon/);
  assert.match(html,/Ikke for reell pasientbehandling/);
 });
 test('all local stylesheet and script references exist exactly once',()=>{
