@@ -270,3 +270,22 @@
  :root[data-personal-mode] .header .theme-top-ribbon{height:16px!important}
  :root[data-personal-mode] .main .intro h1{font-size:clamp(22px,6.4vw,25px)}
 }
+
+
+/* Readability on the light reading panels even if a user had previously selected
+ * a dark service preset. Clinical score and alert text is deliberately excluded. */
+:root[data-personal-mode] :is(.section-header p,.toolbox p,.field .hint,.v099-category-heading p,.v10-optional-gcs>span,.helper){
+ color:#3d5966!important;
+}
+:root[data-personal-mode] .profile-dialog :is(.profile-dialog-head h2,.profile-dialog-head p,.profile-dialog-section h3,.profile-dialog-section>p,.service-theme-intro,.personalization-note,.service-theme-options legend){
+ color:#243f4b!important;
+}
+:root[data-personal-mode] .main .footer{
+ color:var(--pm-hero-muted)!important;
+}
+:root[data-personal-mode] .main .footer a{
+ color:#ffffff!important;text-underline-offset:3px;
+}
+:root[data-personal-mode] :is(.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button,.v081-view-all,.v10-now-button):focus-visible{
+ outline:3px solid var(--pm-focus)!important;outline-offset:3px!important;
+}
