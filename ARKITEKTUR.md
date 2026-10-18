@@ -48,6 +48,15 @@ Det ligger fortsatt historiske versjonsfiler i `assets/`. Vi har **ikke** gjenno
 
 I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancements.js` og `scoring.js`). **Kjøreversjonen** lastes fra `index.html` og `assets/`; rotkopiene skal ikke endres ved funksjonsutvikling og bør på sikt arkiveres etter gjennomgang av eksterne lenker.
 
+## Pedagogisk simulering (egen, isolert funksjon)
+
+- `assets/simulation-engine.js` eier den faste fiktive casen, tidssteg, oppdagede opplysninger, registrering av NEWS2-/ISBAR-svar og refleksjon. NEWS2 beregnes **kun** i `assets/scoring.js`.
+- `assets/simulation-ui.js` viser scenarioet og kaller motoren, med CSS kun i `assets/simulation-v01.css`.
+- Simuleringen kan nås fra `#simulering` i sidemenyen. Ingen innspill fra simuleringen overføres til `#vurdering`, som fortsatt er separat.
+- Ingen API, lagring eller gratisserver som senere kan kreve abonnement. Ingen AI-chat: scenario- og brukervalg er fullstendig deterministiske.
+- **Kliniske forbehold:** fiksert manuslagt forverring, ikke prediksjon; refleksjonslisten er ikke en klinisk godkjenning; obligatorisk faglig og pedagogisk gjennomgang før bred lansering.
+- Regressionstester: `tests/simulation-v01.test.cjs` og nettlesertesten.
+
 ## Verifikasjon
 
 ```sh
