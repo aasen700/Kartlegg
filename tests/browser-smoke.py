@@ -179,6 +179,19 @@ script=r"""
   assert(alert.textContent.includes('Respirasjonsfrekvens'),'red-score parameter not named');
   assert(document.querySelector('#newsNumber').textContent==='3','original NEWS2 result should stay correct');
   assert(document.querySelector('#newsBreakdown').textContent.includes('RF 3'),'compact NEWS2 breakdown missing');
+  const newsMeter=document.querySelector('#newsMeter'),newsMarker=document.querySelector('#newsMeterMarker');
+  assert(newsMeter&&newsMarker,'NEWS2 moving indicator missing');
+  assert(document.querySelector('#newsMeterBlock').dataset.level==='red','single-parameter score 3 must use the dedicated escalation state');
+  assert(!document.querySelector('#newsRedTrigger').hidden,'single-parameter score 3 trigger missing below indicator');
+  assert(newsMeter.getAttribute('aria-label').includes('NEWS2 3'),'NEWS2 indicator lacks an accessible score');
+  assert(newsMarker.style.getPropertyValue('--meter-position').endsWith('%'),'NEWS2 marker position was not updated');
+  const newsTrack=newsMeter.getBoundingClientRect(),newsDot=newsMarker.getBoundingClientRect();
+  assert(newsTrack.width>120&&newsDot.left>=newsTrack.left-2&&newsDot.right<=newsTrack.right+2,'NEWS2 marker escapes its track');
+  put('gcs','14');
+  assert(document.querySelector('#qNumber').textContent==='2','qSOFA threshold scenario should total 2');
+  assert(document.querySelector('#qMeterBlock').dataset.level==='medium','qSOFA marker should identify the ≥2 threshold');
+  assert(document.querySelector('#qMeter').getAttribute('aria-label').includes('2 av 3'),'qSOFA indicator lacks an accessible score');
+  put('gcs','15');
 
   // v0.9: six new standalone home nursing tools. Test search, launch and scoring from actual UI.
   const expected=['mst','tug','esas','ortho','fast','skuv'];

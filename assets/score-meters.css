@@ -1,0 +1,59 @@
+/* Moving score indicators for the NEWS2 and qSOFA result cards.
+ * NEWS2 bands follow the RCP trigger thresholds. The marker position is
+ * piecewise so every official response band remains legible on small screens.
+ */
+.score-meter-block{
+ margin-top:15px;padding:13px 13px 11px;border:1px solid color-mix(in srgb,var(--line) 84%,transparent);
+ border-radius:12px;background:color-mix(in srgb,var(--paper) 80%,transparent);
+}
+.score-meter-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.score-meter-heading span{font-size:10px;font-weight:850;letter-spacing:.075em;text-transform:uppercase;color:var(--muted)}
+.score-meter-heading strong{font-size:11px;line-height:1.3;text-align:right;color:var(--ink)}
+.score-meter{--meter-position:6%;position:relative;display:flex;width:100%;height:15px;border-radius:999px;box-shadow:inset 0 1px 3px #10263a26;isolation:isolate}
+.score-meter-segment{display:block;height:100%;box-shadow:inset 0 1px 1px #fff8}
+.score-meter-segment:first-child{border-radius:999px 0 0 999px}
+.score-meter-segment:last-of-type{border-radius:0 999px 999px 0}
+.news-meter .band-routine{width:12%;background:#137d64}
+.news-meter .band-low{width:36%;background:#54b98f}
+.news-meter .band-medium{width:20%;background:#f2b43f}
+.news-meter .band-high{width:32%;background:#e64d60}
+.qsofa-meter .score-meter-segment{width:25%}
+.qsofa-meter .band-q0{background:#7f91a3}
+.qsofa-meter .band-q1{background:#42a994}
+.qsofa-meter .band-q2{background:#f2b43f}
+.qsofa-meter .band-q3{background:#e64d60}
+.score-meter-marker{
+ position:absolute;z-index:2;left:var(--meter-position);top:50%;width:21px;height:21px;border:3px solid #fff;
+ border-radius:50%;background:#325a73;box-shadow:0 1px 3px #0e273b66,0 0 0 2px #325a73;
+ transform:translate(-50%,-50%);transition:left .42s cubic-bezier(.22,.8,.28,1),background-color .2s,box-shadow .2s;
+}
+.score-meter-block[data-level=routine] .score-meter-marker,.score-meter-block[data-level=low] .score-meter-marker{background:#137d64;box-shadow:0 1px 3px #0e273b66,0 0 0 2px #137d64}
+.score-meter-block[data-level=red] .score-meter-marker,.score-meter-block[data-level=medium] .score-meter-marker{background:#d99013;box-shadow:0 1px 3px #0e273b66,0 0 0 2px #d99013}
+.score-meter-block[data-level=high] .score-meter-marker{background:#d9334b;box-shadow:0 1px 3px #0e273b66,0 0 0 2px #d9334b}
+.score-meter-block.is-waiting .score-meter-marker{opacity:0;transition:none}
+.score-meter-scale{display:grid;margin-top:8px;color:var(--muted)}
+.news-meter-scale{grid-template-columns:12fr 36fr 20fr 32fr}
+.qsofa-meter-scale{grid-template-columns:repeat(4,1fr)}
+.score-meter-scale span{display:flex;min-width:0;flex-direction:column;align-items:center;text-align:center;line-height:1.1}
+.score-meter-scale b{font-size:10px;color:var(--ink)}
+.score-meter-scale small{font-size:8px;margin-top:3px;white-space:nowrap;color:var(--muted)}
+.score-meter-trigger{margin:10px 0 0!important;padding:8px 9px;border-radius:8px;background:#fff0d4;color:#7a430b!important;border:1px solid #db9d36;font-size:10px!important;font-weight:800;line-height:1.4!important}
+.score-meter-trigger[hidden]{display:none!important}
+.score-meter-note{display:block;margin-top:9px;color:var(--muted);font-size:9px;line-height:1.4}
+.score.red-trigger{background:#fff8ec;border-color:#e5b762}
+.score.red-trigger .score-number{color:#c77812}
+.score.red-trigger .score-status{background:#ffebc6;color:#81500d}
+:root[data-theme=dark] .score-meter-block{background:#13283db8;border-color:#496178}
+:root[data-theme=dark] .score-meter-trigger{background:#503a24;color:#ffe3b0!important;border-color:#c78c36}
+:root[data-theme=dark] .score.red-trigger{background:#413527;border-color:#8c6c38}
+:root[data-theme=dark] .score.red-trigger .score-number{color:#ffc66e}
+:root[data-theme=dark] .score.red-trigger .score-status{background:#654e30;color:#ffdfab}
+@media(max-width:480px){
+ .score-meter-block{padding:12px 11px 10px}
+ .score-meter-heading{align-items:flex-start}
+ .score-meter-heading strong{max-width:58%}
+ .score-meter{height:14px}
+ .score-meter-marker{width:20px;height:20px}
+ .score-meter-scale small{font-size:7.5px}
+}
+@media(prefers-reduced-motion:reduce){.score-meter-marker{transition:none}}

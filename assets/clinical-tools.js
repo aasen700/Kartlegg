@@ -42,12 +42,12 @@ function newsAlert(news){
  const sum=keys.reduce((n,key)=>n+news.parts[key],0);
  if(!Number.isInteger(news.total)||news.total!==sum)throw new RangeError('Uoverensstemmende NEWS2-sum');
  const red=keys.filter(k=>news.parts[k]===3).map(k=>newsNames[k]);
- let level='routine',title='NEWS2 = 0',explanation='Fortsett observasjoner og klinisk vurdering etter lokale prosedyrer.';
- if(news.total>=7){level='emergency';title='NEWS2 ≥7 – høy samlet skår';explanation='Krever akutt klinisk respons etter lokale akuttprosedyrer.'}
- else if(news.total>=5){level='urgent';title='NEWS2 5–6 – forhøyet samlet skår';explanation='Krever rask klinisk vurdering og legekontakt etter lokale prosedyrer.'}
- else if(red.length){level='red';title='3 poeng i enkeltparameter';explanation='Informer ansvarlig sykepleier og sørg for rask medisinsk vurdering/legekontakt etter lokale prosedyrer. Ikke vent på en høyere totalskår.'}
- else if(news.total>=1){level='watch';title='NEWS2 1–4';explanation='Informer ansvarlig sykepleier ved avvik eller bekymring. Vurder observasjonsfrekvens og eskalering etter lokale rutiner.'}
- return {level,title,explanation,redParameters:red,notes:'Klinisk forverring krever vurdering uavhengig av skår. Dette er prototypetekst, ikke lokal prosedyre.'};
+ let level='routine',title='NEWS2 = 0',explanation='RCP anbefaler rutinemessig NEWS-overvåking, minst hver 12. time i sykehus.';
+ if(news.total>=7){level='emergency';title='NEWS2 ≥7 – høy samlet skår';explanation='RCP anbefaler øyeblikkelig varsling og vurdering av team med akutt- og intensivkompetanse, kontinuerlig overvåking og vurdering av høyere omsorgsnivå. Tilleggsguiden forventer vurdering innen 30 minutter.'}
+ else if(news.total>=5){level='urgent';title='NEWS2 5–6 – middels risiko';explanation='RCP anbefaler at ansvarlig sykepleier straks varsler kliniker med akuttkompetanse, minst timevis observasjon og vurdering innen 60 minutter. Vurder overvåket behandlingssted og behov for intensivkompetanse.'}
+ else if(red.length){level='red';title='3 poeng i enkeltparameter';explanation='Informer ansvarlig sykepleier og sørg for rask medisinsk vurdering/legekontakt. RCP anbefaler minst timevis observasjon i sykehus. Ikke vent på en høyere totalskår.'}
+ else if(news.total>=1){level='watch';title='NEWS2 1–4 – lav risiko';explanation='RCP anbefaler vurdering av ansvarlig sykepleier, som avgjør behovet for hyppigere observasjon eller eskalering. Minst hver 4.–6. time i sykehus.'}
+ return {level,title,explanation,redParameters:red,notes:'RCP-nivåene gjelder sykehus. Terskler for tiltak i kommunehelsetjenesten er ikke fastsatt av RCP. Følg lokal prosedyre og reager på klinisk bekymring uavhengig av skår.'};
 }
 return Object.freeze({gcs,fourAT,nrs,newsAlert});
 });

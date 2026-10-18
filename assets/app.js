@@ -59,9 +59,46 @@ function setCard(prefix,style,number,status,description,details) {
   $(prefix+'Desc').textContent=description;
   $(prefix+'Breakdown').textContent=details;
 }
+function setMeter(prefix,total,position,level,label,ariaLabel){
+  const block=$(prefix+'MeterBlock'),meter=$(prefix+'Meter'),marker=$(prefix+'MeterMarker');
+  if(!block||!meter||!marker)return;
+  const waiting=total===null;
+  block.classList.toggle('is-waiting',waiting);
+  if(waiting)delete block.dataset.level;else block.dataset.level=level;
+  marker.style.setProperty('--meter-position',position+'%');
+  $(prefix+'MeterLabel').textContent=label;
+  meter.setAttribute('aria-label',ariaLabel);
+}
+function newsMeterPosition(total){
+  if(total===0)return 6;
+  if(total<=4)return 12+((total-.5)/4)*36;
+  if(total<=6)return 48+((total-4.5)/2)*20;
+  return Math.min(97,68+((Math.min(total,20)-6.5)/14)*32);
+}
+function updateNewsMeter(news){
+  if(!news){
+    setMeter('news',null,6,'neutral','Venter på skår','NEWS2-eskalering: venter på skår');
+    $('newsRedTrigger').hidden=true;
+    return;
+  }
+  const single3=Object.values(news.parts).some(n=>n===3);
+  const level=news.total>=7?'high':news.total>=5?'medium':single3?'red':news.total===0?'routine':'low';
+  const label=level==='high'?'Høy risiko':level==='medium'?'Middels risiko':level==='red'?'Enkeltparameter 3':news.total===0?'Rutinemessig':'Lav risiko';
+  const trigger=$('newsRedTrigger');
+  trigger.hidden=!single3;
+  setMeter('news',news.total,newsMeterPosition(news.total),level,label,
+    `NEWS2 ${news.total}. ${label}. Markøren viser samlet skår i RCPs eskaleringsnivåer.${single3?' Minst én enkeltparameter gir 3 poeng.':''}`);
+}
+function updateQMeter(q){
+  if(!q){setMeter('q',null,12.5,'neutral','Venter på GCS','qSOFA: venter på separat vurdert GCS');return;}
+  const level=q.total===3?'high':q.total===2?'medium':q.total===1?'low':'routine';
+  const label=q.total>=2?'Økt risiko ved mistenkt infeksjon':q.total===1?'1 kriterium':'Ingen kriterier';
+  setMeter('q',q.total,12.5+(q.total*25),level,label,`qSOFA ${q.total} av 3. ${label}.`);
+}
 function clearResults(){
   setCard('news','neutral','–','Ikke beregnet','Fyll inn målingene ovenfor for å se NEWS2.','Delpoengene vises her.');
   setCard('q','neutral','–','Ikke beregnet','Fyll inn vitale målinger og en separat vurdert GCS-totalskår.','qSOFA har tre kriterier.');
+  updateNewsMeter(null);updateQMeter(null);
   $('scoreTime').textContent='Venter på målinger';
   window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:null}));
 }
@@ -70,15 +107,20 @@ function updateScores() {
   if(!v) {clearResults();return false;}
   const news=calculateNEWS2(v), q=calculateQSOFA(v);
   const single3=Object.values(news.parts).some(n=>n===3);
-  const ns=news.total>=7?'danger':news.total>=5?'warning':news.total===0?'ok':'neutral';
-  const nl=news.total>=7?'Høy skår':news.total>=5?'Middels skår':news.total===0?'0 poeng':'Lav totalskår';
-  setCard('news',ns,news.total,nl+(news.total<5&&single3?' · enkeltparameter 3':''),
-    'Totalskår og enkeltparametere må vurderes sammen med pasientens kliniske tilstand.',
+  const ns=news.total>=7?'danger':news.total>=5?'warning':single3?'red-trigger':'ok';
+  const nl=news.total>=7?'Høy risiko · ≥7':news.total>=5?'Middels risiko · 5–6':single3?'Lav–middels · enkeltparameter 3':news.total===0?'Lav risiko · 0':'Lav risiko · 1–4';
+  const nd=news.total>=7?'RCP: akutt vurdering av team med intensivkompetanse og kontinuerlig overvåking i sykehus.':
+    news.total>=5?'RCP: rask vurdering av kliniker med akuttkompetanse og minst timevis observasjon i sykehus.':
+    single3?'RCP: rask klinisk vurdering og minst timevis observasjon i sykehus. Ikke vent på høyere totalskår.':
+    news.total===0?'RCP: rutinemessig oppfølging og minst hver 12. time i sykehus.':
+    'RCP: vurdering av ansvarlig sykepleier og minst hver 4.–6. time i sykehus.';
+  setCard('news',ns,news.total,nl,nd,
     `RF ${news.parts.rr} · SpO₂ ${news.parts.spo} · BT ${news.parts.sbp} · puls ${news.parts.hr} · temp ${news.parts.temp} · bevissthet ${news.parts.consciousness} · O₂ ${news.parts.oxygen}`);
   if(!q) setCard('q','neutral','–','GCS mangler','Oppgi en GCS-totalskår vurdert separat for å beregne qSOFA. AVPU brukes ikke som en automatisk erstatning.','qSOFA: RF ≥22 · systolisk BT ≤100 · GCS <15.');
   else setCard('q',q.total>=2?'warning':q.total===0?'ok':'neutral',q.total,q.total>=2?'2 eller flere kriterier':'Under 2 kriterier',
     'qSOFA ≥2 kan indikere økt risiko ved mistenkt infeksjon; lav qSOFA utelukker ikke sepsis.',
     `RF ≥22: ${q.parts.rr?'ja':'nei'} · systolisk BT ≤100: ${q.parts.sbp?'ja':'nei'} · GCS <15: ${q.parts.mentation?'ja':'nei'}`);
+  updateNewsMeter(news);updateQMeter(q);
   $('scoreTime').textContent='Oppdatert fra målingene';
   window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:{total:news.total,parts:news.parts}}));
   return true;
