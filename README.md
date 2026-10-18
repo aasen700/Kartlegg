@@ -27,9 +27,9 @@
 - Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
 - Se [Kontrollmatrisen](KONTROLLMATRISE.md) for kilder, grenser, testdekning, uavklarte spørsmål og klinisk kontrollstatus. Ingen klinisk godkjenning er utført.
 
-## Kartlegg Lær – interaktiv GCS-opplæring (pilot)
+## Kartlegg Lær – tre interaktive læringsmoduler (pilot)
 
-[Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. GCS er første fullt tilgjengelige læringsmodul og kan også åpnes via **«✦ Lær GCS»** på GCS-kortet i verktøybiblioteket.
+[Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. Velg mellom **GCS, 4AT og NEWS2**. Alle kan også åpnes fra egne «Lær»-knapper på kortene i verktøybiblioteket.
 
 - **Lær:** seks illustrerte, stegvis oppbygde temaer med små kunnskapssjekker (E, V, M, ikke-testbar komponent, dokumentasjon).
 - **Øv:** ni fiktive pasientsituasjoner med umiddelbar forklaring på hvert skåringsvalg.
@@ -40,7 +40,23 @@
 - **Kostnader og data:** Ingen AI-API, backend, konto, telemetri eller lagring av svar/fremdrift. Alt er i fane-minnet og nullstilles ved oppdatering.
 - **Status:** pedagogisk demonstrasjon – ikke klinisk godkjent, og ikke en praktisk kompetansetest. Fysisk stimulus må utføres av opplært helsepersonell i henhold til lokale prosedyrer.
 
-Den tidligere større pasientsimuleringen er fortsatt tilgjengelig som **«Avansert case – pilot»**, men læring av verktøyene er nå den fremhevede opplæringsfunksjonen. Videre 4AT- og NEWS2-moduler er foreslått, ikke implementert.
+### 4AT – interaktiv kartlegging
+
+- **Lær:** Seks korte leksjoner om årvåkenhet, AMT4, måneder baklengs, akutt endring og fortolkning.
+- **Øv:** Tre fiktive pasientcaser. Velg 0/1/2/4 der det er tillatt på hvert av de fire områdene, og se forklaringer etter innlevering.
+- **Test deg selv:** Tre caser uten synlig fasit før alle casene er levert.
+- **Fasit:** Eksisterende `KartleggTools.fourAT`; 4AT-score er ikke en diagnose.
+- **Kilde/lisens:** [4AT v1.2](https://www.the4at.com/userguide). Tilpasset fra 4AT © 2011–2014 Alasdair MacLullich, Tracy Ryan og Helen Cash; CC BY 4.0. Norsk pedagogisk gjengivelse, egne øvingscaser og nytt interaktivt grensesnitt. Ikke uavhengig validert som originalversjonen.
+
+### NEWS2 – klikkbart poengskjema
+
+- **Lær:** Fem korte temaer om parametere, skala 1/2, oksygentilførsel og vurdering av enkeltparametere.
+- **Øv:** Tre fiktive målesett. Klikk i poengfeltet for hver av de syv skåringskomponentene og sammenlign med fasit.
+- **Test deg selv:** Tre tilfeller uten fasit før hele testen er levert.
+- **Fasit:** Eksisterende `Scoring.news2`; dekker ny forvirring, ekstra O₂-poeng og separat SpO₂-skala 2 ved dokumentert klinikerbeslutning.
+- **Kilde:** [Royal College of Physicians NEWS2 (2017)](https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/). Dette er et selvlaget pedagogisk poengskjema, **ikke** RCPs offisielle observasjonsskjema eller en autorisert oversettelse. NEWS2-kartet og originale tabeller skal ikke omtales som godkjent klinisk original.
+
+Den tidligere større pasientsimuleringen er fortsatt tilgjengelig som **«Avansert case – pilot»**. Alle de tre læringsmodulene fungerer uten AI-API, backend eller lagring av øvingssvar. Ingen modul er godkjent for klinisk beslutningsstøtte.
 
 ## Øvingsmodus – første pilotcase
 
