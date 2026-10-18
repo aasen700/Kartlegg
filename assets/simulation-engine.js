@@ -35,7 +35,7 @@
  const map=new Map(actions.map(a=>[a.id,a]));
  function start(){
   return Object.freeze({caseId:caseData.id,minutes:0,worsened:false,finished:false,
-   done:Object.freeze([]),timeline:Object.freeze([]),notes:Object.freeze([]),enteredNews:null,isbar:null});
+   done:Object.freeze([]),timeline:Object.freeze([]),lastVitals:null,enteredNews:null,isbar:null});
  }
  function has(s,id){return s.done.includes(id)}
  function currentVitals(s){return {...(s.worsened?worse:vitals)}}
@@ -67,7 +67,8 @@
   // Scripted branch: the patient worsens if assessment is delayed without
   // contacting appropriate help. This is narrative logic, not a medical forecast.
   const worsened=s.worsened||(!has(s,'contact')&&id!=='contact'&&minutes>=12);
-  const now={...s,minutes,worsened,done:Object.freeze([...s.done,id])};
+  const now={...s,minutes,worsened,done:Object.freeze([...s.done,id]),
+   lastVitals:(id==='vitals'||id==='reevaluate')?Object.freeze({...worsened?worse:vitals}):s.lastVitals};
   const update={...now,timeline:Object.freeze([...s.timeline,Object.freeze({
    minute:minutes,id,label:action.label,text:narrative(now,id)
   })])};
@@ -86,7 +87,7 @@
   return Object.freeze({...s,isbar:Object.freeze(Object.fromEntries(['s','b','a','r'].map(k=>[k,fields[k].trim()])))});
  }
  function debrief(s){
-  const objective=Scoring.news2(currentVitals(s));
+  const objective=Scoring.news2(s.lastVitals||vitals);
   const observed=has(s,'vitals'),contacted=has(s,'contact');
   const items=[
    {id:'vitals',label:'Observerte vitale parametere',done:observed,reason:'Vitale målinger og klinisk observasjon gir grunnlag for en strukturert vurdering.'},
@@ -102,5 +103,5 @@
  }
  function finish(s){if(s.finished)return s;return Object.freeze({...s,finished:true})}
  return Object.freeze({caseData,actions,start,has,can,step,recordNews,recordIsbar,finish,debrief,currentVitals,
-  referenceNews:s=>Scoring.news2(currentVitals(s))});
+  referenceNews:s=>Scoring.news2(s.lastVitals||vitals)});
 });
