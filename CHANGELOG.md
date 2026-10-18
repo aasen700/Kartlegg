@@ -1,5 +1,16 @@
 # Versjonshistorikk – Kartlegg
 
+## 1.0.2 – 18. oktober 2026
+
+Faglig veiledningspresisering og forbedret UI/UX på mobil og desktop. Kun demonstrasjonsversjon med fiktive data.
+
+- Rettet overlapping mellom personlig tema-banner og profil-/Kartlegg-logo.
+- Presisert bekreftet hyperkapnisk respirasjonssvikt og dokumentert ordinasjon som forutsetning for NEWS2 SpO₂-skala 2.
+- Skjuler tidligere beregningsresultat når inndata endres i selvstendige hjemmeverktøy.
+- Fjernet duplisert kode for temabryter, og sikret korrekt nettleser-cacheoppdatering.
+- Klinisk kontrollmatrise med kilder, begrensninger og gjenstående krav: [KLINISK-KVALITET.md](KLINISK-KVALITET.md).
+- 139 automatiske tester og nettleserkontroller for 1300/768/410/375/360 px. Ingen endringer i skåringsformler eller datalagring.
+
 ## 1.0.1 – 18. oktober 2026
 
 Mindre stabilitets- og tilgjengelighetsoppdatering før oppkobling av eget domene.
