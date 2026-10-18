@@ -506,7 +506,8 @@ script=r"""
    assert(personalPopup.open,'missing personal mode popup '+mode);
    assert(document.querySelector('#personalModeTitle').textContent===title,'wrong personal popup title');
    assert(getComputedStyle(ribbon).backgroundImage.includes('svg'),'missing SVG ribbon '+mode);
-   assert(Math.abs(ribbon.getBoundingClientRect().width-headerWidth)<2,'personal ribbon not full header width '+mode);
+   const activeHeaderWidth=document.querySelector('.header').getBoundingClientRect().width;
+   assert(Math.abs(ribbon.getBoundingClientRect().width-activeHeaderWidth)<2,'personal ribbon not full header width '+mode);
    const strip=ribbon.getBoundingClientRect();
    const logo=document.querySelector('.header .logo').getBoundingClientRect();
    const avatar=document.querySelector('#profileTrigger').getBoundingClientRect();
