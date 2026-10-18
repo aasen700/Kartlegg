@@ -63,6 +63,7 @@ function clearResults(){
   setCard('news','neutral','–','Ikke beregnet','Fyll inn målingene ovenfor for å se NEWS2.','Delpoengene vises her.');
   setCard('q','neutral','–','Ikke beregnet','Fyll inn vitale målinger og en separat vurdert GCS-totalskår.','qSOFA har tre kriterier.');
   $('scoreTime').textContent='Venter på målinger';
+  window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:null}));
 }
 function updateScores() {
   const v=readVitals();
@@ -79,6 +80,7 @@ function updateScores() {
     'qSOFA ≥2 kan indikere økt risiko ved mistenkt infeksjon; lav qSOFA utelukker ikke sepsis.',
     `RF ≥22: ${q.parts.rr?'ja':'nei'} · systolisk BT ≤100: ${q.parts.sbp?'ja':'nei'} · GCS <15: ${q.parts.mentation?'ja':'nei'}`);
   $('scoreTime').textContent='Oppdatert fra målingene';
+  window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:{parts:news.parts}}));
   return true;
 }
 function showPage(page, setHash=true) {

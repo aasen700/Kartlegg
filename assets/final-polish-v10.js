@@ -123,13 +123,13 @@ const breakdown=document.createElement('div');breakdown.id='v10ClinicalParts';br
 breakdown.setAttribute('aria-label','Delpoeng i NEWS2');
 $('newsBreakdown').before(breakdown);
 const partsLabels={rr:'RF',spo:'SpO₂',sbp:'Systolisk BT',hr:'Puls',temp:'Temperatur',consciousness:'Bevissthet',oxygen:'Tilført O₂'};
-function renderParts(){
- const v=readVitals();
- if(!v){breakdown.hidden=true;breakdown.replaceChildren();return}
- const scoring=Scoring.news2(v),anyThree=Object.values(scoring.parts).some(v=>v===3);
+function renderParts(event){
+ const parts=event.detail?.parts;
+ if(!parts){breakdown.hidden=true;breakdown.replaceChildren();return}
+ const anyThree=Object.values(parts).some(value=>value===3);
  breakdown.replaceChildren();
  for(const [key,label] of Object.entries(partsLabels)){
-  const value=scoring.parts[key];
+  const value=parts[key];
   const chip=document.createElement('div');chip.className='v10-part-score '+(value===3?'critical':value===2?'elevated':value===1?'minor':'normal');
   const name=document.createElement('span');name.textContent=label;
   const num=document.createElement('strong');num.textContent=value+' p';
@@ -141,12 +141,9 @@ function renderParts(){
  }
  breakdown.hidden=false;
 }
-form.addEventListener('input',renderParts);
-form.addEventListener('change',renderParts);
-form.addEventListener('reset',()=>setTimeout(renderParts,0));
-const newsCard=$('newsCard');
-new MutationObserver(()=>{if(newsCard.classList.contains('neutral')&&$('newsNumber').textContent==='–')breakdown.hidden=true;}).observe($('newsNumber'),{childList:true});
-renderParts();
+// app.js provides the validated, already computed NEWS2 parts on each input/change.
+// One calculation now drives both the score card and the detailed visualization.
+window.addEventListener('kartlegg:news2-changed',renderParts);
 // Visible mobile menu action without moving the original sidebar or NEWS2 form.
 const menu=$('menuButton'),label=document.createElement('span');label.className='v10-menu-label';label.textContent='Meny';menu.append(label);
 const menuIcon=document.createElement('span');menuIcon.className='v10-menu-symbol';menuIcon.setAttribute('aria-hidden','true');

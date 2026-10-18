@@ -1,10 +1,16 @@
-# Kartlegg 1.0
+# Kartlegg 1.0.1
 
-**Kliniske verktøy samlet på ett sted – en norsk, nettbasert demonstrasjonsversjon.**
+**Kliniske verktøy samlet på ett sted – norsk demonstrasjonsversjon.**
 
 [Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md)
 
-Kartlegg er utviklet av **Philip Aasen**, sykepleierstudent ved Høgskulen på Vestlandet. Prosjektet startet med ønsket om en oversiktlig NEWS2-/qSOFA-kalkulator og har utviklet seg til et bibliotek med kliniske beregninger, kartleggingsverktøy og pedagogiske veiledere, med særlig oppmerksomhet på hjemmesykepleie og akuttobservasjon.
+## Oppdatering 1.0.1
+- Rettet qSOFA-hurtigsøk: den valgfrie GCS-seksjonen åpnes før fokus flyttes til skåringsfeltet.
+- Erstattet profilikonets dynamisk opprettede knapp med en riktig HTML-knapp med tastaturnavigasjon og tydelig fokusmarkering.
+- Rettet mobilnavigering når «Min profil» åpnes fra sidemenyen.
+- Presisert hvilke NEWS2-felt som er obligatoriske, og at GCS er valgfritt.
+- Optimalisert NEWS2-delpoengene: én beregning oppdaterer både hovedresultat og delpoeng, i stedet for dobbelt beregningsarbeid.
+- Utvidet tester for disse konkrete funksjonene. **Ingen NEWS2-grenser, behandlingstekster eller lagringsregler er endret.**
 
 ## Funksjoner
 

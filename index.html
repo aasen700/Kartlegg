@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="assets/theme-finalize-v0992.css?v=09921">
   <link rel="stylesheet" href="assets/about-v0993.css?v=09931">
   <link rel="stylesheet" href="assets/release-candidate-v10.css?v=100rc1">
-  <link rel="stylesheet" href="assets/final-polish-v10.css?v=1000">
+  <link rel="stylesheet" href="assets/final-polish-v10.css?v=1011">
 </head>
 <body>
   <div class="shell">
@@ -30,7 +30,7 @@
         <span class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M2 14h5l3-8 5 15 3-9 2 2h4" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         Kartlegg <span class="brand-small">PROTOTYPE</span>
       </a>
-      <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><span class="header-note">✦ Målinger kun i denne fanen</span><span class="avatar" aria-hidden="true">K</span></div>
+      <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><span class="header-note">✦ Målinger kun i denne fanen</span><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
     </header>
     <div class="sidebar-backdrop" id="backdrop"></div>
     <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
@@ -43,9 +43,9 @@
     </nav>
     <main class="main" id="top">
       <div class="page" id="page-vurdering">
-      <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer vitale målinger én gang og få flere skårer automatisk.</p></div><span class="chip">v1.0 · Kun demonstrasjon</span></div>
+      <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer vitale målinger én gang og få flere skårer automatisk.</p></div><span class="chip">v1.0.1 · Kun demonstrasjon</span></div>
       <section class="section" id="vurdering" aria-labelledby="input-heading">
-        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Alle feltene nedenfor må fylles ut før skårer kan beregnes.</p></div></div>
+        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Fyll ut de obligatoriske observasjonene for NEWS2. GCS er valgfritt og brukes ved qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
           <div class="form-inner">
             <div class="meta-line">
@@ -207,7 +207,7 @@
           <span>Utviklet av Philip Aasen · Kartlegg</span>
         </div>
       </div><!-- /page-om -->
-      <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a>.<br>ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>Kartlegg v1.0 · Beregninger i nettleseren · Midlertidig målehistorikk i fanen · Ingen analyse- eller sporingstjenester.<br><span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a> · <a href="tel:+4795554040">955 54 040</a></span></footer>
+      <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a>.<br>ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>Kartlegg v1.0.1 · Beregninger i nettleseren · Midlertidig målehistorikk i fanen · Ingen analyse- eller sporingstjenester.<br><span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a> · <a href="tel:+4795554040">955 54 040</a></span></footer>
     </main>
   </div>
   <dialog id="isbarDialog" aria-labelledby="isbarModalTitle">
@@ -229,16 +229,16 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/app.js?v=100rc1"></script>
+  <script src="assets/app.js?v=1011"></script>
   <script src="assets/enhancements.js?v=05.2"></script>
-  <script src="assets/v06.js?v=1000"></script>
+  <script src="assets/v06.js?v=1011"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
   <script src="assets/clinical-ui.js?v=0701"></script>
   <script src="assets/ux-v071.js?v=0711"></script>
   <script src="assets/modern-v08-scoring.js?v=0802"></script>
   <script src="assets/modern-v08-timer.js?v=0803"></script>
   <script src="assets/modern-v08-body.js?v=0992"></script>
-  <script src="assets/news-first-v081.js?v=0992"></script>
+  <script src="assets/news-first-v081.js?v=1011"></script>
   <script src="assets/homecare-v09-scoring.js?v=0901"></script>
   <script src="assets/homecare-v09-ui.js?v=0901"></script>
   <script src="assets/wound-v091-scoring.js?v=0992"></script>
@@ -247,6 +247,6 @@
   <script src="assets/abcde-v099.js?v=0992"></script>
   <script src="assets/tool-categories-v099.js?v=0992"></script>
   <script src="assets/theme-finalize-v0992.js?v=09921"></script>
-  <script src="assets/final-polish-v10.js?v=1000"></script>
+  <script src="assets/final-polish-v10.js?v=1011"></script>
 </body>
 </html>

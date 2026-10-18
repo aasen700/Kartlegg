@@ -9,7 +9,7 @@ const html=read('index.html');
 const css=read('assets/release-candidate-v10.css');
 const app=read('assets/app.js');
 test('official v1.0 clearly labelled as demonstration only',()=>{
- assert.match(html,/v1\.0 · Kun demonstrasjon/);
+ assert.match(html,/v1\.0\.1 · Kun demonstrasjon/);
  assert.match(html,/Ikke for reell pasientbehandling/);
 });
 test('all local stylesheet and script references exist exactly once',()=>{
@@ -61,4 +61,20 @@ test('About page accurately describes its prototype purpose',()=>{
  assert.match(html,/id="page-om"/);
  assert.match(html,/Ikke registrer ekte pasientopplysninger/);
  assert.match(html,/ikke uavhengig klinisk validert/);
+});
+
+test('optional GCS shortcut is accessible and profile trigger is semantic',()=>{
+ assert.match(html,/<button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">/);
+ assert.doesNotMatch(html,/<span class="avatar" aria-hidden="true">/);
+ assert.match(html,/Fyll ut de obligatoriske observasjonene for NEWS2\. GCS er valgfritt/);
+ const search=read('assets/news-first-v081.js');
+ assert.match(search,/if\(optional\)optional\.open=true/);
+ assert.match(search,/gcs\?\.focus/);
+});
+test('NEWS2 is computed once and reused for the visible partial-score breakdown',()=>{
+ const scoringUI=read('assets/final-polish-v10.js');
+ assert.doesNotMatch(scoringUI,/Scoring\.news2\(/);
+ assert.doesNotMatch(scoringUI,/new MutationObserver/);
+ assert.match(app,/CustomEvent\('kartlegg:news2-changed'/);
+ assert.match(scoringUI,/addEventListener\('kartlegg:news2-changed',renderParts\)/);
 });
