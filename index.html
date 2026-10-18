@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="assets/simulation-v01.css?v=101">
   <link rel="stylesheet" href="assets/gcs-learning.css?v=102">
   <link rel="stylesheet" href="assets/learning-tools-v12.css?v=1204">
+  <link rel="stylesheet" href="assets/wound-learning-v12.css?v=1201">
 </head>
 <body>
   <div class="shell">
@@ -140,7 +141,7 @@
       <div class="page" id="page-laer" hidden>
         <div class="intro"><div><p class="eyebrow">Kartlegg · interaktiv læring</p>
           <h1>Lær å bruke verktøyene</h1>
-          <p>Lær kliniske skåringsverktøy gjennom interaktive eksempler. Velg mellom GCS, 4AT og et klikkbart NEWS2-poengskjema.</p></div>
+          <p>Lær kliniske skåringsverktøy gjennom interaktive eksempler. Velg GCS, 4AT, NEWS2 eller TIMES – sårvurdering med fiktive kasus.</p></div>
           <span class="chip">Gratis · Ingen AI</span></div>
         <nav id="learningHubChooser" aria-label="Velg verktøy for opplæring"></nav>
         <section class="section" id="learnGcsModule" aria-labelledby="gcsLearningHeading">
@@ -159,6 +160,10 @@
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▦</div>
             <div><h2 id="newsLearningHeading">NEWS2 – skår direkte i poengskjema</h2>
               <p>Les pasientens vitale parametere og velg det riktige poengfeltet i hver rad. Øv på begge SpO₂-skalaer og oksygentilførsel.</p></div></div>
+        </section>
+        <section class="section" id="learnTimesModule" aria-labelledby="timesLearningHeading" hidden>
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▤</div><div><h2 id="timesLearningHeading">TIMES – lær sårvurdering</h2><p>Seks fiktive sårkasus med illustrasjoner, Lær, Øv og Test deg selv.</p></div></div>
+          <div id="woundLearningRoot"></div>
         </section>
       </div><!-- /page-laer -->
       <div class="page" id="page-simulering" hidden>
@@ -305,5 +310,7 @@
   <script src="assets/gcs-learning-ui.js?v=104"></script>
   <script src="assets/learning-content-v12.js?v=1203"></script>
   <script src="assets/learning-tools-v12.js?v=1204"></script>
+  <script src="assets/wound-learning-data-v12.js?v=1201"></script>
+  <script src="assets/wound-learning-v12.js?v=1201"></script>
 </body>
 </html>

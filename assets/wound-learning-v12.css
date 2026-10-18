@@ -1,0 +1,42 @@
+/* TIMES learning is scoped to its own section; clinical calculators remain unchanged. */
+#learnTimesModule{min-width:0}
+#woundLearningRoot{padding:5px 20px 24px;color:var(--ink)}
+.wound12-header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.wound12-header small{display:block;flex-basis:100%;color:var(--muted);font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.wound12-header h3{font-size:clamp(22px,3vw,29px);flex:1;line-height:1.15;margin:0}
+.wound12-intro{font-size:14px;line-height:1.7;max-width:820px}
+.wound12-switch{display:flex;align-items:center;gap:10px;min-height:45px;padding:10px 13px;margin:12px 0;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:12px;font-size:13px;font-weight:750;cursor:pointer}
+.wound12-switch input{width:20px;height:20px;accent-color:var(--accent)}
+.wound12-image{margin:16px 0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:860px}
+.wound12-image img{display:block;width:100%;height:auto;aspect-ratio:860/550;object-fit:cover}
+.wound12-image figcaption{padding:11px 15px;font-size:11px;color:var(--muted);line-height:1.55}
+.wound12-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.wound12-mode,.wound12-question,.wound12-report{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:17px;min-width:0}
+.wound12-mode{display:flex;align-items:flex-start;gap:8px;flex-direction:column}
+.wound12-mode h4,.wound12-report h4{margin:0;font-size:20px;color:var(--ink)}
+.wound12-mode p{flex:1;font-size:13px;color:var(--muted);line-height:1.5}
+.wound12-num{border-radius:9px;background:var(--accent-bg);color:var(--accent);padding:7px 11px;font-weight:850}
+.wound12-tips{line-height:1.8;font-size:14px;max-width:800px}
+.wound12-subtitle{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase}
+.wound12-observations{border:1px solid var(--line);padding:13px;border-radius:12px;margin:15px 0;background:var(--paper);font-size:13px}
+.wound12-observations summary{cursor:pointer;font-weight:800}
+.wound12-observations li{margin:7px 0}
+.wound12-questions{display:grid;gap:12px}
+.wound12-question legend{font-weight:850;color:var(--ink);padding:0 5px}
+.wound12-question>p{font-size:13px;color:var(--muted)}
+.wound12-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.wound12-choice{min-height:44px;text-align:left;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font:inherit;font-size:12px;cursor:pointer}
+.wound12-choice.selected{border:2px solid var(--accent);background:var(--accent-bg);font-weight:800}
+.wound12-choice:disabled{cursor:default}
+.wound12-feedback{border-top:1px solid var(--line);padding-top:12px;color:var(--ink)!important;line-height:1.6}
+.wound12-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0}
+.wound12-total,.wound12-score{font-size:21px;font-weight:850;color:var(--ink)}
+.wound12-report{margin:12px 0}
+.wound12-report li{margin:11px 0;line-height:1.55;font-size:13px}
+.wound12-disclaimer,.wound12-status{font-size:12px;color:var(--muted);line-height:1.6;margin:16px 0}
+.wound12-source{font-size:12px;font-weight:750;color:var(--accent)}
+.wound12-course{min-width:0}
+@media(max-width:900px){.wound12-modes{grid-template-columns:1fr}}
+@media(max-width:560px){#woundLearningRoot{padding:6px 12px 22px}.wound12-options{grid-template-columns:1fr}.wound12-question{padding:12px}.wound12-image{border-radius:10px}}
+:root[data-personal-mode] :is(.wound12-mode,.wound12-question,.wound12-report){background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
+:root[data-personal-mode] :is(.wound12-mode h4,.wound12-question legend,.wound12-report h4){color:var(--pm-card-ink)!important}
