@@ -26,13 +26,14 @@ const baseLegend=document.createElement('legend');baseLegend.textContent='1 · G
 const baseGrid=document.createElement('div');baseGrid.className='base-theme-grid';
 for(const [id,title,info] of [
  ['standard','Standard','Lys/mørk og aksentfarger'],
- ['philip','Philip · cobalt glass','Mørk koboltblå med glassreflekser']
+ ['philip','Philip · liquid cobalt','Koboltblått med ekte, halvtransparente glassflater']
 ]){
  const label=document.createElement('label');label.className='base-theme-option';
  const input=document.createElement('input');input.type='radio';input.name='baseTheme';input.value=id;
+ const preview=document.createElement('span');preview.className='base-theme-preview';preview.dataset.themePreview=id;preview.setAttribute('aria-hidden','true');
  const body=document.createElement('span');const heading=document.createElement('strong');heading.textContent=title;
  const detail=document.createElement('small');detail.textContent=info;body.append(heading,detail);
- label.append(input,body);baseGrid.append(label);
+ label.append(input,preview,body);baseGrid.append(label);
 }
 baseOptions.append(baseGrid);
 const baseHint=document.createElement('p');baseHint.className='theme-layer-hint';
@@ -73,7 +74,8 @@ for(const id of ThemeEngine.SEASONS){
  const option=document.createElement('option');option.value=id;option.textContent=seasonNames[id];seasonSelect.append(option);
 }
 const seasonMessage=document.createElement('p');seasonMessage.className='season-theme-message';seasonMessage.id='seasonThemeMessage';
-seasonControls.append(seasonLabel,seasonSelect,seasonMessage);seasonOptions.append(seasonControls);
+const seasonPreview=document.createElement('span');seasonPreview.className='season-theme-preview';seasonPreview.id='seasonThemePreview';seasonPreview.setAttribute('aria-hidden','true');
+seasonControls.append(seasonLabel,seasonSelect,seasonPreview,seasonMessage);seasonOptions.append(seasonControls);
 const seasonHint=document.createElement('p');seasonHint.className='theme-layer-hint';
 seasonHint.textContent='Valgfri, diskret dekor. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
 seasonOptions.append(seasonHint);
@@ -86,6 +88,8 @@ seasonHighlight.setAttribute('aria-hidden','true');one('.header')?.append(season
 const profile=one('#page-profil .profile-body');if(profile)$('profileMount').append(profile);
 const placeholder=one('#page-profil .section');if(placeholder){const b=document.createElement('button');b.type='button';b.className='btn btn-primary';b.textContent='Åpne profilinnstillinger';b.addEventListener('click',openProfile);placeholder.append(b)}
 function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
+for(const input of drawer.querySelectorAll('[name=appearanceMode]'))input.closest('label').dataset.previewMode=input.value;
+for(const input of drawer.querySelectorAll('[name=accentChoice]'))input.closest('label').dataset.previewAccent=input.value;
 function apply(){
  if(!philipUnlocked)prefs.base='standard';
  baseOptions.hidden=!philipUnlocked;
@@ -104,13 +108,14 @@ function apply(){
  drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
  drawer.querySelectorAll('[name=baseTheme]').forEach(x=>x.checked=x.value===prefs.base);
  seasonSelect.value=prefs.season;
+ seasonPreview.dataset.seasonPreview=state.season==='none'?'off':state.season;
  seasonNotice.hidden=state.season==='none';
  seasonHighlight.hidden=state.season==='none';
  if(state.season!=='none')seasonNotice.textContent='✦ '+seasonNames[state.season]+' · dekorativt tema';
  seasonMessage.textContent=prefs.season==='off'?'Sesonglaget er slått av.':
   (state.season==='none'?'Ingen markering på denne datoen.':
    (prefs.season==='auto'?'Automatisk valgt: ':'Manuelt valgt: ')+seasonNames[state.season]+'.');
- const baseName=state.base==='philip'?'Philip cobalt glass':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
+ const baseName=state.base==='philip'?'Philip liquid cobalt':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
  $('appearanceSummary').textContent=baseName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
  try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
 }

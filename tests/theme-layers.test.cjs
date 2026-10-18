@@ -55,7 +55,9 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
 test('immersive atmosphere remains independent and excludes clinical scores',()=>{
  const css=read('assets/visual-atmospheres-v112.css');
  const html=read('index.html');
- assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1401/);
+ assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1502/);
+ assert.match(html,/assets\/theme-philip\.css\?v=1502/);
+ assert.match(html,/assets\/visual-refinement-v2\.css\?v=1501/);
  assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
  for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])
   assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
@@ -65,4 +67,22 @@ test('immersive atmosphere remains independent and excludes clinical scores',()=
   assert.ok(!css.includes(clinical),'Must preserve clinical presentation: '+clinical);
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/pointer-events:none/);
+});
+
+test('visual refinement owns previews and motion without recoloring clinical states',()=>{
+ const css=read('assets/visual-refinement-v2.css');
+ const philip=read('assets/theme-philip.css');
+ const profile=read('assets/v06.js');
+ assert.match(css,/\.base-theme-preview/);
+ assert.match(css,/\.season-theme-preview/);
+ assert.match(css,/prefers-reduced-motion:reduce/);
+ assert.match(philip,/--glass-surface:/);
+ assert.match(philip,/backdrop-filter:blur\(28px\)/);
+ assert.match(philip,/radial-gradient/);
+ assert.match(profile,/dataset\.themePreview/);
+ assert.match(profile,/seasonThemePreview/);
+ for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3']){
+  assert.ok(!css.includes(clinical),'Refinement must preserve clinical presentation: '+clinical);
+  assert.ok(!philip.includes(clinical),'Philip glass must preserve clinical presentation: '+clinical);
+ }
 });

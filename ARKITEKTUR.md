@@ -44,7 +44,7 @@ Det ligger fortsatt historiske versjonsfiler i `assets/`. Vi har **ikke** gjenno
 - Separat, vedlikeholdskrevende liste med 16 navngitte åpnefunksjoner i forsidesøket.
 - Kopiering av åpnefunksjoner for direkte lenker/favoritter: alle bruker samme `open(id)`.
 
-**Gjenstående, kontrollert CSS-refaktorering:** `service-themes-v0991.css`, `theme-finalize-v0992.css`, `theme-layers-v11.css`, `personal-modes.css` og `visual-atmospheres-v112.css` overstyrer noen dekorative variabler i en bevisst kaskade. De skal *ikke* blindt slås sammen: profil-, sesong- og tjenestetemaer må testes i kombinasjoner og ved 360/375/410/768/1300 px. Neste trygge steg er å trekke ut felles CSS-tokens og fjerne `!important` kun etter visuell regresjonstest.
+**Kontrollert CSS-refaktorering:** `visual-refinement-v2.css` eier nå felles geometri, temaforhåndsvisninger, rolige overganger og mobile skyggenivåer. Paletter og dekorasjon ligger fortsatt hos sine faglige eiere i `service-themes-v0991.css`, `theme-finalize-v0992.css`, `theme-layers-v11.css`, `personal-modes.css` og `visual-atmospheres-v112.css`. Dermed kan senere duplisering fjernes lagvis etter visuell regresjonstest ved 360/375/410/768/1300 px, uten å blande kliniske statusfarger inn i temalaget.
 
 I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancements.js` og `scoring.js`). **Kjøreversjonen** lastes fra `index.html` og `assets/`; rotkopiene skal ikke endres ved funksjonsutvikling og bør på sikt arkiveres etter gjennomgang av eksterne lenker.
 
@@ -88,6 +88,7 @@ GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester
 - `assets/mobile-ux.js` følger nettleserens visual viewport og skjuler handlingslinjen mens skjermtastaturet tar plass. Dialogene tilpasses synlig høyde, og fokuserte felt holdes synlige.
 - `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2 og TIMES. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
 - `assets/theme-philip.css` er eneste eier av positive Philip-temaregler: palett, glassflater, kontroller og komponenttilpasning. Den lastes etter komponentstilene. Gamle Philip-regler er fjernet fra tema-, lærings- og simuleringsfilene.
+- `assets/visual-refinement-v2.css` eier felles kortgeometri, tema- og sesongforhåndsvisninger, bevegelse og mobile dybdenivåer. Den skal ikke definere kliniske risiko-, poeng- eller fasitfarger.
 - `assets/theme-layers-v11.css` eier temavelger og sesongfarger. `assets/visual-atmospheres-v112.css` eier sesongpynt. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.
 - De andre personlige modusene eies fortsatt av `assets/personal-modes.css`. Generiske personlige palettregler avgrenses bort fra Philip; navn, opplåsing og profillagring følger eksisterende logikk.
 

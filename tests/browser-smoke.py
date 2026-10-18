@@ -405,6 +405,10 @@ script=r"""
    assert(!!preview,'missing preview for '+id);
    assert(getComputedStyle(preview,'::before').backgroundImage!=='none','missing miniature header-pattern preview for '+id);
   }
+  assert(profileDialog.querySelectorAll('.base-theme-preview').length===2,'base theme gallery previews missing');
+  assert(profileDialog.querySelectorAll('[data-preview-mode]').length===3,'appearance mode previews missing');
+  assert(profileDialog.querySelectorAll('[data-preview-accent]').length===3,'accent previews missing');
+  assert(!!profileDialog.querySelector('#seasonThemePreview'),'season preview missing');
   // v0.99.2: header identity patterns and replacement of old blue utility surfaces.
   const ribbon=document.getElementById('themeTopRibbon');
   assert(!!ribbon,'full-width service header ribbon missing');
@@ -515,7 +519,14 @@ script=r"""
    if(mode!=='philip')assert(getComputedStyle(document.querySelector('.header')).backgroundColor===palette.header,'header must switch to immersive '+mode+' palette');
    assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'main page must have substantial '+mode+' colored backdrop');
    if(mode!=='philip')assert(getComputedStyle(document.querySelector('#vurdering')).backgroundColor===palette.panel,'content surface wrong for '+mode);
-   else {assert(root.dataset.baseTheme==='philip','name must activate cobalt glass');assert(getComputedStyle(document.querySelector('#vurdering')).backdropFilter.includes('blur'),'glass must blur the backdrop');}
+   else {
+    const glassPanel=getComputedStyle(document.querySelector('#vurdering'));
+    assert(root.dataset.baseTheme==='philip','name must activate cobalt glass');
+    assert(glassPanel.backdropFilter.includes('blur'),'glass must blur the backdrop');
+    assert(glassPanel.backgroundColor.startsWith('rgba('),'Philip panel must remain genuinely translucent');
+    assert(getComputedStyle(document.body).backgroundImage.includes('radial-gradient'),'Philip needs layered cobalt light');
+    if(!matchMedia('(max-width:770px)').matches)assert(parseFloat(getComputedStyle(document.querySelector('.shell')).borderRadius)>=20,'desktop Philip frame must use liquid rounded geometry');
+   }
    assert(getComputedStyle(document.querySelector('.sidebar')).backgroundImage.includes('linear-gradient'),'side navigation should switch theme for '+mode);
    if(mode==='philip'){
     assert(getComputedStyle(primaryButton).backgroundImage.includes('linear-gradient'),'founder gold action gradient missing');
@@ -697,6 +708,8 @@ script=r"""
   document.querySelector('#saveProfile').click();
   document.querySelector('#closePersonalMode').click();
   assert(!dlg.querySelector('.base-theme-options').hidden,'matching saved name unlocks glass');
+  const philipPreview=dlg.querySelector('[data-theme-preview="philip"]');
+  assert(philipPreview&&philipPreview.getBoundingClientRect().width>0,'unlocked Philip preview must be visible');
   setRadio('baseTheme','philip');
   assert(document.documentElement.dataset.baseTheme==='philip'&&document.documentElement.dataset.theme==='dark','Philip glass not applied');
   setRadio('serviceTheme','homecare');
@@ -704,9 +717,11 @@ script=r"""
   for(const value of ['halloween','christmas','breast-cancer','mental-health','pride']){
    season.value=value;season.dispatchEvent(new Event('change',{bubbles:true}));
    assert(document.documentElement.dataset.seasonTheme===value,'season '+value+' not applied');
+   assert(dlg.querySelector('#seasonThemePreview').dataset.seasonPreview===value,'season preview not synchronized for '+value);
    assert(!document.querySelector('#seasonNotice').hidden,'season announcement missing');
   }
   season.value='off';season.dispatchEvent(new Event('change',{bubbles:true}));
+  assert(dlg.querySelector('#seasonThemePreview').dataset.seasonPreview==='off','season preview did not turn off');
   assert(document.querySelector('#seasonNotice').hidden,'season off not respected');
   assert(document.querySelector('#newsNumber').textContent===beforeScore,'theme changed NEWS2');
   assert(document.querySelector('#newsClinicalAlert').textContent.includes('Respirasjonsfrekvens'),'theme changed clinical escalation');
