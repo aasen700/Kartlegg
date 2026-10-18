@@ -156,7 +156,7 @@
   const answers=state.answers[q.id]||{},rows=data.parts;
   const news=state.tool==='news';
   const scroll=news?h('div','learn12-news-scroll'):null;
-  const table=h('div','learn12-score-grid'+(news?' learn12-news-chart':'');
+  const table=h('div','learn12-score-grid'+(news?' learn12-news-chart':''));
   table.setAttribute('role','group');table.setAttribute('aria-label','Velg poeng på hvert skåringsområde');
   const header=h('div','learn12-score-head');
   header.append(h('span','','Observasjon'));
