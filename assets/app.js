@@ -80,7 +80,7 @@ function updateScores() {
     'qSOFA ≥2 kan indikere økt risiko ved mistenkt infeksjon; lav qSOFA utelukker ikke sepsis.',
     `RF ≥22: ${q.parts.rr?'ja':'nei'} · systolisk BT ≤100: ${q.parts.sbp?'ja':'nei'} · GCS <15: ${q.parts.mentation?'ja':'nei'}`);
   $('scoreTime').textContent='Oppdatert fra målingene';
-  window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:{parts:news.parts}}));
+  window.dispatchEvent(new CustomEvent('kartlegg:news2-changed',{detail:{total:news.total,parts:news.parts}}));
   return true;
 }
 function showPage(page, setHash=true) {
