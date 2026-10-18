@@ -94,6 +94,7 @@
  background:rgba(2,31,96,.29)!important;color:var(--ink)!important;border-color:var(--line)!important;
 }
 :root[data-base-theme="philip"] :is(.profile-dialog-head h2,.profile-dialog-section h3,.section-header h2,.field label,.meta-line label,.toolbox h3,.header .profile-trigger,.intro .eyebrow,.intro .chip){color:var(--ink)!important}
+:root[data-base-theme="philip"] .meta-line>label{color:#f7fbff!important}
 :root[data-base-theme="philip"] :is(.section-header p,.toolbox p,.field .hint,.meta-line small,.sidebar-bottom p,.profile-body p,.profile-body label,.profile-status,.profile-dialog-section>p,.profile-dialog-head p,.service-theme-intro,.personalization-note,.v099-category-heading p,.tool-favorites-empty,.footer,.footer a){color:var(--muted)!important}
 :root[data-base-theme="philip"] :is(a,button,input,select,textarea):focus-visible{outline:3px solid #bde9ff!important;outline-offset:3px}
 :root[data-base-theme="philip"] .profile-dialog{max-width:100vw;box-sizing:border-box;border-radius:22px 0 0 22px}
