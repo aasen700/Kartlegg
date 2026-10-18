@@ -63,7 +63,10 @@
  function directLink(id){return R.linkFor(window.location.href,id)}
  const status=document.createElement('p');status.id='toolNavigationStatus';status.className='tool-navigation-status';
  status.setAttribute('role','status');status.setAttribute('aria-live','polite');
- function message(s){status.textContent=s}
+ const libraryStatus=document.createElement('p');libraryStatus.id='toolLibraryCopyStatus';libraryStatus.className='tool-navigation-status';
+ libraryStatus.setAttribute('role','status');libraryStatus.setAttribute('aria-live','polite');
+ $('page-verktoy').querySelector('.section-header')?.after(libraryStatus);
+ function message(s){status.textContent=s;libraryStatus.textContent=s}
  async function copyLink(id){
   const url=directLink(id);if(!url)return;
   try{
@@ -115,7 +118,7 @@
   card.dataset.toolId=item.id;
   const actions=document.createElement('div');actions.className='tool-card-actions';
   const star=button('☆ Favoritt','tool-card-favorite',()=>toggle(item.id));
-  const copy=button('↗ Del lenke','tool-card-copy',()=>copyLink(item.id));
+  const copy=button('⧉ Kopier lenke','tool-card-copy',()=>copyLink(item.id));
   cardControls.set(item.id,star);
   actions.append(star,copy);card.append(actions);
  }
