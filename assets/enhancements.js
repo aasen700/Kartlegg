@@ -2,14 +2,9 @@
 /* Kartlegg v0.5 – progressive enhancements; do not store observations. */
 (function(){
 const $=id=>document.getElementById(id);
-const modeKey='kartlegg.theme.v05';
-const theme=$('themeToggle') || document.createElement('button');theme.type='button';theme.id='themeToggle';theme.className='theme-switch';
-theme.setAttribute('aria-label','Velg dag- eller nattmodus');
-function setTheme(value){document.documentElement.dataset.theme=value;theme.textContent=value==='dark'?'☀ Dagmodus':'☾ Nattmodus';theme.setAttribute('aria-pressed',String(value==='dark'));try{localStorage.setItem(modeKey,value)}catch(e){}}
-if(!theme.isConnected) document.querySelector('.header-right')?.prepend(theme);
-let initial='light';try{initial=localStorage.getItem(modeKey)|| (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}
-setTheme(initial==='dark'?'dark':'light');
-theme.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+// The header theme switch is now owned solely by v06.js.
+ // Earlier versions registered a second click handler and wrote a redundant
+ // localStorage key, making appearance transitions harder to reason about.
 const oldUpdate=updateScores;
 function partialQ(){const ids=['rr','sbp','gcs'];const vals=ids.map(x=>$(x).value.trim());if(vals.some(x=>!x))return null;const [rr,sbp,gcs]=vals.map(Number);return Number.isInteger(rr)&&rr>=1&&rr<=150&&Number.isInteger(sbp)&&sbp>=1&&sbp<=350&&Number.isInteger(gcs)&&gcs>=3&&gcs<=15?{rr,sbp,gcs}:null}
 updateScores=function(){const ok=oldUpdate();if(!ok){const v=partialQ();if(v){const q=Scoring.qsofa(v);setCard('q',q.total>=2?'warning':q.total===0?'ok':'neutral',q.total,q.total>=2?'2 eller flere kriterier':'Under 2 kriterier','Lav qSOFA utelukker ikke sepsis.',`RF ≥22: ${q.parts.rr?'ja':'nei'} · BT ≤100: ${q.parts.sbp?'ja':'nei'} · GCS <15: ${q.parts.mentation?'ja':'nei'}`);$('scoreTime').textContent='qSOFA er beregnet; NEWS2 avventer';}}return ok};
