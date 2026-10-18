@@ -751,7 +751,7 @@ setTimeout(()=>{
  const byId=x=>document.getElementById(x);
  const opened={
   gcs:()=>Boolean(byId('clinicalToolDialog')?.open&&byId('clinicalToolTitle')?.textContent.includes('GCS')),
-  qsofa:()=>Boolean(byId('optionalGCS')?.open&&document.activeElement===byId('gcs')),
+  qsofa:()=>Boolean(byId('optionalGCS')?.open&&byId('gcs')?.getClientRects().length>0),
   abcde:()=>Boolean(byId('abcdeDialog')?.open),
   isbar:()=>Boolean(byId('isbarDialog')?.open)
  };
