@@ -9,6 +9,7 @@
  if(!D||!root||!chooser||!gcs)return;
  const module4=document.getElementById('learn4atModule'),moduleN=document.getElementById('learnNews2Module');
  const titles={gcs:'GCS',four:'4AT',news:'NEWS2'};
+ let initialized=false;
  const state={tool:'gcs',mode:'home',lesson:0,caseIndex:0,answers:{},results:{},finished:false};
  const h=(tag,cls,txt)=>{
   const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=String(txt);return n;
@@ -25,13 +26,16 @@
   if(!['gcs','four','news'].includes(id))return false;
   state.tool=id;state.mode=['learn','practice','test'].includes(mode)?mode:'home';state.lesson=0;state.caseIndex=0;state.answers={};state.results={};state.finished=false;
   gcs.hidden=id!=='gcs';module4.hidden=id!=='four';moduleN.hidden=id!=='news';
+  if(id==='four')module4.append(root);
+  if(id==='news')moduleN.append(root);
   for(const b of chooser.querySelectorAll('[data-learn-tool]')){
    b.setAttribute('aria-pressed',String(b.dataset.learnTool===id));
    b.classList.toggle('is-active',b.dataset.learnTool===id);
   }
   if(id==='gcs'){
-   window.KartleggLearnPilot?.open(mode==='test'?'exam':mode==='practice'?'practice':mode==='learn'?'learn':'home');
+   if(initialized||mode!=='home')window.KartleggLearnPilot?.open(mode==='test'?'exam':mode==='practice'?'practice':mode==='learn'?'learn':'home');
   }else render();
+  initialized=true;
   return true;
  }
  function chooseCourse(id,mode='home'){
@@ -181,6 +185,7 @@
      announce.textContent=(row.name||row.title)+' – '+score+' poeng valgt';
     });
     b.dataset.part=row.id;b.dataset.score=String(score);
+    b.disabled=Boolean(state.results[q.id]||state.finished);
     b.setAttribute('aria-pressed',String(chosen));
     b.setAttribute('aria-label',(row.name||row.title)+': '+score+' poeng – '+options[score]);
     b.append(h('b','',String(score)),h('small','',options[score]));item.append(b);
