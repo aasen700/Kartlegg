@@ -56,7 +56,7 @@ test('immersive atmosphere remains independent and excludes clinical scores',()=
  const css=read('assets/visual-atmospheres-v112.css');
  const html=read('index.html');
  assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1502/);
- assert.match(html,/assets\/theme-philip\.css\?v=1502/);
+ assert.match(html,/assets\/theme-philip\.css\?v=1503/);
  assert.match(html,/assets\/visual-refinement-v2\.css\?v=1501/);
  assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
  for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])

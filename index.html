@@ -20,28 +20,28 @@
   <link rel="stylesheet" href="assets/theme-finalize-v0992.css?v=1401">
   <link rel="stylesheet" href="assets/about-v0993.css?v=09931">
   <link rel="stylesheet" href="assets/release-candidate-v10.css?v=100rc1">
-  <link rel="stylesheet" href="assets/final-polish-v10.css?v=1011">
+  <link rel="stylesheet" href="assets/final-polish-v10.css?v=1012">
   <link rel="stylesheet" href="assets/theme-layers-v11.css?v=1401">
   <link rel="stylesheet" href="assets/personal-modes.css?v=1401">
-  <link rel="stylesheet" href="assets/tool-navigation.css?v=1401">
+  <link rel="stylesheet" href="assets/tool-navigation.css?v=1402">
   <link rel="stylesheet" href="assets/visual-atmospheres-v112.css?v=1502">
   <link rel="stylesheet" href="assets/simulation-v01.css?v=1401">
   <link rel="stylesheet" href="assets/gcs-learning.css?v=1401">
   <link rel="stylesheet" href="assets/learning-tools-v12.css?v=1401">
   <link rel="stylesheet" href="assets/wound-learning-v12.css?v=1302">
   <link rel="stylesheet" href="assets/abi-medication-v12.css?v=1201">
-  <link rel="stylesheet" href="assets/theme-philip.css?v=1502">
+  <link rel="stylesheet" href="assets/theme-philip.css?v=1503">
   <link rel="stylesheet" href="assets/interaction-polish.css?v=1401">
   <link rel="stylesheet" href="assets/score-meters.css?v=1501">
   <link rel="stylesheet" href="assets/visual-refinement-v2.css?v=1501">
-  <link rel="stylesheet" href="assets/design-system-v3.css?v=1701">
-  <link rel="stylesheet" href="assets/design-system-v4.css?v=1801">
+  <link rel="stylesheet" href="assets/design-system-v3.css?v=1702">
+  <link rel="stylesheet" href="assets/design-system-v4.css?v=1802">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
   <div class="shell">
     <header class="header">
-      <button class="mobile-toggle" id="menuButton" aria-label="Åpne meny" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <button class="mobile-toggle" id="menuButton" type="button" data-icon="menu" aria-label="Åpne meny" aria-controls="sidebar" aria-expanded="false"><span class="v10-menu-label">Meny</span></button>
       <a href="#top" class="brand" aria-label="Kartlegg – til toppen">
         <span class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M2 14h5l3-8 5 15 3-9 2 2h4" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         Kartlegg <span class="brand-small">PROTOTYPE</span>
@@ -63,12 +63,6 @@
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
       <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer målinger, se skår og responsnivå, og vurder neste steg.</p></div><span class="chip">v1.1 · Kun demonstrasjon</span></div>
       <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
-        <nav class="assessment-flow" aria-label="Arbeidsflyt for vurdering">
-          <button type="button" data-assessment-step="input" aria-current="step"><span>1</span><strong>Registrer</strong><small>Målinger og observasjoner</small></button>
-          <button type="button" data-assessment-step="result"><span>2</span><strong>Resultat</strong><small>Skår og responsnivå</small></button>
-          <button type="button" data-assessment-step="action"><span>3</span><strong>Tiltak</strong><small>Tolkning og videre vurdering</small></button>
-        </nav>
-        <p id="assessmentFlowStatus" class="sr-only" role="status" aria-live="polite"></p>
         <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Fyll ut de obligatoriske observasjonene for NEWS2. GCS er valgfritt og brukes ved qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
           <div class="form-inner">
@@ -256,7 +250,7 @@
         <section class="section about-v0993-card release-v11" aria-labelledby="about-release-title">
           <div class="about-v0993-card-icon" aria-hidden="true">✦</div>
           <h2 id="about-release-title">Nytt i Kartlegg 1.1</h2>
-          <p>Førstesiden følger nå arbeidsflyten «Registrer → Resultat → Tiltak», med tydeligere skårkort og neste steg. Mobilvisning, tastaturfokus, 200 % zoom, berøringsflater og ikoner er samordnet på tvers av temaene.</p>
+          <p>Førstesiden leder fra målinger til skår og klinisk respons uten en egen trinnlinje. Mobilvisning, tastaturfokus, 200 % zoom, berøringsflater og ikoner er samordnet på tvers av temaene.</p>
           <p>TIMES-kasusene er gjennomgått mot det opprinnelige TIME-rammeverket, internasjonal sårkonsensus og kilder for de enkelte sårtypene. Gjennomgangen er redaksjonell og kildebasert; uavhengig klinisk signering gjenstår.</p>
           <p><a href="https://github.com/aasen700/Kartlegg/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Les hele versjonshistorikken</a></p>
         </section>
@@ -353,7 +347,7 @@
   <script src="assets/wound-learning-v12.js?v=1401"></script>
   <script src="assets/mobile-ux.js?v=1401"></script>
   <script src="assets/icon-system.js?v=1802"></script>
-  <script src="assets/assessment-flow-v11.js?v=1101"></script>
+  <script src="assets/assessment-flow-v11.js?v=1201"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
 </body>
 </html>

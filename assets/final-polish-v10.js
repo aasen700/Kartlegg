@@ -144,9 +144,5 @@ function renderParts(event){
 // app.js provides the validated, already computed NEWS2 parts on each input/change.
 // One calculation now drives both the score card and the detailed visualization.
 window.addEventListener('kartlegg:news2-changed',renderParts);
-// Visible mobile menu action without moving the original sidebar or NEWS2 form.
-const menu=$('menuButton'),label=document.createElement('span');label.className='v10-menu-label';label.textContent='Meny';menu.append(label);
-const menuIcon=document.createElement('span');menuIcon.className='v10-menu-symbol';menuIcon.setAttribute('aria-hidden','true');
-menuIcon.textContent='☰';menu.firstChild.textContent='';menu.prepend(menuIcon);
 window.KartleggFinalPolish={report,clear,listErrors,setNow};
 })();

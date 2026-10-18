@@ -12,7 +12,7 @@
 ## Oppdatering 1.1
 - Designspråket bruker tre faste kortroller for handling, resultat og forklaring, tydeligere skjema­tilstander og en samlet arbeidsflate på brede skjermer.
 - Mobilnavigasjonen har fire faste hovedvalg. Dag-, natt-, tjeneste- og Philip-temaene deler struktur, avstander og semantiske farger, mens Philip beholder et mer uttrykksfullt koboltglass.
-- Førstesiden viser én tydelig arbeidsflyt: **Registrer → Resultat → Tiltak**. Etter gyldig beregning flyttes fokus til skårkortene og neste steg blir tilgjengelig.
+- Førstesiden går direkte fra registrering til skårkort og klinisk respons. Etter gyldig beregning flyttes fokus til resultatet, uten en egen trinnlinje som tar plass på mobil.
 - Handlingsknapper, dialoger, navigasjon og verktøykort bruker ett lokalt SVG-ikonsystem med tilgjengelige tekstetiketter.
 - Mobil og tilgjengelighet er kontrollert automatisk ved 320–1300 px, mobil landskap og 200 % enhetsskalering. Tastaturfokus, reflow, tilgjengelige navn og minimum 44 px kontroller inngår. Manuell skjermleser-/brukertest gjenstår.
 - TIMES forklarer nå skillet mellom det opprinnelige TIME-rammeverket og Kartleggs pedagogiske S for omkringliggende hud. Kasus, fasiter og begrunnelser er kontrollert mot original TIME, IWII og relevante NICE-/ISTAP-kilder.

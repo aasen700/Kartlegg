@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Mobilretting – 18. oktober 2026
+
+- Fjernet den synlige «Registrer → Resultat → Tiltak»-linjen. Gyldig beregning flytter fortsatt fokus til resultatet, og knappen for neste steg går fortsatt til klinisk respons.
+- Fjernet den faste handlingslinjen på mobil. Beregn, ISBAR og lagring ligger samlet i skjemaet og dekker ikke lenger valideringsmeldinger eller innhold.
+- Rettet mobilheaderen slik at menyen viser ett ikon, prototypemerket skjules på liten skjerm og merkevare- og profilkontroller beholder lesbar bredde.
+- NEWS2-, GCS- og ISBAR-snarveiene og favorittpanelet fyller nå hele søkekortet og brytes ikke til smale, loddrette knapper.
+
 ## Nye verktøy – 18. oktober 2026
 
 - La til ankel–arm-indeks med separat beregning for hvert bein, måletrinn, validering, kildehenvisninger og tydelige kliniske forbehold.
@@ -13,7 +20,7 @@
 - Mobil har en fast hovedmeny for Vurdering, Verktøy, Lær og Profil, mens sidemenyen fortsatt gir tilgang til historikk, avansert case og prosjektinformasjon.
 - Dag- og nattmodus deler nå samme geometri og semantiske farger. Dagmodus har en roligere blågrå flate, nattmodus bruker marineblå flater, og læringsinnhold har en avgrenset lilla identitetsfarge.
 - Philip-temaet har fått tydeligere lagdeling, mer transparente koboltglassflater, sterkere lyskanter og egne glassvarianter for registrering, resultat og informasjon.
-- Ny synlig arbeidsflyt på førstesiden: Registrer → Resultat → Tiltak. Gyldig innsending flytter tastaturfokus til resultatene og åpner et tydelig neste steg.
+- Gyldig innsending flytter tastaturfokus til resultatene og åpner et tydelig neste steg til klinisk respons.
 - Resultatkortene har sterkere visuell prioritet etter beregning, med direkte tilgang til tiltak/forbehold og ISBAR.
 - Ett lokalt SVG-ikonsystem dekker navigasjon, seksjoner, skårkort, verktøykort, handlingsknapper og dialoglukking; eldre tegnikoner ryddes også i dynamisk innhold.
 - Tilgjengelighetsforbedringer for hopp-lenke, fokus, tilgjengelige navn, 44 px berøringsmål, små skjermer, landskap, 200 % skalering, redusert bevegelse og tvungne systemfarger.

@@ -72,13 +72,7 @@ body{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI"
 :is(.btn,.btn-inline,[data-icon]){display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .dialog-close{display:inline-grid!important;place-items:center;min-width:44px;min-height:44px}
 
-/* The assessment page has one visible path from input to response. */
-.assessment-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 var(--ui-space-5)}
-.assessment-flow button{position:relative;display:grid;grid-template-columns:34px 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;min-height:68px;padding:11px 13px;text-align:left;color:var(--muted);background:var(--ui-surface-soft);border:1px solid var(--ui-border-soft);border-radius:var(--ui-radius-card);cursor:pointer}
-.assessment-flow button>span{grid-row:1/3;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:color-mix(in srgb,var(--muted) 10%,transparent);font-weight:850}
-.assessment-flow strong{color:var(--ink);line-height:1.25}.assessment-flow small{line-height:1.3;overflow-wrap:anywhere}
-.assessment-flow button[aria-current="step"]{border-color:var(--accent);box-shadow:var(--ui-focus);background:var(--ui-surface-raised)}
-.assessment-flow button[aria-current="step"]>span,.assessment-flow button.is-complete>span{background:var(--accent);color:#fff}
+/* The assessment page moves directly from input to response. */
 .result-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--ui-border-soft)}
 #resultater.is-ready{border-color:color-mix(in srgb,var(--accent) 42%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 8%,transparent),var(--ui-shadow-raised)}
 .next-step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
@@ -145,27 +139,23 @@ html{scroll-padding-top:90px}
  .section-header{gap:10px}.section-symbol{flex-basis:38px;width:38px;height:38px;border-radius:12px!important}
  .field{padding:13px}.score{padding:17px}.score-number{font-size:48px}
  .toolbox{padding:16px}.nav{min-height:48px}
- .assessment-flow{gap:7px}.assessment-flow button{grid-template-columns:30px 1fr;padding:10px;min-height:64px}.assessment-flow button>span{width:30px;height:30px}
- .assessment-flow small{display:none}.next-step-grid{grid-template-columns:1fr}.result-actions>*{flex:1 1 220px}
+ .next-step-grid{grid-template-columns:1fr}.result-actions>*{flex:1 1 220px}
 }
 @media(max-width:480px){
  .intro{align-items:flex-start}.intro h1{font-size:28px}
  .section-header h2{font-size:18px}.section-symbol{flex-basis:36px;width:36px;height:36px}
  .score{border-radius:16px;padding:15px}.score-number{font-size:44px}
  .form-actions .btn,.actions-right .btn{min-height:46px}
- .assessment-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.assessment-flow button{display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:72px;padding:8px 4px;text-align:center}.assessment-flow button>span{width:28px;height:28px}.assessment-flow strong{font-size:12px}.assessment-flow small{display:none}
  .result-actions{display:grid;grid-template-columns:1fr}.result-actions>*{width:100%}
 }
 @media(max-width:360px){
  .section{padding-left:12px!important;padding-right:12px!important}.score-meter-scale small{font-size:9px}.chip{white-space:normal}
 }
-@media(max-height:500px) and (orientation:landscape){.assessment-flow{grid-template-columns:repeat(3,minmax(0,1fr))}.assessment-flow small{display:none}}
 @media(min-resolution:1.8dppx) and (max-width:900px){.actions-right,.form-actions{flex-wrap:wrap}.form-actions>*{min-width:0}}
 @media(prefers-reduced-motion:reduce){
  :is(.toolbox,.btn,.btn-inline,.nav,.service-theme-option,.base-theme-option){transition:none!important;transform:none!important}
 }
 @media(forced-colors:active){
- .section,.field,.toolbox,.score,.section-symbol,.assessment-flow button,.next-step-card{border:1px solid CanvasText}
+ .section,.field,.toolbox,.score,.section-symbol,.next-step-card{border:1px solid CanvasText}
  .ui-icon-svg{stroke:currentColor}
- .assessment-flow button[aria-current="step"]{outline:3px solid Highlight}
 }

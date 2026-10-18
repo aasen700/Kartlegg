@@ -6,22 +6,22 @@ const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const html=read('index.html');
 
-test('v1.1 exposes one accessible assessment path and release identity',()=>{
+test('v1.1 exposes a direct accessible assessment path and release identity',()=>{
  assert.match(html,/v1\.1 · Kun demonstrasjon/);
  assert.match(html,/class="skip-link" href="#top"/);
- assert.deepEqual([...html.matchAll(/data-assessment-step="([^"]+)"/g)].map(m=>m[1]),['input','result','action']);
- assert.match(html,/id="assessmentFlowStatus"[^>]*role="status"[^>]*aria-live="polite"/);
+ assert.doesNotMatch(html,/class="assessment-flow"|data-assessment-step|assessmentFlowStatus/);
  assert.match(html,/id="reviewResponse"[^>]*disabled/);
  assert.match(html,/Tiltak, tolkning og forbehold/);
  assert.match(html,/Nytt i Kartlegg 1\.1/);
 });
 
-test('assessment flow owns navigation and focus, never scoring or storage',()=>{
+test('assessment result navigation owns focus, never scoring or storage',()=>{
  const js=read('assets/assessment-flow-v11.js');
  assert.match(js,/result-heading/);
  assert.match(js,/heading\.focus/);
  assert.match(js,/kartlegg:news2-changed/);
  assert.match(js,/resultIsbar/);
+ assert.doesNotMatch(js,/data-assessment-step|assessmentFlowStatus/);
  assert.doesNotMatch(js,/\b(?:news2|qsofa)\s*\(|localStorage|sessionStorage|indexedDB|fetch\s*\(|XMLHttpRequest|sendBeacon/);
 });
 

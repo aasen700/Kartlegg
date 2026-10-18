@@ -61,16 +61,15 @@
 :root[data-theme=dark] .v10-part-warning{color:#ffc0cf}
 /* Existing score bands/status labels remain in fixed clinical colors. */
 .mobile-toggle .v10-menu-label{font-size:12px;font-weight:800}
-.mobile-toggle .v10-menu-symbol{font-size:19px;line-height:1}
 @media(max-width:770px){
  .mobile-toggle{
-  gap:5px;background:var(--accent-bg);color:var(--accent);
+  gap:0;background:var(--accent-bg);color:var(--accent);
   border:1px solid var(--accent-border);border-radius:11px;
-  padding:7px 9px!important;margin-left:0!important;min-width:44px;min-height:44px;
+  padding:0!important;margin-left:0!important;width:44px;min-width:44px;min-height:44px;flex:0 0 44px;
   display:inline-flex;align-items:center;justify-content:center;
  }
+ .mobile-toggle .v10-menu-label{display:none}
 }
-@media(max-width:390px){.mobile-toggle .v10-menu-label{display:none}}
 @media(max-width:620px){
  #page-vurdering .v10-now-button{padding:6px 10px}
  #page-vurdering .meta-line{align-items:end}

@@ -25,7 +25,7 @@
 | Klinisk UI og dialoger | `assets/clinical-ui.js`, `assets/homecare-v09-ui.js`, `assets/modern-v08-body.js`, `assets/modern-v08-timer.js`, `assets/times-v091.js`, `assets/palliation-v091.js`, `assets/abcde-v099.js` | Bare ved rene layoutendringer uten endring av tekst, fortolkning eller flyt |
 | Indeksering, navn, direkte lenker | `assets/tool-registry.js` | Ja, for rent søke-/rutearbeid |
 | Favoritter, lenkekopiering, overgang mellom verktøy | `assets/tool-navigation.js` | Ja, men krev navigasjons-/tilgjengelighetstest |
-| Forsidens Registrer → Resultat → Tiltak-navigasjon | `assets/assessment-flow-v11.js` | Ja; modulen navigerer og annonserer status, men beregner ingen skår |
+| Forsidens resultatfokus og neste steg | `assets/assessment-flow-v11.js` | Ja; modulen flytter fokus etter beregning og åpner neste steg, men beregner ingen skår |
 | Bibliotekets søk/kategorier | `assets/tool-categories-v099.js` | Ja, med nettleserregresjon |
 | Søk på forsiden og palliative undersymptomer | `assets/news-first-v081.js` | Ja, unntatt endring av palliativt innhold |
 | Tema-/sesonglogikk | `assets/theme-engine.js`, `assets/v06.js`, `assets/theme-finalize-v0992.js`, `assets/personal-modes.js` | Ja, hvis ikke scoringfarger/kliniske varsler berøres |
@@ -94,7 +94,7 @@ GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester
 - `assets/visual-refinement-v2.css` eier felles kortgeometri, tema- og sesongforhåndsvisninger, bevegelse og mobile dybdenivåer. Den skal ikke definere kliniske risiko-, poeng- eller fasitfarger.
 - `assets/design-system-v3.css` eier grunngeometri og fokus. `assets/design-system-v4.css` er siste felles lag og eier tre kortroller, skjema­tilstander, vurderingsgrid, mobil hovedmeny og semantiske farger. Ingen av dem endrer beregningsregler eller kliniske tekster.
 - `assets/icon-system.js` eier dekorative ikoner i hovednavigasjon, seksjonsoverskrifter, skårkort, verktøykort, handlingsknapper og dialoglukking. Ikonene er lokale, skjules for hjelpemidler og kan ikke lagre eller sende data.
-- `assets/assessment-flow-v11.js` eier bare trinnvis navigasjon, fokus og statusannonsering på forsiden. `assets/app.js` og `assets/scoring.js` beholder fullt eierskap til validering og beregning.
+- `assets/assessment-flow-v11.js` eier bare resultatfokus og navigasjon til klinisk respons på forsiden. `assets/app.js` og `assets/scoring.js` beholder fullt eierskap til validering og beregning.
 - `assets/design-system-v4.js` ruter bare den mobile hovedmenyen gjennom eksisterende sideknapper og markerer lokalt om et skjemafelt er ferdig utfylt. Modulen beregner, lagrer eller sender ingenting.
 - `assets/theme-layers-v11.css` eier temavelger og sesongfarger. `assets/visual-atmospheres-v112.css` eier sesongpynt. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.
 - De andre personlige modusene eies fortsatt av `assets/personal-modes.css`. Generiske personlige palettregler avgrenses bort fra Philip; navn, opplåsing og profillagring følger eksisterende logikk.

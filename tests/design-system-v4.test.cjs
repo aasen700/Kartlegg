@@ -7,7 +7,7 @@ const read=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
 
 test('v4 visual system is the final stylesheet and defines the eight requested layers',()=>{
  const html=read('index.html'),css=read('assets/design-system-v4.css'),philip=read('assets/theme-philip.css');
- assert.match(html,/assets\/design-system-v4\.css\?v=1801/);
+ assert.match(html,/assets\/design-system-v4\.css\?v=1802/);
  assert.ok(html.indexOf('assets/design-system-v3.css')<html.indexOf('assets/design-system-v4.css'));
  for(const selector of [
   '.surface-action','.surface-result','.surface-info','.assessment-workspace',
@@ -24,16 +24,17 @@ test('v4 visual system is the final stylesheet and defines the eight requested l
  assert.match(css,/forced-colors:active/);
 });
 
-test('assessment markup has explicit action, result and information card roles',()=>{
+test('assessment markup has direct action, result and information card roles',()=>{
  const html=read('index.html');
  assert.match(html,/class="[^"]*assessment-workspace[^"]*"/);
  assert.match(html,/class="section surface-action" id="vurdering"/);
  assert.match(html,/class="section surface-result" id="resultater"/);
  assert.match(html,/class="section surface-info" id="forklaring"/);
-  const flow=html.indexOf('class="assessment-flow"');
  const input=html.indexOf('class="section surface-action" id="vurdering"');
- const heading=html.indexOf('id="input-heading"');
- assert.ok(flow>input&&flow<heading,'workflow navigation should lead the assessment form');
+ const result=html.indexOf('class="section surface-result" id="resultater"');
+ const info=html.indexOf('class="section surface-info" id="forklaring"');
+ assert.ok(input<result&&result<info,'assessment cards should follow input, result, information order');
+ assert.doesNotMatch(html,/class="assessment-flow"|data-assessment-step/);
 });
 
 test('mobile primary navigation has four stable destinations and shared icons',()=>{

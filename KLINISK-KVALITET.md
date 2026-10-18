@@ -35,7 +35,7 @@ Se også den mer detaljerte [kontrollmatrisen](KONTROLLMATRISE.md) med originalk
 2. **NEWS2 SpO₂-skala 2:** tidligere tekst kunne leses som om ønsket metningsmål alene var tilstrekkelig. Presisert bekreftet hyperkapnisk respirasjonssvikt og dokumentert beslutning om ordinerte mål.
 3. **Gamle skåringsresultater i visning:** endring av inndata i selvstendige hjemmeverktøy skjuler nå tidligere resultat slik at brukeren ikke kan forveksle gammel tolkning med nytt inntastet grunnlag.
 4. **Dobbelt eierskap til temabryter:** fjernet gammel klikklytter og redundant tidligere tema-lagring; én kontroller eier nå dag/natt-modus.
-5. **Versjon 1.1 – vurderingsflyt:** lagt inn én synlig «Registrer → Resultat → Tiltak»-rekkefølge, tastaturfokus til resultatet etter beregning og eksplisitt kobling fra skår til responsnivå, klinisk helhetsvurdering og lokal prosedyre.
+5. **Versjon 1.1 – vurderingsflyt:** tastaturfokus flyttes til resultatet etter beregning, med eksplisitt kobling fra skår til responsnivå, klinisk helhetsvurdering og lokal prosedyre. Den tidligere synlige trinnlinjen er fjernet fordi den tok unødvendig plass på mobil.
 6. **Tilgjengelighetskontroll:** automatisk nettleserkontroll dekker 320–1300 px, landskap, 200 % enhetsskalering, horisontal reflow, tastaturfokus, dialoglukking, fokusmål, tilgjengelige navn og dekorative SVG-ikoner. En manuell test med faktiske skjermlesere og brukere gjenstår.
 7. **AAI og Legemiddelverkstedet:** nye moduler er skilt i rene beregnings-/svarmotorer og UI, bruker ingen nettverk eller lagring, og er testet med grenseverdier og komplette nettleserforløp. Begge er fortsatt demonstrasjon med fiktive opplysninger.
 

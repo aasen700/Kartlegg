@@ -30,10 +30,9 @@ script=r"""
  try {
   assert(!!window.KartleggTools,'scoring module did not load');
   assert(!!window.KartleggIconSystem,'shared icon system did not load');
-  assert(!!window.KartleggAssessmentFlow,'v1.1 assessment flow did not load');
+  assert(!!window.KartleggAssessmentFlow,'assessment result navigation did not load');
   assert(!!window.KartleggDesignSystemV4,'v4 design interaction layer did not load');
-  assert(document.querySelectorAll('.assessment-flow [data-assessment-step]').length===3,'assessment flow needs three steps');
-  assert(document.querySelector('[data-assessment-step="input"]').getAttribute('aria-current')==='step','input step should start active');
+  assert(!document.querySelector('.assessment-flow'),'redundant assessment step bar should be absent');
   assert(!!document.querySelector('.skip-link'),'skip link missing');
   assert(document.querySelectorAll('.mobile-primary-nav .mobile-primary-link').length===4,'mobile primary navigation needs four destinations');
   assert(!!document.querySelector('.assessment-workspace'),'assessment workspace missing');
@@ -133,11 +132,15 @@ script=r"""
   assert(!!document.querySelector('#actionDock #dockSave'),'sticky save button missing');
   document.querySelector('[data-page=vurdering]').click();
   document.activeElement?.blur();
-  assert(getComputedStyle(document.querySelector('#actionDock')).position==='fixed','action dock must stay fixed on scroll');
-  assert(getComputedStyle(document.querySelector('#actionDock')).display!=='none','action dock should be visible on assessment page');
-  document.querySelector('#dockIsbar').click();
-  assert(document.querySelector('#isbarDialog').open,'sticky ISBAR action does not open script');
-  document.querySelector('#closeIsbar').click();
+  if(matchMedia('(max-width:770px)').matches){
+   assert(getComputedStyle(document.querySelector('#actionDock')).display==='none','action dock must not cover mobile content');
+  }else{
+   assert(getComputedStyle(document.querySelector('#actionDock')).position==='fixed','desktop action dock must stay fixed on scroll');
+   assert(getComputedStyle(document.querySelector('#actionDock')).display!=='none','desktop action dock should be visible on assessment page');
+   document.querySelector('#dockIsbar').click();
+   assert(document.querySelector('#isbarDialog').open,'desktop ISBAR action does not open script');
+   document.querySelector('#closeIsbar').click();
+  }
   document.querySelector('[data-page=historikk]').click();
   assert(getComputedStyle(document.querySelector('#actionDock')).display==='none','action dock must hide on history page');
   document.querySelector('[data-page=vurdering]').click();
@@ -660,13 +663,18 @@ script=r"""
    assert(!main.inert&&!document.body.classList.contains('mobile-menu-open'),'profile dialog should restore mobile background state');
    assert(document.querySelector('#profileDialog').open,'profile navigation should open profile dialog');
    document.querySelector('#closeProfile').click();
-   const actionWidth=dock.getBoundingClientRect().width;
-   if(matchMedia('(max-width:620px)').matches){
-    assert(Math.abs(actionWidth-document.documentElement.clientWidth)<4,'phone action bar should match viewport width');
-   }else{
-    assert(actionWidth<document.documentElement.clientWidth,'tablet action bar should remain centered and compact');
-   }
-   assert([...dock.querySelectorAll('button')].every(b=>b.getBoundingClientRect().height>=44),'mobile action buttons too small');
+   assert(getComputedStyle(dock).display==='none','mobile action dock must remain hidden');
+   assert(getComputedStyle(toggle.querySelector('.v10-menu-label')).display==='none','mobile menu label should not crowd the header');
+   assert(toggle.querySelectorAll('.ui-icon-svg').length===1,'mobile menu must show one icon');
+   assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','prototype badge should not crowd the mobile header');
+   const quickButtons=[...document.querySelectorAll('#toolWorkflow .tool-workflow-button')];
+   const quickRects=quickButtons.map(button=>button.getBoundingClientRect());
+   const searchRectAfter=document.querySelector('#homeToolSearch').getBoundingClientRect();
+   assert(quickButtons.length===3,'mobile quick workflow must keep three shortcuts');
+   assert(Math.max(...quickRects.map(rect=>rect.top))-Math.min(...quickRects.map(rect=>rect.top))<3,'mobile quick shortcuts must stay on one row');
+   assert(quickRects.every(rect=>rect.left>=searchRectAfter.left-2&&rect.right<=searchRectAfter.right+2),'mobile quick shortcuts overflow the search card');
+   const favoritesRect=document.querySelector('#toolFavorites').getBoundingClientRect();
+   assert(favoritesRect.left>=searchRectAfter.left-2&&favoritesRect.right<=searchRectAfter.right+2,'favorites panel overflows the search card');
    assert(document.documentElement.scrollWidth<=document.documentElement.clientWidth+3,'horizontal viewport overflow on mobile');
   }
   // Even on desktop, the search and scoring layout must survive the release cleanup.
@@ -713,11 +721,8 @@ script=r"""
   assert(document.querySelector('#resultater').classList.contains('is-ready'),'result section was not emphasized after scoring');
   assert(!document.querySelector('#reviewResponse').disabled,'next-step action stayed disabled after scoring');
   assert(document.activeElement===document.querySelector('#result-heading'),'keyboard focus did not move to result heading');
-  assert(document.querySelector('[data-assessment-step="result"]').getAttribute('aria-current')==='step','result step is not current');
-  assert(document.querySelector('[data-assessment-step="input"]').classList.contains('is-complete'),'input step is not marked complete');
   document.querySelector('#reviewResponse').click();
   assert(document.activeElement===document.querySelector('#info-heading'),'next-step action did not focus intervention heading');
-  assert(document.querySelector('[data-assessment-step="action"]').getAttribute('aria-current')==='step','action step is not current');
   window.KartleggIconSystem.refresh();
   assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===4,'form actions did not receive shared SVG icons');
   assert(document.querySelectorAll('.dialog-close:not([data-ui-action-icon])').length===0,'dialog close controls still use legacy glyphs');
@@ -738,7 +743,7 @@ script=r"""
   put('gcs','14');
   assert(gcsDisclosure.open,'transferring/populating GCS must expand the optional field');
   const mobileButton=document.querySelector('#menuButton');
-  assert(mobileButton.querySelector('.v10-menu-symbol')&&mobileButton.querySelector('.v10-menu-label')?.textContent==='Meny','mobile menu must have recognizable icon and label');
+  assert(mobileButton.querySelectorAll('.ui-icon-svg').length===1&&mobileButton.getAttribute('aria-label')==='Åpne meny','mobile menu must have one recognizable, accessible icon');
   // Ensure original SCORE, and all dialogs, still work after new tools.
   assert(!document.querySelector('#homecareDialog').open,'homecare dialog must close cleanly');
   assert(!errors.length,'JS errors: '+errors.join(';'));
