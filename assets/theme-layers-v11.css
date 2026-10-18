@@ -1,0 +1,154 @@
+/* Kartlegg v1.1 theme layers.
+ * Layer 1: base identity (standard / Philip glass)
+ * Layer 2: existing service presentation, including its independent top ribbon
+ * Layer 3: decorative seasonal marker only.
+ *
+ * Clinical scoring, severity statuses, escalation alerts, and risk colors are NEVER
+ * targeted here. Seasons do not alter global --accent, --paper, --ink, or score tokens.
+ */
+:root[data-base-theme="philip"][data-service-theme][data-theme][data-accent]{
+ color-scheme:dark;
+ --ink:#eff6ff;--muted:#bfd1ee;--line:#5478af7a;
+ --bg:#07162e;--paper:#112a53;--accent:#a9ceff;--accent-on:#061b38;
+ --accent-bg:#224982;--accent-border:#81b5fc;
+ --shadow:0 14px 42px #01091ecc;
+ --service-subtle:#203d69;--service-soft:#102b52;--service-control:#173660;
+ --service-unit:#294a75;--service-border:#5c86bd;--service-soft-text:#d6e4fa;
+ --service-focus:#b7d8ff;
+}
+:root[data-base-theme="philip"] body{
+ background:radial-gradient(ellipse 78% 55% at 92% -4%,#2468d44a,transparent 76%),
+ radial-gradient(ellipse 68% 48% at 0% 65%,#1246a34d,transparent 76%),#07162e;
+ color:var(--ink);
+}
+:root[data-base-theme="philip"] :is(
+ .header,.sidebar,.section,.field,.toolbox,.profile-dialog,.profile-dialog-head,
+ .clinical-tool-dialog,.v08-dialog,.v081-tool-search,.v081-search-results
+){
+ color:var(--ink);
+ background:linear-gradient(145deg,#234d8394 0%,#112c54df 32%,#0b2247ec 100%);
+ border-color:var(--line);
+ box-shadow:0 1px 0 #bad8ff28 inset,0 16px 38px #01081e69;
+}
+:root[data-base-theme="philip"] :is(.header,.sidebar,.profile-dialog){
+ -webkit-backdrop-filter:blur(12px) saturate(135%);
+ backdrop-filter:blur(12px) saturate(135%);
+}
+:root[data-base-theme="philip"] :is(.section,.toolbox,.field){
+ border:1px solid var(--line);
+}
+:root[data-base-theme="philip"] :is(.logo,.btn-primary,.tool-launch,.hc-launch){
+ background:linear-gradient(138deg,#c2deff 0%,#80b8ff 38%,#3982ec 100%);
+ color:#061a39;
+ border-color:#a1cfff;
+ box-shadow:0 1px 0 #ffffffa8 inset,0 7px 24px #4a8bf34a;
+}
+:root[data-base-theme="philip"] :is(.btn-primary,.tool-launch,.hc-launch):hover{
+ filter:brightness(1.05);
+}
+:root[data-base-theme="philip"] :is(.brand-small,.avatar,.chip,.toolbox .tool-tag:not(.soon)){
+ background:#203f72;color:#c7e3ff;border-color:#6e9ed7;
+}
+:root[data-base-theme="philip"] :is(
+ .control-wrap,.meta-line,.v081-search-field,.profile-field input,.profile-field select,
+ .isbar-inputs input,.isbar-inputs textarea,.hc-field input,.hc-field select,
+ .tool-field select,.v08-body-field input,.v08-body-field select
+){
+ background:#0a2448;color:#f0f7ff;border-color:#6586b0;
+}
+:root[data-base-theme="philip"] :is(
+ .field .control-wrap input,.field .control-wrap select,
+ .v081-search-field input,.meta-line input,
+ .profile-field input,.profile-field select
+){color:#f0f7ff!important;}
+:root[data-base-theme="philip"] :is(input,textarea)::placeholder{color:#aebfda;opacity:1}
+:root[data-base-theme="philip"] :is(.field .unit,.nav:hover,.nav.active,.v099-category-button[aria-pressed="true"]){
+ background:#254779;color:#eaf4ff;
+}
+:root[data-base-theme="philip"] :is(.sidebar-bottom,.v099-category-heading,.service-theme-option,.appearance-options label,.base-theme-option,.season-theme-controls){
+ background:#15335e;color:#eff6ff;border-color:var(--line);
+}
+:root[data-base-theme="philip"] :is(.theme-switch,.btn-secondary,.btn-inline){
+ background:#15345e;color:#e9f3ff;border-color:#6a93c6;
+}
+:root[data-base-theme="philip"] .header .theme-top-ribbon{
+ box-shadow:0 2px 14px #6ba7ff65;
+}
+:root[data-base-theme="philip"] :is(a,button,input,select,textarea):focus-visible{
+ outline:3px solid #a9ceff;outline-offset:3px;
+}
+/* Keep input and decorative text legible where old light service presets used white. */
+:root[data-base-theme="philip"] :is(.meta-line small,.field .hint,.sidebar-bottom p,.profile-dialog-section>p){color:#c0d2ed}
+:root[data-base-theme="philip"] :is(.profile-dialog,.v081-tool-result,.v081-search-results,.toolbox){
+ color:var(--ink);
+}
+:root[data-base-theme="philip"] .v081-tool-result{background:#142f57}
+:root[data-base-theme="philip"] .v081-tool-result:is(:hover,:focus-visible){background:#204b81}
+:root[data-base-theme="philip"] .v081-tool-result small{color:#c5d7f2}
+
+/* Native, accessible preference controls: independent layers, never above the assessment. */
+.base-theme-options,.season-theme-options{
+ border:0;border-top:1px solid var(--line);padding:18px 0 0;margin:18px 0 0;min-width:0;
+}
+.base-theme-options legend,.season-theme-options legend{
+ font-size:13px;font-weight:850;color:var(--ink);padding-right:8px;
+}
+.base-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:8px}
+.base-theme-option{
+ display:flex;align-items:center;gap:9px;min-height:65px;padding:11px;
+ border:1px solid var(--line);border-radius:12px;background:var(--paper);
+ cursor:pointer;font-size:13px;font-weight:750;
+}
+.base-theme-option input{accent-color:var(--accent);flex:none}
+.base-theme-option:has(input:checked){outline:2px solid var(--accent);background:var(--accent-bg)}
+.base-theme-option small{display:block;font-size:11px;font-weight:400;margin-top:3px;color:var(--muted);line-height:1.5}
+.base-theme-option:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.theme-layer-hint{font-size:12px;line-height:1.55;color:var(--muted);margin:9px 0}
+.season-theme-controls{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.season-theme-controls label{display:block;color:var(--ink);font-size:12px;font-weight:750;margin-bottom:7px}
+.season-theme-controls select{
+ width:100%;min-height:43px;border:1px solid var(--line);border-radius:9px;
+ background:var(--paper);color:var(--ink);padding:8px 11px;font:inherit;font-size:13px;
+}
+.season-theme-controls select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.season-theme-message{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
+/* Decor-only seasonal palette variables; no general accent variables overridden. */
+:root[data-season-theme="halloween"]{
+ --season-ink:#6f360d;--season-bg:#fff0d8;--season-edge:#d47c2f;--season-glow:#b95c1b;
+}
+:root[data-season-theme="christmas"]{
+ --season-ink:#165139;--season-bg:#edfff5;--season-edge:#2b9561;--season-glow:#3da36d;
+}
+:root[data-season-theme="breast-cancer"]{
+ --season-ink:#772c58;--season-bg:#fff0f8;--season-edge:#b54d8c;--season-glow:#c75b9e;
+}
+:root[data-season-theme="mental-health"]{
+ --season-ink:#254d59;--season-bg:#eafffa;--season-edge:#3a9995;--season-glow:#3e9893;
+}
+:root[data-season-theme="pride"]{
+ --season-ink:#35365d;--season-bg:#f2f3ff;--season-edge:#7d6eb6;--season-glow:#7d6eb6;
+}
+.season-notice{
+ display:inline-flex;align-items:center;gap:7px;max-width:100%;
+ padding:6px 11px;margin-top:10px;border:1px solid var(--season-edge,#aeb3bc);
+ border-radius:999px;background:var(--season-bg,#f6f6f6);
+ color:var(--season-ink,#343943);font-size:12px;font-weight:750;line-height:1.4;
+}
+.season-notice[hidden],.season-highlight[hidden]{display:none!important}
+.season-notice::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--season-edge);flex:none}
+.season-highlight{
+ position:absolute;bottom:0;left:0;right:0;height:3px;z-index:5;pointer-events:none;
+ background:linear-gradient(90deg,transparent 3%,var(--season-glow) 48%,transparent 97%);
+}
+:root[data-season-theme="pride"] .season-highlight{
+ background:linear-gradient(90deg,#d95b6d,#e4ab47,#6eac82,#6898cd,#9266b7);
+ opacity:.75;
+}
+:root[data-season-theme="halloween"] .season-highlight{
+ background:linear-gradient(90deg,#6c428b,#e18a32,#6c428b);
+}
+:root[data-base-theme="philip"] .season-highlight{opacity:.66}
+@media(max-width:480px){.base-theme-grid{grid-template-columns:1fr}.season-notice{font-size:11px}}
+@media(prefers-reduced-motion:reduce){
+ .season-highlight,.season-notice,.base-theme-option{animation:none!important;transition:none!important}
+}
