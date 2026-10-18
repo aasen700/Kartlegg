@@ -48,6 +48,16 @@ Det ligger fortsatt historiske versjonsfiler i `assets/`. Vi har **ikke** gjenno
 
 I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancements.js` og `scoring.js`). **Kjøreversjonen** lastes fra `index.html` og `assets/`; rotkopiene skal ikke endres ved funksjonsutvikling og bør på sikt arkiveres etter gjennomgang av eksterne lenker.
 
+## Kartlegg Lær – GCS og videre læringsmoduler
+
+- `#laer` og `assets/gcs-learning-ui.js` eier den nye pedagogiske brukeropplevelsen. `assets/gcs-learning.css` gjelder bare læringsgrensesnittet.
+- `assets/gcs-learning-data.js` eier GCS-kriteriealternativer, seks leksjoner, ni praktiske spørsmål, fire testcaser og kildeadresser.
+- **Eksakt én faglig GCS-beregningsfunksjon:** `assets/clinical-tools.js` eier `gcs({eyes,verbal,motor})`, som brukes av både eksisterende GCS-kalkulator og ny læringsmodul. Testcasenes fasit sammenlignes med denne; det finnes ingen parallell totalskår.
+- Ved NT/IT (ikke testbar) skal aldri totalskår beregnes. Skriptet bruker ingen vedvarende lagring, ingen nettverkskall og ingen identifiserende helseopplysninger.
+- SVG-illustrasjonene er egenproduserte og **symbolske**. De kan ikke brukes som dokumentasjon av konkrete nevrologiske responser.
+- `tests/gcs-learning.test.cjs` tester samtlige svarnøkler, NT, og tverrbruk av den eksisterende skåringsmotoren; `tests/browser-smoke.py` kontrollerer de tre læringsnivåene på mobil/desktop.
+- Fremtidige verktøymoduler (4AT, NEWS2 m.fl.) må ha separat, kvalitetssikret læringsinnhold og tester, men kan bruke samme UI-rammeverk.
+
 ## Pedagogisk simulering (egen, isolert funksjon)
 
 - `assets/simulation-engine.js` eier den faste fiktive casen, tidssteg, oppdagede opplysninger, registrering av NEWS2-/ISBAR-svar og refleksjon. NEWS2 beregnes **kun** i `assets/scoring.js`.
