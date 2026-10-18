@@ -27,6 +27,19 @@
 - Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
 - Se [Kontrollmatrisen](KONTROLLMATRISE.md) for kilder, grenser, testdekning, uavklarte spørsmål og klinisk kontrollstatus. Ingen klinisk godkjenning er utført.
 
+## Øvingsmodus – første pilotcase
+
+[Kartlegg Simulering](https://aasen700.github.io/Kartlegg/#simulering) inneholder foreløpig **én regelstyrt pasientcase** med fiktive opplysninger: akutt forverring under hjemmebesøk. Brukeren velger selv samtalespørsmål, ABCDE-observasjon, målinger, eventuell ny måling og når hjelp kontaktes. NEWS2-svaret registreres i øvingen og sammenholdes med den **eksisterende NEWS2-beregningsmotoren** i oppsummeringen. Det finnes også en egen ISBAR-øvelse med fritekst, uten automatisk KI-vurdering.
+
+Scenarioutviklingen er **forhåndsskrevet**, ikke en simulering av virkelig fysiologisk prognose. En av grenene lar pasienten forverres hvis man bruker mye simulert tid uten å varsle. Nye målinger vises bare hvis brukeren faktisk velger å måle på nytt. Fritekstsvar vurderes ikke automatisk for medisinsk korrekthet. En pedagogisk refleksjonssjekkliste erstatter ikke faglig vurdering.
+
+- **Ingen AI-API, backend eller løpende AI-kostnader** i øvingsmodusen.
+- **Ingen lagring** av øvingsdata etter oppdatering/lukking av fanen.
+- **Ingen overføring** fra øvingen til Kartleggs ordinære vurderings- eller målehistorikk.
+- **Kun pilot, ikke faglig validert.** Bruk bare syntetiske opplysninger; ikke bruk øvingens tekst eller hendelsesforløp som behandlingsinstruks.
+
+Beregningslogikk og testspecifikasjon: `assets/simulation-engine.js` og `tests/simulation-v01.test.cjs`. Visningen eies av `assets/simulation-ui.js`, med isolert `assets/simulation-v01.css`.
+
 ## Funksjoner
 
 - **NEWS2 og qSOFA**, med delpoeng, forklaringer, tydelig skåringsfeedback og særskilte varsler for NEWS2-enkeltparametere med 3 poeng. qSOFA krever separat vurdert GCS.
