@@ -289,3 +289,26 @@
 :root[data-personal-mode] :is(.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button,.v081-view-all,.v10-now-button):focus-visible{
  outline:3px solid var(--pm-focus)!important;outline-offset:3px!important;
 }
+
+
+/* Header clipping correction — decorative banner stays below interactive brand
+ * and avatar instead of painting over them. Keep the full-width stadium/aurora/
+ * mountain artwork, but dock it at the bottom edge of the header. */
+:root[data-personal-mode] .header .theme-top-ribbon{
+ top:auto!important;bottom:0!important;height:12px!important;
+ z-index:1!important;filter:none!important;
+}
+:root[data-personal-mode] .header :is(.brand,.header-right,.mobile-toggle){
+ position:relative;z-index:3;
+}
+:root[data-personal-mode] .header .brand{min-width:0}
+:root[data-personal-mode] .header .logo,
+:root[data-personal-mode] .header .profile-trigger{
+ flex-shrink:0;position:relative;z-index:3;
+}
+@media(max-width:770px){
+ :root[data-personal-mode] .header .theme-top-ribbon{height:9px!important}
+}
+@media(max-width:480px){
+ :root[data-personal-mode] .header .theme-top-ribbon{height:8px!important}
+}
