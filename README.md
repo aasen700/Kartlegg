@@ -27,6 +27,21 @@
 - Ett register eier navn/ID-er/søkeord; ett bibliotekfilter eier søk og kategorier. Kliniske beregningsmoduler er uendret.
 - Se [Kontrollmatrisen](KONTROLLMATRISE.md) for kilder, grenser, testdekning, uavklarte spørsmål og klinisk kontrollstatus. Ingen klinisk godkjenning er utført.
 
+## Kartlegg Lær – interaktiv GCS-opplæring (pilot)
+
+[Åpne Kartlegg Lær](https://aasen700.github.io/Kartlegg/#laer) i sidemenyen. GCS er første fullt tilgjengelige læringsmodul og kan også åpnes via **«✦ Lær GCS»** på GCS-kortet i verktøybiblioteket.
+
+- **Lær:** seks illustrerte, stegvis oppbygde temaer med små kunnskapssjekker (E, V, M, ikke-testbar komponent, dokumentasjon).
+- **Øv:** ni fiktive pasientsituasjoner med umiddelbar forklaring på hvert skåringsvalg.
+- **Test deg selv:** fire komplette pasientcaser hvor du velger E, V og M. Fasiten vises samlet først etter alle fire. Hvis en komponent er NT, vises **ingen gyldig totalskår**.
+- **Originalillustrasjoner:** fem små SVG-tegninger opprettet for nettstedet. Illustrasjoner er symbolske; alle vurderinger skal baseres på tekstobservasjonene, ikke detaljer i tegningene.
+- **Faglig referanse:** [offisiell norsk Glasgow Coma Scale-vurderingshjelp](https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid-Norwegian.pdf) og [offisiell GCS-dokumentasjon](https://www.glasgowcomascale.org/recording-gcs/). Den norske originaloversikten bruker «IT», mens Kartlegg bruker «NT» for ikke-testbar komponent.
+- **Beregning:** fasiter og totalskår bruker `assets/clinical-tools.js`, som er samme deterministiske GCS-funksjon som den ordinære kalkulatoren. Ingen parallell klinisk regnemotor.
+- **Kostnader og data:** Ingen AI-API, backend, konto, telemetri eller lagring av svar/fremdrift. Alt er i fane-minnet og nullstilles ved oppdatering.
+- **Status:** pedagogisk demonstrasjon – ikke klinisk godkjent, og ikke en praktisk kompetansetest. Fysisk stimulus må utføres av opplært helsepersonell i henhold til lokale prosedyrer.
+
+Den tidligere større pasientsimuleringen er fortsatt tilgjengelig som **«Avansert case – pilot»**, men læring av verktøyene er nå den fremhevede opplæringsfunksjonen. Videre 4AT- og NEWS2-moduler er foreslått, ikke implementert.
+
 ## Øvingsmodus – første pilotcase
 
 [Kartlegg Simulering](https://aasen700.github.io/Kartlegg/#simulering) inneholder foreløpig **én regelstyrt pasientcase** med fiktive opplysninger: akutt forverring under hjemmebesøk. Brukeren velger selv samtalespørsmål, ABCDE-observasjon, målinger, eventuell ny måling og når hjelp kontaktes. NEWS2-svaret registreres i øvingen og sammenholdes med den **eksisterende NEWS2-beregningsmotoren** i oppsummeringen. Det finnes også en egen ISBAR-øvelse med fritekst, uten automatisk KI-vurdering.
