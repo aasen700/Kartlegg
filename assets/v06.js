@@ -10,8 +10,7 @@ const serviceNames={custom:'Egendefinert',hospital:'Sykehus / akuttmottak',ambul
 const serviceModes={hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'};
 let prefs={mode:'system',accent:'coral',service:'custom'};
 try{const p=JSON.parse(localStorage.getItem(key)||'null');if(p&&modes.includes(p.mode)&&accents.includes(p.accent))prefs={mode:p.mode,accent:p.accent,service:services.includes(p.service)?p.service:'custom'};else{const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}}catch(_){}
-const avatar= document.createElement('button');avatar.className='avatar profile-trigger';avatar.id='profileTrigger';avatar.type='button';avatar.setAttribute('aria-label','Åpne profil og utseende');avatar.textContent='K';
-one('.header-right .avatar')?.replaceWith(avatar);
+const avatar=one('#profileTrigger'); // Accessible native button is rendered in index.html.
 const drawer=document.createElement('dialog');drawer.id='profileDialog';drawer.className='profile-dialog';drawer.setAttribute('aria-labelledby','profileDialogTitle');
 drawer.innerHTML='<div class="profile-dialog-head"><div><h2 id="profileDialogTitle">Min profil</h2><p>Din avsenderprofil og utseende</p></div><button id="closeProfile" type="button" class="dialog-close" aria-label="Lukk">×</button></div><div class="profile-dialog-scroll"><section class="profile-dialog-section"><h3>Profil for ISBAR</h3><p>Ikke skriv inn pasientopplysninger her.</p><div id="profileMount"></div></section><section class="profile-dialog-section"><h3>Utseende</h3><p id="appearanceSummary"></p><fieldset class="appearance-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> ☀ Dag</label><label><input type="radio" name="appearanceMode" value="dark"> ☾ Natt</label><label><input type="radio" name="appearanceMode" value="system"> ◐ System</label></fieldset><fieldset class="appearance-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="coral"><i class="swatch coral"></i> Korall</label><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i> Blå</label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i> Grønn</label></fieldset><p class="personalization-note">Valgt tema endrer ikke kliniske risiko- og skåringsfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p></section></div>';
 document.body.append(drawer);
@@ -55,7 +54,7 @@ $('closeProfile').addEventListener('click',()=>drawer.close());
 drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.close()});
 $('profileName')?.addEventListener('input',initials);
 $('clearProfile')?.addEventListener('click',initials);
-const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();openProfile()},true);
+const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();if(one('#sidebar')?.classList.contains('open'))one('#menuButton')?.click();openProfile()},true);
 drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=serviceTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.service=el.value;apply()}));
