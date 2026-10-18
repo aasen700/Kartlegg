@@ -1,0 +1,202 @@
+/* Kartlegg visual atmosphere – pure presentation, v1.1.2.
+   Loaded AFTER personal modes so the selected Philip glass base is genuinely
+   glass even when an opt-in personal easter egg is active.
+   Seasonal atmosphere is independent of base and service settings.
+   DO NOT style clinical status colors, score cards, escalation warnings,
+   NEWS2/qSOFA points or medical interpretation here. No patient data or JS. */
+
+/* ─── Philip: deep cobalt liquid-glass surfaces ─────────────────────── */
+:root[data-base-theme="philip"] {
+  --glass-ink:#eef6ff;
+  --glass-secondary:#c5d7f4;
+  --glass-border:rgba(163,203,255,.35);
+  --glass-focus:#bde0ff;
+  --glass-controls:rgba(7,28,64,.82);
+  color-scheme:dark;
+}
+:root[data-base-theme="philip"] body {
+  background:
+    radial-gradient(ellipse 46% 32% at 88% 10%,rgba(106,165,255,.31),transparent 80%),
+    radial-gradient(ellipse 52% 48% at 3% 68%,rgba(35,102,220,.38),transparent 74%),
+    radial-gradient(ellipse 48% 40% at 62% 100%,rgba(58,105,205,.25),transparent 80%),
+    linear-gradient(145deg,#041024 0%,#0b2b62 49%,#05172f 100%) !important;
+  background-attachment:fixed !important;
+  color:var(--glass-ink);
+}
+:root[data-base-theme="philip"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.profile-dialog-head,
+  .v081-tool-search,.v081-search-results,.v10-optional-gcs
+) {
+  position:relative;
+  color:var(--glass-ink) !important;
+  background:
+    linear-gradient(160deg,rgba(167,206,255,.18) 0%,rgba(95,153,237,.07) 24%,transparent 48%),
+    linear-gradient(142deg,rgba(24,67,129,.76) 0%,rgba(12,39,90,.78) 55%,rgba(8,27,60,.86) 100%) !important;
+  border-color:var(--glass-border) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.32),
+    inset 1px 0 0 rgba(208,231,255,.08),
+    inset 0 -1px 0 rgba(3,12,33,.35),
+    0 16px 42px rgba(0,6,25,.38) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(165%);
+  backdrop-filter:blur(22px) saturate(165%);
+}
+:root[data-base-theme="philip"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
+)::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(111deg,transparent 8%,rgba(255,255,255,.065) 26%,rgba(211,235,255,.13) 35%,transparent 52%),
+    linear-gradient(180deg,rgba(255,255,255,.13),transparent 20%);
+  opacity:.78;
+}
+:root[data-base-theme="philip"] :is(
+  .section-header h2,.toolbox h3,.field label,.field .field-label,
+  .section-header p,.toolbox p,.field .hint,.meta-line label,.meta-line small,
+  .sidebar-bottom p,.sidebar-bottom strong,.v10-optional-gcs>span,
+  .profile-dialog-section h3,.profile-dialog-section>p,.profile-dialog-head h2,
+  .profile-dialog-head p,.service-theme-intro,.personalization-note,
+  .v099-category-heading h3,.v099-category-heading p
+){color:var(--glass-ink) !important}
+:root[data-base-theme="philip"] :is(
+  .field .control-wrap,.meta-line input,.v081-search-field,
+  .profile-field input,.profile-field select,.tool-field select,
+  .isbar-inputs input,.isbar-inputs textarea
+) {
+  background:var(--glass-controls) !important;
+  color:#f2f8ff !important;
+  border-color:rgba(165,203,255,.47) !important;
+  box-shadow:inset 0 1px 3px rgba(0,8,30,.42),inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+:root[data-base-theme="philip"] :is(
+  .field .control-wrap input,.field .control-wrap select,.meta-line input,
+  .v081-search-field input,.profile-field input,.profile-field select
+){color:#f2f8ff !important}
+:root[data-base-theme="philip"] :is(.field .unit,.v081-tool-result,.v099-category-heading,.sidebar-bottom){
+  background:rgba(43,87,149,.63) !important;color:#e7f2ff !important;
+  border-color:rgba(157,204,255,.30) !important;
+}
+:root[data-base-theme="philip"] .v081-tool-result small{color:var(--glass-secondary) !important}
+:root[data-base-theme="philip"] :is(.field,.toolbox,.section,.v081-tool-search):focus-within{
+  border-color:rgba(176,221,255,.78) !important;
+}
+:root[data-base-theme="philip"] :is(a,button,input,select,textarea):focus-visible{
+  outline:3px solid var(--glass-focus) !important;outline-offset:3px;
+}
+/* Preserve styling for special clinical alert/safety/score surfaces by exclusion. */
+
+/* ─── Every seasonal layer sits above any base, service or personal theme ─── */
+:root[data-season-theme="halloween"] body::before,
+:root[data-season-theme="christmas"] body::before,
+:root[data-season-theme="breast-cancer"] body::before,
+:root[data-season-theme="mental-health"] body::before,
+:root[data-season-theme="pride"] body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+/* Subtle background atmosphere is independent of the personal-mode body
+   background and doesn't repaint any clinical result panels. */
+:root[data-season-theme="halloween"] body::before{
+  background:
+    radial-gradient(circle at 82% 13%,rgba(255,164,59,.38),transparent 29%),
+    radial-gradient(circle at 6% 93%,rgba(104,41,151,.22),transparent 40%),
+    linear-gradient(180deg,rgba(31,12,50,.16),rgba(42,13,7,.19));
+}
+:root[data-season-theme="christmas"] body::before{
+  background:
+    radial-gradient(circle at 88% 5%,rgba(198,232,255,.43),transparent 29%),
+    radial-gradient(circle at 6% 92%,rgba(95,168,242,.28),transparent 38%),
+    linear-gradient(160deg,rgba(9,56,90,.10),rgba(127,209,237,.17));
+}
+:root[data-season-theme="breast-cancer"] body::before{
+  background:radial-gradient(circle at 85% 12%,rgba(231,91,155,.19),transparent 38%);
+}
+:root[data-season-theme="mental-health"] body::before{
+  background:radial-gradient(circle at 80% 13%,rgba(55,191,169,.17),transparent 40%);
+}
+:root[data-season-theme="pride"] body::before{
+  background:linear-gradient(122deg,rgba(237,106,132,.07),rgba(244,188,85,.07) 35%,rgba(99,183,207,.07) 69%,rgba(150,105,212,.07));
+}
+
+/* Cobwebs hang from top corners of navigation, panels and form sections.
+   Background images are decorative and never capture pointer/keyboard events. */
+:root[data-season-theme="halloween"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
+){position:relative;outline:1px solid rgba(250,144,55,.20);outline-offset:-1px}
+:root[data-season-theme="halloween"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
+)::after{
+  content:"";position:absolute;top:0;right:0;width:clamp(80px,24%,166px);height:105px;
+  border-radius:inherit;pointer-events:none;
+  background:url("./season-halloween-web.svg") no-repeat right top / contain;
+  opacity:.68;
+}
+:root[data-season-theme="halloween"] :is(.header,.sidebar)::after{
+  width:190px;height:115px;opacity:.80;
+}
+:root[data-season-theme="halloween"] .season-highlight{
+  height:4px;opacity:1;
+  background:linear-gradient(90deg,#67317d,#ff9f31 30%,#ffca72 56%,#873577);
+  box-shadow:0 2px 18px rgba(255,152,44,.38);
+}
+
+/* Frosted overhang on every non-clinical panel. Borders/status indicators
+   on result cards remain untouched; snow stays in a tiny, non-obstructive strip. */
+:root[data-season-theme="christmas"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
+){position:relative;outline:1px solid rgba(188,224,255,.24);outline-offset:-1px}
+:root[data-season-theme="christmas"] :is(
+  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
+)::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:15px;
+  pointer-events:none;
+  background:url("./season-christmas-snow.svg") repeat-x left top / 224px 16px;
+  opacity:.88;
+}
+:root[data-season-theme="christmas"] .season-highlight{
+  height:4px;opacity:1;
+  background:linear-gradient(90deg,#d8f6ff,#7fc5eb 24%,#f7ffff 49%,#72b5de 82%,#eefcff);
+  box-shadow:0 2px 17px rgba(163,218,255,.36);
+}
+/* Sparse snowfall over the background, no DOM nodes or polling. */
+:root[data-season-theme="christmas"] body::after{
+  content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
+  opacity:.32;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.96) 0 1.3px,transparent 1.9px),
+    radial-gradient(circle,rgba(215,243,255,.8) 0 .9px,transparent 1.6px);
+  background-size:157px 171px,91px 127px;
+  background-position:10px 16px,47px 67px;
+  animation:kartlegg-snow-drift 32s linear infinite;
+}
+@keyframes kartlegg-snow-drift{
+  from{background-position:10px -171px,47px -127px}
+  to{background-position:10px 171px,47px 127px}
+}
+/* Distinct accents for awareness dates, without suggesting affiliation. */
+:root[data-season-theme="breast-cancer"] :is(.section,.toolbox,.header,.sidebar){
+  outline:1px solid rgba(220,98,158,.23);outline-offset:-1px;
+}
+:root[data-season-theme="mental-health"] :is(.section,.toolbox,.header,.sidebar){
+  outline:1px solid rgba(63,174,164,.22);outline-offset:-1px;
+}
+:root[data-season-theme="pride"] :is(.section,.toolbox,.header,.sidebar){
+  outline:1px solid rgba(152,118,209,.20);outline-offset:-1px;
+}
+@media(max-width:770px){
+  :root[data-base-theme="philip"] body{background-attachment:scroll !important}
+  :root[data-base-theme="philip"] :is(.field,.toolbox,.section){
+    -webkit-backdrop-filter:blur(12px) saturate(145%);backdrop-filter:blur(12px) saturate(145%);
+  }
+  :root[data-season-theme="halloween"] :is(.field,.toolbox)::after{
+    width:88px;height:62px;opacity:.54;
+  }
+  :root[data-season-theme="christmas"] body::after{opacity:.20}
+}
+@media(prefers-reduced-motion:reduce){
+  :root[data-season-theme="christmas"] body::after{animation:none}
+}
+/* Older browsers keep gradients/borders when backdrop-filter is unsupported. */

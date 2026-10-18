@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## UI 1.1.2 – 18. oktober 2026 (forslag)
+
+- Forsterket Philip cobalt glass med dypere blå reflekser, glassflater og fokusmarkeringer.
+- Sesongtemaene fungerer som et separat visuelt lag på Standard, tjenestetemaer og personlige temaer.
+- Halloween får spindelvev og varme atmosfæreeffekter på ikke-kliniske flater. Jul får snøkanter, frostdetaljer og redusert bevegelse ved OS-innstilling.
+- Kliniske skårer, varsler, beregningsregler og datalagring er uendret.
+
 ## 1.0.2 – 18. oktober 2026
 
 Faglig veiledningspresisering og forbedret UI/UX på mobil og desktop. Kun demonstrasjonsversjon med fiktive data.
