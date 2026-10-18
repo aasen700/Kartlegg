@@ -41,7 +41,7 @@ function initials(){const name=$('profileName')?.value.trim()||'';avatar.textCon
 function apply(){
  const resolved=serviceModes[prefs.service]||(prefs.mode==='system'?(media?.matches?'dark':'light'):prefs.mode);
  html.dataset.theme=resolved;html.dataset.accent=prefs.accent;html.dataset.serviceTheme=prefs.service;
- const toggle=$('themeToggle');if(toggle){toggle.textContent=resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus';toggle.setAttribute('aria-label',resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus')}
+ const toggle=$('themeToggle');if(toggle){toggle.textContent=resolved==='dark'?'☀ Dagmodus':'☾ Nattmodus';toggle.setAttribute('aria-label',resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus');toggle.setAttribute('aria-pressed',String(resolved==='dark'))}
  drawer.querySelectorAll('[name=appearanceMode]').forEach(x=>x.checked=x.value===prefs.mode);
  drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=x.value===prefs.accent);
  drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
