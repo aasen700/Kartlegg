@@ -34,6 +34,10 @@
  function anchor(label,url){
   const a=h('a','gcs-learn-link',label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;
  }
+ // The scoring module reports ENT/VNT/MNT. Show E-NT/V-NT/M-NT in
+ // teaching copy to avoid confusing non-testability with a numeric score.
+ const readableReport=report=>report.replace(/([EVM])NT\\b/g,'$1-NT');
+ const readablePart=(part,value)=>({eyes:'E',verbal:'V',motor:'M'})[part]+(value==='NT'?'-NT':value);
  function heading(title,subtitle,mode){
   const wrap=h('div','gcs-learn-title');
   wrap.append(h('p','gcs-learn-eyebrow',subtitle),h('h3','',title));
@@ -125,7 +129,7 @@
   if(answer!==null){
    const result=D.gradePractice(q.id,answer);
    const feedback=h('div','gcs-learn-feedback '+(result.correct?'is-correct':'is-wrong'));
-   feedback.append(h('strong','',result.correct?'Riktig observasjon!':'Det riktige svaret er '+q.part.slice(0,1).toUpperCase()+result.expected+'.'));
+   feedback.append(h('strong','',result.correct?'Riktig observasjon!':'Det riktige svaret er '+readablePart(q.part,result.expected)+'.'));
    para(feedback,result.why);root.append(feedback);
    root.append(btn('Neste oppgave →','gcs-learn-primary',()=>{state.practiceIndex++;state.practiceChoice=null;render()}));
   }
@@ -187,7 +191,7 @@
   for(const item of result.cases){
    const q=D.exams.find(x=>x.id===item.id),card=h('article','gcs-learn-exam-report');
    card.append(h('h4','',q.name),h('p','gcs-learn-muted',item.correct+' av 3 komponenter riktige'));
-   const report=(o)=>o.report+(o.total===null?' · ingen gyldig totalskår':' = '+o.total);
+   const report=(o)=>readableReport(o.report)+(o.total===null?' · ingen gyldig totalskår':' = '+o.total);
    card.append(h('p','', 'Ditt svar: '+report(item.entered)));
    card.append(h('p','', 'Fasit: '+report(item.expected)));
    const mismatches=['eyes','verbal','motor'].filter(k=>!item.parts[k]);
