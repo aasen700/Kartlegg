@@ -29,7 +29,7 @@
 
 ## Lenke- og favorittkontrakt
 
-- Direkte lenke: `https://aasen700.github.io/Kartlegg/?tool=<id>#verktoy` for selvstendige verktøy, og `#vurdering` for `news2`, `qsofa` eller `isbar`. **Ingen måledata eller pasientinformasjon i URL.**
+- Direkte lenke: `https://aasen700.github.io/Kartlegg/?tool=<id>#verktoy` for selvstendige verktøy, og `#vurdering` for `news2`, `qsofa` eller `isbar`. **Ingen måledata eller pasientinformasjon i URL.** Eventuelle eksisterende søkeparametere fjernes når en verktøylenke opprettes, slik at bare `tool` blir med.
 - Inngangen er en *eksakt* ID, validert mot registeret; ugyldig ID ignoreres.
 - Favoritter er en sanitert liste med unike kjente ID-er. Lokal lagring inneholder **bare** IDs, aldri pasientdata. Fungerer også i minnet hvis localStorage ikke er tilgjengelig.
 - Hurtigbytte fra modal lukker eksisterende modal før en ny åpnes.
