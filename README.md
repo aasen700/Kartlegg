@@ -1,8 +1,16 @@
-# Kartlegg 1.0.1
+# Kartlegg 1.0.2
 
 **Kliniske verktøy samlet på ett sted – norsk demonstrasjonsversjon.**
 
-[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md)
+[Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Klinisk og teknisk kvalitetssikring](KLINISK-KVALITET.md)
+
+## Oppdatering 1.0.2
+- Rettet overlapp mellom toppbanner og Kartlegg-/profilikon i de personlige temaene; kontrollert med automatiske geometritester på fem visningsbredder.
+- Presisert når SpO₂-skala 2 kan brukes i NEWS2.
+- Ryddet bort duplisert styring av temabryteren og gammel redundant tema-lagring.
+- Endret selvstendige hjemmetjenesteverktøy slik at gamle resultater skjules når målinger endres.
+- Utvidet kildedokumentasjon og dokumentert gjenstående klinisk/regulatorisk validering for samtlige 16 verktøy.
+- Ingen endringer i kliniske skåringsgrenser, behandlingsalgoritmer eller lagringsregler.
 
 ## Oppdatering 1.0.1
 - Rettet qSOFA-hurtigsøk: den valgfrie GCS-seksjonen åpnes før fokus flyttes til skåringsfeltet.
@@ -32,7 +40,7 @@
 
 ## Viktig om klinisk bruk
 
-**Kartlegg 1.0 er en offentlig tilgjengelig demonstrasjonsversjon, ikke en klinisk godkjent eller uavhengig validert løsning.** Verktøyene er ment for læring, utprøving og utvikling med fiktive opplysninger. Beregninger, veiledere og legemiddelinformasjon erstatter ikke faglig skjønn, godkjente lokale prosedyrer, behandlende lege eller ordinær dokumentasjon. Klinisk og regulatorisk vurdering må gjennomføres før eventuell bruk i pasientbehandling.
+**Kartlegg 1.0.2 er en offentlig tilgjengelig demonstrasjonsversjon, ikke en klinisk godkjent eller uavhengig validert løsning.** Verktøyene er ment for læring, utprøving og utvikling med fiktive opplysninger. Beregninger, veiledere og legemiddelinformasjon erstatter ikke faglig skjønn, godkjente lokale prosedyrer, behandlende lege eller ordinær dokumentasjon. Klinisk og regulatorisk vurdering må gjennomføres før eventuell bruk i pasientbehandling.
 
 Faglige referanser og avgrensninger vises i de enkelte verktøyene.
 
@@ -45,7 +53,7 @@ node --test tests/*.test.cjs
 python3 tests/browser-smoke.py
 ```
 
-Ved lansering ble **133 automatiske enhets-/kontraktstester** samt nettlesertester på desktop, nettbrett og tre mobilbredder bestått. Automatiske tester innebærer **ikke klinisk validering**.
+De automatiske testene er utvidet fra **133** ved den første lanseringen til **139** etter v1.0.2-oppdateringen, samt nettlesertester på desktop, nettbrett og tre mobilbredder. Automatiske tester innebærer **ikke klinisk validering**.
 
 ## Utvikling
 
