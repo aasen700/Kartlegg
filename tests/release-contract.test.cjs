@@ -87,3 +87,22 @@ test('NEWS2 alert reuses the single computed score and keeps validation',()=>{
  assert.doesNotMatch(ui,/Scoring\.news2\(/);
  assert.doesNotMatch(ui,/updateScores=function/);
 });
+
+test('the three optional personal modes are exact-name cosmetic decorations only',()=>{
+ const modes=require('../assets/personal-modes.js');
+ const expected=[['Kristian Bøe','kristian'],['Philip Aasen','philip'],['Kent Ole Hansen','kent']];
+ for(const [name,id] of expected){
+  assert.equal(modes.resolvePersonalMode(name).id,id);
+  assert.equal(modes.resolvePersonalMode('  '+name.toUpperCase()+'  ').id,id);
+ }
+ for(const name of ['Kristian','Philip','Kent','Maritha','Kent Ole','Kristian Bøe Jr','']){
+  assert.equal(modes.resolvePersonalMode(name),null);
+ }
+ const js=read('assets/personal-modes.js'),css=read('assets/personal-modes.css');
+ assert.match(html,/assets\/personal-modes\.css/);
+ assert.match(html,/assets\/personal-modes\.js/);
+ assert.match(js,/save\.addEventListener\('click'/);
+ assert.match(js,/clear\.addEventListener\('click'/);
+ assert.doesNotMatch(js,/localStorage|sessionStorage|indexedDB|fetch\(|sendBeacon/);
+ assert.doesNotMatch(css,/\.score(?:\.|\s|\{|:)|\.news-alert|\.v10-part-score/);
+});
