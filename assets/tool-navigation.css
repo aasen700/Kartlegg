@@ -1,0 +1,46 @@
+/* Kartlegg 1.1: concise favorites, deep links and clinical workflow UI.
+ * No clinical risk/severity colors are overridden. */
+.tool-workflow{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.tool-workflow-button,.tool-favorite-shortcut,.tool-card-favorite,.tool-card-copy,.tool-dialog-switch{
+ appearance:none;cursor:pointer;border:1px solid var(--line);border-radius:10px;
+ background:var(--paper);color:var(--ink);font:inherit;font-size:12px;font-weight:750;
+ min-height:40px;padding:9px 12px;transition:border-color .15s,background-color .15s;
+}
+.tool-workflow-button{flex:1 1 86px;background:var(--accent-bg);border-color:var(--accent-border);color:var(--ink)}
+.tool-workflow-button:hover,.tool-favorite-shortcut:hover,.tool-card-favorite:hover,.tool-card-copy:hover,.tool-dialog-switch:hover{
+ border-color:var(--accent);background:var(--accent-bg)
+}
+.tool-favorites{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.tool-favorites>strong{display:block;margin-bottom:8px;font-size:12px;color:var(--ink)}
+.tool-favorites-list{display:flex;flex-wrap:wrap;gap:7px}
+.tool-favorite-shortcut{padding:7px 11px;background:var(--accent-bg);border-color:var(--accent-border)}
+.tool-favorites-empty{font-size:12px;line-height:1.5;color:var(--muted)}
+.tool-card-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+.tool-card-actions button{flex:1 1 100px;text-align:center}
+.tool-card-favorite[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-bg);font-weight:850}
+.tool-navigation-status{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.tool-navigation-status:empty{display:none}
+.tool-dialog-switches{display:flex;flex-wrap:wrap;gap:8px;padding:10px 18px;border-block:1px solid var(--line);background:var(--paper)}
+.tool-dialog-switch{min-height:40px}
+:root[data-base-theme="philip"] :is(.tool-favorites,.tool-card-actions,.tool-dialog-switches) {
+ border-color:rgba(162,200,255,.3);background:rgba(18,49,91,.63);color:#eef6ff
+}
+:root[data-base-theme="philip"] :is(.tool-workflow-button,.tool-favorite-shortcut,.tool-card-favorite,.tool-card-copy,.tool-dialog-switch){
+ background:rgba(27,64,115,.78);border-color:rgba(153,201,255,.45);color:#f0f6ff
+}
+:root[data-base-theme="philip"] .tool-favorites-empty{color:#c4d6f1}
+:root[data-personal-mode] :is(.tool-favorites,.tool-dialog-switches){background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
+:root[data-personal-mode] :is(.tool-card-favorite,.tool-card-copy,.tool-favorite-shortcut,.tool-workflow-button,.tool-dialog-switch){
+ background:var(--pm-soft-action)!important;color:var(--pm-soft-action-ink)!important;border-color:var(--pm-action-border)!important
+}
+:is(.tool-workflow-button,.tool-favorite-shortcut,.tool-card-favorite,.tool-card-copy,.tool-dialog-switch):focus-visible{
+ outline:3px solid var(--accent);outline-offset:3px
+}
+@media(max-width:480px){
+ .tool-workflow{gap:6px}.tool-workflow-button{min-height:44px;padding:8px 6px}
+ .tool-card-actions button{min-height:44px}
+ .tool-dialog-switches{padding:9px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .tool-workflow-button,.tool-favorite-shortcut,.tool-card-favorite,.tool-card-copy,.tool-dialog-switch{transition:none}
+}
