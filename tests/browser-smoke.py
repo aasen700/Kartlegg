@@ -811,6 +811,74 @@ script=r"""
   document.querySelector('[data-page=vurdering]').click();
   assert(document.querySelector('#page-laer').hidden,'learning page not hidden on return to assessment');
   assert(!errors.length,'learning JavaScript errors: '+errors.join(';'));
+  // 4AT and NEWS2 training share the learning hub, not their scoring logic.
+  document.querySelector('[data-page="laer"]').click();
+  const hub=window.KartleggLearningHub,materials=window.KartleggLearningContent;
+  assert(!!hub&&!!materials,'4AT/NEWS2 learning hub missing');
+  assert(document.querySelectorAll('#learningHubChooser [data-learn-tool]').length===3,'learning hub should have three tools');
+  for(const [tool,definition,engine] of [
+   ['four','fourCases','4at'],
+   ['news','newsCases','news2']
+  ]){
+   assert(hub.setTool(tool,'home'),'failed to select '+tool);
+   const currentSection=document.querySelector(tool==='four'?'#learn4atModule':'#learnNews2Module');
+   assert(!currentSection.hidden&&currentSection.contains(document.querySelector('#learnToolExerciseRoot')),
+    'learning content not mounted in visible '+tool+' section');
+   assert(hub.setTool(tool,'learn'),'could not open '+tool+' lessons');
+   const lessons=tool==='four'?materials.fourLessons:materials.newsLessons;
+   for(let i=0;i<lessons.length;i++){
+    assert(document.querySelector('#learnToolExerciseRoot').textContent.includes(lessons[i].name),'lesson not shown: '+lessons[i].name);
+    const next=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Neste')||b.textContent.includes('Start øving'));
+    assert(!!next,'lesson continuation missing');next.click();
+   }
+   assert(hub.mode==='practice',tool+' should transition from learn to practice');
+   for(const q of materials[definition].filter(x=>x.level==='Øv')){
+    const answer=materials.expected(engine,q.id).parts;
+    for(const [part,value] of Object.entries(answer)){
+     const selector='#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]';
+     const b=document.querySelector(selector);
+     assert(!!b,tool+' missing clickable cell '+part+'='+value);
+     b.click();
+     assert(b===b,'button click must not throw');
+    }
+    const submit=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Neste case')||b.textContent.includes('Fullfør øvingen'));
+    assert(!!submit&&!submit.disabled,tool+' case action unavailable');
+    submit.click();
+    assert(document.querySelector('#learnToolExerciseRoot .learn12-feedback'),tool+' guided feedback missing');
+    const next=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Fortsett til neste')||b.textContent.includes('Se oppsummeringen'));
+    assert(!!next,'guided next case missing');next.click();
+   }
+   assert(hub.finished,'guided '+tool+' session should finish');
+   assert(document.querySelector('#learnToolExerciseRoot .learn12-big-score'),'guided '+tool+' results missing');
+   hub.setTool(tool,'test');
+   for(const q of materials[definition].filter(x=>x.level==='Test')){
+    const answer=materials.expected(engine,q.id).parts;
+    for(const [part,value] of Object.entries(answer)){
+     const b=document.querySelector('#learnToolExerciseRoot [data-part="'+part+'"][data-score="'+value+'"]');
+     assert(!!b,'test scoring cell missing '+tool+' '+part);b.click();
+    }
+    assert(!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'test must not reveal immediate feedback');
+    const action=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Neste case')||b.textContent.includes('Lever testen'));
+    assert(!!action&&!action.disabled,'cannot submit '+tool+' test case');action.click();
+   }
+   assert(hub.finished,'test '+tool+' must finish');
+   assert(document.querySelectorAll('#learnToolExerciseRoot .learn12-report').length===3,'three graded test cases expected');
+   assert(document.querySelector('#rr').value===simulatedBaseline,tool+' training must not affect live vitals');
+  }
+  // Switching back to GCS must restore its existing tutorial, also via library shortcut.
+  assert(hub.setTool('gcs','home'),'cannot return to GCS learning');
+  assert(!document.querySelector('#learnGcsModule').hidden,'GCS pane is still hidden');
+  document.querySelector('[data-page="verktoy"]').click();
+  const fourShortcut=document.querySelector('#page-verktoy .toolbox[data-tool-id="4at"] .learn12-card-shortcut');
+  const newsShortcut=document.querySelector('#page-verktoy .toolbox[data-tool-id="news2"] .learn12-card-shortcut');
+  assert(!!fourShortcut&&!!newsShortcut,'learning shortcuts missing from clinical library cards');
+  newsShortcut.click();
+  assert(hub.active==='news'&&hub.mode==='learn','NEWS2 tool shortcut did not launch lesson');
+  document.querySelector('[data-page="verktoy"]').click();
+  const gcsShortcut=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"] .gcs-learn-card-button');
+  gcsShortcut.click();
+  assert(hub.active==='gcs'&&window.KartleggLearnPilot.mode==='learn','GCS tool shortcut not restored after NEWS2');
+  assert(!errors.length,'multitool learning JavaScript errors: '+errors.join(';'));
   status='PASS';
  } catch(err) {status='FAIL: '+String(err.message||err)+'; '+errors.join('; ');}
  const el=document.createElement('output');el.id='kartlegg-smoke';el.textContent=status;document.body.append(el);
