@@ -49,19 +49,23 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
  assert.doesNotMatch(css,/--(?:coral|orange|teal|blue):/);
  assert.doesNotMatch(js,/Scoring\.|readVitals|localStorage|sessionStorage|fetch\(/);
  assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1101/);
- assert.match(read('index.html'),/assets\/theme-layers-v11\.css\?v=1601/);
+ assert.match(read('index.html'),/assets\/theme-layers-v11\.css\?v=1602/);
 });
 
 test('immersive atmosphere remains independent and excludes clinical scores',()=>{
  const css=read('assets/visual-atmospheres-v112.css');
  const html=read('index.html');
- assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1601/);
+ assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1602/);
  assert.match(html,/assets\/theme-philip\.css\?v=1503/);
- assert.match(html,/assets\/visual-refinement-v2\.css\?v=1601/);
+ assert.match(html,/assets\/visual-refinement-v2\.css\?v=1602/);
  assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
  for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])
   assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
- assert.doesNotMatch(css,/season-halloween-web\.svg|season-christmas-snow\.svg/);
+ assert.match(css,/season-halloween-web\.svg/);
+ assert.match(css,/season-christmas-snow\.svg/);
+ assert.match(css,/🦇[\s\S]*🎃/);
+ assert.match(css,/❄[\s\S]*❅/);
+ assert.match(css,/🌈[\s\S]*🏳️‍🌈/);
  assert.match(css,/--season-glass-edge/);
  assert.match(css,/kartlegg-winter-drift/);
  for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])

@@ -7,6 +7,7 @@
 - Jul har fått nordisk kobolt, furu, isblå glasskanter, auroragløtt og dempet bakgrunnssnø.
 - Brystkreftmåned, psykisk helse og Pride har fått egne, mer gjennomarbeidede uttrykk med rosekvarts, rolig salvie/teal og raffinert spektrumglød.
 - Temaforhåndsvisningene i profilen gjengir nå det faktiske uttrykket tydeligere. Kliniske risikofarger, varsler og skåringsflater er uendret.
+- Gjorde sesongene tydeligere: jul bruker tradisjonell rød med snøkanter og snøfnugg, Halloween viser spindelvev, gresskar og flaggermus, og Pride har en sterkere regnbue med synlige regnbuesymboler.
 
 ## Mobilretting – 18. oktober 2026
 
