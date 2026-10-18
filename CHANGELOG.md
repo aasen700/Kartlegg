@@ -6,6 +6,7 @@
 - Fjernet den faste handlingslinjen på mobil. Beregn, ISBAR og lagring ligger samlet i skjemaet og dekker ikke lenger valideringsmeldinger eller innhold.
 - Rettet mobilheaderen slik at menyen viser ett ikon, prototypemerket skjules på liten skjerm og merkevare- og profilkontroller beholder lesbar bredde.
 - NEWS2-, GCS- og ISBAR-snarveiene og favorittpanelet fyller nå hele søkekortet og brytes ikke til smale, loddrette knapper.
+- Mobilregresjonen kontrolleres ved 320, 360, 375, 410 og 768 px, liggende visning og 200 % skalering.
 
 ## Nye verktøy – 18. oktober 2026
 
