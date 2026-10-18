@@ -56,7 +56,12 @@ I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancement
 - Ved NT/IT (ikke testbar) skal aldri totalskår beregnes. Skriptet bruker ingen vedvarende lagring, ingen nettverkskall og ingen identifiserende helseopplysninger.
 - SVG-illustrasjonene er egenproduserte og **symbolske**. De kan ikke brukes som dokumentasjon av konkrete nevrologiske responser.
 - `tests/gcs-learning.test.cjs` tester samtlige svarnøkler, NT, og tverrbruk av den eksisterende skåringsmotoren; `tests/browser-smoke.py` kontrollerer de tre læringsnivåene på mobil/desktop.
-- Fremtidige verktøymoduler (4AT, NEWS2 m.fl.) må ha separat, kvalitetssikret læringsinnhold og tester, men kan bruke samme UI-rammeverk.
+- 4AT og NEWS2 er nå også bygget som separate læringsmoduler gjennom `assets/learning-content-v12.js` (kildehenvisninger, kurs, cases, oppgavefasit) og `assets/learning-tools-v12.js` (felles skjema, læringsflyt og evaluering). `assets/learning-tools-v12.css` eier bare det tilhørende UI-et.
+- Nytt valgfelt i `#laer` viser GCS, 4AT og NEWS2 og flytter *ett* øvingspanel mellom de to nye modulene. GCS fortsetter å eie sitt separate pedagogiske grensesnitt.
+- **Ingen duplisering av kliniske regnefunksjoner:** 4AT-fasit fra `KartleggTools.fourAT`, NEWS2-fasit fra `Scoring.news2`.
+- Testdekning: `tests/learning-tools-v12.test.cjs` + nettlesertest gjennom alle nivåer ved fem skjermbredder, inkludert SpO₂-skala 2.
+- Faglig forbehold: interaktive NEWS2-felter er en *egen pedagogisk fremstilling* av poengreglene, ikke en endret utgave av RCPs offisielle skjema; 4AT er tydelig angitt som norsk pedagogisk tilpasning med CC BY 4.0-kreditering.
+- Nye læringsmoduler skal ha egen kilde, regeltest, klinisk gjennomgang og mobilregresjon før de aktiveres.
 
 ## Pedagogisk simulering (egen, isolert funksjon)
 
