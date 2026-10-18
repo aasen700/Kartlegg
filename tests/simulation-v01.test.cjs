@@ -27,7 +27,7 @@ test('pilot uses canonical NEWS2 arithmetic and an explicitly fictional case',()
 test('observed measurements stay unchanged until user repeats them',()=>{
  let s=S.step(S.start(),'vitals');
  assert.equal(s.lastVitals.spo2,91);
- for(const id of ['symptoms','history','abcde'])s=S.step(s,id);
+ for(const id of ['symptoms','history','abcde','mental'])s=S.step(s,id);
  assert.equal(s.worsened,true);
  assert.equal(S.currentVitals(s).spo2,88);
  assert.equal(s.lastVitals.spo2,91,'do not reveal unmeasured deterioration');
