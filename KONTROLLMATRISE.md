@@ -2,6 +2,8 @@
 
 **Opprettet:** 18. oktober 2026 · **Gjennomgang:** teknisk kode- og kildekartlegging · **Bruksstatus:** KUN DEMONSTRASJON MED FIKTIVE DATA.
 
+**Pedagogiske moduler:** GCS, 4AT og NEWS2 har nå separate læringsløp med fiktive oppgaver. Fasit for 4AT og NEWS2 beregnes av eksisterende skåringsfunksjoner og testes gjennom `tests/learning-tools-v12.test.cjs`. Dette gir ekstra *teknisk* kontroll, men ikke klinisk validering eller tillatelse til å bruke pasientdata. NEWS2-læringsskjemaet er en egen undervisningsfremstilling, og 4AT er en kreditert pedagogisk tilpasning.
+
 Dette er en sporbar **kontrollplan**, ikke en erklæring om klinisk godkjenning. «Automatisert kontroll» betyr at konkrete kodebaner er testet, **ikke** at verktøyet er klinisk validert. Originalversjon er oppgitt der det finnes et identifiserbart originalinstrument. For generiske veiledere beskrives faglig referanse og oppslagsdato. Ingen eksterne fagpersoner er dokumentert å ha signert av innholdet.
 
 **Statusnøkler:** `A` = regneregel/validering har automatiske tester; `D` = dokumentert kilde og kode er gjennomgått på skrivebordsnivå; `ÅPEN` = uavhengig faglig kontroll, lisens eller praktisk målevaliditet gjenstår. Samtlige rader er `ÅPEN` for klinisk bruk.
