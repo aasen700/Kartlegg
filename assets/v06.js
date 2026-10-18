@@ -77,7 +77,7 @@ const seasonMessage=document.createElement('p');seasonMessage.className='season-
 const seasonPreview=document.createElement('span');seasonPreview.className='season-theme-preview';seasonPreview.id='seasonThemePreview';seasonPreview.setAttribute('aria-hidden','true');
 seasonControls.append(seasonLabel,seasonSelect,seasonPreview,seasonMessage);seasonOptions.append(seasonControls);
 const seasonHint=document.createElement('p');seasonHint.className='theme-layer-hint';
-seasonHint.textContent='Valgfri, diskret dekor. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
+seasonHint.textContent='Valgfri bakgrunnsdekor med tydelige sesongmotiv. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
 seasonOptions.append(seasonHint);
 serviceOptions.querySelector('legend').textContent='Tjenestetema';
 serviceOptions.after(seasonOptions);

@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Tydeligere sesongbakgrunner – 18. oktober 2026
+
+- Flyttet all sesongpynt bak grensesnittet slik at symboler aldri dekker bokser, tekst, knapper eller dialoger.
+- Forsterket fargeatmosfæren og la til repeterende bakgrunnsmotiv for alle fem sesongtemaene: gresskar, flaggermus og spindelvev; snøfnugg og gaver; rosa sløyfer; hjerter og rolige naturformer; regnbuer, stjerner og hjerter.
+- Motivene er tydelige i sidens bakgrunn og kan skimtes gjennom Liquid Glass, mens solide bokser beholder maksimal lesbarhet.
+- Ingen struktur, kliniske farger, beregninger eller funksjoner er endret.
+
 ## Valgbart kortmateriale – 18. oktober 2026
 
 - La til et eget valg mellom solide bokser og Liquid Glass under «Utseende».

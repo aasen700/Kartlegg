@@ -1,5 +1,19 @@
 /* Seasonal atmospheres are presentation only. Clinical score, alert and
    escalation surfaces deliberately remain outside these selectors. */
+:root:is(
+ [data-season-theme="halloween"],
+ [data-season-theme="christmas"],
+ [data-season-theme="breast-cancer"],
+ [data-season-theme="mental-health"],
+ [data-season-theme="pride"]
+) body{position:relative;isolation:isolate}
+:root:is(
+ [data-season-theme="halloween"],
+ [data-season-theme="christmas"],
+ [data-season-theme="breast-cancer"],
+ [data-season-theme="mental-health"],
+ [data-season-theme="pride"]
+) .shell{position:relative;z-index:1}
 
 :root:is(
  [data-season-theme="halloween"],
@@ -30,7 +44,7 @@
  [data-season-theme="breast-cancer"],
  [data-season-theme="mental-health"],
  [data-season-theme="pride"]
-) body::after{z-index:2}
+) body::after{z-index:0}
 
 /* Glass edges follow the chosen season without replacing component surfaces
    or their existing shadows. */
@@ -47,21 +61,14 @@
 /* Halloween: unmistakable seasonal decor without adding UI elements. */
 :root[data-season-theme="halloween"] body::before{
  background:
-  radial-gradient(ellipse at 82% 5%,rgba(255,142,45,.34),transparent 31%),
-  radial-gradient(ellipse at 12% 91%,rgba(112,48,145,.30),transparent 38%),
-  radial-gradient(ellipse at 54% 46%,rgba(91,37,88,.17),transparent 43%),
-  linear-gradient(145deg,rgba(9,16,35,.18),rgba(48,20,55,.21) 55%,rgba(73,36,23,.17));
+  radial-gradient(ellipse at 82% 5%,rgba(255,142,45,.52),transparent 35%),
+  radial-gradient(ellipse at 12% 91%,rgba(112,48,145,.46),transparent 42%),
+  radial-gradient(ellipse at 54% 46%,rgba(91,37,88,.28),transparent 47%),
+  linear-gradient(145deg,rgba(9,16,35,.28),rgba(48,20,55,.34) 55%,rgba(73,36,23,.26));
 }
 :root[data-season-theme="halloween"] body::after{
- content:"🦇   🎃   🦇";
- padding:86px 22px 0;text-align:right;color:#ffc169;font-size:clamp(18px,2.2vw,30px);
- letter-spacing:.18em;text-shadow:0 4px 18px rgba(10,4,18,.68);opacity:.84;
- background:
-  radial-gradient(ellipse 34px 12px at 13% 18%,rgba(239,154,78,.30),transparent 72%),
-  radial-gradient(ellipse 28px 10px at 88% 31%,rgba(180,105,64,.25),transparent 72%),
-  radial-gradient(ellipse 38px 13px at 22% 74%,rgba(118,69,143,.22),transparent 72%),
-  radial-gradient(ellipse 24px 9px at 76% 86%,rgba(236,160,84,.22),transparent 72%);
- filter:blur(.2px);
+ background:url("./season-halloween-icons.svg") repeat 5vw 38px / 360px 260px;
+ opacity:.42;
 }
 :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog){position:relative}
 :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog)::before{
@@ -73,21 +80,20 @@
 /* Christmas: traditional red, Nordic winter blue and visible snow. */
 :root[data-season-theme="christmas"] body::before{
  background:
-  radial-gradient(ellipse at 88% 3%,rgba(201,38,52,.35),transparent 34%),
-  radial-gradient(ellipse at 8% 90%,rgba(151,20,38,.27),transparent 40%),
-  radial-gradient(ellipse at 52% 38%,rgba(193,232,255,.21),transparent 46%),
-  linear-gradient(128deg,rgba(77,7,22,.16),rgba(14,70,89,.12) 48%,rgba(144,22,40,.18));
+  radial-gradient(ellipse at 88% 3%,rgba(201,38,52,.55),transparent 38%),
+  radial-gradient(ellipse at 8% 90%,rgba(151,20,38,.43),transparent 44%),
+  radial-gradient(ellipse at 52% 38%,rgba(193,232,255,.32),transparent 50%),
+  linear-gradient(128deg,rgba(77,7,22,.27),rgba(14,70,89,.21) 48%,rgba(144,22,40,.30));
 }
 :root[data-season-theme="christmas"] body::after{
- content:"❄     ❅     ❆     ❄";
- padding:82px 20px 0;text-align:center;color:#fff;font-size:clamp(18px,2vw,28px);
- text-shadow:0 2px 12px rgba(128,210,255,.86);opacity:.45;
  background-image:
+  url("./season-christmas-icons.svg"),
   radial-gradient(circle,rgba(255,255,255,.94) 0 1.2px,transparent 1.8px),
   radial-gradient(circle,rgba(203,241,255,.82) 0 .8px,transparent 1.5px),
   linear-gradient(112deg,transparent 15%,rgba(116,233,215,.10) 38%,rgba(119,188,255,.13) 55%,transparent 78%);
- background-size:181px 197px,109px 143px,100% 100%;
- background-position:17px 22px,61px 79px,0 0;
+ background-size:360px 260px,181px 197px,109px 143px,100% 100%;
+ background-position:4vw 24px,17px 22px,61px 79px,0 0;
+ opacity:.52;
  animation:kartlegg-winter-drift 38s linear infinite;
 }
 :root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.profile-dialog){position:relative}
@@ -97,58 +103,50 @@
  opacity:.88;
 }
 @keyframes kartlegg-winter-drift{
- from{background-position:17px -197px,61px -143px,0 0}
- to{background-position:17px 197px,61px 143px,0 0}
+ from{background-position:4vw 24px,17px -197px,61px -143px,0 0}
+ to{background-position:4vw 24px,17px 197px,61px 143px,0 0}
 }
 
 /* Breast cancer awareness: rose quartz, warm blush and an abstract ribbon
    curve made only from low-contrast gradients. */
 :root[data-season-theme="breast-cancer"] body::before{
  background:
-  radial-gradient(ellipse at 87% 8%,rgba(233,123,172,.20),transparent 35%),
-  radial-gradient(ellipse at 7% 92%,rgba(196,92,147,.11),transparent 39%),
-  linear-gradient(145deg,rgba(106,43,85,.035),rgba(255,190,216,.08));
+  radial-gradient(ellipse at 87% 8%,rgba(233,123,172,.38),transparent 39%),
+  radial-gradient(ellipse at 7% 92%,rgba(196,92,147,.26),transparent 43%),
+  linear-gradient(145deg,rgba(106,43,85,.10),rgba(255,190,216,.20));
 }
 :root[data-season-theme="breast-cancer"] body::after{
- opacity:.18;
- background:
-  radial-gradient(ellipse 76px 136px at calc(100% - 74px) 102px,transparent 45%,rgba(218,101,157,.42) 46% 49%,transparent 50%),
-  radial-gradient(ellipse 46px 86px at calc(100% - 112px) 147px,transparent 43%,rgba(244,164,196,.34) 44% 48%,transparent 49%);
+ opacity:.38;background:url("./season-breast-cancer-ribbons.svg") repeat 7vw 34px / 360px 260px;
 }
 
 /* Mental health day: calm teal, sage and sand with a soft breathing ripple. */
 :root[data-season-theme="mental-health"] body::before{
  background:
-  radial-gradient(ellipse at 84% 10%,rgba(82,184,174,.18),transparent 36%),
-  radial-gradient(ellipse at 8% 88%,rgba(188,174,121,.10),transparent 40%),
-  linear-gradient(150deg,rgba(20,81,86,.035),rgba(118,197,172,.08));
+  radial-gradient(ellipse at 84% 10%,rgba(82,184,174,.34),transparent 40%),
+  radial-gradient(ellipse at 8% 88%,rgba(188,174,121,.23),transparent 44%),
+  linear-gradient(150deg,rgba(20,81,86,.11),rgba(118,197,172,.19));
 }
 :root[data-season-theme="mental-health"] body::after{
- opacity:.17;
- background:repeating-radial-gradient(circle at 91% 15%,transparent 0 28px,rgba(70,164,157,.26) 29px 30px,transparent 31px 54px);
- mask-image:radial-gradient(circle at 91% 15%,#000,transparent 34%);
- -webkit-mask-image:radial-gradient(circle at 91% 15%,#000,transparent 34%);
+ opacity:.34;background:url("./season-mental-health-icons.svg") repeat 3vw 46px / 360px 260px;
 }
 
 /* Pride: a confident spectrum with celebratory symbols. */
 :root[data-season-theme="pride"] body::before{
  background:
-  radial-gradient(ellipse at 89% 4%,rgba(150,102,209,.27),transparent 31%),
-  radial-gradient(ellipse at 5% 91%,rgba(73,153,202,.22),transparent 37%),
-  linear-gradient(118deg,rgba(218,86,109,.12),rgba(229,172,67,.11) 26%,rgba(90,171,128,.11) 50%,rgba(79,139,202,.11) 73%,rgba(142,91,185,.13));
+  radial-gradient(ellipse at 89% 4%,rgba(150,102,209,.43),transparent 35%),
+  radial-gradient(ellipse at 5% 91%,rgba(73,153,202,.38),transparent 41%),
+  linear-gradient(118deg,rgba(218,86,109,.23),rgba(229,172,67,.22) 26%,rgba(90,171,128,.22) 50%,rgba(79,139,202,.22) 73%,rgba(142,91,185,.25));
 }
 :root[data-season-theme="pride"] body::after{
- content:"🌈  🏳️‍🌈";inset:76px 18px auto auto;height:auto;opacity:.84;
- background:none;font-size:clamp(20px,2.4vw,32px);letter-spacing:.12em;
- filter:drop-shadow(0 4px 12px rgba(38,42,91,.28));
+ opacity:.40;background:url("./season-pride-icons.svg") repeat 6vw 28px / 360px 260px;
 }
 
 @media(max-width:770px){
- :root[data-season-theme="breast-cancer"] body::after,
- :root[data-season-theme="mental-health"] body::after{opacity:.12}
- :root[data-season-theme="halloween"] body::after{padding:72px 10px 0;font-size:17px;opacity:.76}
- :root[data-season-theme="christmas"] body::after{padding:70px 8px 0;font-size:16px;opacity:.34}
- :root[data-season-theme="pride"] body::after{inset:70px 10px auto auto;font-size:20px;opacity:.78}
+ :root[data-season-theme="breast-cancer"] body::after{opacity:.31}
+ :root[data-season-theme="mental-health"] body::after{opacity:.29}
+ :root[data-season-theme="halloween"] body::after{opacity:.35;background-size:310px 224px}
+ :root[data-season-theme="christmas"] body::after{opacity:.43}
+ :root[data-season-theme="pride"] body::after{opacity:.34;background-size:310px 224px}
  :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog)::before{width:88px;height:62px;opacity:.45}
  :root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.profile-dialog)::before{height:14px;background-size:196px 14px;opacity:.82}
 }

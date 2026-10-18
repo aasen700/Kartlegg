@@ -82,9 +82,11 @@ test('immersive atmosphere remains independent and excludes clinical scores',()=
   assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
  assert.match(css,/season-halloween-web\.svg/);
  assert.match(css,/season-christmas-snow\.svg/);
- assert.match(css,/🦇[\s\S]*🎃/);
- assert.match(css,/❄[\s\S]*❅/);
- assert.match(css,/🌈[\s\S]*🏳️‍🌈/);
+ for(const asset of ['season-halloween-icons.svg','season-christmas-icons.svg','season-breast-cancer-ribbons.svg','season-mental-health-icons.svg','season-pride-icons.svg'])
+  assert.match(css,new RegExp(asset.replace('.','\\.')));
+ assert.match(css,/body\{position:relative;isolation:isolate\}/);
+ assert.match(css,/\.shell\{position:relative;z-index:1\}/);
+ assert.match(css,/body::after\{z-index:0\}/);
  assert.match(css,/--season-glass-edge/);
  assert.match(css,/kartlegg-winter-drift/);
  for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])
