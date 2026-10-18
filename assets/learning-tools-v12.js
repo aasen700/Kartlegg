@@ -65,7 +65,7 @@
  }
  function heading(kicker,name){
   const section=h('div','learn12-heading');section.append(h('span','learn12-kicker',kicker),h('h3','',name));
-  if(state.mode!=='home')section.append(button('← Oversikten','learn12-back',()=>setMode('home')));
+  if(state.mode!=='home')section.append(button('← Til oversikten','learn12-back',()=>setMode('home')));
   root.append(section);
  }
  function setMode(mode){state.mode=mode;state.caseIndex=0;state.lesson=0;state.answers={};state.cells={};state.results={};state.finished=false;render()}
@@ -168,14 +168,14 @@
    {mode:'practice',number:'02',name:'Øv',subtitle:'Skår med forklaringer',
     desc:'Tre fiktive pasientsituasjoner. Sjekk svar og lær hvorfor hvert poeng er riktig.',action:'Start øving →'},
    {mode:'test',number:'03',name:'Test deg selv',subtitle:'Finn poengene på egen hånd',
-    desc:'Tre caser med fire vurderinger hver og tydelig tilbakemelding etter hver oppgave.',action:'Ta testen →'}
+    desc:'Tre kasus med fire vurderinger hver. Fasit og forklaringer kommer når hele testen er levert.',action:'Ta testen →'}
   ]:[
    {mode:'learn',number:'01',name:'Lær',subtitle:'Forstå grensene og skalaene',
     desc:'Fem steg om delpoeng, SpO₂-skala 1 og 2, oksygen og klinisk helhetsvurdering.',action:'Start læringen →'},
    {mode:'practice',number:'02',name:'Øv',subtitle:'Finn riktig poengfelt',
     desc:'Tre fiktive caser i et klikkbart NEWS2-skjema. Se fasit og forklaring underveis.',action:'Start øving →'},
    {mode:'test',number:'03',name:'Test deg selv',subtitle:'Skår alle observasjonene',
-    desc:'Tre caser med sju delområder. Kontroller poeng og intervallvalg etter hvert skjema.',action:'Ta testen →'}
+    desc:'Tre kasus med sju delområder. Se poeng, intervallvalg og forklaringer samlet etter testen.',action:'Ta testen →'}
   ];
   const modes=h('div','learn12-modes learn12-premium-modes');
   for(const spec of specs){
@@ -266,7 +266,7 @@
      state.answers[q.id][row.id]=score;
      if(news){if(!state.cells[q.id])state.cells[q.id]={};state.cells[q.id][row.id]=i;}
      render();
-     const focus=root.querySelector('[data-part="'+row.id+'"][data-score="'+score+'"]');
+     const focus=root.querySelector('[data-part="'+row.id+'"]['+(news?'data-column="'+i:'data-score="'+score)+'"]');
      focus?.focus({preventScroll:true});
      announce.textContent=(row.name||row.title)+' – '+score+' poeng valgt';
     });
@@ -304,7 +304,7 @@
   heading((state.mode==='practice'?'Øv':'Test deg selv')+' · '+(state.caseIndex+1)+' / '+list.length,
    state.tool==='news'?'Trykk på riktig poengfelt':'Skår alle fire 4AT-delene');
   progress(state.caseIndex+1,list.length);root.append(narrative());
-  text(root,'Skår alle delområder, trykk «Sjekk resultat» og gå deretter videre. Fasit vises for hver oppgave.','learn12-note');
+  text(root,state.mode==='test'?'Fasit vises når hele testen er levert.':'Skår alle delområder og trykk «Sjekk resultat» for forklaring.','learn12-note');
   root.append(scoreRows());
   const answer=state.answers[q.id]||{},complete=collections().parts.every(row=>Number.isInteger(answer[row.id]));
   const footer=h('div','learn12-actions');
@@ -324,16 +324,16 @@
    const grade=validate();if(!grade)return;
    state.results[q.id]=grade;render();
   });
-  check.disabled=!complete||graded;footer.append(check);
+  check.disabled=!complete||graded;if(state.mode==='practice')footer.append(check);
   const next=button(state.caseIndex===list.length-1?'Se oppsummeringen →':'Gå videre →','learn12-primary',()=>{
    const grade=state.results[q.id]||validate();if(!grade)return;
    state.results[q.id]=grade;
    if(state.caseIndex===list.length-1){state.finished=true;render()}
    else{state.caseIndex++;render()}
   });
-  next.disabled=!complete;footer.append(next);
+  next.disabled=!complete||(state.mode==='practice'&&!graded);footer.append(next);
   root.append(footer);
-  if(state.results[q.id]){
+  if(state.mode==='practice'&&state.results[q.id]){
    const grade=state.results[q.id],panel=h('div','learn12-feedback');
    panel.append(h('strong','',grade.score+' av '+grade.max+' delpoeng riktige'));
    text(panel,'Beregnet total for dette tilfellet: '+grade.truth.total+' poeng. Din valgte sum: '+grade.enteredTotal+'.');
@@ -341,12 +341,20 @@
    for(const row of collections().parts){
     const li=h('li','');
     li.append(h('strong','', (grade.match[row.id]?'✓ ':'○ ')+(row.name||row.title)+': '+grade.truth.parts[row.id]+' poeng'));
-    li.append(h('small','',row.rule||'Sammenlign funnet med området i poengskjemaet.'));list.append(li);
+    li.append(h('small','',explainRow(row,q)));list.append(li);
    }
    panel.append(list);
    text(panel,interpretation(grade),'learn12-explanation');
    root.append(panel);
+   window.KartleggLearningFlow.feedback(panel);
   }
+ }
+ function explainRow(row,q){
+  if(state.tool==='news'){
+   const chart=D.newsChartRow(row.id,q.v),chosen=(state.cells[q.id]||{})[row.id];
+   return 'Observasjon: '+newsMeasurement(row,q.v)+'. Ditt felt: '+(chart.labels[chosen]||'ikke valgt')+'. Riktig felt: '+chart.labels[chart.answerIndex]+'. '+(row.rule||'');
+  }
+  return 'Oppgitt: '+q.observations[row.id]+'. '+(row.rule||'');
  }
  function interpretation(grade){
   if(state.tool==='four')return grade.truth.interpretation+' Dette er en screeningvurdering, ikke en diagnose.';
@@ -371,13 +379,13 @@
    const ul=h('ul','learn12-report-parts');
    for(const row of collections().parts){
     const val=state.answers[q.id][row.id],correct=r.truth.parts[row.id];
-    ul.append(h('li','', (val===correct?'✓':'○')+' '+(row.name||row.title)+': valgt '+val+' / fasit '+correct));
+    const li=h('li','', (r.match[row.id]?'✓':'○')+' '+(row.name||row.title)+': ditt svar '+val+' / fasit '+correct);li.append(h('small','',explainRow(row,q)));ul.append(li);
    }
    card.append(ul);text(card,interpretation(r),'learn12-explanation');root.append(card);
   }
   const bar=h('div','learn12-actions');
   bar.append(button('Prøv igjen','learn12-secondary',()=>setMode(state.mode)),
-   button('Velg et annet nivå','learn12-primary',()=>setMode('home')));root.append(bar);
+   button(state.mode==='practice'?'Fortsett til test →':'Til oversikten','learn12-primary',()=>setMode(state.mode==='practice'?'test':'home')));root.append(bar);
  }
  function render(){
   root.replaceChildren();
@@ -386,6 +394,7 @@
   else if(state.finished)summary();
   else caseView();
   scoreSource();root.append(announce);
+  window.KartleggLearningFlow.mount(root,{course:titles[state.tool],mode:state.mode,current:state.mode==='learn'?state.lesson+1:state.caseIndex+1,total:state.mode==='learn'?collections().lessons.length:subset().length,finished:state.finished,onMode:setMode});
  }
  setTool('gcs');
  window.KartleggLearningHub=Object.freeze({

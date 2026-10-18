@@ -1,83 +1,4 @@
-/* Kartlegg visual atmosphere – pure presentation, v1.1.2.
-   Loaded AFTER personal modes so the selected Philip glass base is genuinely
-   glass even when an opt-in personal easter egg is active.
-   Seasonal atmosphere is independent of base and service settings.
-   DO NOT style clinical status colors, score cards, escalation warnings,
-   NEWS2/qSOFA points or medical interpretation here. No patient data or JS. */
 
-/* ─── Philip: deep cobalt liquid-glass surfaces ─────────────────────── */
-:root[data-base-theme="philip"] {
-  --glass-ink:#eef6ff;
-  --glass-secondary:#c5d7f4;
-  --glass-border:rgba(163,203,255,.35);
-  --glass-focus:#bde0ff;
-  --glass-controls:rgba(0,21,78,.34);
-  color-scheme:dark;
-  background:#0047ab!important;
-}
-:root[data-base-theme="philip"] body {
-  background:
-    radial-gradient(ellipse 46% 32% at 88% 10%,rgba(123,193,255,.48),transparent 80%),
-    radial-gradient(ellipse 52% 48% at 3% 68%,rgba(60,119,255,.48),transparent 74%),
-    radial-gradient(ellipse 48% 40% at 62% 100%,rgba(87,143,255,.32),transparent 80%),
-    linear-gradient(145deg,#0047ab 0%,#0644b8 49%,#003c97 100%) !important;
-  background-color:#0047ab!important;
-  background-attachment:fixed !important;
-  color:var(--glass-ink);
-}
-:root[data-base-theme="philip"] :is(
-  .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.profile-dialog-head,
-  .v081-tool-search,.v081-search-results,.v10-optional-gcs,
-  .clinical-tool-dialog,.v08-dialog,.learn12-course-card,.wound12-mode,
-  .wound13-home-hero,.wound13-gallery-card,.wound13-case-media,.wound13-case-panel,
-  .gcs-learning-card,.profile-dialog-scroll,.action-dock
-) {
-  color:var(--glass-ink) !important;
-  background:
-    linear-gradient(160deg,rgba(167,206,255,.18) 0%,rgba(95,153,237,.07) 24%,transparent 48%),
-    linear-gradient(142deg,rgba(166,205,255,.18) 0%,rgba(37,90,180,.12) 55%,rgba(0,24,85,.23) 100%) !important;
-  border-color:var(--glass-border) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.32),
-    inset 1px 0 0 rgba(208,231,255,.08),
-    inset 0 -1px 0 rgba(3,12,33,.35),
-    0 16px 42px rgba(0,20,75,.20) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(145%);
-  backdrop-filter:blur(24px) saturate(145%);
-}
-:root[data-base-theme="philip"] :is(
-  .section-header h2,.toolbox h3,.field label,.field .field-label,
-  .section-header p,.toolbox p,.field .hint,.meta-line label,.meta-line small,
-  .sidebar-bottom p,.sidebar-bottom strong,.v10-optional-gcs>span,
-  .profile-dialog-section h3,.profile-dialog-section>p,.profile-dialog-head h2,
-  .profile-dialog-head p,.service-theme-intro,.personalization-note,
-  .v099-category-heading h3,.v099-category-heading p
-){color:var(--glass-ink) !important}
-:root[data-base-theme="philip"] :is(
-  .field .control-wrap,.meta-line input,.v081-search-field,
-  .profile-field input,.profile-field select,.tool-field select,
-  .isbar-inputs input,.isbar-inputs textarea
-) {
-  background:var(--glass-controls) !important;
-  color:#f2f8ff !important;
-  border-color:rgba(165,203,255,.47) !important;
-  box-shadow:inset 0 1px 3px rgba(0,8,30,.42),inset 0 1px 0 rgba(255,255,255,.10) !important;
-}
-:root[data-base-theme="philip"] :is(
-  .field .control-wrap input,.field .control-wrap select,.meta-line input,
-  .v081-search-field input,.profile-field input,.profile-field select
-){color:#f2f8ff !important}
-:root[data-base-theme="philip"] :is(.field .unit,.v081-tool-result,.v099-category-heading,.sidebar-bottom){
-  background:rgba(30,73,150,.22) !important;color:#e7f2ff !important;
-  border-color:rgba(157,204,255,.30) !important;
-}
-:root[data-base-theme="philip"] .v081-tool-result small{color:var(--glass-secondary) !important}
-:root[data-base-theme="philip"] :is(.field,.toolbox,.section,.v081-tool-search):focus-within{
-  border-color:rgba(176,221,255,.78) !important;
-}
-:root[data-base-theme="philip"] :is(a,button,input,select,textarea):focus-visible{
-  outline:3px solid var(--glass-focus) !important;outline-offset:3px;
-}
 /* Preserve styling for special clinical alert/safety/score surfaces by exclusion. */
 
 /* ─── Every seasonal layer sits above any base, service or personal theme ─── */
@@ -116,7 +37,7 @@
    Background images are decorative and never capture pointer/keyboard events. */
 :root[data-season-theme="halloween"] :is(
   .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
-){position:relative;outline:1px solid rgba(250,144,55,.20);outline-offset:-1px}
+){outline:1px solid rgba(250,144,55,.20);outline-offset:-1px}
 :root[data-season-theme="halloween"] :is(
   .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
 )::after{
@@ -126,7 +47,7 @@
   opacity:.68;
 }
 :root[data-season-theme="halloween"] :is(.header,.sidebar)::after{
-  width:190px;height:115px;opacity:.80;
+  width:84px;height:40px;opacity:.22;
 }
 :root[data-season-theme="halloween"] .season-highlight{
   height:4px;opacity:1;
@@ -138,7 +59,7 @@
    on result cards remain untouched; snow stays in a tiny, non-obstructive strip. */
 :root[data-season-theme="christmas"] :is(
   .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
-){position:relative;outline:1px solid rgba(188,224,255,.24);outline-offset:-1px}
+){outline:1px solid rgba(188,224,255,.24);outline-offset:-1px}
 :root[data-season-theme="christmas"] :is(
   .header,.sidebar,.section,.toolbox,.field,.profile-dialog,.v081-tool-search
 )::after{
@@ -178,10 +99,6 @@
   outline:1px solid rgba(152,118,209,.20);outline-offset:-1px;
 }
 @media(max-width:770px){
-  :root[data-base-theme="philip"] body{background-attachment:scroll !important}
-  :root[data-base-theme="philip"] :is(.field,.toolbox,.section){
-    -webkit-backdrop-filter:blur(12px) saturate(145%);backdrop-filter:blur(12px) saturate(145%);
-  }
   :root[data-season-theme="halloween"] :is(.field,.toolbox)::after{
     width:88px;height:62px;opacity:.54;
   }
@@ -203,41 +120,8 @@
 :is(.service-theme-option,.base-theme-option,.appearance-options label):focus-within{
  outline:2px solid var(--accent);outline-offset:3px;
 }
-:root[data-base-theme="philip"] :is(.base-theme-option,.service-theme-option,.appearance-options label,.season-theme-controls){
- background:rgba(0,24,85,.18)!important;color:#f4f8ff!important;border-color:rgba(204,228,255,.35)!important;
-}
-:root[data-base-theme="philip"] :is(.base-theme-option,.service-theme-option,.appearance-options label):has(input:checked){
- background:rgba(192,221,255,.22)!important;box-shadow:inset 0 0 0 1px #c6e4ff;
-}
-:root[data-base-theme="philip"] .personal-mode-popup[data-mode="philip"]{
- background:linear-gradient(140deg,rgba(123,179,255,.35),rgba(0,42,117,.78));
- color:#fff;border:1px solid #b7d8ff80;backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-}
-:root[data-base-theme="philip"] .personal-mode-popup[data-mode="philip"] :is(h2,p){color:#f3f8ff}
-:root[data-base-theme="philip"] .personal-mode-popup[data-mode="philip"] button{background:#d5eaff;color:#07316c}
-:root[data-base-theme="philip"] :is(.profile-dialog,.clinical-tool-dialog,.v08-dialog)::backdrop{background:rgba(0,15,54,.38)}
-:root[data-base-theme="philip"] select option{background:#07377e;color:#fff}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
- :root[data-base-theme="philip"] :is(.section,.field,.toolbox,.header,.sidebar,.profile-dialog,.clinical-tool-dialog,.v08-dialog){background:rgba(8,48,115,.94)!important}
-}
-@media(prefers-reduced-transparency:reduce){
- :root[data-base-theme="philip"] :is(.section,.field,.toolbox,.header,.sidebar,.profile-dialog,.clinical-tool-dialog,.v08-dialog){background:#103d86!important;backdrop-filter:none;-webkit-backdrop-filter:none}
-}
 @media(prefers-reduced-motion:reduce){
  :is(.service-theme-option,.base-theme-option,.appearance-options label){transition:none}
 }
 
-:root[data-base-theme="philip"] :is(.tool-favorites,.meta-line,.tool-dialog-switches){
- background:rgba(0,30,102,.20)!important;border-color:rgba(190,219,255,.32)!important;
-}
-:root[data-base-theme="philip"] :is(.profile-info,.profile-status,.profile-remember,.profile-body .hint,.footer,.footer a,.intro .eyebrow,.intro .chip){color:#dbeaff!important}
-:root[data-base-theme="philip"] .profile-dialog{max-width:100vw;box-sizing:border-box}
-:root[data-base-theme="philip"] .profile-dialog-scroll{background:transparent!important;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none!important}
-:root[data-base-theme="philip"] .field .control-wrap :is(input,select){background:transparent!important}
-:root[data-base-theme="philip"] .personal-mode-info{background:rgba(160,203,255,.12);color:#f0f7ff!important}
-:root[data-base-theme="philip"][data-personal-mode="philip"] :is(.header .profile-trigger,.sidebar .nav.active,.sidebar .nav[aria-current="page"],.main .intro .chip){color:#f0f7ff!important}
-:root[data-base-theme="philip"] .profile-body :is(p,label,.profile-status){color:#e3eeff!important}
-@media(max-width:770px){
- :root[data-base-theme="philip"] #themeToggle{font-size:0}
- :root[data-base-theme="philip"] #themeToggle::before{content:'☀';font-size:18px}
-}
+:root:is([data-season-theme="halloween"],[data-season-theme="christmas"]) :is(.section,.toolbox,.field,.v081-tool-search){position:relative}

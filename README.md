@@ -114,7 +114,7 @@ Utviklingshistorikken finnes i [Kartlegg-test](https://github.com/aasen700/Kartl
 
 
 ## TIMES – kliniske undervisningsillustrasjoner (oktober 2026)
-- Seks fiktive anatomisk tilpassede SVG-illustrasjoner ligger i `assets/wounds/*-clinical.svg`. De er digitalt genererte undervisningsillustrasjoner, ikke pasientfotografier eller diagnostiske bilder. Eldre illustrasjoner er beholdt som fallback.
+- Seks fiktive anatomisk tilpassede SVG-illustrasjoner ligger i `assets/wounds/*-clinical.svg`. De er digitalt genererte undervisningsillustrasjoner, ikke pasientfotografier eller diagnostiske bilder. Ved bildeinnlastingsfeil vises kasusbeskrivelsen med en melding. Se `TIMES-KASUS.md` for bildesamsvar og fagkilder.
 - TIMES Lær har et responsivt todelt kasusoppsett med zoom til sårbunn/sårkant, analyse, systematisk T-I-M-E-S-vurdering, videre vurderingsmomenter og fasit.
 - Ingen kunstige tidspunkter eller sårprogresjonsdata vises. Fasit er sperret frem til innlevering (og samlet til slutt i testmodus).
 - Ingen endring i vurderingsalgoritme, pasientdatalagring eller øvrige kliniske verktøy. Illustrasjonenes medisinske detaljer krever faglig gjennomgang før annet enn pedagogisk demonstrasjon.

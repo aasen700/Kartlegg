@@ -17,11 +17,12 @@
   const fig=h('figure','wound13-picture'+(compact?' compact':''));
   const viewport=h('div','wound13-image-viewport'),img=h('img','wound13-image is-oversikt');
   img.src='assets/wounds/'+c.id+'-clinical.svg';
+  img.style.transformOrigin=({venous:'50% 57%',arterial:'55% 49%',pressure:'70% 52%',postop:'50% 50%',diabetic:'47% 48%','skin-tear':'52% 52%'})[c.id];
   img.alt='Digitalt laget, anatomisk tilpasset undervisningsillustrasjon av '+c.title+'. Fiktivt kasus, ikke pasientfoto.';
   img.loading=compact?'lazy':'eager';img.decoding='async';
   img.addEventListener('error',()=>{
    if(img.dataset.fallback)return;
-   img.dataset.fallback='true';img.src='assets/wounds/'+c.id+'-realistic.svg';
+   img.dataset.fallback='true';img.hidden=true;viewport.append(h('p','wound-image-unavailable','Illustrasjonen kunne ikke lastes. Bruk opplysningene i kasusbeskrivelsen.'));
   });
   viewport.append(img);fig.append(viewport);
   if(!compact){
@@ -41,7 +42,7 @@
  }
  function header(kicker,title){
   const d=h('div','wound12-header');d.append(h('small','',kicker),h('h3','',title));
-  if(mode!=='home')d.append(b('← Tilbake til nivåer','learn12-secondary',()=>setMode('home')));
+  if(mode!=='home')d.append(b('← Til oversikten','learn12-secondary',()=>setMode('home')));
   root.append(d);
  }
  function setMode(m){mode=m;lesson=0;caseIndex=0;answers={};grades={};finished=false;view='analyse';render()}
@@ -88,7 +89,8 @@
   const layout=h('div','wound13-case-layout'),left=h('section','wound13-case-media'),right=h('section','wound13-case-panel');
   left.append(picture(q));
   const context=h('div','wound13-context'),obs=h('details','wound12-observations');
-  context.append(h('span','wound13-eyebrow',q.subtitle),h('h4','','Pasientbeskrivelse'),h('p','',q.summary));
+  const evidence=h('section','wound-case-evidence');evidence.append(h('h5','','Dette viser illustrasjonen'));const visible=h('ul');q.imageFindings.forEach(x=>visible.append(h('li','',x)));evidence.append(visible);left.append(evidence);
+  context.append(h('span','wound13-eyebrow',q.subtitle),h('h4','','Opplysninger fra det fiktive kasuset'),h('p','',q.summary));
   obs.append(h('summary','','Se oppsummering av observasjonene'));
   const ol=h('ul');q.observations.forEach(x=>ol.append(h('li','',x)));obs.append(ol);
   context.append(obs);left.append(context);
@@ -138,7 +140,7 @@
     article.append(ul);
   }else{
     article.append(h('h4','','Fasit og begrunnelse'),h('p','wound13-score',submitted.score+' av '+submitted.max+' riktige'));
-    for(const part of D.parts){const f=h('div','wound13-answer');f.append(h('strong','',(submitted.match[part.id]?'✓ ':'○ ')+part.letter+' · '+D.optionLabel(part.id,submitted.truth[part.id])),h('p','',q.why[part.id]));article.append(f)}
+    for(const part of D.parts){const f=h('div','wound13-answer');f.append(h('strong','',(submitted.match[part.id]?'✓ ':'○ ')+part.letter+' · '+D.optionLabel(part.id,submitted.truth[part.id])),h('small','','Ditt svar: '+D.optionLabel(part.id,a[part.id])),h('p','',q.why[part.id]));article.append(f)}
   }
   right.append(article);
   const actions=h('div','wound12-actions wound13-actions');
@@ -146,7 +148,7 @@
     const submit=b('Lever TIMES-vurdering →','learn12-primary',()=>{
       if(D.parts.some(p=>!(answers[q.id]||{})[p.id])){
        document.getElementById('wound12Status').textContent='Svar på alle fem TIMES-områdene før du leverer.';
-       view='analyse';return;
+       view='analyse';const missing=[...root.querySelectorAll('.wound13-select')].find(x=>!x.value);if(missing){missing.setAttribute('aria-invalid','true');missing.focus()}return;
       }
       grades[q.id]=D.grade(q.id,answers[q.id]);
       if(mode==='test'){if(caseIndex===cases().length-1){finished=true;render()}else{caseIndex++;view='analyse';render()}}
@@ -169,10 +171,10 @@
   root.append(h('p','wound12-intro','Resultatet er pedagogisk tilbakemelding, ikke en kompetansevurdering eller klinisk godkjenning.'));
   list.forEach(q=>{
    const g=grades[q.id],card=h('article','wound12-report');card.append(h('h4','',q.title),h('strong','',g.score+' av 5 riktige'));
-   const ul=h('ul');D.parts.forEach(p=>ul.append(h('li','',(g.match[p.id]?'✓ ':'○ ')+p.letter+': '+D.optionLabel(p.id,g.truth[p.id])+' – '+q.why[p.id])));
+   const ul=h('ul');D.parts.forEach(p=>ul.append(h('li','',(g.match[p.id]?'✓ ':'○ ')+p.letter+': '+D.optionLabel(p.id,g.truth[p.id])+' · Ditt svar: '+D.optionLabel(p.id,answers[q.id][p.id])+' – '+q.why[p.id])));
    card.append(ul);root.append(card);
   });
-  root.append(b('Prøv på nytt','learn12-primary',()=>setMode(mode)));
+  const actions=h('div','wound12-actions');actions.append(b('Prøv på nytt','learn12-secondary',()=>setMode(mode)),b(mode==='practice'?'Fortsett til test →':'Til oversikten','learn12-primary',()=>setMode(mode==='practice'?'test':'home')));root.append(actions);
  }
  function render(){
   root.replaceChildren();
@@ -180,7 +182,11 @@
   const note=h('p','wound12-disclaimer','Medisinske undervisningsillustrasjoner av fiktive kasus – ikke pasientfoto. Infeksjon, sårårsak, fuktmengde og behandlingsbehov kan ikke avgjøres fra bilde alene. Følg lokale prosedyrer og klinisk vurdering.');
   const src=h('a','wound12-source','Les om TIMES hos Sykepleien ↗');src.href='https://sykepleien.no/forskning/2019/02/bruk-verktoyet-times-til-vurdere-sar-strukturert';src.target='_blank';src.rel='noopener noreferrer';
   const status=h('p','wound12-status');status.id='wound12Status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  root.append(note,src,status);
+  const sources=h('div','wound12-sources');sources.append(src);
+  D.sources.forEach(source=>{const link=h('a','wound12-source',source.label+' ↗');link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';sources.append(link)});
+  root.append(note,sources,status);
+  window.KartleggLearningFlow.mount(root,{course:'TIMES',mode,current:mode==='learn'?lesson+1:caseIndex+1,total:mode==='learn'?D.lessons.length:cases().length,finished,onMode:setMode});
+  if(view==='fasit'&&!finished){const feedback=root.querySelector('.wound13-pane');if(feedback)window.KartleggLearningFlow.feedback(feedback)}
  }
  window.KartleggWoundLearningUI=Object.freeze({open,get mode(){return mode},get illustrationStyle(){return 'clinical'},get caseIndex(){return caseIndex}});
 })();

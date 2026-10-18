@@ -1,0 +1,63 @@
+/* Shared layout and interaction rules. Theme colors belong to theme files. */
+.learning-orientation{margin-bottom:20px;scroll-margin-top:90px}
+.learning-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:5px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.learning-flow-step{min-height:44px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:13px;font-weight:750;cursor:pointer}
+.learning-flow-step[aria-current=step]{background:var(--accent-bg);border-color:var(--accent-border);color:var(--ink)}
+.learning-flow-step:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.learning-progress{display:flex;align-items:center;gap:14px;margin-top:14px;font-size:13px;font-weight:700;color:var(--ink)}
+.learning-progress progress{flex:1;min-width:0;height:8px;accent-color:var(--accent)}
+.learning-flow-hint{color:var(--muted);font-size:13px;line-height:1.6;margin:8px 0 0}
+:is(.learn12-feedback,.gcs-learn-feedback,.wound13-pane):focus{outline:2px solid var(--accent);outline-offset:4px}
+.wound-case-evidence{padding:14px;margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--accent-bg);font-size:13px;line-height:1.65}
+.wound-case-evidence h5{font-size:13px;margin:0 0 6px}.wound-case-evidence ul{padding-left:20px;margin:0}
+.wound12-sources{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;line-height:1.6;margin:14px 0}
+.wound13-answer small{display:block;color:var(--muted);line-height:1.6;margin-top:6px}
+.learn12-report-parts li small{display:block;margin:4px 0 10px;color:var(--muted);line-height:1.6}
+/* Large touch targets and native form text that does not trigger iOS focus zoom. */
+@media(max-width:770px){
+ :is(input,select,textarea):not([type=checkbox]):not([type=radio]){font-size:16px!important;max-width:100%;min-width:0}
+ :is(button,.btn,.dialog-close,.wound13-tab,.wound13-image-button,.gcs-learn-option){min-height:44px}
+ :is(.main,dialog,.profile-dialog-scroll,.learn12-exercise-root,.wound13-case-panel){overflow-wrap:anywhere;min-width:0}
+ dialog{box-sizing:border-box;max-width:calc(100vw - 16px);max-height:calc(var(--visible-height,100dvh) - 16px);overscroll-behavior:contain;scroll-padding-block:16px}
+ dialog.profile-dialog{max-width:100vw;height:var(--visible-height,100dvh);max-height:var(--visible-height,100dvh)}
+ .keyboard-open dialog[open]{position:fixed;top:var(--visible-top,0px);bottom:auto;margin-block:8px}
+ .keyboard-open dialog.profile-dialog[open]{margin-block:0}
+ .keyboard-open .action-dock{display:none!important}
+ .profile-dialog-head{position:sticky;top:0;z-index:3}
+ .profile-dialog-scroll{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+ .sidebar{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+ .meta-line{display:grid!important;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:end}
+ .meta-line label{min-width:0}.meta-line input{width:100%;box-sizing:border-box}
+ .meta-line small{grid-column:1/-1}.meta-line .v10-now-button{justify-self:start}
+ #themeToggle{font-size:0;min-width:44px;width:44px;padding:8px}
+ #themeToggle::before{content:'☾';font-size:18px}
+ :root[data-theme=dark] #themeToggle::before{content:'☀'}
+ :is(.learn12-actions,.wound12-actions,.gcs-learn-actions,.gcs-learn-summary-actions){gap:10px;flex-wrap:wrap}
+ :is(.learn12-actions,.wound12-actions,.gcs-learn-actions,.gcs-learn-summary-actions)>button{flex:1 1 140px;white-space:normal}
+ :is(.learn12-news-scroll,.history-table-wrap){overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+ .learning-flow-step{font-size:12px;padding:7px 3px}.learning-progress{gap:8px}
+ .wound13-image-viewport{max-height:60dvh}.wound13-image-tools{gap:6px}
+ .wound13-image-button{flex:1 1 80px;padding:8px 5px}
+ .wound13-image-tools strong{width:100%}
+ .gcs-learn-columns,.wound13-case-layout{min-width:0}
+}
+@media(max-width:360px){
+ .header{gap:4px;padding-inline:10px}.header .brand{font-size:19px;gap:6px}.header-right{gap:5px}
+ .learning-flow{gap:2px;padding:3px}.learning-flow-step{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:770px){.sidebar.open{max-height:calc(var(--visible-height,100dvh) - 64px)}}
+@media(max-width:770px){
+ .hc-controls{flex-wrap:wrap}.hc-controls .btn{min-width:0;flex:1 1 100px;white-space:normal}
+ dialog :is(form,fieldset,.tool-field,.hc-field,.hc-esas-head,.v08-dialog-content){min-width:0}
+}
+.wound-image-unavailable{padding:24px;color:#29445c;background:#f3f7fb;font-size:14px;line-height:1.6}
+.wound13-image[hidden]{display:none}
+/* Four courses stay balanced, with a compact two-column chooser on phones. */
+#learningHubChooser{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:980px){#learningHubChooser{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ .learn12-course-card{padding:11px;gap:7px;align-items:flex-start;min-height:100px}
+ .learn12-course-symbol{display:none}
+ .learn12-course-copy strong{font-size:14px}.learn12-course-copy small{font-size:11px;line-height:1.5}
+}

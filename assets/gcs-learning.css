@@ -88,17 +88,10 @@
 .gcs-learn-option:focus-visible,.gcs-learn-select:focus-visible,.gcs-learn-link:focus-visible{
  outline:3px solid var(--accent);outline-offset:3px
 }
-:root[data-base-theme="philip"] #gcsLearningRoot :is(.gcs-learn-hero,.gcs-learn-mode-card,.gcs-learn-sheet,
- .gcs-learn-check,.gcs-learn-exam,.gcs-learn-exam-report,.gcs-learn-summary,.gcs-learn-soon){
- background:rgba(14,44,92,.83);border-color:rgba(158,202,252,.32)}
-:root[data-base-theme="philip"] #gcsLearningRoot :is(.gcs-learn-option,.gcs-learn-secondary,.gcs-learn-select){
- background:rgba(10,35,78,.9);border-color:rgba(156,204,255,.38);color:#eef6ff}
-:root[data-base-theme="philip"] #gcsLearningRoot :is(.gcs-learn-tags span,.gcs-learn-pill){
- background:rgba(35,76,132,.79);color:#eef6ff;border-color:rgba(156,204,255,.38)}
-:root[data-personal-mode] #gcsLearningRoot :is(.gcs-learn-hero,.gcs-learn-mode-card,.gcs-learn-sheet,
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #gcsLearningRoot :is(.gcs-learn-hero,.gcs-learn-mode-card,.gcs-learn-sheet,
  .gcs-learn-check,.gcs-learn-exam,.gcs-learn-exam-report,.gcs-learn-summary,.gcs-learn-soon){
  background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
-:root[data-personal-mode] #gcsLearningRoot :is(.gcs-learn-title h3,.gcs-learn-hero h4,.gcs-learn-lead,
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #gcsLearningRoot :is(.gcs-learn-title h3,.gcs-learn-hero h4,.gcs-learn-lead,
  .gcs-learn-case,.gcs-learn-sheet h4,.gcs-learn-copy,.gcs-learn-tips,.gcs-learn-mode-card h4,
  .gcs-learn-option,.gcs-learn-mode-card strong,.gcs-learn-check p,.gcs-learn-check h4,
  .gcs-learn-big-score,.gcs-learn-exam-report h4){color:var(--pm-card-ink)!important}
@@ -123,7 +116,4 @@
 }
 #page-verktoy .gcs-learn-card-button:hover{border-color:var(--accent)}
 #page-verktoy .gcs-learn-card-button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-:root[data-base-theme="philip"] #page-verktoy .gcs-learn-card-button{
- background:rgba(26,65,118,.83);border-color:rgba(171,211,255,.46);color:#eff7ff
-}
 @media(max-width:480px){#page-verktoy .gcs-learn-card-button{min-height:44px}}

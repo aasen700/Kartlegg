@@ -64,19 +64,10 @@
 #simulationRoot :is(.sim-action,.sim-reset,.sim-number,.sim-textarea,.sim-details summary):focus-visible{
  outline:3px solid var(--accent);outline-offset:3px
 }
-:root[data-base-theme="philip"] #simulationRoot :is(.sim-panel,.sim-finish,.sim-references){
- background:rgba(15,42,87,.85);border-color:rgba(150,198,255,.38)
-}
-:root[data-base-theme="philip"] #simulationRoot :is(.sim-action,.sim-number,.sim-textarea,.sim-reset){
- background:rgba(11,30,66,.92);border-color:rgba(164,202,255,.35);color:#eef6ff
-}
-:root[data-base-theme="philip"] #simulationRoot :is(.sim-vital,.sim-latest,.sim-report-summary,.sim-time){
- background:rgba(27,65,114,.83);border-color:rgba(150,198,255,.38)
-}
-:root[data-personal-mode] #simulationRoot :is(.sim-panel,.sim-references){color:var(--pm-card-ink);background:var(--pm-panel)!important}
-:root[data-personal-mode] #simulationRoot :is(.sim-panel-heading,.sim-hint,.sim-copy,.sim-vital dt,.sim-vital dd,
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #simulationRoot :is(.sim-panel,.sim-references){color:var(--pm-card-ink);background:var(--pm-panel)!important}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #simulationRoot :is(.sim-panel-heading,.sim-hint,.sim-copy,.sim-vital dt,.sim-vital dd,
  .sim-form-label,.sim-timeline li,.sim-intro-list){color:var(--pm-card-ink)!important}
-:root[data-personal-mode] #simulationRoot :is(.sim-action,.sim-number,.sim-textarea,.sim-reset){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #simulationRoot :is(.sim-action,.sim-number,.sim-textarea,.sim-reset){
  background:var(--pm-subpanel)!important;color:var(--pm-card-ink)!important
 }
 @media(max-width:950px){.sim-columns{grid-template-columns:1fr}}

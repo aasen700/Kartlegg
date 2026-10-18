@@ -883,8 +883,8 @@ script=r"""
     }
     assert(!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'result must not appear before checking');
     const check=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Sjekk resultat'));
-    assert(!!check&&!check.disabled,'cannot check '+tool+' test case');check.click();
-    assert(!!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'test case feedback unavailable');
+    assert(!check,'test mode must not expose check-result button');
+    assert(!document.querySelector('#learnToolExerciseRoot .learn12-feedback'),'test must hide answers until completion');
     const action=[...document.querySelectorAll('#learnToolExerciseRoot button')].find(b=>b.textContent.includes('Gå videre')||b.textContent.includes('Se oppsummeringen'));
     assert(!!action&&!action.disabled,'cannot move to next '+tool+' case');action.click();
    }
@@ -905,6 +905,27 @@ script=r"""
   const gcsShortcut=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"] .gcs-learn-card-button');
   gcsShortcut.click();
   assert(hub.active==='gcs'&&window.KartleggLearnPilot.mode==='learn','GCS tool shortcut not restored after NEWS2');
+  // TIMES uses the supplied image cases, with delayed exam feedback and shared navigation.
+  const wound=window.KartleggWoundLearning, woundUI=window.KartleggWoundLearningUI;
+  for(const mode of ['practice','test']){
+   woundUI.open(mode);
+   assert(document.querySelector('#woundLearningRoot .learning-flow'),'shared TIMES navigation missing');
+   const list=wound.cases.filter(q=>q.level===(mode==='practice'?'Øv':'Test'));
+   for(let i=0;i<list.length;i++){
+    const q=list[i];
+    assert(document.querySelector('#woundLearningRoot .wound-case-evidence').textContent.includes(q.imageFindings[0]),'visible findings missing '+q.id);
+    assert(document.querySelector('#woundLearningRoot img').src.endsWith(q.id+'-clinical.svg'),'wrong image '+q.id);
+    const fields=[...document.querySelectorAll('#woundLearningRoot .wound13-select')];
+    fields.forEach((el,index)=>{el.value=q.answer[wound.parts[index].id];el.dispatchEvent(new Event('change',{bubbles:true}))});
+    [...document.querySelectorAll('#woundLearningRoot button')].find(b=>b.textContent.includes('Lever TIMES')).click();
+    if(mode==='practice'){
+     assert(document.querySelector('#woundLearningRoot .wound13-answer').textContent.includes('Ditt svar:'),'practice needs entered answer and rationale');
+     [...document.querySelectorAll('#woundLearningRoot button')].find(b=>b.textContent.includes(i===list.length-1?'Se oppsummering':'Neste kasus')).click();
+    }else if(i<list.length-1){assert(!document.querySelector('#woundLearningRoot .wound13-answer'),'test leaked feedback');}
+   }
+   assert(document.querySelector('#woundLearningRoot .wound12-score').textContent.includes('15 / 15'),'TIMES complete score wrong');
+   assert(document.querySelector('#woundLearningRoot progress').value===3,'finished progress incorrect');
+  }
   assert(!errors.length,'multitool learning JavaScript errors: '+errors.join(';'));
   status='PASS';
  } catch(err) {status='FAIL: '+String(err.message||err)+'; '+errors.join('; ');}
@@ -915,7 +936,7 @@ script=r"""
 temp=root/".kartlegg-smoke.html"
 temp.write_text(source.replace("</body>",script+"</body>"),encoding="utf-8")
 try:
- for width,height in [(1300,850),(768,1024),(410,850),(375,812),(360,780)]:
+ for width,height in [(1300,850),(768,1024),(410,850),(375,812),(360,780),(320,740),(844,390)]:
   command=[shutil.which(chrome),"--headless","--disable-gpu","--disable-dev-shm-usage","--no-sandbox",f"--window-size={width},{height}","--virtual-time-budget=5000","--dump-dom",temp.as_uri()]
   result=subprocess.run(command,text=True,capture_output=True,timeout=45)
   match=re.search(r'<output id="kartlegg-smoke">(.*?)</output>',result.stdout)

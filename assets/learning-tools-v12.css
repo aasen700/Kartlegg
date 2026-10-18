@@ -101,18 +101,9 @@
 :is(.learn12-course-card,.learn12-primary,.learn12-secondary,.learn12-score-option,.learn12-back,.learn12-card-shortcut):focus-visible{
  outline:3px solid var(--accent);outline-offset:2px;z-index:3
 }
-/* All new panels obey the same user-selectable dark and personal theme language. */
-:root[data-base-theme="philip"] :is(.learn12-course-card,.learn12-mode,.learn12-lesson,.learn12-score-grid,.learn12-score-option,.learn12-report){
- background:rgba(9,39,87,.83);border-color:rgba(171,211,255,.30);color:#edf5ff}
-:root[data-base-theme="philip"] :is(.learn12-patient,.learn12-feedback,.learn12-summary,.learn12-rule-example){
- background:rgba(26,70,123,.82);border-color:rgba(167,206,255,.39)}
-:root[data-base-theme="philip"] :is(.learn12-score-head,.learn12-course-card.is-active){
- background:rgba(24,77,130,.85)}
-:root[data-base-theme="philip"] :is(.learn12-score-option.is-selected,.learn12-score-option:not(:disabled):hover){
- background:rgba(40,104,165,.85)}
-:root[data-personal-mode] :is(.learn12-course-card,.learn12-mode,.learn12-lesson,.learn12-report,.learn12-score-grid){
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.learn12-course-card,.learn12-mode,.learn12-lesson,.learn12-report,.learn12-score-grid){
  background:var(--pm-panel)!important;color:var(--pm-card-ink)!important}
-:root[data-personal-mode] :is(.learn12-course-copy strong,.learn12-heading h3,.learn12-mode h4,.learn12-row-name strong,
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.learn12-course-copy strong,.learn12-heading h3,.learn12-mode h4,.learn12-row-name strong,
  .learn12-patient h4,.learn12-lesson-text,.learn12-score-option b,.learn12-score-option small,.learn12-report h4){
  color:var(--pm-card-ink)!important}
 @media(max-width:980px){
@@ -137,7 +128,6 @@
 @media(prefers-reduced-motion:reduce){.learn12-course-card{transition:none}}
 
 .learn12-explanation{font-size:12px;font-weight:650;line-height:1.7;color:var(--ink);border-left:3px solid var(--accent);padding:8px 10px;margin:11px 0;background:var(--paper);border-radius:5px}
-:root[data-base-theme="philip"] .learn12-explanation{background:rgba(11,38,83,.77);color:#eef6ff}
 
 /* NEWS2 learning chart: white until chosen; scoring hues never indicate correctness. */
 .learn12-vital-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:15px}
@@ -170,16 +160,11 @@
  .learn12-news-chart .learn12-score-option.learn12-news-cell{min-height:70px}
  .learn12-news-chart .learn12-score-void{min-height:70px}
 }
-:root[data-base-theme="philip"] .learn12-news-chart .learn12-score-option.learn12-news-cell,
 :root[data-personal-mode] .learn12-news-chart .learn12-score-option.learn12-news-cell{background:#fff!important;color:#253448!important}
 :root[data-personal-mode] .learn12-news-chart .learn12-news-range{color:#253448!important}
-:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-0,
 :root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-0{background:#dcebe2!important}
-:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-1,
 :root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-1{background:#f3df6f!important}
-:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-2,
 :root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-2{background:#f4ad6e!important}
-:root[data-base-theme="philip"] .learn12-news-chart .learn12-news-cell.is-selected.is-score-3,
 :root[data-personal-mode] .learn12-news-chart .learn12-news-cell.is-selected.is-score-3{background:#ef7777!important}
 
 /* Kartlegg Lær: GCS-level home presentation for 4AT and NEWS2. */
@@ -224,8 +209,8 @@
 .learn12-premium-mode p{margin:0 0 8px;flex:1}
 .learn12-premium-mode .learn12-primary{margin-top:auto}
 .learn12-landing-note{font-size:12px;line-height:1.6;color:var(--muted);margin:6px 0 15px}
-:root[data-base-theme="philip"] .learn12-hero,:root[data-personal-mode] .learn12-hero{background:var(--pm-panel,rgba(11,38,83,.76));border-color:var(--line)}
-:root[data-base-theme="philip"] .learn12-hero h4,:root[data-personal-mode] .learn12-hero h4,:root[data-personal-mode] .learn12-mode-subtitle{color:var(--pm-card-ink,var(--ink))}
-:root[data-personal-mode] .learn12-hero-tags span{background:var(--pm-panel);color:var(--pm-card-ink);border-color:var(--line)}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .learn12-hero{background:var(--pm-panel,rgba(11,38,83,.76));border-color:var(--line)}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .learn12-hero h4,:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .learn12-mode-subtitle{color:var(--pm-card-ink,var(--ink))}
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .learn12-hero-tags span{background:var(--pm-panel);color:var(--pm-card-ink);border-color:var(--line)}
 @media(max-width:710px){.learn12-hero{grid-template-columns:1fr;padding:12px}.learn12-hero-copy{padding:5px}.learn12-visual{min-height:240px;max-width:500px;width:100%;margin-inline:auto}.learn12-premium-mode{padding:16px}}
 @media(max-width:390px){.learn12-visual{padding:12px}.learn12-four-tile{padding:9px}.learn12-visual-label{font-size:9px}.learn12-monitor{padding:11px}}

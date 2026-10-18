@@ -1,7 +1,6 @@
 /* Kartlegg personlige easter eggs: presentation only, never clinical risk colors. */
 :root[data-personal-mode="kristian"]{--pm-primary:#b41730;--pm-tint:#fff0f2;--pm-text:#8f1228;--pm-border:#d74e65}
 :root[data-personal-mode="kent"]{--pm-primary:#19558c;--pm-tint:#eaf4fb;--pm-text:#174c78;--pm-border:#5390b1}
-:root[data-personal-mode="philip"]{--pm-primary:linear-gradient(115deg,#134cad,#2864cc);--pm-tint:#ffffff24;--pm-text:#eaf4ff;--pm-border:#b9dbff}
 :root[data-personal-mode] .header .theme-top-ribbon{
  display:block!important;height:19px!important;z-index:6!important;
  border:0!important;box-shadow:0 2px 9px #09172e28!important;
@@ -55,7 +54,6 @@
 .personal-mode-popup::backdrop{background:#081b35aa;backdrop-filter:blur(3px)}
 .personal-mode-popup[data-mode="kristian"]{border-top:7px solid #b41730;background:linear-gradient(165deg,#fff,#fff0f2)}
 .personal-mode-popup[data-mode="kent"]{border-top:7px solid #19558c;background:linear-gradient(165deg,#fff,#edf8f1)}
-.personal-mode-popup[data-mode="philip"]{border-top:7px solid #b6a16e;background:linear-gradient(155deg,#eefafa,#f9f6e9)}
 .personal-mode-emblem{font-size:35px;line-height:1.25;margin:4px 0 12px}
 .personal-mode-popup h2{font-size:24px;line-height:1.2;letter-spacing:-.03em;margin:0 0 11px;color:#152b45}
 .personal-mode-popup p{font-size:14px;line-height:1.6;margin:8px 0;color:#40556b}
@@ -67,7 +65,6 @@
 .personal-mode-popup button:focus-visible{outline:3px solid #13aca0;outline-offset:3px}
 .personal-mode-popup[data-mode="kristian"] button{background:#a91b32}
 .personal-mode-popup[data-mode="kent"] button{background:#19558c}
-.personal-mode-popup[data-mode="philip"] button{background:#115566}
 @media(max-width:1100px){.personal-mode-signature{display:none!important}}
 @media(max-width:480px){
  :root[data-personal-mode] .header .theme-top-ribbon{height:13px!important}
@@ -100,16 +97,6 @@
  --pm-action:#f8cc47;--pm-action-ink:#172b42;--pm-action-border:#cc9d23;
  --pm-soft-action:#edf9f4;--pm-soft-action-ink:#155344;--pm-highlight:#234c65;
  --pm-focus:#ffe08a;--pm-surface-ink:#124f49;
-}
-:root[data-personal-mode="philip"]{
- --pm-page:radial-gradient(ellipse at 78% 12%,#1a758781,transparent 36%),radial-gradient(ellipse at 9% 83%,#26637875,transparent 46%),linear-gradient(155deg,#051627,#0a2941 55%,#031322);
- --pm-header:#081c2d;--pm-header-ink:#eaf8f7;
- --pm-sidebar:linear-gradient(180deg,#092d41,#071b2b);--pm-sidebar-ink:#e2f5f2;
- --pm-panel:#f8fbfa;--pm-subpanel:#edf6f5;--pm-card-ink:#102f3e;--pm-card-border:#bfd8d8;
- --pm-hero-ink:#f9f5e7;--pm-hero-muted:#c3dedc;--pm-ribbon-glow:#4cddd866;
- --pm-action:linear-gradient(120deg,#ead28b,#cbb16d);--pm-action-ink:#112735;--pm-action-border:#ac904f;
- --pm-soft-action:#eaf6f4;--pm-soft-action-ink:#0a5762;--pm-highlight:#164456;
- --pm-focus:#f3d783;--pm-surface-ink:#125d69;
 }
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) body{
  background:var(--pm-page)!important;background-attachment:fixed!important;
@@ -148,7 +135,6 @@
 }
 :root[data-personal-mode="kristian"] .sidebar .nav:is(.active,[aria-current="page"]){color:#95152c!important}
 :root[data-personal-mode="kent"] .sidebar .nav:is(.active,[aria-current="page"]){color:#164e48!important}
-:root[data-personal-mode="philip"] .sidebar .nav:is(.active,[aria-current="page"]){color:#0c5664!important}
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .sidebar-bottom{
  background:#ffffff13!important;color:var(--pm-sidebar-ink)!important;
  border:1px solid #ffffff50!important;
@@ -168,7 +154,6 @@
 }
 :root[data-personal-mode="kristian"] .main .intro .chip{color:#85152b!important}
 :root[data-personal-mode="kent"] .main .intro .chip{color:#144e49!important}
-:root[data-personal-mode="philip"] .main .intro .chip{color:#155969!important}
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.section,.toolbox){
  background:var(--pm-panel)!important;color:var(--pm-card-ink)!important;
  border-color:var(--pm-card-border)!important;
@@ -227,7 +212,6 @@
 }
 :root[data-personal-mode="kristian"] .header .profile-trigger{color:#95152c!important}
 :root[data-personal-mode="kent"] .header .profile-trigger{color:#164e48!important}
-:root[data-personal-mode="philip"] .header .profile-trigger{color:#0c5664!important}
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.header .mobile-toggle,.sidebar .nav,.btn-primary,.btn-secondary,.tool-launch,.hc-launch,.v099-category-button):focus-visible{
  outline:3px solid var(--pm-focus)!important;outline-offset:3px!important;
 }
@@ -257,9 +241,6 @@
 }
 :root[data-personal-mode="kent"] .personal-mode-popup[data-mode="kent"]{
  border-top:8px solid #d9b53f;background:linear-gradient(155deg,#fff,#e0f4ec);
-}
-:root[data-personal-mode="philip"] .personal-mode-popup[data-mode="philip"]{
- border-top:8px solid #c5a65a;background:linear-gradient(155deg,#fff,#e1f5f3);
 }
 @media(max-width:770px){
  :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .theme-top-ribbon{height:21px!important}

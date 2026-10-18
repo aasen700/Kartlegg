@@ -29,11 +29,19 @@
         ],
         [
           "mixed",
-          "Blandet granulasjon og fibrin"
+          "Blandet rødt vev og gult fibrin/slough"
         ],
         [
           "epithelial",
           "Overveiende epitelisering"
+        ],
+        [
+          "red",
+          "Rød åpen sårbunn – vevstype ikke sikkert bestemt"
+        ],
+        [
+          "closed",
+          "Lukket snitt – ingen synlig sårbunn"
         ]
       ]
     },
@@ -74,6 +82,10 @@
         [
           "excess",
           "For mye sårvæske / lekkasje"
+        ],
+        [
+          "closed-dry",
+          "Tørr, lukket snittlinje uten sekresjon"
         ]
       ]
     },
@@ -94,6 +106,14 @@
         [
           "undermined",
           "Underminert / løsnet sårkant"
+        ],
+        [
+          "approximated",
+          "Sammenførte sårkanter med suturer"
+        ],
+        [
+          "separated",
+          "Åpne / adskilte kanter etter fersk skade"
         ]
       ]
     },
@@ -122,6 +142,14 @@
         [
           "callus",
           "Hard hud / kallus"
+        ],
+        [
+          "pigmented",
+          "Pigmentforandringer rundt såret"
+        ],
+        [
+          "bruised",
+          "Blodutredelser / blåmerker rundt såret"
         ]
       ]
     }
@@ -142,7 +170,8 @@
       "tips": [
         "Rødt, kornet vev kan være granulasjon.",
         "Gult belegg kan være fibrin/slough, men farge alene er ikke fasit.",
-        "Mørkt vev kan ha flere årsaker; vurder perfusjon og hele forløpet."
+        "Mørkt vev kan ha flere årsaker; vurder perfusjon og hele forløpet.",
+        "Et suturert, lukket snitt har ingen synlig sårbunn. Ferskt rødt vev er ikke automatisk granulasjon."
       ]
     },
     {
@@ -160,7 +189,8 @@
       "tips": [
         "Vurder bandasjens gjennomtrukking og lekkasje.",
         "Macerasjon er en observasjon – ikke en diagnose.",
-        "Fuktnivå kan ikke fastslås på et fotografi alene."
+        "Fuktnivå kan ikke fastslås på et fotografi alene.",
+        "Skill tørr lukket snittlinje fra uttørking i et åpent sår."
       ]
     },
     {
@@ -187,116 +217,132 @@
       "id": "venous",
       "title": "Venøst leggsår",
       "level": "Øv",
-      "subtitle": "Sår på nedre legg",
-      "summary": "Fiktiv kvinne, 78 år. Uregelmessig, overflatisk sår medialt på leggen, til stede i åtte uker. Sårbunnen er rød med spredt gulaktig belegg. Bandasjen blir svært fuktig innen neste skift, og sårkant/hud rundt er oppbløtt. Ikke ny smerte, varme eller økende rødhet oppgitt. Sårkanten har liten synlig fremgang siste fire uker.",
+      "subtitle": "Uregelmessig sår ved ankelen",
+      "summary": "Fiktiv kvinne, 78 år, med kjent venøs insuffisiens. Et uregelmessig sår ved innsiden av ankelen har vært til stede i åtte uker. Ved undersøkelse beskrives rødt vev og gult belegg, brunpigmentert hud og lett hevelse. Bandasjen er gjennomtrukket før planlagt skift. Ingen ny smerte, spredende rødhet, varmeøkning eller feber er oppgitt. Målinger viser liten endring i sårkanten siste fire uker.",
       "observations": [
-        "Blandet rødt granulasjonsvev og fibrin/slough.",
-        "Mye sårvæske og macerasjon.",
-        "Ingen ny lokalisert inflammasjon eller systemiske tegn oppgitt."
+        "Mye væske er oppgitt fra bandasjeskift – mengden kan ikke leses av bildet.",
+        "Venøs årsak er gitt i den fiktive sykehistorien.",
+        "Manglende fremgang er dokumentert over fire uker."
       ],
       "answer": {
         "tissue": "mixed",
         "infection": "none",
         "moisture": "excess",
         "edge": "stalled",
-        "skin": "macerated"
+        "skin": "pigmented"
       },
       "why": {
-        "tissue": "Teksten beskriver både granulasjon og gulaktig fibrin/slough.",
-        "infection": "Ingen nye tegn til infeksjon er oppgitt. Dette utelukker ikke infeksjon ved andre funn.",
-        "moisture": "Gjennomtrukket bandasje og oppbløtt hud tyder på for høy fuktbelastning.",
-        "edge": "Lite utvikling gjennom fire uker er forenlig med stagnasjon.",
-        "skin": "Hud rundt såret er tydelig beskrevet som oppbløtt."
-      }
+        "tissue": "Illustrasjonen og undersøkelsen viser både rødt vev og gult belegg. Farge alene bestemmer ikke vevstype.",
+        "infection": "Ingen nye infeksjonstegn er oppgitt. Dette er ikke det samme som at infeksjon er utelukket.",
+        "moisture": "Gjennomtrukket bandasje før planlagt skift er grunnlaget for svaret, ikke glansen i illustrasjonen.",
+        "edge": "Stagnasjon bygger på målingene over fire uker, ikke et enkelt bilde.",
+        "skin": "Pigmentforandringene er synlige og beskrevet. Det er ikke oppgitt oppbløtt hud som begrunner macerasjon."
+      },
+      "imageFindings": [
+        "Uregelmessig åpent sår med røde og gulaktige områder.",
+        "Brunlige og fiolette hudforandringer rundt ankelen."
+      ]
     },
     {
       "id": "arterial",
-      "title": "Distalt fotsår ved nedsatt sirkulasjon",
+      "title": "Tåsår ved nedsatt sirkulasjon",
       "level": "Øv",
-      "subtitle": "Sår på tå",
-      "summary": "Fiktiv mann, 72 år. Lite sår på tåspissen. Mørkt, tørt vev dekker store deler av sårbunnen; lite sårvæske. Rundt såret er huden intakt uten ny rødhet eller varme. Tydelig avgrenset, stagnerende sårkant. Pasienten har kalde føtter, smerter i hvile og tidligere kjent perifer karsykdom.",
+      "subtitle": "Åpent sår på oversiden av stortåen",
+      "summary": "Fiktiv mann, 72 år, med kjent perifer karsykdom. Et avgrenset sår på oversiden av stortåen har åpen rød sårbunn, uten oppgitt svart eskar. Såret er lett fuktig med sparsom klar væske, uten gjennomtrukket bandasje. En smal rød rand er uendret. Ingen økende varme, hevelse, smerte fra selve såret eller feber er oppgitt. Såret har ikke minket på tre uker. Kald fot og hvilesmerter er oppgitt og krever egen vurdering av sirkulasjonen.",
       "observations": [
-        "Overveiende mørkt nekrotisk vev.",
-        "Tørr sårbunn og minimalt med sårvæske.",
-        "Kald fot og hvilesmerter gjør vurdering av perfusjon sentral."
+        "Karsykdom, kald fot og hvilesmerter er tilleggsopplysninger.",
+        "Sparsom klar væske og uendret rød rand er beskrevet ved undersøkelse.",
+        "Ingen målbar reduksjon av såret på tre uker."
       ],
       "answer": {
-        "tissue": "necrosis",
-        "infection": "none",
-        "moisture": "dry",
+        "tissue": "red",
+        "infection": "inflammation",
+        "moisture": "balanced",
         "edge": "stalled",
-        "skin": "intact"
+        "skin": "erythema"
       },
       "why": {
-        "tissue": "Mørkt, tørt vev er her eksplisitt beskrevet som nekrotisk.",
-        "infection": "Det er ikke oppgitt nye lokale infeksjonstegn. Perfusjonsproblematikk krever separat vurdering.",
-        "moisture": "Sårbunnen er beskrevet som tørr.",
-        "edge": "Sårkanten er oppgitt å stå stille.",
-        "skin": "Huden omkring er angitt intakt uten lokale hudforandringer."
-      }
+        "tissue": "Rødt vev ses, men illustrasjonen alene bekrefter ikke granulasjon. Arteriell årsak betyr ikke at alle sår må ha svart nekrose.",
+        "infection": "En smal, stabil rød rand kan passe med lokal irritasjon. Sykehistorien oppgir ikke en utvikling som i seg selv begrunner infeksjonsmistanke.",
+        "moisture": "Sparsom væske uten lekkasje passer best med lett fuktig sårbunn i dette kasuset. Dette er ingen anbefaling om å tilføre fukt.",
+        "edge": "Manglende størrelsesendring over tre uker støtter stagnasjon.",
+        "skin": "Den røde randen er synlig og oppgitt. Fotens perfusjon må vurderes separat og kan ikke fastslås fra hudfarge i bildet."
+      },
+      "imageFindings": [
+        "Lite, tydelig avgrenset sår på oversiden av stortåen.",
+        "Rød åpen sårbunn med en smal rød rand; ingen tydelig svart, tørr skorpe."
+      ]
     },
     {
       "id": "pressure",
-      "title": "Trykksår over korsbenet",
+      "title": "Dypt sår i seteområdet",
       "level": "Øv",
-      "subtitle": "Trykkutsatt område",
-      "summary": "Fiktiv person, 86 år, med redusert mobilitet. Sår ved korsbenet har granulasjonsvev i bunnen, rikelig væske og underminerte sårkanter. Huden rundt er rød og varm. Pasienten har fått tydelig økende smerte og mer illeluktende sekret siste tre døgn. Ingen temperaturmåling er oppgitt.",
+      "subtitle": "Sårhule ved langvarig trykkbelastning",
+      "summary": "Fiktiv person, 86 år, med redusert mobilitet og langvarig trykk mot seteområdet. Undersøkelsen beskriver en dyp sårhule med rødt vev og gult belegg. Underminering er påvist ved faglig undersøkelse. De siste tre døgnene har smerte, væskemengde og lukt økt, og huden rundt er blitt rødere og varmere. Bandasjen lekker. Allmenntilstand og temperatur er ikke oppgitt og må etterspørres.",
       "observations": [
-        "Rød granulerende sårbunn, men underminerte kanter.",
-        "Økende smerter, lukt og væskemengde.",
-        "Rød og varm omkringliggende hud."
+        "Trykkbelastning og påvist underminering er oppgitt i teksten.",
+        "Ny smerte, økende lukt, væske, rødhet og varme.",
+        "Dybde, trykksårkategori og eventuelt eksponerte strukturer kan ikke bestemmes sikkert fra illustrasjonen."
       ],
       "answer": {
-        "tissue": "granulation",
+        "tissue": "mixed",
         "infection": "suspect",
         "moisture": "excess",
         "edge": "undermined",
         "skin": "erythema"
       },
       "why": {
-        "tissue": "Granulasjonsvev er uttrykkelig beskrevet som dominerende.",
-        "infection": "Kombinasjonen av ny smerte, lukt, sekresjon og inflammasjon øker mistanken; det er ingen endelig diagnose.",
-        "moisture": "Rikelig sårvæske er et dominerende funn.",
-        "edge": "Kantene er uttrykkelig beskrevet som underminerte.",
-        "skin": "Rød og varm hud er et dominerende funn."
-      }
+        "tissue": "Både rødt vev og gult belegg er beskrevet. Mørke partier kan ikke automatisk kalles nekrose eller eksponert ben.",
+        "infection": "Flere nye og tiltagende tegn gir mistanke og behov for klinisk vurdering; bildet stiller ingen infeksjonsdiagnose.",
+        "moisture": "Lekkasje og økende væskemengde begrunner væskeoverskudd.",
+        "edge": "Undermineringen er påvist i den fiktive undersøkelsen. Et bilde av en hule er ikke nok til å fastslå dette.",
+        "skin": "Økende rødhet og varme er oppgitt som hovedfunn rundt såret."
+      },
+      "imageFindings": [
+        "Åpen sårhule i seteområdet med røde, gule og mørkere partier.",
+        "Uregelmessig sårkant og rødlig hud nær åpningen."
+      ]
     },
     {
       "id": "postop",
-      "title": "Postoperativt sår",
+      "title": "Lukket postoperativt sår",
       "level": "Test",
-      "subtitle": "Kirurgisk snitt",
-      "summary": "Fiktiv kvinne, 64 år, ti dager etter operasjon. Et mindre område i snittlinjen er fuktig og rødt med granulasjonsvev; resten er lukket. Langs sårkanten ses ny, tynn epitelisering. Litt klar sårvæske, ingen lekkasje. Smal rand med rødhet der tape nylig er fjernet. Ikke økende smerte, varme eller puss. Omkringliggende hud er irritert, men ikke oppbløtt.",
+      "subtitle": "Suturert snitt",
+      "summary": "Fiktiv kvinne, 64 år, fem dager etter operasjon. Snittet er lukket med suturer; sårkantene ligger inntil hverandre uten sprik. Det ses ingen åpen sårbunn. Snittlinjen og bandasjen er tørre uten sekresjon. Huden rundt er intakt. Ingen tiltagende rødhet, varme, hevelse, smerte eller feber er oppgitt.",
       "observations": [
-        "Granulasjonsvev på mindre, åpent område.",
-        "Liten mengde klar væske.",
-        "Rødhet følger tapeområdet uten andre oppgitte infeksjonstegn."
+        "Tørr bandasje og fravær av sekresjon er gitt i teksten.",
+        "Ingen tiltagende lokale tegn eller feber er oppgitt.",
+        "TIMES må tilpasses et lukket snitt; vev i en åpen sårbunn kan ikke graderes her."
       ],
       "answer": {
-        "tissue": "granulation",
-        "infection": "inflammation",
-        "moisture": "balanced",
-        "edge": "advancing",
-        "skin": "erythema"
+        "tissue": "closed",
+        "infection": "none",
+        "moisture": "closed-dry",
+        "edge": "approximated",
+        "skin": "intact"
       },
       "why": {
-        "tissue": "Det åpne området beskrives som granulerende.",
-        "infection": "Tapeirritasjon gir lokal inflammasjon, men det er ikke oppgitt tilstrekkelige tegn til å kalle dette en infeksjon.",
-        "moisture": "Lite klar væske uten lekkasje gir her best treff på balansert fukt.",
-        "edge": "Ny epitelisering langs kanten tilsier fremgang.",
-        "skin": "Omkringliggende hud beskrives som rød og irritert."
-      }
+        "tissue": "Et lukket snitt har ingen synlig åpen sårbunn. Det ville være feil å kalle dette granulasjonsvev ut fra illustrasjonen.",
+        "infection": "Det er ikke oppgitt tiltagende tegn som gir mistanke om infeksjon. Observer utviklingen over tid.",
+        "moisture": "Tørr, lukket snittlinje uten sekresjon er ikke det samme som en for tørr åpen sårbunn.",
+        "edge": "Suturene holder kantene sammen. Dette beskriver lukning; fremgang i tilhelingen krever oppfølging over tid.",
+        "skin": "Huden er intakt uten markerte forandringer i kasusbeskrivelsen. Tape på bildet dokumenterer ikke tapeirritasjon."
+      },
+      "imageFindings": [
+        "Lineært snitt lukket med synlige suturer.",
+        "Sårkantene ligger sammen; ingen tydelig åpen sårbunn."
+      ]
     },
     {
       "id": "diabetic",
-      "title": "Plantart fotsår",
+      "title": "Plantart fotsår ved diabetes",
       "level": "Test",
-      "subtitle": "Sår under forfoten",
-      "summary": "Fiktiv mann, 59 år, med diabetes og nedsatt følesans. Rundt et sår under forfoten er det tykk, hard hud. I sårbunnen dominerer gult fibrinbelegg, og området er lett fuktig uten lekkasje. Sårkanten er fortykket og har hatt liten fremgang. Ingen tiltagende varme, lukt, hevelse eller smerte oppgitt. Vurder behovet for avlastning og sirkulasjonsundersøkelse separat.",
+      "subtitle": "Sår under forfoten med kallus",
+      "summary": "Fiktiv mann, 59 år, med diabetes og nedsatt følesans. Et sår under forfoten har overveiende gult belegg og mindre røde områder. Det er en fortykket rand med hard hud. Undersøkelsen beskriver lett fuktig sårbunn, moderat væske uten lekkasje og liten fremgang de siste ukene. Ingen ny varmeøkning, spredende rødhet eller allmennsymptomer er oppgitt. Smertefravær er ikke et betryggende tegn ved nedsatt følesans. Fotstatus, sirkulasjon og belastning må vurderes separat.",
       "observations": [
-        "Dominerende fibrin/slough.",
-        "Fortykkede kanter og betydelig kallus.",
-        "Moderat fuktighet, uten oppgitt infeksjonsutvikling."
+        "Nedsatt følesans og diabetes er oppgitt i sykehistorien.",
+        "Moderat væske uten lekkasje og manglende fremgang er oppgitt.",
+        "Infeksjon og iskemi kan ikke utelukkes fra illustrasjonen eller fravær av smerte."
       ],
       "answer": {
         "tissue": "slough",
@@ -306,44 +352,74 @@
         "skin": "callus"
       },
       "why": {
-        "tissue": "Gult fibrinbelegg er uttrykkelig det dominerende vevet.",
-        "infection": "Det er ikke beskrevet tiltagende lokale tegn, men diabetes kan gi atypisk symptomuttrykk.",
-        "moisture": "Lett fuktig sårbunn uten lekkasje tilsier balansert fukt i denne øvingsbeskrivelsen.",
-        "edge": "Fortykket kant uten fremgang samsvarer med stagnerende sårkant.",
-        "skin": "Tykk hard hud rundt såret er kallus."
-      }
+        "tissue": "Gult belegg er beskrevet som dominerende, med mindre røde områder. Den fiktive undersøkelsen støtter fibrin/slough.",
+        "infection": "Ingen nye infeksjonstegn er oppgitt; svaret betyr ikke at infeksjon er utelukket. Tegn kan være svake ved diabetes.",
+        "moisture": "Moderat væske uten lekkasje er grunnlaget for dette øvingssvaret.",
+        "edge": "Fortykket kant og liten fremgang over tid passer med stagnerende sårkant.",
+        "skin": "Den fortykkede, harde huden rundt åpningen beskrives som kallus."
+      },
+      "imageFindings": [
+        "Rundt sår under forfoten med gult belegg og røde områder.",
+        "Fortykket gulaktig hud rundt åpningen."
+      ]
     },
     {
       "id": "skin-tear",
-      "title": "Hudrift på underarmen",
+      "title": "Traumatisk hudskade på underarmen",
       "level": "Test",
-      "subtitle": "Sår hos eldre person",
-      "summary": "Fiktiv kvinne, 91 år, fikk hudrift på underarmen ved forflytning i går. En tynn hudlapp ligger delvis tilbake over såret. Det åpne området har rød sårbunn med nytt granulasjonslignende vev, er lett fuktig og har ingen lekkasje. Sårkant/hudlapp ligger til og ser ut til å få kontakt med sårflaten. Svært skjør omkringliggende hud. Lett lokal rødhet etter friksjon, uten varme, økende smerte eller illeluktende sekresjon.",
+      "subtitle": "Åpent sår med blodutredelser",
+      "summary": "Fiktiv kvinne, 91 år, fikk en traumatisk hudskade på underarmen ved forflytning tidligere i dag. Såret har åpen rød sårflate med blodtilblanding og adskilte kanter. Det er omfattende blåmerker i huden rundt. Undersøkelsen oppgir sparsom blodtilblandet væske uten vedvarende blødning eller gjennomtrukket bandasje. Lett lokal irritasjon, men ingen tiltagende varme, spredende rødhet eller feber. Dybde og eventuell levedyktig hudlapp er ennå ikke avklart.",
       "observations": [
-        "Åpen, rød sårbunn og delvis bevart hudlapp.",
-        "Lett fuktig uten lekkasje.",
-        "Svært skjør hud rundt skadeområdet."
+        "Skaden er fersk; rødt vev betyr ikke at nytt granulasjonsvev allerede er dannet.",
+        "Blødningen er oppgitt å ha stanset.",
+        "Illustrasjonen ligner en dypere flenge. Den skal ikke alene brukes til å klassifisere en overflatisk hudrift etter ISTAP."
       ],
       "answer": {
-        "tissue": "granulation",
+        "tissue": "red",
         "infection": "inflammation",
         "moisture": "balanced",
-        "edge": "advancing",
-        "skin": "fragile"
+        "edge": "separated",
+        "skin": "bruised"
       },
       "why": {
-        "tissue": "Det synlige åpne området beskrives som rødt granulasjonslignende vev. Ved ferske sår må dette tolkes forsiktig.",
-        "infection": "Lett rødhet etter friksjon taler for irritasjon; det er ikke nok informasjon til å mistenke infeksjon.",
-        "moisture": "Lett fukt uten lekkasje tilsier balansert fukt.",
-        "edge": "Hudlappen ligger til og kanten har god kontakt – her det beste alternativet blant øvingsvalgene.",
-        "skin": "Svært skjør hud og hudrift er dominerende funn."
-      }
+        "tissue": "En fersk rød sårflate kan inneholde blod og eksponert vev. Det er ikke grunnlag for å kalle dette etablert granulasjon.",
+        "infection": "Lokal reaksjon etter skade kan være inflammasjon. Ingen tiltagende infeksjonstegn er oppgitt.",
+        "moisture": "Sparsom væske uten gjennomtrukking gir best treff på fuktig uten overskudd. Vedvarende blødning ville krevd en annen vurdering.",
+        "edge": "Kantene er adskilt. Ingen tilheling eller god kontakt fra en hudlapp er dokumentert.",
+        "skin": "Blodutredelsene er det dominerende synlige funnet. Alder alene avgjør ikke graden av hudskjørhet."
+      },
+      "imageFindings": [
+        "Avlang åpen skade med rødt vev, blodtilblanding og adskilte kanter.",
+        "Tydelige fiolette blodutredelser i omkringliggende hud."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "NICE – infeksjon i leggsår",
+      "url": "https://www.nice.org.uk/guidance/ng152/chapter/recommendations"
+    },
+    {
+      "label": "NICE – trykksår",
+      "url": "https://www.nice.org.uk/guidance/cg179/chapter/recommendations"
+    },
+    {
+      "label": "NICE – diabetiske fotproblemer",
+      "url": "https://www.nice.org.uk/guidance/ng19/chapter/Recommendations"
+    },
+    {
+      "label": "NICE – kirurgiske sår",
+      "url": "https://www.nice.org.uk/guidance/ng125/chapter/recommendations"
+    },
+    {
+      "label": "ISTAP – hudrifter, anbefalinger 2025",
+      "url": "https://www.skintears.org/post/bpr-for-the-prevention-and-management-of-skin-tears-in-aged-skin"
     }
   ]
 };
  const parts=Object.freeze(raw.parts.map(p=>Object.freeze({...p,options:Object.freeze(p.options.map(o=>Object.freeze(o)))})));
  const lessons=Object.freeze(raw.lessons.map(x=>Object.freeze({...x,tips:Object.freeze(x.tips)})));
- const cases=Object.freeze(raw.cases.map(x=>Object.freeze({...x,observations:Object.freeze(x.observations),answer:Object.freeze(x.answer),why:Object.freeze(x.why)})));
+ const cases=Object.freeze(raw.cases.map(x=>Object.freeze({...x,observations:Object.freeze(x.observations),imageFindings:Object.freeze(x.imageFindings),answer:Object.freeze(x.answer),why:Object.freeze(x.why)})));
  const ids=new Map(cases.map(q=>[q.id,q]));
  const allowed=new Map(parts.map(p=>[p.id,new Set(p.options.map(o=>o[0]))]));
  function grade(id,answers){
@@ -358,5 +434,5 @@
   const p=parts.find(p=>p.id===partId);
   return p?.options.find(o=>o[0]===value)?.[1]||'Ikke vurdert';
  }
- return Object.freeze({parts,lessons,cases,grade,optionLabel});
+ return Object.freeze({parts,lessons,cases,grade,optionLabel,sources:Object.freeze(raw.sources.map(Object.freeze))});
 });

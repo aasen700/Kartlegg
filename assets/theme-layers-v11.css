@@ -1,90 +1,4 @@
-/* Kartlegg v1.1 theme layers.
- * Layer 1: base identity (standard / Philip glass)
- * Layer 2: existing service presentation, including its independent top ribbon
- * Layer 3: decorative seasonal marker only.
- *
- * Clinical scoring, severity statuses, escalation alerts, and risk colors are NEVER
- * targeted here. Seasons do not alter global --accent, --paper, --ink, or score tokens.
- */
-:root[data-base-theme="philip"][data-service-theme][data-theme][data-accent]{
- color-scheme:dark;
- --ink:#eff6ff;--muted:#bfd1ee;--line:#5478af7a;
- --bg:#07162e;--paper:#112a53;--accent:#a9ceff;--accent-on:#061b38;
- --accent-bg:#224982;--accent-border:#81b5fc;
- --shadow:0 14px 42px #01091ecc;
- --service-subtle:#203d69;--service-soft:#102b52;--service-control:#173660;
- --service-unit:#294a75;--service-border:#5c86bd;--service-soft-text:#d6e4fa;
- --service-focus:#b7d8ff;
-}
-:root[data-base-theme="philip"][data-service-theme] body{
- background:radial-gradient(ellipse 78% 55% at 92% -4%,#2468d44a,transparent 76%),
- radial-gradient(ellipse 68% 48% at 0% 65%,#1246a34d,transparent 76%),#07162e;
- color:var(--ink);
-}
-:root[data-base-theme="philip"][data-service-theme] :is(
- .header,.sidebar,.section,.field,.toolbox,.profile-dialog,.profile-dialog-head,
- .clinical-tool-dialog,.v08-dialog,.v081-tool-search,.v081-search-results
-){
- color:var(--ink);
- background:linear-gradient(145deg,#234d8394 0%,#112c54df 32%,#0b2247ec 100%);
- border-color:var(--line);
- box-shadow:0 1px 0 #bad8ff28 inset,0 16px 38px #01081e69;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.header,.sidebar,.profile-dialog){
- -webkit-backdrop-filter:blur(12px) saturate(135%);
- backdrop-filter:blur(12px) saturate(135%);
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.section,.toolbox,.field){
- border:1px solid var(--line);
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.logo,.btn-primary,.tool-launch,.hc-launch){
- background:linear-gradient(138deg,#c2deff 0%,#80b8ff 38%,#3982ec 100%);
- color:#061a39;
- border-color:#a1cfff;
- box-shadow:0 1px 0 #ffffffa8 inset,0 7px 24px #4a8bf34a;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.btn-primary,.tool-launch,.hc-launch):hover{
- filter:brightness(1.05);
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.brand-small,.avatar,.chip,.toolbox .tool-tag:not(.soon)){
- background:#203f72;color:#c7e3ff;border-color:#6e9ed7;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(
- .control-wrap,.meta-line,.v081-search-field,.profile-field input,.profile-field select,
- .isbar-inputs input,.isbar-inputs textarea,.hc-field input,.hc-field select,
- .tool-field select,.v08-body-field input,.v08-body-field select
-){
- background:#0a2448;color:#f0f7ff;border-color:#6586b0;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(
- .field .control-wrap input,.field .control-wrap select,
- .v081-search-field input,.meta-line input,
- .profile-field input,.profile-field select
-){color:#f0f7ff!important;}
-:root[data-base-theme="philip"][data-service-theme] :is(input,textarea)::placeholder{color:#aebfda;opacity:1}
-:root[data-base-theme="philip"][data-service-theme] :is(.field .unit,.nav:hover,.nav.active,.v099-category-button[aria-pressed="true"]){
- background:#254779;color:#eaf4ff;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.sidebar-bottom,.v099-category-heading,.service-theme-option,.appearance-options label,.base-theme-option,.season-theme-controls){
- background:#15335e;color:#eff6ff;border-color:var(--line);
-}
-:root[data-base-theme="philip"][data-service-theme] :is(.theme-switch,.btn-secondary,.btn-inline){
- background:#15345e;color:#e9f3ff;border-color:#6a93c6;
-}
-:root[data-base-theme="philip"][data-service-theme] .header .theme-top-ribbon{
- box-shadow:0 2px 14px #6ba7ff65;
-}
-:root[data-base-theme="philip"][data-service-theme] :is(a,button,input,select,textarea):focus-visible{
- outline:3px solid #a9ceff;outline-offset:3px;
-}
-/* Keep input and decorative text legible where old light service presets used white. */
-:root[data-base-theme="philip"][data-service-theme] :is(.meta-line small,.field .hint,.sidebar-bottom p,.profile-dialog-section>p){color:#c0d2ed}
-:root[data-base-theme="philip"][data-service-theme] :is(.profile-dialog,.v081-tool-result,.v081-search-results,.toolbox){
- color:var(--ink);
-}
-:root[data-base-theme="philip"][data-service-theme] .v081-tool-result{background:#142f57}
-:root[data-base-theme="philip"][data-service-theme] .v081-tool-result:is(:hover,:focus-visible){background:#204b81}
-:root[data-base-theme="philip"][data-service-theme] .v081-tool-result small{color:#c5d7f2}
+
 
 /* Native, accessible preference controls: independent layers, never above the assessment. */
 .base-theme-options,.season-theme-options{
@@ -147,7 +61,6 @@
 :root[data-season-theme="halloween"] .season-highlight{
  background:linear-gradient(90deg,#6c428b,#e18a32,#6c428b);
 }
-:root[data-base-theme="philip"][data-service-theme] .season-highlight{opacity:.66}
 @media(max-width:480px){.base-theme-grid{grid-template-columns:1fr}.season-notice{font-size:11px}}
 @media(prefers-reduced-motion:reduce){
  .season-highlight,.season-notice,.base-theme-option{animation:none!important;transition:none!important}

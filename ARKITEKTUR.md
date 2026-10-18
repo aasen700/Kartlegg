@@ -81,3 +81,14 @@ python3 tests/browser-smoke.py
 ```
 
 GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester (identitet, whitelist, URL og datasikkerhet) og nettlesertester (favorittklikk, modalbytte, mobilvisning, ekte direktelenke/refresh). **Grønne tester er ikke klinisk godkjenning.**
+
+## Mobil, læringsflyt og temaer (oktober 2026)
+
+- `assets/interaction-polish.css` eier felles mobilgeometri, berøringsmål, læringsnavigasjon og dialogtilpasning. Den endrer ikke klinisk skåring.
+- `assets/mobile-ux.js` følger nettleserens visual viewport og skjuler handlingslinjen mens skjermtastaturet tar plass. Dialogene tilpasses synlig høyde, og fokuserte felt holdes synlige.
+- `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2 og TIMES. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
+- `assets/theme-philip.css` er eneste eier av positive Philip-temaregler: palett, glassflater, kontroller og komponenttilpasning. Den lastes etter komponentstilene. Gamle Philip-regler er fjernet fra tema-, lærings- og simuleringsfilene.
+- `assets/theme-layers-v11.css` eier temavelger og sesongfarger. `assets/visual-atmospheres-v112.css` eier sesongpynt. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.
+- De andre personlige modusene eies fortsatt av `assets/personal-modes.css`. Generiske personlige palettregler avgrenses bort fra Philip; navn, opplåsing og profillagring følger eksisterende logikk.
+
+Bruk temavariabler i nye komponenter. Unngå å legge nye Philip-overstyringer i komponentfiler. Behold NEWS2-tabellens poengfarger og kliniske varselfarger hos deres eksisterende eiere.

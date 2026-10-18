@@ -41,7 +41,7 @@
  function heading(title,subtitle,mode){
   const wrap=h('div','gcs-learn-title');
   wrap.append(h('p','gcs-learn-eyebrow',subtitle),h('h3','',title));
-  if(mode!=='home')wrap.append(btn('← Velg læringsnivå','gcs-learn-back',()=>open('home')));
+  if(mode!=='home')wrap.append(btn('← Til oversikten','gcs-learn-back',()=>open('home')));
   return wrap;
  }
  const mini=Object.freeze({
@@ -131,6 +131,7 @@
    const feedback=h('div','gcs-learn-feedback '+(result.correct?'is-correct':'is-wrong'));
    feedback.append(h('strong','',result.correct?'Riktig observasjon!':'Det riktige svaret er '+readablePart(q.part,result.expected)+'.'));
    para(feedback,result.why);root.append(feedback);
+   window.KartleggLearningFlow.feedback(feedback);
    root.append(btn('Neste oppgave →','gcs-learn-primary',()=>{state.practiceIndex++;state.practiceChoice=null;render()}));
   }
  }
@@ -245,6 +246,9 @@
   else if(state.mode==='practice')practiceScreen();
   else examScreen();
   footer();root.append(live);
+  const current=state.mode==='learn'?state.lesson+1:state.mode==='practice'?state.practiceIndex+1:state.examIndex+1;
+  const total=state.mode==='learn'?D.lessons.length:state.mode==='practice'?D.practice.length:D.exams.length;
+  window.KartleggLearningFlow.mount(root,{course:'GCS',mode:state.mode,current,total,finished:state.examDone||(state.mode==='practice'&&state.practiceIndex>=D.practice.length),onMode:m=>open(m==='test'?'exam':m)});
  }
  render();
  // Discoverability: open the tutorial directly from the GCS calculator card.

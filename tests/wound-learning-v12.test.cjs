@@ -13,7 +13,7 @@ test('TIMES learning has five observation domains and six separate cases',()=>{
  assert.equal(D.lessons.length,6);
  assert.equal(new Set(D.cases.map(c=>c.id)).size,6);
 });
-test('each wound case has complete legitimate answer choices, rationales and two original images',()=>{
+test('each wound case has complete legitimate answer choices, rationales and a clinical teaching image',()=>{
  for(const q of D.cases){
   assert.match(q.summary,/./);
   assert.equal(D.grade(q.id,{...q.answer}).score,5);
@@ -21,7 +21,7 @@ test('each wound case has complete legitimate answer choices, rationales and two
    assert.ok(part.options.some(([id])=>id===q.answer[part.id]),q.id+' '+part.id);
    assert.ok(q.why[part.id].length>12,q.id+' '+part.id);
   }
-  for(const style of ['realistic','clinical']){
+  for(const style of ['clinical']){
    const image='assets/wounds/'+q.id+'-'+style+'.svg';
    assert.ok(fs.existsSync(path.join(__dirname,'..',image)),image);
    assert.match(read(image),/<svg[\s\S]*<\/svg>/);
