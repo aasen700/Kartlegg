@@ -158,7 +158,7 @@
 }
 
 @media(max-width:620px){
- .action-dock{bottom:calc(var(--ui-nav-height) + 14px + env(safe-area-inset-bottom));border-radius:16px 16px 0 0;width:100vw;left:0;transform:none}
+ .action-dock{bottom:calc(var(--ui-nav-height) + 14px + env(safe-area-inset-bottom));border-radius:16px 16px 0 0;width:auto;left:0;right:0;transform:none}
 }
 
 @media(max-width:480px){
