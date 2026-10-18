@@ -755,6 +755,56 @@ script=r"""
   document.querySelector('[data-page=vurdering]').click();
   assert(document.querySelector('#page-simulering').hidden,'training page not hidden when navigating away');
   assert(!errors.length,'simulation JS errors: '+errors.join(';'));
+  // Kartlegg Lær: guided E/V/M/NT lessons, nine exercises and four full-case exam.
+  document.querySelector('[data-page=laer]').click();
+  assert(!document.querySelector('#page-laer').hidden,'GCS learning route missing');
+  const learn=window.KartleggLearnPilot,model=window.KartleggGcsLearning;
+  assert(!!learn&&!!model,'GCS learning module failed to initialize');
+  assert(learn.mode==='home','GCS landing should show learning tracks');
+  assert(document.querySelectorAll('#gcsLearningRoot .gcs-learn-mode-card').length===3,'expected three learning levels');
+  learn.open('learn');
+  assert(learn.mode==='learn','guided lessons not opened');
+  for(let i=0;i<6;i++){
+   assert(learn.lesson===i,'lesson order incorrect '+i);
+   const first=document.querySelector('#gcsLearningRoot .gcs-learn-option');
+   assert(!!first,'lesson must have a clickable knowledge check');
+   first.click();
+   assert(document.querySelector('#gcsLearningRoot .gcs-learn-feedback'),'lesson feedback missing');
+   const next=[...document.querySelectorAll('#gcsLearningRoot button')].find(b=>b.textContent.includes('Neste tema')||b.textContent.includes('Fortsett til øving'));
+   assert(!!next,'next lesson button missing');next.click();
+  }
+  assert(learn.mode==='practice','guided lessons should flow to practice');
+  for(let i=0;i<model.practice.length;i++){
+   assert(learn.practiceIndex===i,'practice order incorrect');
+   const q=model.practice[i],opts=model.categories[q.part];
+   const correctIndex=opts.findIndex(o=>o.value===q.answer);
+   const answers=[...document.querySelectorAll('#gcsLearningRoot .gcs-learn-option')];
+   assert(answers.length===opts.length,'incorrect practice choices count');
+   answers[correctIndex].click();
+   assert(document.querySelector('#gcsLearningRoot .gcs-learn-feedback'),'practice feedback missing');
+   const next=[...document.querySelectorAll('#gcsLearningRoot button')].find(b=>b.textContent.includes('Neste oppgave'));
+   assert(!!next,'practice next missing');next.click();
+  }
+  assert(document.querySelector('#gcsLearningRoot').textContent.includes('9 av 9'),'practice score must match answer keys');
+  learn.open('exam');
+  for(let i=0;i<model.exams.length;i++){
+   const form=document.querySelector('#gcsLearningRoot .gcs-learn-exam');
+   assert(!!form,'full-case test form missing');
+   const q=model.exams[i];
+   for(const select of form.querySelectorAll('select')){
+    select.value=q.answers[select.name];
+    select.dispatchEvent(new Event('change',{bubbles:true}));
+   }
+   if(i!==model.exams.length-1)assert(!document.querySelector('.gcs-learn-exam-report'),'test answers must remain hidden until finish');
+   form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+  }
+  assert(learn.examDone,'exam did not finish');
+  assert(document.querySelector('#gcsLearningRoot').textContent.includes('12 / 12'),'full-case test total incorrect');
+  assert(document.querySelector('#gcsLearningRoot').textContent.includes('ingen gyldig totalskår'),'NT case missing correct note');
+  assert(document.querySelector('#rr').value===simulatedBaseline,'GCS teaching must never modify assessment fields');
+  document.querySelector('[data-page=vurdering]').click();
+  assert(document.querySelector('#page-laer').hidden,'learning page not hidden on return to assessment');
+  assert(!errors.length,'learning JavaScript errors: '+errors.join(';'));
   status='PASS';
  } catch(err) {status='FAIL: '+String(err.message||err)+'; '+errors.join('; ');}
  const el=document.createElement('output');el.id='kartlegg-smoke';el.textContent=status;document.body.append(el);
