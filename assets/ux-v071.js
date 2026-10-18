@@ -40,15 +40,7 @@
  finder.append(searchLabel,input,count);
  library.querySelector('.intro')?.after(finder);
  tools.after(empty);
- const terms=new Map([[existing[2],'gcs glasgow bevissthet coma øyne verbal motor'],[existing[3],'4at delirium kognitiv akutt forvirring'],[existing[4],'nrs smerte smerteskala numerisk smerter'],[existing[0],'news2 news respirasjon puls blodtrykk oksygen'],[existing[1],'qsofa sepsis respirasjon gcs blodtrykk']]);
- function filter(){
-  const query=input.value.trim().toLocaleLowerCase('nb-NO');
-  let visible=0;
-  for(const card of existing){const yes=!query||(card.textContent+' '+terms.get(card)).toLocaleLowerCase('nb-NO').includes(query);card.hidden=!yes;if(yes)visible++}
-  count.textContent=visible+' av '+existing.length+' verktøy';empty.hidden=visible!==0;
- }
- input.addEventListener('input',filter);filter();
-
+ // Library search and categories are handled by one late-loaded module.
  // Real-time numeric NRS input + keyboard-accessible draggable slider.
  function upgradeNrs(){
   const sel=$('toolNRS');if(!sel||$('toolNRSNumber'))return;
