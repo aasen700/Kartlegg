@@ -200,12 +200,16 @@ script=r"""
   document.querySelector('#hcMstForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(document.querySelector('#hcResult').textContent.includes('MST 2 poeng'),'MST score wrong');
   assert(document.querySelector('#hcResult').textContent.includes('risiko for underernæring'),'MST risk not shown');
+  put('hcMstWeight','no');
+  assert(document.querySelector('#hcResult').hidden,'editing MST must hide stale risk classification');
   document.querySelector('#homecareDialog .dialog-close').click();
   // TUG: manually observed 16s should indicate elevated risk without predicting diagnosis.
   document.querySelector('[data-homecare=tug]').click();
   put('hcTugSeconds','16');
   document.querySelector('#hcTugForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(document.querySelector('#hcResult').textContent.includes('Over 15 sekunder'),'TUG interpretation incorrect');
+  put('hcTugSeconds','12');
+  assert(document.querySelector('#hcResult').hidden,'editing TUG must hide stale fall-risk classification');
   document.querySelector('#hcTugStart').click();
   assert(!document.querySelector('#hcTugStop').disabled,'TUG stopwatch did not start');
   document.querySelector('#hcTugZero').click();
@@ -220,6 +224,8 @@ script=r"""
   document.querySelector('#hcEsasForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(document.querySelector('#hcResult').textContent.includes('ESAS-r – symptomer nå'),'complete ESAS-r not shown');
   assert(!document.querySelector('#hcResult').textContent.includes('totalskår'),'ESAS-r must not show an aggregate score');
+  put('hcEsasNumber_smerte','6');
+  assert(document.querySelector('#hcResult').hidden,'editing ESAS-r must hide stale symptom assessment');
   document.querySelector('#homecareDialog .dialog-close').click();
   // Orthostatic BP: 20/10 difference marked and missing standing observations rejected.
   document.querySelector('[data-homecare=ortho]').click();
@@ -227,6 +233,8 @@ script=r"""
   document.querySelector('#hcOrthoForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(document.querySelector('#hcResult').textContent.includes('Etter 3 minutter'),'orthostatic 3-minute calculation missing');
   assert(document.querySelector('#hcResult').textContent.includes('20 mmHg'),'orthostatic threshold not explained');
+  put('hcO3Sys','120');
+  assert(document.querySelector('#hcResult').hidden,'editing orthostatic BP must hide stale BP-drop interpretation');
   document.querySelector('#homecareDialog .dialog-close').click();
   // FAST: 113 must be prominently visible, no negative/exclusion score.
   document.querySelector('[data-homecare=fast]').click();
@@ -592,6 +600,7 @@ script=r"""
   assert(document.querySelector('#newsNumber')&&document.querySelector('#qNumber'),'NEWS2/qSOFA outputs missing');
   // v1.0 RC2: GCS is optional, collapsible and supports clinical-tool GCS transfer.
   assert(!!window.KartleggFinalPolish,'release polish module not loaded');
+  assert(document.querySelector('#scale').closest('.field').textContent.includes('bekreftet hyperkapnisk respirasjonssvikt'),'NEWS2 scale 2 eligibility must be visible');
   const gcsDisclosure=document.querySelector('#optionalGCS');
   assert(gcsDisclosure&&gcsDisclosure.contains(document.querySelector('#gcs')),'GCS progressive disclosure missing');
   assert(gcsDisclosure.textContent.includes('valgfritt'),'GCS must be clearly optional');
