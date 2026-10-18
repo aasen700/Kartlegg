@@ -25,6 +25,15 @@ script=r"""
  let status='FAIL';
  try {
   assert(!!window.KartleggTools,'scoring module did not load');
+  assert(!!window.KartleggIconSystem,'shared icon system did not load');
+  const primaryIcons=[...document.querySelectorAll('.sidebar .nav .ui-icon-svg')];
+  assert(primaryIcons.length===7,'every primary destination needs a shared line icon');
+  assert(primaryIcons.every(icon=>icon.getAttribute('aria-hidden')==='true'),'decorative navigation icons must stay hidden from assistive technology');
+  assert(document.querySelectorAll('.section-symbol:not([data-ui-icon])').length===0,'section headings still contain legacy symbol glyphs');
+  assert(!!document.querySelector('#newsCard .score-icon .ui-icon-svg')&&!!document.querySelector('#qCard .score-icon .ui-icon-svg'),'score heading icons missing');
+  const firstSection=document.querySelector('.section');
+  assert(parseFloat(getComputedStyle(firstSection).borderRadius)>=16,'shared panel geometry did not apply');
+  assert(parseFloat(getComputedStyle(document.querySelector('#rr')).minHeight)>=44,'shared touch target did not apply to form controls');
   assert(!!document.querySelector('#clinicalToolDialog'),'missing tool dialog');
   assert(!!document.querySelector('#newsClinicalAlert'),'missing NEWS2 alert');
   const btns=[...document.querySelectorAll('.tool-launch')];
