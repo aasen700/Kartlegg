@@ -51,6 +51,17 @@ button:disabled {
     max-width: 100%;
     min-width: 0;
   }
+  /* iOS Safari gir dato- og tidsfelt en egen minstebredde som ellers sprenger kortet */
+  input:is([type=date],[type=time],[type=datetime-local]) {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  input:is([type=date],[type=time],[type=datetime-local])::-webkit-date-and-time-value {
+    text-align: left;
+  }
   dialog {
     box-sizing: border-box;
     max-width: calc(100vw - 16px);
