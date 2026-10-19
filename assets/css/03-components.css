@@ -431,6 +431,10 @@
   background: var(--accent);
   color: var(--accent-on);
 }
+.logo {
+  background: transparent;
+  color: inherit;
+}
 .btn-primary:hover {
   filter: brightness(.95);
 }

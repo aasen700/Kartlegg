@@ -11,8 +11,10 @@ test('Kartlegg has an original reusable mark and demo identity',()=>{
  assert.match(html,/assets\/kartlegg-mark\.svg/);
  assert.match(html,/brand-small">DEMO</);
  assert.doesNotMatch(html,/brand-small">PROTOTYPE</);
- assert.match(html,/M47 14c-12 0-20 7-29 18/);
- assert.match(mark,/M47 14c-12 0-20 7-29 18/);
+ assert.match(html,/class="brand-word">Kartlegg/);
+ assert.match(html,/data-brand-mark="kartlegg-2a"/);
+ assert.match(mark,/data-brand-mark="kartlegg-2a"/);
+ assert.match(mark,/aria-label="Kartlegg monogram"/);
 });
 
 test('mobile header and drawer are deliberately right aligned',()=>{
