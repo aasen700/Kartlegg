@@ -1,5 +1,18 @@
 # Versjonshistorikk – Kartlegg
 
+## Bedre mobilvisning – 19. oktober 2026
+
+- NEWS2-øvingen i Kartlegg Lær viser hver observasjon som et eget kort med poengfeltene i tre kolonner på mobil, i stedet for et 820 px bredt skjema som ble kuttet og måtte sveipes sidelengs.
+- Kategoriene i verktøybiblioteket er én sveipbar rad på mobil, så lange navn som «Kartleggingsverktøy og skårer» ikke lenger brytes midt i ordet.
+- Rettet at knappen i «Min profil» stakk utenfor kortet og dro innholdet sidelengs.
+- Rettet at «Pause» og «Nullstill» i respirasjonstimeren ble klemt til «Pa/use» og «N/ull». Primærknapper har ikke lenger en fast minstebredde på 245 px på mobil.
+- Legemiddelverkstedet har fått samme indre marg som de andre læringsmodulene; formelen og ampulleetiketten brytes ikke lenger midt i ordet.
+- Verktøykortene har mindre dobbelt innrykk på smale telefoner, og lange titler deles med bindestrek.
+- «Lagre måling» er fullbredde som de andre knappene på forsiden.
+- Dato- og klokkeslettfeltene holder seg innenfor kortet i Safari på iPhone.
+- Kortere plassholdertekst i søkefelt og profilskjema, så den ikke kuttes.
+- Kontrollert automatisk for overflyt og ord som brytes ved 320, 375 og 414 px på alle sider og i alle 18 verktøyvinduer. Ingen beregninger, kliniske grenser eller fagtekster er endret.
+
 ## Mindre pynt, roligere språk og en enklere forside – 19. oktober 2026
 
 - Fjernet merkelapper som «Gratis · Ingen AI», «0 kr · Ingen AI», «Kjører lokalt», «Tilgjengelig nå», «NY» og «PILOT».
