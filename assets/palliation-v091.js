@@ -91,7 +91,7 @@
   const safety=h('div','pall-safety');
   safety.append(h('strong','','Ikke et ordinasjonsverktøy'));
   safety.append(h('p','','Ved akutt/uventet forverring må pasienten vurderes straks etter lokale prosedyrer. Bruk legemidler bare etter gyldig individuell ordinasjon. Ingen doser eller pasientdata lagres.'));
-  const search=h('input','pall-search');search.type='search';search.id='pallSymptomSearch';search.placeholder='Søk smerter, myoklonier, uro, surkling …';search.setAttribute('aria-label','Filtrer symptomer');
+  const search=h('input','pall-search');search.type='search';search.id='pallSymptomSearch';search.placeholder='Søk symptom, f.eks. uro …';search.setAttribute('aria-label','Filtrer symptomer');
   const list=h('div','pall-topic-grid');list.id='pallTopicList';
   const article=h('section','pall-article');article.id='pallArticle';article.setAttribute('aria-live','polite');
   function choose(id){selected=id;renderTopics();renderArticle();}
