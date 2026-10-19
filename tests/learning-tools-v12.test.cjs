@@ -7,6 +7,7 @@ const D=require('../assets/learning-content-v12.js');
 const N=require('../assets/scoring.js');
 const C=require('../assets/clinical-tools.js');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+const css=require('./css-helper.cjs');
 
 test('4AT has exact four parts and legitimate item-specific point values',()=>{
  assert.deepEqual(D.fourParts.map(x=>x.id),['alertness','orientation','attention','acute']);
@@ -89,12 +90,12 @@ test('NEWS2 refuses incomplete and illegal score combinations',()=>{
 });
 test('learning modules have exact asset references, clinician-origin sources and no persistence',()=>{
  const html=read('index.html'),js=read('assets/learning-tools-v12.js'),data=read('assets/learning-content-v12.js');
- for(const file of ['assets/learning-tools-v12.css','assets/learning-tools-v12.js','assets/learning-content-v12.js'])
+ for(const file of ['assets/css/08-learning.css','assets/learning-tools-v12.js','assets/learning-content-v12.js'])
   assert.ok(fs.existsSync(path.join(__dirname,'..',file)),file);
  for(const s of ['id="learningHubChooser"','id="learn4atModule"','id="learnNews2Module"','id="learnToolExerciseRoot"'])
   assert.ok(html.includes(s),s);
  assert.ok(html.includes('learning-content-v12.js?v=1203')&&html.includes('learning-tools-v12.js?v=1402'));
- assert.ok(html.includes('learning-tools-v12.css?v=1401'));
+ assert.ok(html.includes('assets/css/08-learning.css'));
  assert.match(js,/data-part/);
  assert.match(js,/aria-pressed/);
  assert.match(js,/4AT v1\.2/);
@@ -134,17 +135,17 @@ test('NEWS2 duplicate score columns must not count the wrong interval as correct
  assert.throws(()=>D.gradeNewsChart(q.id,correct,{...cells,spo:4})); // 1 point column does not match answer 2.
 });
 test('NEWS2 UI uses explicit check and next actions, not reveal only at final summary',()=>{
- const js=read('assets/learning-tools-v12.js'),css=read('assets/learning-tools-v12.css');
+ const js=read('assets/learning-tools-v12.js'),styles=css.all();
  assert.match(js,/Sjekk resultat/);
  assert.match(js,/Gå videre/);
  assert.match(js,/gradeNewsChart/);
  assert.match(js,/learn12-vital-tiles/);
- assert.match(css,/learn12-news-cell\.is-selected\.is-score-3/);
- assert.match(css,/background:#fff!important/);
+ assert.match(styles,/learn12-news-cell\.is-selected\.is-score-3/);
+ assert.match(styles,/background:#fff!important/);
 });
 
 test('4AT and NEWS2 both provide GCS-level learning home screens without changing scoring',()=>{
- const ui=read('assets/learning-tools-v12.js'),css=read('assets/learning-tools-v12.css');
+ const ui=read('assets/learning-tools-v12.js'),styles=css.all();
  assert.match(ui,/function landingArtwork\(\)/);
  assert.match(ui,/learn12-hero learn12-hero-/);
  assert.match(ui,/learn12-four-grid/);
@@ -154,7 +155,7 @@ test('4AT and NEWS2 both provide GCS-level learning home screens without changin
  assert.match(ui,/learn12-mode-subtitle/);
  assert.match(ui,/count\.lessons\.length\+' læringssteg'/);
  assert.match(ui,/count\.cases\.filter\(c=>c\.level==='Øv'\)\.length/);
- assert.match(css,/@media\(max-width:710px\)\{\.learn12-hero\{grid-template-columns:1fr/);
+ assert.match(styles,/@media\(max-width:710px\)\{[^@]*\.learn12-hero\{[^}]*grid-template-columns:1fr/);
  assert.doesNotMatch(ui,/localStorage|sessionStorage|\bfetch\(/);
  const gcs=read('assets/gcs-learning-ui.js');
  assert.doesNotMatch(gcs,/4AT og NEWS2 er aktuelle neste steg/);

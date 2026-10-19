@@ -35,7 +35,7 @@ test('one SVG icon system covers navigation, actions, dialogs and tool cards',()
 });
 
 test('v1.1 layout includes reflow, zoom, focus and system-color safeguards',()=>{
- const css=read('assets/design-system-v3.css');
+ const css=require('./css-helper.cjs').all();
  assert.match(css,/\.skip-link:focus/);
  assert.match(css,/min-height:44px/);
  assert.match(css,/@media\(max-width:360px\)/);

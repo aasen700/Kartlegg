@@ -38,28 +38,43 @@
 - Hurtigbytte fra modal lukker eksisterende modal før en ny åpnes.
 - Nye verktøy krever én oppføring i registret, ett eget implementeringssted, kontrakttest og oppdatert kontrollmatrise.
 
-## Kodelag og kontrollert opprydding
+## Stilark: ett designsystem i `assets/css/`
 
-Det ligger fortsatt historiske versjonsfiler i `assets/`. Vi har **ikke** gjennomført en risikabel totalomskriving av hele nettstedet i ett steg. Følgende duplisering er allerede fjernet fra aktiv kjøring:
+Utseendet ble tidligere bygget av 32 versjonslag (`v06.css`, `ux-v071.css`, `final-polish-v10.css`, `design-system-v3.css`, `design-system-v4.css`, `human-finish-v13.css` …), der hvert nytt lag overstyrte det forrige. Fra 19. oktober 2026 ligger all stil i tolv filer ordnet etter ansvar. `index.html` laster dem i nummerrekkefølge:
 
-- Femverktøy-søkets gamle filtreringslytter i `ux-v071.js`.
-- Seksverktøy-søkets `stopImmediatePropagation()`-overstyring i `modern-v08-body.js`.
-- Separat, vedlikeholdskrevende liste med 16 navngitte åpnefunksjoner i forsidesøket.
-- Kopiering av åpnefunksjoner for direkte lenker/favoritter: alle bruker samme `open(id)`.
+| Fil | Ansvar |
+|---|---|
+| `00-tokens.css` | Designtokens: farger, avstander, radius, typografi og skygger for lys og mørk modus |
+| `01-base.css` | Grunnstil for HTML-elementer |
+| `02-layout.css` | Topplinje, sidemeny, hovedflate og mobilnavigasjon |
+| `03-components.css` | Felles komponenter: seksjonskort, knapper, skjemafelt, merkelapper og dialoger |
+| `04-profile.css` | Profil, utseende og Om Kartlegg |
+| `05-assessment.css` | Ny vurdering: NEWS2/qSOFA-skjema, skårkort, ISBAR og målehistorikk |
+| `06-tools.css` | Verktøybiblioteket (felles verktøykort) og verktøydialogene |
+| `07-simulation.css` | Pasientsimulering |
+| `08-learning.css` | Kartlegg Lær: GCS, 4AT, NEWS2, TIMES og Legemiddelverkstedet |
+| `09-decor.css` | Sesongpynt og personlige moduser (kun dekor) |
+| `10-themes.css` | Tjenestetemaer, aksentfarger, glassflater og mørk modus |
+| `11-clinical.css` | Kliniske statusfarger for skår og varsler – lastes sist |
 
-**Kontrollert CSS-refaktorering:** `design-system-v4.css` er siste felles strukturlag og eier kortrollene handling/resultat/informasjon, skjema­tilstander, bred vurderingsarbeidsflate, mobil hovedmeny og semantiske farger. `design-system-v3.css` beholder den grunnleggende typografiske rytmen, avstanden, paneldybden, fokuset og berøringsmålene. Paletter og dekorasjon ligger hos sine faglige eiere i `service-themes-v0991.css`, `theme-finalize-v0992.css`, `theme-layers-v11.css`, `personal-modes.css`, `theme-philip.css` og `visual-atmospheres-v112.css`; Philip-spesifikke v4-glassvarianter ligger derfor i `theme-philip.css`. `icon-system.js` erstatter dekorative symboltegn med ett lokalt SVG-linjesett, også for innhold som opprettes senere. Dermed kan senere duplisering fjernes lagvis etter visuell regresjonstest ved 320/360/375/410/768/844/1300 px, uten å blande klinisk logikk inn i temalaget.
+**Regler for videre arbeid**
 
-I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancements.js` og `scoring.js`). **Kjøreversjonen** lastes fra `index.html` og `assets/`; rotkopiene skal ikke endres ved funksjonsutvikling og bør på sikt arkiveres etter gjennomgang av eksterne lenker.
+1. **Endre der stilen bor – ikke legg til et nytt lag.** Finn regelen i riktig fil og rediger den. Nye filer som bare overstyrer eldre regler skal ikke opprettes; det var nettopp dette som ga 32 lag.
+2. **Bruk tokens.** Farger, avstander, radius og skygger hentes fra `00-tokens.css` (`var(--ink)`, `var(--ui-space-3)` osv.), slik at mørk modus og temaene virker automatisk.
+3. **Kliniske statusfarger** (`.score.warning/danger/ok`, `.news-alert`, `.point-3`, `.v10-part-score.critical`, `.abcde-v099-emergency`) ligger bare i `11-clinical.css`, som lastes sist. Tema- og dekorfilene kan ikke endre dem; `tests/css-architecture.test.cjs` kontrollerer dette.
+4. **Rekkefølgen betyr noe.** Noen få regler ligger i en senere fil enn navnet tilsier, fordi de må komme etter en annen regel med samme presisjon for å vinne. De er merket med kommentaren «Regel fra … som må komme etter reglene over for å vinne».
+
+Sammenslåingen ble kontrollert maskinelt før designendringene: den gamle og den nye versjonen ble åpnet i Chrome i et stort antall tilstander (alle sider, alle verktøydialoger med og uten utfylte verdier, læringsmodulene, simuleringen, temaer, sesonger, personlige moduser, mørk modus og tilgjengelighetsinnstillinger, ved bredder fra 320 til 1600 px). Regler som aldri vant over andre regler ble fjernet, og skjermbildene var piksel for piksel identiske.
 
 ## Kartlegg Lær – GCS og videre læringsmoduler
 
-- `#laer` og `assets/gcs-learning-ui.js` eier den nye pedagogiske brukeropplevelsen. `assets/gcs-learning.css` gjelder bare læringsgrensesnittet.
+- `#laer` og `assets/gcs-learning-ui.js` eier den nye pedagogiske brukeropplevelsen. Stilen ligger i `assets/css/08-learning.css`.
 - `assets/gcs-learning-data.js` eier GCS-kriteriealternativer, seks leksjoner, ni praktiske spørsmål, fire testcaser og kildeadresser.
 - **Eksakt én faglig GCS-beregningsfunksjon:** `assets/clinical-tools.js` eier `gcs({eyes,verbal,motor})`, som brukes av både eksisterende GCS-kalkulator og ny læringsmodul. Testcasenes fasit sammenlignes med denne; det finnes ingen parallell totalskår.
 - Ved NT/IT (ikke testbar) skal aldri totalskår beregnes. Skriptet bruker ingen vedvarende lagring, ingen nettverkskall og ingen identifiserende helseopplysninger.
 - SVG-illustrasjonene er egenproduserte og **symbolske**. De kan ikke brukes som dokumentasjon av konkrete nevrologiske responser.
 - `tests/gcs-learning.test.cjs` tester samtlige svarnøkler, NT, og tverrbruk av den eksisterende skåringsmotoren; `tests/browser-smoke.py` kontrollerer de tre læringsnivåene på mobil/desktop.
-- 4AT og NEWS2 er nå også bygget som separate læringsmoduler gjennom `assets/learning-content-v12.js` (kildehenvisninger, kurs, cases, oppgavefasit) og `assets/learning-tools-v12.js` (felles skjema, læringsflyt og evaluering). `assets/learning-tools-v12.css` eier bare det tilhørende UI-et.
+- 4AT og NEWS2 er nå også bygget som separate læringsmoduler gjennom `assets/learning-content-v12.js` (kildehenvisninger, kurs, cases, oppgavefasit) og `assets/learning-tools-v12.js` (felles skjema, læringsflyt og evaluering). Stilen ligger i `assets/css/08-learning.css`.
 - Nytt valgfelt i `#laer` viser GCS, 4AT og NEWS2 og flytter *ett* øvingspanel mellom de to nye modulene. GCS fortsetter å eie sitt separate pedagogiske grensesnitt.
 - **Ingen duplisering av kliniske regnefunksjoner:** 4AT-fasit fra `KartleggTools.fourAT`, NEWS2-fasit fra `Scoring.news2`.
 - Testdekning: `tests/learning-tools-v12.test.cjs` + nettlesertest gjennom alle nivåer ved fem skjermbredder, inkludert SpO₂-skala 2.
@@ -69,7 +84,7 @@ I rotmappen finnes historiske kopier (f.eks. `app.js`, `style.css`, `enhancement
 ## Pedagogisk simulering (egen, isolert funksjon)
 
 - `assets/simulation-engine.js` eier den faste fiktive casen, tidssteg, oppdagede opplysninger, registrering av NEWS2-/ISBAR-svar og refleksjon. NEWS2 beregnes **kun** i `assets/scoring.js`.
-- `assets/simulation-ui.js` viser scenarioet og kaller motoren, med CSS kun i `assets/simulation-v01.css`.
+- `assets/simulation-ui.js` viser scenarioet og kaller motoren, med stil i `assets/css/07-simulation.css`.
 - Simuleringen kan nås fra `#simulering` i sidemenyen. Ingen innspill fra simuleringen overføres til `#vurdering`, som fortsatt er separat.
 - Ingen API, lagring eller gratisserver som senere kan kreve abonnement. Ingen AI-chat: scenario- og brukervalg er fullstendig deterministiske.
 - **Kliniske forbehold:** fiksert manuslagt forverring, ikke prediksjon; refleksjonslisten er ikke en klinisk godkjenning; obligatorisk faglig og pedagogisk gjennomgang før bred lansering.
@@ -87,16 +102,12 @@ GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester
 
 ## Mobil, læringsflyt og temaer (oktober 2026)
 
-- `assets/interaction-polish.css` eier felles mobilgeometri, berøringsmål, læringsnavigasjon og dialogtilpasning. Den endrer ikke klinisk skåring.
 - `assets/mobile-ux.js` følger nettleserens visual viewport og skjuler handlingslinjen mens skjermtastaturet tar plass. Dialogene tilpasses synlig høyde, og fokuserte felt holdes synlige.
 - `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2, TIMES og Legemiddelverkstedet. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
-- `assets/theme-philip.css` er eneste eier av positive Philip-temaregler: palett, glassflater, kontroller og komponenttilpasning. Selektorene er avgrenset til aktivt Philip-tema og beholder prioritet over det senere felles strukturlaget. Gamle Philip-regler er fjernet fra tema-, lærings- og simuleringsfilene.
-- `assets/visual-refinement-v2.css` eier felles kortgeometri, tema- og sesongforhåndsvisninger, bevegelse og mobile dybdenivåer. Den skal ikke definere kliniske risiko-, poeng- eller fasitfarger.
-- `assets/design-system-v3.css` eier grunngeometri og fokus. `assets/design-system-v4.css` er siste felles lag og eier tre kortroller, skjema­tilstander, vurderingsgrid, mobil hovedmeny og semantiske farger. Ingen av dem endrer beregningsregler eller kliniske tekster.
+- Philip-temaet (palett, glassflater og kontroller) ligger i `assets/css/10-themes.css`, avgrenset til aktivt Philip-tema.
 - `assets/icon-system.js` eier dekorative ikoner i hovednavigasjon, seksjonsoverskrifter, skårkort, verktøykort, handlingsknapper og dialoglukking. Ikonene er lokale, skjules for hjelpemidler og kan ikke lagre eller sende data.
 - `assets/assessment-flow-v11.js` eier bare resultatfokus og navigasjon til klinisk respons på forsiden. `assets/app.js` og `assets/scoring.js` beholder fullt eierskap til validering og beregning.
 - `assets/design-system-v4.js` ruter bare den mobile hovedmenyen gjennom eksisterende sideknapper og markerer lokalt om et skjemafelt er ferdig utfylt. Modulen beregner, lagrer eller sender ingenting.
-- `assets/theme-layers-v11.css` eier temavelger og sesongfarger. `assets/visual-atmospheres-v112.css` eier sesongpynt. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.
-- De andre personlige modusene eies fortsatt av `assets/personal-modes.css`. Generiske personlige palettregler avgrenses bort fra Philip; navn, opplåsing og profillagring følger eksisterende logikk.
+- Sesongpynt og personlige moduser ligger i `assets/css/09-decor.css`. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.
 
-Bruk temavariabler i nye komponenter. Unngå å legge nye Philip-overstyringer i komponentfiler. Behold NEWS2-tabellens poengfarger og kliniske varselfarger hos deres eksisterende eiere.
+Bruk temavariabler i nye komponenter. Unngå å legge nye Philip-overstyringer i komponentfiler. Kliniske varsel- og poengfarger hører hjemme i `assets/css/11-clinical.css`.

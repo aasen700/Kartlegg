@@ -40,7 +40,7 @@ test('TIMES rejects incomplete, tampered and unknown case submissions',()=>{
 });
 test('TIMES is installed as a fourth learning card with client-only state and no real-photo claims',()=>{
  const html=read('index.html'),js=read('assets/wound-learning-v12.js');
- for(const name of ['wound-learning-data-v12.js','wound-learning-v12.js','wound-learning-v12.css','id="learnTimesModule"','id="woundLearningRoot"']){
+ for(const name of ['wound-learning-data-v12.js','wound-learning-v12.js','css/08-learning.css','id="learnTimesModule"','id="woundLearningRoot"']){
   assert.ok(html.includes(name),name);
  }
  for(const text of ["dataset.learnTool='times'","-clinical.svg","grades[q.id]=D.grade(q.id,answers[q.id])"]){

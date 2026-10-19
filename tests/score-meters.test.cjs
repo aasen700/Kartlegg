@@ -1,3 +1,4 @@
+const css=require('./css-helper.cjs');
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -32,11 +33,11 @@ test('NEWS2 official guidance covers routine, low, single-red, medium and high r
 });
 
 test('score meters use moving markers and preserve qSOFA as a criterion count',()=>{
- const app=read('assets/app.js'),css=read('assets/score-meters.css'),html=read('index.html');
+ const app=read('assets/app.js'),styles=css.all(),html=read('index.html');
  assert.match(app,/function newsMeterPosition/);
  assert.match(app,/updateNewsMeter\(news\);updateQMeter\(q\)/);
- assert.match(css,/transition:left/);
- assert.match(css,/prefers-reduced-motion:reduce/);
+ assert.match(styles,/transition:left/);
+ assert.match(styles,/prefers-reduced-motion:reduce/);
  assert.match(html,/qSOFA har ikke egne NEWS2-lignende eskaleringsfarger/);
  assert.match(html,/Ved ≥2: undersøk organdysfunksjon/);
 });

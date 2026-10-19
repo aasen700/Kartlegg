@@ -6,7 +6,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const html=read('index.html');
-const css=read('assets/release-candidate-v10.css');
+const css=require('./css-helper.cjs').all();
 const app=read('assets/app.js');
 test('official v1.1 clearly labelled as demonstration only',()=>{
  assert.match(html,/v1\.1 · Demo/);
@@ -37,17 +37,17 @@ test('original NEWS2 assessment fields and qSOFA result remain intact',()=>{
  assert.match(html,/name="confusion"/);
 });
 test('mobile drawer overlays search and dock and locks background scrolling',()=>{
- assert.match(css,/\.sidebar\{z-index:90/);
- assert.match(css,/\.sidebar-backdrop\{z-index:80/);
- assert.match(css,/body\.mobile-menu-open\{overflow:hidden/);
- assert.match(css,/body\.mobile-menu-open \.action-dock\{display:none!important/);
+ assert.match(css,/\.sidebar\{[^}]*z-index:90/);
+ assert.match(css,/\.sidebar-backdrop\{[^}]*z-index:80/);
+ assert.match(css,/body\.mobile-menu-open\{[^}]*overflow:hidden/);
+ assert.match(css,/body\.mobile-menu-open \.action-dock\{[^}]*display:none!important/);
  assert.match(app,/mainContent\.inert=open/);
  assert.match(app,/menuBtn\.setAttribute\('aria-expanded'/);
 });
 test('custom themes and service-theme choices are not replaced',()=>{
  const themes=require('../assets/theme-engine.js');
  for(const id of ['custom','hospital','ambulance','urgent','homecare'])assert.ok(themes.SERVICES.includes(id),id);
- const cssThemes=read('assets/service-themes-v0991.css');
+ const cssThemes=require('./css-helper.cjs').group('themes');
  assert.match(cssThemes,/--accent:#ffff00/);
  assert.match(cssThemes,/--accent:#ffcc00/);
 });
@@ -100,13 +100,14 @@ test('the three optional personal modes are exact-name cosmetic decorations only
  for(const name of ['Kristian','Philip','Kent','Maritha','Kent Ole','Kristian Bøe Jr','']){
   assert.equal(modes.resolvePersonalMode(name),null);
  }
- const js=read('assets/personal-modes.js'),css=read('assets/personal-modes.css');
- assert.match(html,/assets\/personal-modes\.css/);
+ const js=read('assets/personal-modes.js'),decor=require('./css-helper.cjs').group('decor');
  assert.match(html,/assets\/personal-modes\.js/);
  assert.match(js,/save\.addEventListener\('click'/);
  assert.match(js,/clear\.addEventListener\('click'/);
  assert.doesNotMatch(js,/localStorage|sessionStorage|indexedDB|fetch\(|sendBeacon/);
- assert.doesNotMatch(css,/\.score(?:\.|\s|\{|:)|\.news-alert|\.v10-part-score/);
+ const personal=[...decor.matchAll(/([^{}]*data-personal-mode[^{}]*)\{/g)].map(m=>m[1]);
+ assert.ok(personal.length>0,'personal mode rules expected');
+ for(const sel of personal)assert.doesNotMatch(sel,/\.score(?:\.|\s|,|:|$)|\.news-alert|\.v10-part-score/,sel);
 });
 
 test('NEWS2 scale 2 guidance requires confirmed hypercapnic respiratory failure',()=>{
