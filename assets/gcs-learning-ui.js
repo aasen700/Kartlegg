@@ -211,7 +211,7 @@
   left.append(h('span','gcs-learn-pill','Tilgjengelig nå · GCS'),
    h('h4','','Fra usikker til tryggere på E, V og M'));
   para(left,'Lær skåringsreglene, prøv korte fiktive pasientsituasjoner med veiledning, og test deg selv uten fasit underveis.');
-  const tag=h('div','gcs-learn-tags');for(const s of ['6 læringssteg','9 veiledede spørsmål','4 testcaser','Ingen AI-kostnad'])tag.append(h('span','',s));
+  const tag=h('div','gcs-learn-tags');for(const s of ['6 læringssteg','9 veiledede spørsmål','4 testcaser','Kjører lokalt'])tag.append(h('span','',s));
   left.append(tag);hero.append(left,picture('intro','Illustrasjonen er symbolsk og erstatter ikke klinisk demonstrasjon.'));
   root.append(hero);
   const modes=h('div','gcs-learn-modes');

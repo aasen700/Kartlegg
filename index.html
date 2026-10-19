@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
+  <link rel="icon" href="assets/kartlegg-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/enhancements.css?v=05.2">
   <link rel="stylesheet" href="assets/v06.css?v=0602">
@@ -37,6 +38,7 @@
   <link rel="stylesheet" href="assets/design-system-v3.css?v=1702">
   <link rel="stylesheet" href="assets/design-system-v4.css?v=1802">
   <link rel="stylesheet" href="assets/surface-styles-v12.css?v=1201">
+  <link rel="stylesheet" href="assets/human-finish-v13.css?v=1301">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -44,8 +46,8 @@
     <header class="header">
       <button class="mobile-toggle" id="menuButton" type="button" data-icon="menu" aria-label="Åpne meny" aria-controls="sidebar" aria-expanded="false"><span class="v10-menu-label">Meny</span></button>
       <a href="#top" class="brand" aria-label="Kartlegg – til toppen">
-        <span class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M2 14h5l3-8 5 15 3-9 2 2h4" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Kartlegg <span class="brand-small">PROTOTYPE</span>
+        <span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#173b55"/><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14v36" stroke-width="5"/><path d="M47 14c-12 0-20 7-29 18 9 11 17 18 29 18" stroke-width="5"/><path d="M42 20c-7 1-13 5-19 12 6 7 12 11 19 12" stroke-width="2.5" opacity=".48"/></g><circle cx="18" cy="32" r="4.2" fill="#ef5b68"/></svg></span>
+        Kartlegg <span class="brand-small">DEMO</span>
       </a>
       <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><span class="header-note">✦ Målinger kun i denne fanen</span><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
     </header>
@@ -62,7 +64,7 @@
     </nav>
     <main class="main" id="top" tabindex="-1">
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
-      <div class="intro"><div><p class="eyebrow">Kliniske verktøy, samlet på ett sted</p><h1>Ny pasientvurdering</h1><p>Registrer målinger, se skår og responsnivå, og vurder neste steg.</p></div><span class="chip">v1.1 · Kun demonstrasjon</span></div>
+      <div class="intro"><div><p class="eyebrow">Kartlegging og opplæring</p><h1>Ny pasientvurdering</h1><p>Registrer målinger og se skår, responsnivå og neste steg.</p></div><span class="chip">v1.1 · Demo</span></div>
       <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
         <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Fyll ut de obligatoriske observasjonene for NEWS2. GCS er valgfritt og brukes ved qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
@@ -100,7 +102,7 @@
           <button class="btn btn-secondary" type="button" id="resultIsbar" data-icon="document">Lag ISBAR-manus</button>
         </div>
       </section>
-      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Vitale målinger kan være personopplysninger når de knyttes til en pasient. Bruk kun fiktive data i denne prototypen. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
+      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Vitale målinger kan være personopplysninger når de knyttes til en pasient. Bruk kun fiktive data i denne demoversjonen. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
@@ -274,7 +276,7 @@
         </section>
         <section class="section about-v0993-notice" aria-labelledby="about-limits-title">
           <h2 id="about-limits-title">Faglig ansvar og begrensninger</h2>
-          <p>Kartlegg er en <strong>prototype beregnet for utprøving med fiktive data</strong>. Selv om programvaren har automatiske tester, er den ikke uavhengig klinisk validert eller regulatorisk avklart for bruk i reell pasientbehandling.</p>
+          <p>Kartlegg er en <strong>demoversjon for utprøving med fiktive data</strong>. Selv om programvaren har automatiske tester, er den ikke uavhengig klinisk validert eller regulatorisk avklart for bruk i reell pasientbehandling.</p>
           <p>Veiledere og beregninger erstatter ikke klinisk skjønn, lokale prosedyrer, gyldig ordinasjon eller ansvarlig helsepersonell. Faglige kilder finnes i verktøyene og nederst på nettsiden.</p>
         </section>
         <div class="about-v0993-contacts">
@@ -311,7 +313,7 @@
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
   <script src="assets/app.js?v=1011"></script>
-  <script src="assets/enhancements.js?v=1022"></script>
+  <script src="assets/enhancements.js?v=1023"></script>
   <script src="assets/theme-engine.js?v=1201"></script>
   <script src="assets/v06.js?v=1601"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
@@ -338,12 +340,12 @@
   <script src="assets/personal-modes.js?v=1021"></script>
   <script src="assets/tool-navigation.js?v=1202"></script>
   <script src="assets/simulation-engine.js?v=101"></script>
-  <script src="assets/simulation-ui.js?v=101"></script>
+  <script src="assets/simulation-ui.js?v=102"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
   <script src="assets/learning-flow.js?v=1401"></script>
-  <script src="assets/gcs-learning-ui.js?v=1401"></script>
+  <script src="assets/gcs-learning-ui.js?v=1402"></script>
   <script src="assets/learning-content-v12.js?v=1203"></script>
-  <script src="assets/learning-tools-v12.js?v=1401"></script>
+  <script src="assets/learning-tools-v12.js?v=1402"></script>
   <script src="assets/wound-learning-data-v12.js?v=1401"></script>
   <script src="assets/wound-learning-v12.js?v=1401"></script>
   <script src="assets/mobile-ux.js?v=1401"></script>

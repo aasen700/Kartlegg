@@ -86,7 +86,7 @@
    text(refs,'Poenggrenser fra RCP NEWS2 (2017). Dette er et eget, interaktivt pedagogisk poengskjema, ikke RCPs originale observasjonsskjema eller en autorisert oversettelse. Skala 2 kun etter dokumentert klinisk beslutning.');
    refs.append(url(D.source.news2,'Royal College of Physicians – NEWS2 ↗'));
   }
-  text(refs,'Øv kun med fiktive data. Ingen klinisk godkjenning, pasientdata, serverlagring eller AI-API. Resultatene viser skåring, ikke en diagnose eller behandlingsplan.','learn12-disclaimer');
+  text(refs,'Øv kun med fiktive data. Ingen klinisk godkjenning, pasientdata eller serverlagring. Resultatene viser skåring, ikke en diagnose eller behandlingsplan.','learn12-disclaimer');
   root.append(refs);
  }
  function landingArtwork(){
@@ -157,7 +157,7 @@
    count.lessons.length+' læringssteg',
    count.cases.filter(c=>c.level==='Øv').length+' øvingscaser',
    count.cases.filter(c=>c.level==='Test').length+' testcaser',
-   'Ingen AI-kostnad'
+   'Kjører lokalt'
   ])stats.append(h('span','',label));
   copy.append(stats);
   hero.append(copy,landingArtwork());

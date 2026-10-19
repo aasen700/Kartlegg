@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Egen identitet og roligere standarduttrykk – 19. oktober 2026
+
+- Erstattet det generiske pulssymbolet med et eget Kartlegg-merke: en K bygget av kartleggingslinjer og et tydelig sentrumspunkt. Merket brukes også som favicon.
+- Flyttet hamburgermenyen til høyre i mobilheaderen og lot mobilmenyen åpne fra høyre. Profilen ligger fortsatt i den faste mobilnavigasjonen.
+- Endret statusmerket fra «PROTOTYPE» til «DEMO» og strammet inn den mest synlige teksten.
+- Gjorde standardtemaet roligere med flat bakgrunn, færre pilleformer, mindre skygge og mindre dekorativ dybde. Liquid Glass, tjenestetemaer og sesongtemaer er fortsatt egne valg.
+- Kliniske farger, beregninger, innholdsrekkefølge og funksjoner er uendret.
+
 ## Tydeligere sesongbakgrunner – 18. oktober 2026
 
 - Flyttet all sesongpynt bak grensesnittet slik at symboler aldri dekker bokser, tekst, knapper eller dialoger.

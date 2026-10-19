@@ -8,7 +8,7 @@ const $=id=>document.getElementById(id);
 const oldUpdate=updateScores;
 function partialQ(){const ids=['rr','sbp','gcs'];const vals=ids.map(x=>$(x).value.trim());if(vals.some(x=>!x))return null;const [rr,sbp,gcs]=vals.map(Number);return Number.isInteger(rr)&&rr>=1&&rr<=150&&Number.isInteger(sbp)&&sbp>=1&&sbp<=350&&Number.isInteger(gcs)&&gcs>=3&&gcs<=15?{rr,sbp,gcs}:null}
 updateScores=function(){const ok=oldUpdate();if(!ok){const v=partialQ();if(v){const q=Scoring.qsofa(v);setCard('q',q.total>=2?'warning':q.total===0?'ok':'neutral',q.total,q.total>=2?'2 eller flere kriterier':'Under 2 kriterier','Lav qSOFA utelukker ikke sepsis.',`RF ≥22: ${q.parts.rr?'ja':'nei'} · BT ≤100: ${q.parts.sbp?'ja':'nei'} · GCS <15: ${q.parts.mentation?'ja':'nei'}`);$('scoreTime').textContent='qSOFA er beregnet; NEWS2 avventer';}}return ok};
-const dialog=document.createElement('dialog');dialog.id='scoreDialog';dialog.setAttribute('aria-labelledby','scoreDetailTitle');dialog.innerHTML='<div class="dialog-head"><div class="section-symbol cyan">▥</div><div><h2 id="scoreDetailTitle">Delpoeng</h2><p>Kontroller målinger og beregning</p></div><button type="button" class="dialog-close" id="closeDetail" aria-label="Lukk">×</button></div><div class="dialog-body"><div id="scoreDetailContent"></div><p class="isbar-smallprint">Kun prototype med syntetiske data, ikke validert for klinisk bruk.</p></div>';document.body.append(dialog);$('closeDetail').onclick=()=>dialog.close();
+const dialog=document.createElement('dialog');dialog.id='scoreDialog';dialog.setAttribute('aria-labelledby','scoreDetailTitle');dialog.innerHTML='<div class="dialog-head"><div class="section-symbol cyan">▥</div><div><h2 id="scoreDetailTitle">Delpoeng</h2><p>Kontroller målinger og beregning</p></div><button type="button" class="dialog-close" id="closeDetail" aria-label="Lukk">×</button></div><div class="dialog-body"><div id="scoreDetailContent"></div><p class="isbar-smallprint">Demoversjon med syntetiske data, ikke validert for klinisk bruk.</p></div>';document.body.append(dialog);$('closeDetail').onclick=()=>dialog.close();
 function showDetails(which){
 const v=readVitals(),q=partialQ();const isNews=which==='news';const available=isNews?!!v:!!q;
 $('scoreDetailTitle').textContent=isNews?'NEWS2 – delpoeng':'qSOFA – kriterier';
@@ -51,7 +51,7 @@ $('deltas').replaceChildren(...vals.map(([lab,diff,u])=>{const div=makeElement('
 };select.addEventListener('change',()=>{if(measurements.length>=2)renderTrend()});
 const observ=document.createElement('label');observ.textContent='Andre observasjoner';const textarea=document.createElement('textarea');textarea.id='isbarObservations';textarea.rows=2;textarea.maxLength=600;textarea.placeholder='Skriv observasjoner uten pasientidentitet';observ.append(textarea);document.querySelector('.isbar-inputs').append(observ);
 $('isbarModalTitle').textContent='ISBAR – samtalemanus';
-document.querySelector('.isbar-preamble').textContent='Les manuset høyt. Fyll muntlig inn tekst i [klammer]. Ikke skriv inn pasientnavn eller fødselsdato i prototypen.';
+document.querySelector('.isbar-preamble').textContent='Les manuset høyt. Fyll muntlig inn tekst i [klammer]. Ikke skriv inn pasientnavn eller fødselsdato i demoversjonen.';
 const phrase=(id,fallback)=>$(id).value.trim().replace(/[.!?]+$/,'')||fallback;
 buildIsbarText=function(){
 const p=readProfile(),v=readVitals(),name=p.name||'[ditt navn]',work=p.work||'[arbeidssted]',role=p.role?', '+p.role.toLowerCase():'',dept=p.department?', '+p.department:'';

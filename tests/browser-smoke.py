@@ -48,7 +48,7 @@ script=r"""
   assert(document.querySelectorAll('.section-symbol:not([data-ui-icon])').length===0,'section headings still contain legacy symbol glyphs');
   assert(!!document.querySelector('#newsCard .score-icon .ui-icon-svg')&&!!document.querySelector('#qCard .score-icon .ui-icon-svg'),'score heading icons missing');
   const firstSection=document.querySelector('.section');
-  assert(parseFloat(getComputedStyle(firstSection).borderRadius)>=16,'shared panel geometry did not apply');
+  assert(parseFloat(getComputedStyle(firstSection).borderRadius)>=12,'shared panel geometry did not apply');
   assert(parseFloat(getComputedStyle(document.querySelector('#rr')).minHeight)>=44,'shared touch target did not apply to form controls');
   assert(!!document.querySelector('#clinicalToolDialog'),'missing tool dialog');
   assert(!!document.querySelector('#newsClinicalAlert'),'missing NEWS2 alert');
@@ -629,6 +629,10 @@ script=r"""
    const toggle=document.querySelector('#menuButton'),sidebar=document.querySelector('#sidebar'),backdrop=document.querySelector('#backdrop');
    const dock=document.querySelector('#actionDock'),main=document.querySelector('main');
    assert(getComputedStyle(toggle).display!=='none','hamburger must be visible at the mobile breakpoint');
+   const toggleRect=toggle.getBoundingClientRect(),themeRect=document.querySelector('.header-right').getBoundingClientRect(),brandRect=document.querySelector('.header .brand').getBoundingClientRect();
+   assert(toggleRect.left>themeRect.left&&themeRect.left>brandRect.left,'mobile header order must be brand, theme and menu');
+   assert(getComputedStyle(document.querySelector('.header .profile-trigger')).display==='none','duplicate profile control should be hidden in mobile header');
+   assert(document.querySelector('.header .logo svg path'),'new Kartlegg logo is missing from the mobile header');
    toggle.click();
    assert(sidebar.classList.contains('open'),'mobile drawer did not open');
    assert(backdrop.classList.contains('open'),'mobile menu scrim missing');
@@ -640,6 +644,7 @@ script=r"""
    assert(Number(getComputedStyle(sidebar).zIndex)>Number(getComputedStyle(document.querySelector('#homeToolSearch')).zIndex),'sidebar layers below search');
    assert(Number(getComputedStyle(backdrop).zIndex)>Number(getComputedStyle(document.querySelector('#homeToolSearch')).zIndex),'backdrop layers below search');
    const sidebarRect=sidebar.getBoundingClientRect(),searchRect=document.querySelector('#homeToolSearch').getBoundingClientRect();
+   assert(sidebarRect.right>=innerWidth-2&&sidebarRect.left>0,'mobile drawer must open from the right edge');
    const sampleX=Math.min(sidebarRect.right-20,sidebarRect.left+70);
    const sampleY=Math.max(sidebarRect.top+20,Math.min(sidebarRect.bottom-20,searchRect.top+20));
    assert(sidebar.contains(document.elementFromPoint(sampleX,sampleY)),'home search is painted on top of open mobile navigation');
@@ -668,7 +673,7 @@ script=r"""
    assert(getComputedStyle(dock).display==='none','mobile action dock must remain hidden');
    assert(getComputedStyle(toggle.querySelector('.v10-menu-label')).display==='none','mobile menu label should not crowd the header');
    assert(toggle.querySelectorAll('.ui-icon-svg').length===1,'mobile menu must show one icon');
-   assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','prototype badge should not crowd the mobile header');
+   assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','demo badge should not crowd the mobile header');
    const quickButtons=[...document.querySelectorAll('#toolWorkflow .tool-workflow-button')];
    const quickRects=quickButtons.map(button=>button.getBoundingClientRect());
    const searchRectAfter=document.querySelector('#homeToolSearch').getBoundingClientRect();
