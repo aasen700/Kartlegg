@@ -10,7 +10,16 @@
  if(!R||!icons||!library)return;
  const h=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
  // NEWS2 og qSOFA beregnes på forsiden; kortet sender brukeren dit.
- const assessmentLabels={news2:'Gå til NEWS2 →',qsofa:'Gå til qSOFA →'};
+ const assessmentLabels={news2:'Gå til NEWS2',qsofa:'Gå til qSOFA'};
+ // Én merkelapp per kort som sier hvilket fagområde verktøyet hører til, og én kort knappetekst.
+ const cardText={
+  gcs:['Bevissthet','Åpne GCS'],'4at':['Delirium','Åpne 4AT'],nrs:['Smerte','Åpne NRS'],
+  mst:['Ernæring','Åpne MST'],tug:['Fall og mobilitet','Åpne TUG'],'esas-r':['Palliasjon','Åpne ESAS-r'],
+  news2:['Vitale tegn'],qsofa:['Sepsis'],'bmi-bsa':['Kroppsmål','Åpne BMI og BSA'],
+  'ortho-bt':['Sirkulasjon','Åpne ortostatisk BT'],abi:['Sirkulasjon','Åpne AAI'],'resp-timer':['Respirasjon','Åpne timeren'],
+  abcde:['Akutt','Åpne ABCDE'],palliasjon:['Palliasjon','Åpne veilederen'],times:['Sår','Åpne TIMES'],
+  fast:['Hjerneslag','Åpne FAST'],skuv:['Undersøkelse','Åpne SKUV'],'medication-lab':['Legemidler','Start øving']
+ };
  function launchFor(card,id){
   const item=R.get(id);
   const own=item&&item.launchSelector&&!['.toolbox','.tool-launch'].includes(item.launchSelector)?card.querySelector(item.launchSelector):null;
@@ -27,7 +36,8 @@
   heading.querySelectorAll('.ui-icon-svg').forEach(el=>el.remove());
   heading.dataset.uiActionIcon='tool-card';
   heading.textContent=heading.textContent.replace(/^\s*[^\p{L}\p{N}]+\s*/u,'').trim();
-  const tag=card.querySelector(':scope > .tool-tag');
+  let tag=card.querySelector(':scope > .tool-tag');
+  if(cardText[id]){if(!tag){tag=h('span','tool-tag');card.append(tag)}tag.textContent=cardText[id][0]}
   const head=h('div','tool-card-head');
   const icon=h('span','tool-card-icon');icon.setAttribute('aria-hidden','true');icon.innerHTML=icons.svg(icons.toolIcon(id));
   const titles=h('div','tool-card-titles');titles.append(heading);if(tag)titles.append(tag);
@@ -46,9 +56,7 @@
    primary.classList.add('tool-card-primary');
    // Korte, like knappetekster; fullt verktøynavn for skjermlesere.
    const item=R.get(id),name=item?.name||heading.textContent;
-   if(!assessmentLabels[id]){
-    primary.textContent=name.length<=12?'Åpne '+name+' →':item?.category==='guide'?'Åpne veileder →':item?.category==='learn'?'Start øving →':'Åpne verktøy →';
-   }
+   if(!assessmentLabels[id])primary.textContent=cardText[id]?.[1]||'Åpne '+name;
    primary.setAttribute('aria-label',(assessmentLabels[id]?'Gå til ':'Åpne ')+name);
    footer.append(primary);
   }

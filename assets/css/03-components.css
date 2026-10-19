@@ -1196,9 +1196,6 @@
     bottom: auto;
     margin-block: 8px;
   }
-  .keyboard-open dialog.profile-dialog[open] {
-    margin-block: 0;
-  }
   .keyboard-open .main {
     padding-bottom: 35px;
   }

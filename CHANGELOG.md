@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Ryddigere verktøykort og stilark – 20. oktober 2026
+
+- Hvert verktøykort har én merkelapp som viser fagområdet (for eksempel Bevissthet, Delirium, Smerte, Sirkulasjon, Sår) i stedet for en blanding av «Separat kalkulator», «Selvstendig kalkulator» og «Kan beregnes automatisk».
+- Knappene sier hva de åpner, uten pil: «Åpne GCS», «Åpne AAI», «Åpne timeren», «Gå til NEWS2». Ingen generiske «Åpne verktøy →» lenger.
+- Fjernet rundt 100 linjer stil for det gamle profilvinduet. Reglene som ga vinduet riktig tema (tjenestetema, glass, Philip-modus, sesongpynt), gjelder nå profilsidens kort og ark.
+
 ## Småpuss på profil, meny og tekster – 20. oktober 2026
 
 - «Husk profilen i denne nettleseren» vises ikke når du er innlogget. Da tar kontoen vare på profilen.

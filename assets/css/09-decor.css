@@ -115,7 +115,7 @@
     height: 8px !important;
   }
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) :is(.header,.sidebar,.section,.toolbox,.profile-dialog,.v081-tool-search,.mobile-primary-nav) {
+:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) :is(.header,.sidebar,.section,.toolbox,.settings-card,.account-card,.v081-tool-search,.mobile-primary-nav) {
   outline: 1px solid var(--season-glass-edge);
   outline-offset: -1px;
 }
@@ -751,10 +751,10 @@
   color: var(--pm-card-ink) !important;
   border-color: var(--pm-card-border) !important;
 }
-:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog) {
+:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card) {
   position: relative;
 }
-:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog)::before {
+:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card)::before {
   content: "";
   position: absolute;
   z-index: 1;
@@ -767,10 +767,10 @@
   background: url("../season-halloween-web.svg") no-repeat right top / contain;
   opacity: .58;
 }
-:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.profile-dialog) {
+:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card) {
   position: relative;
 }
-:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.profile-dialog)::before {
+:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card)::before {
   content: "";
   position: absolute;
   z-index: 1;
@@ -784,18 +784,18 @@
   opacity: .88;
 }
 @media(max-width:770px){
-  :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.profile-dialog)::before {
+  :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card)::before {
     width: 88px;
     height: 62px;
     opacity: .45;
   }
-  :root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.profile-dialog)::before {
+  :root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card)::before {
     height: 14px;
     background-size: 196px 14px;
     opacity: .82;
   }
 }
-:root[data-personal-mode] :is(.section,.toolbox,.field,.v081-tool-search,.profile-dialog,.clinical-tool-dialog,.v08-dialog) {
+:root[data-personal-mode] :is(.section,.toolbox,.field,.v081-tool-search,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
   border-radius: var(--ui-radius-lg);
 }
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.section,.toolbox) {
@@ -924,19 +924,19 @@
   color: var(--pm-surface-ink) !important;
   border-color: var(--pm-action-border) !important;
 }
-/* profile-dialog */
-:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog {
+/* profile page */
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) :is(.settings-sheet,.settings-card,.account-card) {
   background: var(--pm-panel) !important;
   color: var(--pm-card-ink) !important;
 }
-:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog .service-theme-option:has(input:checked) {
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .settings-sheet .service-theme-option:has(input:checked) {
   outline: 2px solid var(--pm-action-border);
   outline-offset: 1px;
 }
-:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog :is(.profile-dialog-head h2,.profile-dialog-head p,.profile-dialog-section h3,.profile-dialog-section>p,.service-theme-intro,.personalization-note,.service-theme-options legend) {
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .settings-sheet :is(.settings-sheet-head h2,.service-theme-intro,.service-theme-options legend) {
   color: #243f4b !important;
 }
-:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .profile-dialog-head {
+:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .settings-sheet-head {
   background: var(--pm-subpanel) !important;
   color: var(--pm-card-ink) !important;
   border-color: var(--pm-card-border) !important;

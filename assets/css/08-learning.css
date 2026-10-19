@@ -2763,7 +2763,7 @@
   background: var(--paper);
 }
 /* Regel fra «tools» som må komme etter reglene over for å vinne */
-:is(.toolbox,.v081-tool-search,.profile-dialog,.clinical-tool-dialog,.v08-dialog,.sim-panel,.learning-flow) {
+:is(.toolbox,.v081-tool-search,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog,.sim-panel,.learning-flow) {
   border-radius: var(--ui-radius-card);
   border-color: var(--ui-border-soft);
 }

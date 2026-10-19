@@ -421,7 +421,7 @@
 }
 @media(max-width:770px){
   /* main */
-  :is(.main,dialog,.profile-dialog-scroll,.learn12-exercise-root,.wound13-case-panel) {
+  :is(.main,dialog,.learn12-exercise-root,.wound13-case-panel) {
     overflow-wrap: anywhere;
     min-width: 0;
   }

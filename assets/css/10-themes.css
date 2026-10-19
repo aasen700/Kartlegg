@@ -2,7 +2,7 @@
  * Del av designsystemet i assets/css/. Filene lastes i nummerrekkefølge fra index.html.
  */
 /* header */
-:root[data-service-theme]:not([data-service-theme="custom"]) :is(.header,.sidebar,.section,.field,.toolbox,.score.neutral,.profile-dialog,.profile-dialog-head,.clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.theme-switch,.dialog-head) {
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.header,.sidebar,.section,.field,.toolbox,.score.neutral,.settings-sheet,.settings-card,.account-card,.settings-sheet-head,.clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.theme-switch,.dialog-head) {
   background: var(--paper);
   color: var(--ink);
   border-color: var(--line);
@@ -20,8 +20,10 @@
 .section,
 .field,
 .toolbox,
-.profile-dialog,
-.profile-dialog-head,
+.settings-sheet,
+.settings-card,
+.account-card,
+.settings-sheet-head,
 .clinical-tool-dialog,
 .tool-modal-head,
 .v08-dialog,
@@ -151,7 +153,7 @@
   color: var(--muted);
 }
 /* meta-line */
-:root[data-service-theme]:not([data-service-theme="custom"]) :is(.meta-line,.meta-line label,.meta-line small,.chip,.control-wrap,.control-wrap input,.control-wrap select,.unit,.choice span,.field-icon,.field:nth-child(3n) .field-icon,.field:nth-child(4n) .field-icon,.v081-tool-search,.v081-search-field,.isbar-details,.isbar-details summary,.isbar-output,.isbar-inputs textarea,.isbar-inputs input,.profile-field input,.profile-field select,.history-table th,.history-table tr:hover td,.score-table th,.criterion,.criterion summary,.criterion-content,.toolbox summary,.v08-timer-display,.v08-duration label,.hc-esas-item,.hc-esas-number,.v099-category-heading,.v099-category-count,.service-theme-option,.profile-dialog-section,.score.neutral,.score.neutral .score-status) {
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.meta-line,.meta-line label,.meta-line small,.chip,.control-wrap,.control-wrap input,.control-wrap select,.unit,.choice span,.field-icon,.field:nth-child(3n) .field-icon,.field:nth-child(4n) .field-icon,.v081-tool-search,.v081-search-field,.isbar-details,.isbar-details summary,.isbar-output,.isbar-inputs textarea,.isbar-inputs input,.profile-field input,.profile-field select,.history-table th,.history-table tr:hover td,.score-table th,.criterion,.criterion summary,.criterion-content,.toolbox summary,.v08-timer-display,.v08-duration label,.hc-esas-item,.hc-esas-number,.v099-category-heading,.v099-category-count,.service-theme-option,.settings-row,.score.neutral,.score.neutral .score-status) {
   border-color: var(--service-border);
 }
 :root[data-service-theme]:not([data-service-theme="custom"]) .meta-line label {
@@ -642,15 +644,11 @@
   background: #594626;
   color: #ffe2a9;
 }
-:root[data-theme=dark] .profile-dialog .profile-field input,
-:root[data-theme=dark] .profile-dialog .profile-field select {
+:root[data-theme=dark] .sender-editor .profile-field input,
+:root[data-theme=dark] .sender-editor .profile-field select {
   background: #172d43;
   border-color: var(--line);
   color: #e9f2fb;
-}
-:root[data-base-theme="philip"] .profile-dialog {
-  max-width: 100vw;
-  box-sizing: border-box;
 }
 /* toolbox */
 .toolbox .criterion summary,
@@ -673,8 +671,10 @@
 .sidebar,
 .section,
 .toolbox,
-.profile-dialog,
-.profile-dialog-head,
+.settings-sheet,
+.settings-card,
+.account-card,
+.settings-sheet-head,
 .clinical-tool-dialog,
 .tool-modal-head,
 .v08-dialog,
@@ -1042,18 +1042,11 @@
 :root[data-base-theme="standard"][data-surface-style="solid"] :is(.control-wrap,.btn,.btn-inline,.theme-switch,.mobile-toggle,input,select,textarea) {
   border-radius: var(--human-radius-control) !important;
 }
-:root[data-base-theme="philip"] :is(.profile-dialog-head h2,.profile-dialog-section h3,.section-header h2,.field label,.meta-line label,.toolbox h3,.header .profile-trigger,.intro .eyebrow,.intro .chip) {
+:root[data-base-theme="philip"] :is(.settings-sheet-head h2,.settings-group-title,.section-header h2,.field label,.meta-line label,.toolbox h3,.header .profile-trigger,.intro .eyebrow,.intro .chip) {
   color: var(--ink) !important;
 }
-:root[data-base-theme="philip"] :is(.section-header p,.toolbox p,.field .hint,.meta-line small,.sidebar-bottom p,.profile-body p,.profile-body label,.profile-status,.profile-dialog-section>p,.profile-dialog-head p,.service-theme-intro,.personalization-note,.v099-category-heading p,.tool-favorites-empty,.footer,.footer a) {
+:root[data-base-theme="philip"] :is(.section-header p,.toolbox p,.field .hint,.meta-line small,.sidebar-bottom p,.profile-body p,.profile-body label,.profile-status,.settings-group-note,.service-theme-intro,.personalization-note,.v099-category-heading p,.tool-favorites-empty,.footer,.footer a) {
   color: var(--muted) !important;
-}
-:root[data-base-theme="philip"] .profile-dialog-scroll {
-  background: transparent;
-  box-shadow: none;
-}
-:root[data-surface-style="glass"] .profile-dialog-scroll {
-  background: transparent !important;
 }
 :root[data-base-theme="philip"] :is(.sim-action,.sim-number,.sim-textarea,.sim-reset,.gcs-learn-option,.gcs-learn-secondary,.gcs-learn-card-button) {
   background: var(--glass-controls);
@@ -1075,18 +1068,18 @@
 }
 @media(prefers-reduced-transparency:reduce){
   /* section */
-  :root[data-base-theme="philip"] :is(.section,.field,.toolbox,.header,.sidebar,.profile-dialog,.clinical-tool-dialog,.v08-dialog) {
+  :root[data-base-theme="philip"] :is(.section,.field,.toolbox,.header,.sidebar,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 }
-:root[data-base-theme="standard"] :is(.section,.toolbox,.field,.v081-tool-search,.profile-dialog,.clinical-tool-dialog,.v08-dialog) {
+:root[data-base-theme="standard"] :is(.section,.toolbox,.field,.v081-tool-search,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
   border-radius: var(--ui-radius-lg);
 }
 :root[data-base-theme="standard"] .section {
   border-color: color-mix(in srgb,var(--line) 82%,var(--accent) 18%);
 }
-:root[data-base-theme="standard"][data-surface-style="solid"] :is(.section,.toolbox,.hc-tool-card,.v081-tool-search,.profile-dialog,.clinical-tool-dialog,.v08-dialog) {
+:root[data-base-theme="standard"][data-surface-style="solid"] :is(.section,.toolbox,.hc-tool-card,.v081-tool-search,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
   border-radius: var(--human-radius-panel) !important;
   box-shadow: var(--human-shadow) !important;
 }
@@ -1115,8 +1108,10 @@
 .hc-tool-card,
 .v081-tool-search,
 .tool-favorites,
-.profile-dialog,
-.profile-dialog-head,
+.settings-sheet,
+.settings-card,
+.account-card,
+.settings-sheet-head,
 .clinical-tool-dialog,
 .tool-modal-head,
 .v08-dialog,
@@ -1136,7 +1131,7 @@
   backdrop-filter: blur(26px) saturate(175%);
 }
 @media(prefers-reduced-transparency:reduce){
-  :root[data-surface-style="glass"] :is(.header,.sidebar,.section,.field,.toolbox,.profile-dialog,.clinical-tool-dialog,.v08-dialog) {
+  :root[data-surface-style="glass"] :is(.header,.sidebar,.section,.field,.toolbox,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
