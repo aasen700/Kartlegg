@@ -253,6 +253,16 @@
 [data-theme=dark] textarea::placeholder {
   color: #b3c4d2;
 }
+:root[data-accent=violet] {
+  --accent: #7652a6;
+  --accent-bg: #f3effb;
+  --accent-border: #cbbce5;
+}
+:root[data-theme=dark][data-accent=violet] {
+  --accent: #c9b2ff;
+  --accent-bg: #382b55;
+  --accent-border: #8169ad;
+}
 :root[data-accent=blue] {
   --accent: #185cab;
   --accent-bg: #eaf3ff;

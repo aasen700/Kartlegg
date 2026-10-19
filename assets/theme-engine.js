@@ -9,10 +9,10 @@
  const SEASONS=Object.freeze(['off','auto','halloween','christmas','breast-cancer','mental-health','pride']);
  const SERVICES=Object.freeze(['custom','hospital','ambulance','urgent','homecare']);
  const MODES=Object.freeze(['light','dark','system']);
- const ACCENTS=Object.freeze(['coral','blue','green']);
+ const ACCENTS=Object.freeze(['violet','blue','green']);
  const SURFACES=Object.freeze(['solid','glass']);
  const serviceModes=Object.freeze({hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'});
- const fallback=Object.freeze({mode:'system',accent:'coral',service:'custom',base:'standard',season:'off',surface:'solid'});
+ const fallback=Object.freeze({mode:'system',accent:'violet',service:'custom',base:'standard',season:'off',surface:'solid'});
  function normalize(raw){
   const p=raw&&typeof raw==='object'?raw:{};
   return {

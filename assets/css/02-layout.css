@@ -428,9 +428,17 @@
   min-width: 0;
 }
 @media(max-width:770px){
+  html {
+    scroll-padding-top: calc(64px + env(safe-area-inset-top));
+    scroll-padding-bottom: calc(var(--ui-nav-height) + 28px + env(safe-area-inset-bottom));
+  }
+  input:not([type=checkbox]):not([type=radio]),
+  select,
+  textarea {
+    font-size: max(16px,1em);
+  }
   .main {
-    padding: 20px 13px 40px;
-    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+    padding: 20px 13px calc(var(--ui-nav-height) + 30px + env(safe-area-inset-bottom));
   }
 }
 /* intro */

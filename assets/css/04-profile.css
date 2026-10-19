@@ -232,8 +232,8 @@
 .appearance-options label[data-preview-mode="system"]::after {
   background: linear-gradient(105deg,#f5f8fb 0 49%,#18324a 50%);
 }
-.appearance-options label[data-preview-accent="coral"]::after {
-  background: linear-gradient(145deg,#edf2f7 0 61%,#ed5362 62%);
+.appearance-options label[data-preview-accent="violet"]::after {
+  background: linear-gradient(145deg,#edf2f7 0 61%,#7652a6 62%);
 }
 .appearance-options label[data-preview-accent="blue"]::after {
   background: linear-gradient(145deg,#edf2f7 0 61%,#2679d4 62%);

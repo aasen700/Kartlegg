@@ -53,7 +53,7 @@ test('styling leaves clinical status, escalation and scoring tokens unmodified',
  }
  assert.doesNotMatch(themes,/--(?:coral|orange|teal|blue):/);
  assert.doesNotMatch(js,/Scoring\.|readVitals|localStorage|sessionStorage|fetch\(/);
- assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1201/);
+ assert.match(read('index.html'),/assets\/theme-engine\.js\?v=2011/);
  const html=read('index.html');
  assert.ok(html.indexOf('assets/css/10-themes.css')<html.indexOf('assets/css/11-clinical.css'),'clinical colours load after every theme');
 });
@@ -62,7 +62,7 @@ test('solid and liquid glass are explicit, persistent visual choices',()=>{
  const themes=css.group('themes');
  const js=read('assets/v06.js');
  const html=read('index.html');
- assert.match(html,/assets\/v06\.js\?v=2010/);
+ assert.match(html,/assets\/v06\.js\?v=2011/);
  assert.match(js,/name='surfaceStyle'/);
  assert.match(js,/dataset\.surfaceStyle=state\.surface/);
  assert.match(themes,/data-surface-style="glass"/);
