@@ -46,7 +46,7 @@ Same-email handling: Firebase's one-account-per-email setting must remain enable
 
 Google uses `signInWithPopup` / `reauthenticateWithPopup`, directly from a user click after SDK initialization, with `authDomain: kartlegg.firebaseapp.com`. **Do not change authDomain to kartlegg.com on GitHub Pages:** Pages does not serve Firebase's reserved `/__/auth/*` handlers. No automatic redirect fallback. Popup blockers receive Norwegian instructions and email login remains available. Test Safari/iOS, Chrome/Android and desktop on the intended HTTPS origin before release. Popup remains dependent on browser privacy settings and extensions.
 
-Authentication uses browser-session persistence with in-memory fallback. Firestore uses memory-only cache; no persistent Firestore IndexedDB cache. Tokens are managed only by the Firebase SDK.
+Authentication uses browser-session persistence by default, or browser-local persistence when the user ticks «Husk meg på denne enheten» (stored as `kartlegg.account.remember.v1`, no personal data); in-memory fallback if neither is available. Firestore uses memory-only cache; no persistent Firestore IndexedDB cache. Tokens are managed only by the Firebase SDK.
 
 ## Sync and conflict handling
 

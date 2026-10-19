@@ -1,5 +1,5 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
-import {getAuth,browserSessionPersistence,inMemoryPersistence,setPersistence,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,sendEmailVerification,sendPasswordResetEmail,signOut,deleteUser,reload,getIdToken,EmailAuthProvider,reauthenticateWithCredential,reauthenticateWithPopup,linkWithPopup} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
+import {getAuth,browserLocalPersistence,browserSessionPersistence,inMemoryPersistence,setPersistence,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,sendEmailVerification,sendPasswordResetEmail,signOut,deleteUser,reload,getIdToken,EmailAuthProvider,reauthenticateWithCredential,reauthenticateWithPopup,linkWithPopup} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
 import {initializeFirestore,memoryLocalCache,doc,getDocFromServer,onSnapshot,runTransaction,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
 import {firebaseConfig} from './config.mjs';
 import {documentData,validDocument} from './model.mjs';
@@ -7,7 +7,9 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);auth.languageCode='nb';
 const db=initializeFirestore(app,{localCache:memoryLocalCache()});
 const google=new GoogleAuthProvider();google.setCustomParameters({prompt:'select_account'});
-try{await setPersistence(auth,browserSessionPersistence)}catch(_){await setPersistence(auth,inMemoryPersistence)}
+// «Husk meg» (opt-in, per enhet): innloggingen varer til utlogging. Ellers bare til nettleseren lukkes.
+// Valget lagres av ui.mjs; denne modulen lagrer ingenting selv.
+async function persist(on){try{await setPersistence(auth,on?browserLocalPersistence:browserSessionPersistence)}catch(_){await setPersistence(auth,inMemoryPersistence)}}
 const ref=uid=>doc(db,'users',uid);
 const failure=code=>Object.assign(Error(code),{code});
 function unpack(snapshot){
@@ -19,6 +21,7 @@ function unpack(snapshot){
 }
 export const backend={
  get user(){return auth.currentUser},
+ remember:on=>persist(on),
  observe:cb=>onAuthStateChanged(auth,cb),
  async register(email,password){const {user}=await createUserWithEmailAndPassword(auth,email,password);await sendEmailVerification(user)},
  login:(email,password)=>signInWithEmailAndPassword(auth,email,password),

@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Ny førsteside og «Husk meg» – 20. oktober 2026
+
+- Førsteside: tre innganger øverst – «Start vurdering» (går rett til NEWS2-skjemaet), «Finn verktøy» og «Lær og øv» – så nye besøkende ser hva Kartlegg tilbyr.
+- Mindre tyngde på vurderingen: kortere overskrifter og hjelpetekster, én forklaring av skårene i stedet for to, og dato/klokkeslett uten egen boks på mobil. De tre stegene om tiltak og tolkning ligger bak «Les mer» og åpnes av «Se tiltak». Forbeholdet om demoversjon står fortsatt synlig.
+- Innlogging: «Husk meg på denne enheten». Krysser du av, varer innloggingen til du logger ut. Uten avkrysning varer den til nettleseren lukkes, som før. Bare valget lagres, ingen personopplysninger.
+- Ingen beregninger, kliniske grenser eller fagtekster er endret.
+
 ## Ryddigere verktøykort og stilark – 20. oktober 2026
 
 - Hvert verktøykort har én merkelapp som viser fagområdet (for eksempel Bevissthet, Delirium, Smerte, Sirkulasjon, Sår) i stedet for en blanding av «Separat kalkulator», «Selvstendig kalkulator» og «Kan beregnes automatisk».

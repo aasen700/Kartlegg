@@ -1308,6 +1308,7 @@
     align-items: start;
   }
   .assessment-workspace>.intro,
+  .assessment-workspace>.home-entries,
   .assessment-workspace>.v081-tool-search,
   .assessment-workspace>#forklaring {
     grid-column: 1/-1;
@@ -1361,4 +1362,142 @@
 /* Favorittfeltet på forsiden vises først når noe er stjernemerket. */
 .tool-favorites[hidden] {
   display: none;
+}
+
+/* Forsiden: tre innganger øverst. Mobil: rader med ikon og pil. PC: tre like kort. */
+.home-entries {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+@media(min-width:771px){
+  .home-entries {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+}
+.home-entry {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+}
+.home-entry:hover {
+  border-color: var(--accent-border,var(--accent));
+}
+.home-entry:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.home-entry-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.home-entry-icon .ui-icon-svg {
+  width: 22px;
+  height: 22px;
+}
+.home-entry-text {
+  display: grid;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.home-entry-text strong {
+  font-size: 16px;
+  line-height: 1.25;
+}
+.home-entry-text small {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.home-entry-chevron {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.home-entry.is-primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.home-entry.is-primary .home-entry-icon {
+  background: color-mix(in srgb,var(--accent-on) 16%,transparent);
+  color: var(--accent-on);
+}
+.home-entry.is-primary small,
+.home-entry.is-primary .home-entry-chevron {
+  color: color-mix(in srgb,var(--accent-on) 82%,transparent);
+  stroke: currentColor;
+}
+/* Utdyping bak «Les mer». */
+.read-more {
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+.read-more>summary {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
+}
+.read-more>summary::-webkit-details-marker {
+  display: none;
+}
+.read-more>summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+.read-more[open]>summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+.read-more>summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+  border-radius: 14px;
+}
+.read-more[open]>.next-step-grid {
+  padding: 0 14px 14px;
+}
+/* Mobil: dato og klokkeslett uten egen boks, så skjemaet ikke får kort i kort. */
+@media(max-width:770px){
+  #page-vurdering .meta-line {
+    margin-bottom: 4px;
+    padding: 2px 2px 14px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
 }

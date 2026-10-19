@@ -5,7 +5,7 @@ const $=id=>document.getElementById(id), assert=(v,m)=>{if(!v)throw Error(m)};
 const pause=()=>new Promise(r=>setTimeout(r,30));
 let observer, cloud=documentData(settings({profile:{name:'Cloud Nurse'},favorites:['news2'],appearance:{mode:'dark'}}),1,null),writes=0;
 const user={uid:'synthetic-account',email:'synthetic@example.test',emailVerified:true};
-const backend={user:null,observe(cb){observer=cb;cb(null)},async read(){return cloud},watch(){return ()=>{}},async write(uid,value,revision){writes++;if(revision!==cloud.revision)throw {code:'conflict'};cloud=documentData(value,revision+1,null);return cloud},async login(){backend.user=user;await observer(user)},async logout(){backend.user=null;await observer(null)},async remove(){backend.user=null;cloud=null;await observer(null)}};
+const backend={user:null,remembered:false,async remember(on){this.remembered=on},observe(cb){observer=cb;cb(null)},async read(){return cloud},watch(){return ()=>{}},async write(uid,value,revision){writes++;if(revision!==cloud.revision)throw {code:'conflict'};cloud=documentData(value,revision+1,null);return cloud},async login(){backend.user=user;await observer(user)},async logout(){backend.user=null;await observer(null)},async remove(){backend.user=null;cloud=null;await observer(null)}};
 const disabled=mountAccount({enabled:false,loadBackend:async()=>{throw Error('SDK must not be loaded before activation')}});
 assert(disabled.host.querySelector('#accountLogin').disabled,'account gate disables login before SDK loading');disabled.host.remove();
 const app=mountAccount({enabled:true,loadBackend:async()=>backend});
@@ -13,6 +13,7 @@ try{
  await pause();
  $('profileTrigger').click();assert(!$('page-profil').hidden,'profile page opens with account');
  $('accountOpenLogin').click();assert($('page-profil').dataset.profileView==='login','guest card opens the login screen');
+ assert(!$('accountRemember').checked,'«Husk meg» is opt-in');$('accountRemember').click();await pause();assert(backend.remembered&&$('accountRememberSignup').checked,'«Husk meg» is stored and mirrored');$('accountRemember').click();await pause();assert(!backend.remembered,'«Husk meg» can be turned off');
  $('profileName').value='Guest Nurse';$('profileRole').value='Sykepleier';$('saveProfile').click();
  $('accountEmail').value='synthetic@example.test';$('accountPassword').value='synthetic-test-password';
  $('accountForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));await pause();

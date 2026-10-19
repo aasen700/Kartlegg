@@ -1237,18 +1237,6 @@
     margin-bottom: 12px;
   }
 }
-/* surface-result */
-.surface-result>.live-note {
-  margin: 12px 25px 14px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--muted);
-}
-@media(max-width:770px){
-  .surface-result>.live-note {
-    margin: 10px 14px 13px;
-  }
-}
 /* surface-info */
 .surface-info {
   background: var(--ui-card-info);

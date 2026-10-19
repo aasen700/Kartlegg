@@ -10,16 +10,16 @@
   <link rel="stylesheet" href="assets/css/00-tokens.css?v=2012">
   <link rel="stylesheet" href="assets/css/01-base.css?v=2013">
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profile3">
-  <link rel="stylesheet" href="assets/css/03-components.css?v=profile3">
+  <link rel="stylesheet" href="assets/css/03-components.css?v=home1">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=profile3">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=2013">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=home1">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=2013">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
   <link rel="stylesheet" href="assets/css/09-decor.css?v=profile3">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=profile3">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=2011">
-  <link rel="stylesheet" href="assets/css/12-account.css?v=profile1">
+  <link rel="stylesheet" href="assets/css/12-account.css?v=home1">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -44,9 +44,14 @@
     </nav>
     <main class="main" id="top" tabindex="-1">
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
-      <div class="intro"><div><h1>Ny pasientvurdering</h1><p>Registrer målinger og se skår, responsnivå og neste steg.</p></div></div>
+      <div class="intro home-intro"><div><h1>Kartlegg</h1><p>Regn ut NEWS2, finn riktig kartleggingsverktøy eller øv på tenkte pasienter.</p></div></div>
+      <nav class="home-entries" aria-label="Kom i gang">
+        <a class="home-entry is-primary" href="#vurdering" data-home-start><span class="home-entry-icon" aria-hidden="true"><svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v18M3 12h18"/><path d="M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg></span><span class="home-entry-text"><strong>Start vurdering</strong><small>NEWS2 og qSOFA fra vitale målinger</small></span><svg class="home-entry-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
+        <a class="home-entry" href="#verktoy"><span class="home-entry-icon" aria-hidden="true"><svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8l-4-4h-3"/><path d="M9 3h6v4H9zM8 12h8M8 16h5"/></svg></span><span class="home-entry-text"><strong>Finn verktøy</strong><small>Skårer, kalkulatorer og veiledere</small></span><svg class="home-entry-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
+        <a class="home-entry" href="#laer"><span class="home-entry-icon" aria-hidden="true"><svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22Z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22Z"/></svg></span><span class="home-entry-text"><strong>Lær og øv</strong><small>GCS, 4AT, NEWS2, TIMES og legemidler</small></span><svg class="home-entry-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
+      </nav>
       <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
-        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Fyll ut de obligatoriske observasjonene for NEWS2. GCS er valgfritt og brukes ved qSOFA.</p></div></div>
+        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Ny vurdering</h2><p>Felt med * trengs for NEWS2. GCS trengs bare for qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
           <div class="form-inner">
             <div class="meta-line">
@@ -72,7 +77,7 @@
         </form>
       </section>
       <section class="section surface-result" id="resultater" aria-labelledby="result-heading">
-        <div class="section-header"><div class="section-symbol cyan" aria-hidden="true">▥</div><div><h2 id="result-heading">Automatisk beregnede skårer</h2><p>NEWS2 beregnes fra vitale målinger. qSOFA krever i tillegg en separat vurdert GCS.</p></div><span class="subtle-note" id="scoreTime">Venter på målinger</span></div>
+        <div class="section-header"><div class="section-symbol cyan" aria-hidden="true">▥</div><div><h2 id="result-heading">Skårer</h2><p>Oppdateres mens du fyller ut.</p></div><span class="subtle-note" id="scoreTime">Venter på målinger</span></div>
         <div class="scores" aria-live="polite">
           <article class="score neutral" id="newsCard"><div class="score-top"><span class="score-icon">▤</span><div><strong>NEWS2</strong><small>National Early Warning Score 2</small></div></div><div class="score-number muted" id="newsNumber">–</div><span class="score-status" id="newsStatus">Ikke beregnet</span><p id="newsDesc">Fyll inn målingene ovenfor for å se NEWS2-skåren.</p><div class="score-meter-block is-waiting" id="newsMeterBlock"><div class="score-meter-heading"><span>RCP-eskalering</span><strong id="newsMeterLabel">Venter på skår</strong></div><div class="score-meter news-meter" id="newsMeter" role="img" aria-label="NEWS2-eskalering: venter på skår"><span class="score-meter-segment band-routine"></span><span class="score-meter-segment band-low"></span><span class="score-meter-segment band-medium"></span><span class="score-meter-segment band-high"></span><span class="score-meter-marker" id="newsMeterMarker" aria-hidden="true"></span></div><div class="score-meter-scale news-meter-scale" aria-hidden="true"><span><b>0</b><small>12 t</small></span><span><b>1–4</b><small>4–6 t</small></span><span><b>5–6</b><small>≥ hver time</small></span><span><b>≥7</b><small>kontinuerlig</small></span></div><p class="score-meter-trigger" id="newsRedTrigger" hidden>3 i én parameter: minst hver time og rask klinisk vurdering.</p><small class="score-meter-note">RCPs responsnivåer for sykehus. Følg lokal prosedyre og klinisk skjønn.</small></div><div class="score-bottom" id="newsBreakdown">Skårens delpoeng vises her.</div></article>
           <article class="score neutral" id="qCard"><div class="score-top"><span class="score-icon">◉</span><div><strong>qSOFA</strong><small>Quick Sequential Organ Failure Assessment</small></div></div><div class="score-number muted" id="qNumber">–</div><span class="score-status" id="qStatus">Ikke beregnet</span><p id="qDesc">Fyll inn målingene ovenfor for å se qSOFA-skåren.</p><div class="score-meter-block is-waiting" id="qMeterBlock"><div class="score-meter-heading"><span>Antall kriterier</span><strong id="qMeterLabel">Venter på GCS</strong></div><div class="score-meter qsofa-meter" id="qMeter" role="img" aria-label="qSOFA: venter på komplett skår"><span class="score-meter-segment band-q0"></span><span class="score-meter-segment band-q1"></span><span class="score-meter-segment band-q2"></span><span class="score-meter-segment band-q3"></span><span class="score-meter-marker" id="qMeterMarker" aria-hidden="true"></span></div><div class="score-meter-scale qsofa-meter-scale" aria-hidden="true"><span><b>0</b></span><span><b>1</b></span><span><b>2</b></span><span><b>3</b></span></div><small class="score-meter-note">Ved ≥2: undersøk organdysfunksjon og vurder tettere oppfølging. qSOFA har ikke egne NEWS2-lignende eskaleringsfarger.</small></div><div class="score-bottom" id="qBreakdown">Kriteriene vises her.</div></article>
@@ -82,7 +87,7 @@
           <button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button>
         </div>
       </section>
-      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
+      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><details class="read-more" id="responseDetails"><summary>Les mer om tiltak og tolkning</summary><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div></details><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
@@ -302,7 +307,7 @@
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
   <script src="assets/app.js?v=profile2"></script>
-  <script src="assets/enhancements.js?v=1023"></script>
+  <script src="assets/enhancements.js?v=home1"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
   <script src="assets/v06.js?v=profile2"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
@@ -340,8 +345,8 @@
   <script src="assets/mobile-ux.js?v=1401"></script>
   <script src="assets/icon-system.js?v=2010"></script>
   <script src="assets/tool-cards.js?v=profile3"></script>
-  <script src="assets/assessment-flow-v11.js?v=1201"></script>
+  <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=profile2"></script>
+  <script type="module" src="assets/account/entry.mjs?v=home1"></script>
 </body>
 </html>

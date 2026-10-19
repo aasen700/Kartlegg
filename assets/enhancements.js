@@ -24,7 +24,6 @@ for(const [key,points] of Object.entries(r.parts)){const tr=document.createEleme
 table.append(tbody);const foot=document.createElement('tfoot');const tr=document.createElement('tr');let label=document.createElement('th');label.colSpan=2;label.textContent='Totalskår';let sum=document.createElement('th');sum.textContent=r.total;tr.append(label,sum);foot.append(tr);table.append(foot);mount.append(table);dialog.showModal();
 }
 for(const [id,which] of [['newsCard','news'],['qCard','q']]){const btn=document.createElement('button');btn.type='button';btn.className='detail-button';btn.textContent='Se beregning og delpoeng →';btn.addEventListener('click',()=>showDetails(which));$(id).append(btn)}
-const note=document.createElement('p');note.className='live-note';note.textContent='Skårer oppdateres automatisk når opplysningene er komplette. Trykk på et resultatkort for å se delpoeng.';$('resultater').querySelector('.section-header').after(note);
 const selectLabel=document.createElement('label');selectLabel.className='metric-select';selectLabel.textContent='Graf for';
 const select=document.createElement('select');select.id='chartMetric';
 const metrics={news:['NEWS2','poeng',m=>m.news.total],q:['qSOFA','poeng',m=>m.q?.total??null],rr:['Respirasjonsfrekvens','/min',m=>m.v.rr],spo2:['SpO₂','%',m=>m.v.spo2],sbp:['Systolisk BT','mmHg',m=>m.v.sbp],hr:['Puls','/min',m=>m.v.hr],temp:['Temperatur','°C',m=>m.v.temp]};

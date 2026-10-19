@@ -66,3 +66,7 @@
 .account-panel button:disabled{opacity:.55;cursor:not-allowed}
 .account-panel :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:540px){.account-compare{grid-template-columns:1fr}.account-actions .btn{flex:1 1 100%}}
+.account-form-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;margin-top:4px}
+.account-form-row .account-forgot{justify-self:auto}
+.account-remember,.account-form>label.account-remember{display:flex;align-items:center;gap:10px;min-height:44px;margin:0;font-size:14px;font-weight:500;color:var(--ink)}
+.account-remember input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}

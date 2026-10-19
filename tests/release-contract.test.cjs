@@ -65,7 +65,7 @@ test('About page accurately describes its prototype purpose',()=>{
 test('optional GCS shortcut is accessible and profile trigger is semantic',()=>{
  assert.match(html,/<button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">/);
  assert.doesNotMatch(html,/<span class="avatar" aria-hidden="true">/);
- assert.match(html,/Fyll ut de obligatoriske observasjonene for NEWS2\. GCS er valgfritt/);
+ assert.match(html,/Felt med \* trengs for NEWS2\. GCS trengs bare for qSOFA\./);
  const search=read('assets/news-first-v081.js');
  assert.match(search,/KartleggToolNavigation/);
  const nav=read('assets/tool-navigation.js');
