@@ -80,6 +80,11 @@
  function button(label,cls,callback){
   const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;b.addEventListener('click',callback);return b;
  }
+ // Kortknapper får ikon fra ikonsystemet (data-icon) og tekst i eget element.
+ function labelled(label,icon,cls,callback){
+  const b=button('',cls,callback);b.dataset.icon=icon;
+  const text=document.createElement('span');text.className='tool-card-action-label';text.textContent=label;b.append(text);return b;
+ }
  const home=$('homeToolSearch');
  const quick=document.createElement('nav');quick.className='tool-workflow';quick.id='toolWorkflow';
  quick.setAttribute('aria-label','Hurtigflyt mellom NEWS2, GCS og ISBAR');
@@ -96,7 +101,7 @@
  function syncCards(){
   for(const [id,star] of cardControls){
    const active=isFavorite(id);
-   star.textContent=active?'★ Favoritt':'☆ Favoritt';
+   star.querySelector('.tool-card-action-label').textContent=active?'Favoritt':'Favoritt';
    star.setAttribute('aria-pressed',String(active));
    star.setAttribute('aria-label',(active?'Fjern ':'Legg til ')+R.get(id).name+(active?' fra favoritter':' som favoritt'));
   }
@@ -110,15 +115,15 @@
   }
   for(const id of favorites){
    const item=R.get(id);if(!item)continue;
-   favItems.append(button('★ '+item.name,'tool-favorite-shortcut',()=>open(id)));
+   const shortcut=button(item.name,'tool-favorite-shortcut',()=>open(id));shortcut.dataset.icon='star';favItems.append(shortcut);
   }
  }
  for(const item of R.all){
   const card=cardFor(item);if(!card)continue;
   card.dataset.toolId=item.id;
   const actions=document.createElement('div');actions.className='tool-card-actions';
-  const star=button('☆ Favoritt','tool-card-favorite',()=>toggle(item.id));
-  const copy=button('⧉ Kopier lenke','tool-card-copy',()=>copyLink(item.id));
+  const star=labelled('Favoritt','star','tool-card-favorite',()=>toggle(item.id));
+  const copy=labelled('Kopier lenke','link','tool-card-copy',()=>copyLink(item.id));
   cardControls.set(item.id,star);
   actions.append(star,copy);card.append(actions);
  }

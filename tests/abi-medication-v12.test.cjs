@@ -60,7 +60,7 @@ test('new modules are registered, local-only and linked from the page',()=>{
  assert.equal(registry.get('medication-lab').category,'learn');
  assert.equal(registry.linkFor('https://example.test/Kartlegg/','medication-lab'),'https://example.test/Kartlegg/?tool=medication-lab#laer');
  const html=read('index.html');
- for(const asset of ['assets/abi-v12-scoring.js','assets/abi-v12-ui.js','assets/medication-learning-data-v12.js','assets/medication-learning-v12.js','assets/abi-medication-v12.css'])assert.match(html,new RegExp(asset.replaceAll('.','\\.')));
+ for(const asset of ['assets/abi-v12-scoring.js','assets/abi-v12-ui.js','assets/medication-learning-data-v12.js','assets/medication-learning-v12.js'])assert.match(html,new RegExp(asset.replaceAll('.','\\.')));
  assert.match(html,/id="learnMedicationModule"/);
  for(const file of ['assets/abi-v12-scoring.js','assets/medication-learning-data-v12.js','assets/abi-v12-ui.js','assets/medication-learning-v12.js']){
   const source=read(file);

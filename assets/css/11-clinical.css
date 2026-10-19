@@ -1,0 +1,366 @@
+/* Kartlegg – Kliniske statusfarger for skår og varsler. Lastes sist, slik at ingen tema eller pynt kan endre dem.
+ * Del av designsystemet i assets/css/. Filene lastes i nummerrekkefølge fra index.html.
+ */
+/* score */
+.score.warning {
+  background: #fff9f0;
+  border-color: #fae6c3;
+}
+.score.danger {
+  background: #fff5f6;
+  border-color: #f6dadf;
+}
+.score.ok {
+  background: #f4fcf9;
+  border-color: #d4eee6;
+}
+/* Regel fra «assessment» som må komme etter reglene over for å vinne */
+.score.neutral {
+  background: #f9fbfd;
+}
+/* Regel fra «themes» som må komme etter reglene over for å vinne */
+[data-theme=dark] .header,
+[data-theme=dark] .sidebar,
+[data-theme=dark] .section,
+[data-theme=dark] .field,
+[data-theme=dark] .toolbox,
+[data-theme=dark] #isbarDialog,
+[data-theme=dark] .score,
+[data-theme=dark] .diff-box,
+[data-theme=dark] .trend-wrap,
+[data-theme=dark] .script-paper,
+[data-theme=dark] .dialog-head {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+/* Regel fra «components» som må komme etter reglene over for å vinne */
+.field:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--ui-focus) !important;
+  background: var(--paper);
+}
+.field.is-complete {
+  background: var(--ui-field-done);
+  border-color: color-mix(in srgb,var(--ui-success) 48%,var(--line));
+  box-shadow: inset 3px 0 0 var(--ui-success) !important;
+}
+.field.v10-field-error,
+.field.field-invalid {
+  background: color-mix(in srgb,var(--paper) 91%,#ffe3e7 9%);
+  border-color: var(--ui-danger) !important;
+  box-shadow: inset 3px 0 0 var(--ui-danger) !important;
+}
+@media(forced-colors:active){
+  .field.is-complete {
+    border: 2px solid Highlight;
+  }
+}
+/* Regel fra «assessment» som må komme etter reglene over for å vinne */
+.score.red-trigger {
+  background: #fff8ec;
+  border-color: #e5b762;
+}
+/* Regel fra «themes» som må komme etter reglene over for å vinne */
+[data-theme=dark] .script-paper {
+  background: #1b324a;
+  box-shadow: none;
+}
+/* score */
+.score.warning .score-number {
+  color: #cf8a22;
+}
+.score.danger .score-number {
+  color: #de4453;
+}
+.score.ok .score-number {
+  color: #098c78;
+}
+/* Regel fra «assessment» som må komme etter reglene over for å vinne */
+.score.neutral .score-number {
+  color: #677d91;
+}
+.score.red-trigger .score-number {
+  color: #c77812;
+}
+/* score */
+.score.warning .score-status {
+  background: #ffebc9;
+  color: #97600d;
+}
+.score.danger .score-status {
+  background: #ffe0e3;
+  color: #ba3441;
+}
+.score.ok .score-status {
+  background: #daf4e9;
+  color: #087963;
+}
+/* Regel fra «assessment» som må komme etter reglene over for å vinne */
+.score.neutral .score-status {
+  background: #e8eef4;
+  color: #64788e;
+}
+.score.red-trigger .score-status {
+  background: #ffebc6;
+  color: #81500d;
+}
+/* score */
+[data-theme=dark] .score.danger,
+[data-theme=dark] .info-panel.safety {
+  background: #402838;
+  color: #ffced7;
+  border-color: #845165;
+}
+[data-theme=dark] .score.warning {
+  background: #413527;
+  color: #ffe3b9;
+  border-color: #736042;
+}
+[data-theme=dark] .score.ok,
+[data-theme=dark] .info-panel.education {
+  background: #1b3f36;
+  color: #cbf6df;
+  border-color: #376959;
+}
+/* Regel fra «themes» som må komme etter reglene over for å vinne */
+[data-theme=dark] .score.neutral {
+  background: #193247;
+  color: #dce9f5;
+  border-color: #395671;
+}
+/* score */
+[data-theme=dark] .score.danger .score-status {
+  background: #653a4d;
+  color: #ffe5e9;
+}
+[data-theme=dark] .score.warning .score-status {
+  background: #654e30;
+  color: #ffdfab;
+}
+.score.ok {
+  background: color-mix(in srgb,var(--paper) 85%,#d8f4e9 15%);
+  border-color: color-mix(in srgb,var(--ui-success) 42%,var(--line));
+}
+.score.warning {
+  background: color-mix(in srgb,var(--paper) 84%,#fff0cf 16%);
+  border-color: color-mix(in srgb,var(--ui-attention) 42%,var(--line));
+}
+.score.danger {
+  background: color-mix(in srgb,var(--paper) 84%,#ffe1e6 16%);
+  border-color: color-mix(in srgb,var(--ui-danger) 42%,var(--line));
+}
+/* Regel fra «assessment» som må komme etter reglene over for å vinne */
+.score.neutral {
+  background: color-mix(in srgb,var(--paper) 91%,var(--accent-bg) 9%);
+  border-color: var(--ui-border-soft);
+}
+.point-3 {
+  background: #ffe0e4;
+  color: #ae2637;
+}
+:root[data-theme=dark] .point-3 {
+  background: #57313a;
+  color: #ffc6cf;
+}
+/* news-alert */
+.news-alert {
+  margin-top: 16px;
+  padding: 19px 21px;
+  border-radius: 13px;
+  border: 2px solid #a96627;
+  background: #fff3d8;
+  color: #6f3e12;
+  line-height: 1.6;
+}
+.news-alert[hidden] {
+  display: none !important;
+}
+.news-alert h3 {
+  font-size: 17px;
+  color: inherit;
+  margin: 0 0 8px;
+  font-weight: 850;
+}
+.news-alert p {
+  font-size: 14px;
+  margin: 8px 0;
+}
+.news-alert small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: .88;
+  margin-top: 8px;
+}
+.news-alert[data-level=watch] {
+  border-color: #5289b3;
+  background: #eaf4fc;
+  color: #17496d;
+}
+.news-alert[data-level=red] {
+  border-color: #cb7d1f;
+  background: #fff1d1;
+  color: #78440f;
+}
+.news-alert[data-level=urgent],
+.news-alert[data-level=emergency] {
+  border-color: #bb354e;
+  background: #fff0f1;
+  color: #842535;
+}
+:root[data-theme=dark] .news-alert[data-level=watch] {
+  background: #1e394f;
+  border-color: #6598bf;
+  color: #d6ecff;
+}
+:root[data-theme=dark] .news-alert[data-level=red] {
+  background: #503a24;
+  border-color: #cc8a36;
+  color: #ffe5b9;
+}
+:root[data-theme=dark] .news-alert[data-level=urgent],
+:root[data-theme=dark] .news-alert[data-level=emergency] {
+  background: #512936;
+  border-color: #df6981;
+  color: #ffe1e6;
+}
+/* Regel fra «themes» som må komme etter reglene over for å vinne */
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.v08-timer-track,.v08-metric-track) {
+  background: var(--line);
+}
+/* Regel fra «decor» som må komme etter reglene over for å vinne */
+:root[data-personal-mode="kristian"] .personal-mode-popup[data-mode="kristian"] {
+  border-top: 8px solid #af1630;
+  background: linear-gradient(155deg,#fff,#ffe3e9);
+}
+:root[data-personal-mode="kent"] .personal-mode-popup[data-mode="kent"] {
+  border-top: 8px solid #d9b53f;
+  background: linear-gradient(155deg,#fff,#e0f4ec);
+}
+:root[data-base-theme="philip"] .personal-mode-popup[data-mode="philip"] {
+  background: linear-gradient(145deg,rgba(132,202,255,.40),rgba(4,37,112,.72));
+  color: #fff;
+  border: 1px solid #c7e9ffb3;
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  backdrop-filter: blur(30px) saturate(160%);
+  box-shadow: inset 0 1px 0 #fff9,0 24px 80px #00113f9c;
+}
+/* Regel fra «themes» som må komme etter reglene over for å vinne */
+:root[data-service-theme]:not([data-service-theme="custom"]) .meta-line {
+  background: var(--service-subtle);
+  color: var(--ink);
+}
+:root[data-theme=dark] .score.red-trigger {
+  background: #413527;
+  border-color: #8c6c38;
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.detail-button,.btn-isbar) {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .section-symbol {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .toolbox {
+  background: var(--paper);
+  color: var(--ink);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .chip {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .v081-tool-search {
+  background: var(--paper);
+  border-color: var(--service-border);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .v081-search-field {
+  background: var(--service-soft);
+  border-color: var(--service-border);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .v081-search-results {
+  background: var(--paper);
+  border-color: var(--service-border);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) .v081-tool-result {
+  color: var(--ink);
+  background: var(--paper);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.criterion,.criterion-content) {
+  background: var(--paper);
+  border-color: var(--line);
+}
+:root[data-service-theme]:not([data-service-theme="custom"]) :is(.isbar-output,.script-paper,.spoken-script) {
+  background: var(--service-soft);
+  color: var(--ink);
+  border-color: var(--service-border);
+}
+:root[data-theme=dark] .v10-part-score.normal {
+  background: #263741;
+  color: #d6e2eb;
+  border-color: #557082;
+}
+:root[data-theme=dark] .v10-part-score.minor {
+  background: #493a20;
+  color: #fff0cc;
+  border-color: #bb9855;
+}
+:root[data-theme=dark] .v10-part-score.elevated {
+  background: #553a19;
+  color: #ffe9be;
+  border-color: #c58c3f;
+}
+:root[data-base-theme="philip"] .learn12-score-grid:not(.learn12-news-chart) {
+  background: var(--paper);
+  color: var(--ink);
+}
+:root[data-base-theme="philip"] :is(.surface-action,.surface-result,.surface-info)>.section-header {
+  background: linear-gradient(105deg,rgba(192,229,255,.11),transparent 70%);
+  border-color: rgba(187,224,255,.28);
+}
+@media(max-width:620px){
+  /* news-alert */
+  .news-alert {
+    padding: 15px 16px;
+  }
+  .news-alert h3 {
+    font-size: 16px;
+  }
+}
+/* abcde-v099-emergency */
+.abcde-v099-emergency {
+  background: #fff3f4;
+  color: #8e2d43;
+  border: 1px solid #dd879b;
+  padding: 15px;
+  border-radius: 11px;
+}
+.abcde-v099-emergency strong {
+  font-size: 14px;
+}
+.abcde-v099-emergency p {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 7px 0 0;
+}
+:root[data-theme=dark] .abcde-v099-emergency {
+  background: #422736;
+  color: #ffd5df;
+  border-color: #9d6275;
+}
+/* v10-part-score */
+.v10-part-score.critical {
+  background: #ffe3e7;
+  border: 2px solid #c62d45;
+  color: #8e1530;
+  padding: 8px;
+}
+:root[data-theme=dark] .v10-part-score.critical {
+  background: #5a2436;
+  color: #ffd6de;
+  border-color: #ff8ca5;
+}

@@ -1,0 +1,395 @@
+/* Kartlegg – Pasientsimulering.
+ * Del av designsystemet i assets/css/. Filene lastes i nummerrekkefølge fra index.html.
+ */
+/* simulationRoot */
+#simulationRoot {
+  padding: 0 24px 24px;
+  min-width: 0;
+}
+#simulationRoot :is(.sim-action,.sim-reset,.sim-number,.sim-textarea,.sim-details summary):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+@media(max-width:600px){
+  #simulationRoot {
+    padding: 0 13px 15px;
+  }
+}
+.sim-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.sim-case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sim-pill {
+  display: inline-flex;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--ink);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 750;
+}
+.sim-copy {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 10px 0;
+}
+.sim-intro-list {
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.8;
+}
+.sim-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 14px 0;
+}
+.sim-time {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--accent-bg);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.sim-reset {
+  font: inherit;
+  font-size: 12px;
+  min-height: 42px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 9px 13px;
+}
+.sim-columns {
+  display: grid;
+  grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+  gap: 15px;
+  align-items: start;
+}
+@media(max-width:950px){
+  .sim-columns {
+    grid-template-columns: 1fr;
+  }
+}
+.sim-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sim-panel {
+  min-width: 0;
+  border: 1px solid var(--line);
+  padding: 17px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.sim-panel-heading {
+  font-size: 17px;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.sim-hint {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 8px 0;
+}
+/* sim-latest */
+.sim-latest {
+  margin: 12px 0 17px;
+  padding: 14px 18px;
+  border: 1px solid var(--accent-border);
+  border-radius: 13px;
+  background: var(--accent-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--ink);
+}
+.sim-latest strong {
+  font-size: 14px;
+}
+.sim-latest .sim-copy {
+  margin: 4px 0;
+}
+.sim-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+}
+.sim-deterioration {
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--accent-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 12px;
+  line-height: 1.6;
+}
+.sim-action-group {
+  margin: 10px 0 16px;
+}
+.sim-action-group h4 {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .02em;
+  margin: 0 0 7px;
+}
+.sim-action-list {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 8px;
+}
+@media(max-width:600px){
+  .sim-action-list {
+    grid-template-columns: 1fr;
+  }
+}
+/* sim-action */
+.sim-action {
+  font: inherit;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 650;
+  min-height: 48px;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.sim-action:not(:disabled):hover,
+.sim-action:not(:disabled):focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+.sim-action:disabled {
+  opacity: .5;
+  cursor: default;
+}
+.sim-vital-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 9px;
+  margin: 0;
+}
+@media(max-width:600px){
+  .sim-vital-grid {
+    gap: 7px;
+  }
+}
+/* sim-vital */
+.sim-vital {
+  min-width: 0;
+  padding: 10px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 9px;
+}
+.sim-vital dt {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.sim-vital dd {
+  margin: 5px 0 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.sim-reference {
+  display: inline-block;
+  margin: 6px 9px 6px 0;
+  color: var(--accent);
+  font-size: 12px;
+  text-underline-offset: 3px;
+}
+.sim-inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+  margin: 12px 0;
+}
+.sim-inline-form .btn,
+.sim-isbar-form .btn {
+  min-height: 43px;
+}
+.sim-form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 750;
+  color: var(--ink);
+  min-width: 0;
+}
+.sim-number {
+  width: 130px;
+  height: 43px;
+}
+.sim-number,
+.sim-textarea {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 9px 11px;
+}
+.sim-isbar-form {
+  display: grid;
+  gap: 11px;
+}
+.sim-textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 69px;
+}
+.sim-form-status {
+  font-size: 12px;
+  color: var(--ink);
+  margin: 4px 0;
+}
+/* sim-timeline */
+.sim-timeline {
+  margin: 0;
+  padding-left: 23px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.sim-timeline li {
+  padding: 8px 0 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink);
+}
+.sim-timeline strong {
+  font-size: 12px;
+}
+.sim-timeline .sim-hint {
+  margin: 4px 0 0;
+}
+/* sim-finish */
+.sim-finish {
+  padding: 17px;
+  margin: 16px 0;
+  border-radius: 13px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+}
+.sim-finish p {
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0 0 9px;
+}
+@media(max-width:600px){
+  .sim-finish {
+    padding: 13px;
+  }
+}
+.sim-report {
+  padding: 20px;
+}
+@media(max-width:600px){
+  .sim-panel {
+    padding: 14px;
+  }
+}
+.sim-report-summary {
+  border-radius: 11px;
+  padding: 12px;
+  background: var(--accent-bg);
+  margin: 12px 0;
+}
+.sim-report-summary p {
+  margin: 7px 0;
+  font-weight: 750;
+  font-size: 13px;
+  color: var(--ink);
+}
+/* sim-feedback */
+.sim-feedback {
+  padding-left: 20px;
+  display: grid;
+  gap: 13px;
+}
+.sim-feedback li {
+  color: var(--ink);
+  font-size: 13px;
+}
+.sim-feedback .sim-hint {
+  margin: 4px 0;
+}
+/* sim-details */
+.sim-details {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-size: 13px;
+}
+.sim-details summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--ink);
+}
+.sim-details p,
+.sim-details strong {
+  color: var(--ink);
+}
+.sim-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.sim-parts span {
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--ink);
+}
+.sim-references {
+  border-top: 1px solid var(--line);
+  padding-top: 13px;
+  margin-top: 16px;
+  color: var(--ink);
+  font-size: 12px;
+}
+.sim-references p {
+  line-height: 1.6;
+}
+.sim-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+@media(max-width:600px){
+  .sim-overview {
+    padding: 14px;
+  }
+}

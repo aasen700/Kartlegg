@@ -72,7 +72,7 @@ test('learn mode includes an educational disclaimer, official source and static 
  assert.match(html,/id="page-laer"/);
  assert.match(html,/id="gcsLearningRoot"/);
  assert.match(app,/'laer'/);
- for(const p of ['gcs-learning-data.js','gcs-learning-ui.js','gcs-learning.css',
+ for(const p of ['gcs-learning-data.js','gcs-learning-ui.js','css/08-learning.css',
   'gcs-learning-patient.svg','gcs-learning-eyes.svg','gcs-learning-verbal.svg',
   'gcs-learning-motor.svg','gcs-learning-nt.svg']){
   assert.ok(fs.existsSync(path.join(__dirname,'../assets/',p)),p+' must exist');

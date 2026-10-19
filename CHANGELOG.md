@@ -1,5 +1,18 @@
 # Versjonshistorikk – Kartlegg
 
+## Ett designsystem og felles verktøykort – 19. oktober 2026
+
+- Slo sammen de 32 versjonslagene med stil (`v06.css` … `human-finish-v13.css`) til tolv filer i `assets/css/`, ordnet etter ansvar: tokens, grunnstil, sideoppsett, komponenter, profil, vurdering, verktøy, simulering, læring, sesongpynt, temaer og kliniske statusfarger. Overstyrte og ubrukte regler er fjernet.
+- Kliniske statusfarger (skårkort, NEWS2-varsel, 3-poengsparametere, ABCDE-nødvarsel) ligger i en egen fil som lastes sist, slik at ingen tema eller pynt kan endre dem.
+- Sammenslåingen er kontrollert maskinelt: den gamle og den nye versjonen ble sammenlignet piksel for piksel i alle sider, verktøydialoger, læringsmoduler, temaer og skjermbredder før designendringene under ble gjort.
+- Alle 18 verktøykort har nå samme oppbygning: eget ikon, tittel og merkelapp øverst, beskrivelse i midten og én hovedknapp med ikonknapper for *Favoritt* og *Kopier lenke* nederst. Knappene står på samme høyde i hver rad. «Lær …» er en lenke i kortet.
+- Hvert verktøy har fått et eget, meningsbærende linjeikon (f.eks. øye for GCS, puls for NEWS2, stoppeklokke for respirasjonstimeren, sprøyte for Legemiddelverkstedet). Doble ikoner, emojier og symboltegn i kortene er fjernet.
+- NEWS2- og qSOFA-kortene har fått en «Gå til …»-knapp til vurderingen på forsiden.
+- Rettet at kildelenken viste «Kilde: Kilde: …».
+- Rettet en feil der et verktøyvindu kunne åpnes tomt hvis man byttet direkte fra ett hjemmesykepleieverktøy til et annet (gjaldt også TIMES, palliasjon, ABCDE og ankel–arm-indeks).
+- Fjernet historiske kopier i rotmappen (`app.js`, `style.css`, `scoring.js`, `enhancements.*`, `scoring.test.cjs`).
+- Ingen beregninger, kliniske grenser, tekster i verktøyene eller lagringsregler er endret.
+
 ## Egen identitet og roligere standarduttrykk – 19. oktober 2026
 
 - Erstattet det generiske pulssymbolet med et eget Kartlegg-merke: en K bygget av kartleggingslinjer og et tydelig sentrumspunkt. Merket brukes også som favicon.

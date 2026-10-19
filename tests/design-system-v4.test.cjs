@@ -4,24 +4,22 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const read=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+const css=require('./css-helper.cjs');
 
-test('v4 visual system is the final stylesheet and defines the eight requested layers',()=>{
- const html=read('index.html'),css=read('assets/design-system-v4.css'),philip=read('assets/theme-philip.css');
- assert.match(html,/assets\/design-system-v4\.css\?v=1802/);
- assert.ok(html.indexOf('assets/design-system-v3.css')<html.indexOf('assets/design-system-v4.css'));
+test('the design system defines card roles, form states and navigation for every theme',()=>{
+ const all=css.all(),tokens=css.group('tokens'),themes=css.group('themes');
  for(const selector of [
   '.surface-action','.surface-result','.surface-info','.assessment-workspace',
   '.field.is-complete','.mobile-primary-nav',
   'data-theme="light"','data-theme="dark"','#page-laer'
- ])assert.ok(css.includes(selector),selector);
- for(const role of ['--ui-action:','--ui-success:','--ui-attention:','--ui-elevated:','--ui-danger:','--ui-learning:'])assert.ok(css.includes(role),role);
- assert.match(philip,/v4 card hierarchy/);
- assert.match(philip,/data-base-theme="philip"/);
- assert.match(philip,/\.surface-result/);
- assert.match(css,/@media\(min-width:1280px\)/);
- assert.match(css,/@media\(max-width:770px\)/);
- assert.match(css,/prefers-reduced-motion:reduce/);
- assert.match(css,/forced-colors:active/);
+ ])assert.ok(all.includes(selector),selector);
+ for(const role of ['--ui-action:','--ui-success:','--ui-attention:','--ui-elevated:','--ui-danger:','--ui-learning:'])assert.ok(tokens.includes(role)||themes.includes(role),role);
+ assert.match(themes,/data-base-theme="philip"/);
+ assert.match(themes,/\.surface-result/);
+ assert.match(all,/@media\(min-width:1280px\)/);
+ assert.match(all,/@media\(max-width:770px\)/);
+ assert.match(all,/prefers-reduced-motion:reduce/);
+ assert.match(all,/forced-colors:active/);
 });
 
 test('assessment markup has direct action, result and information card roles',()=>{

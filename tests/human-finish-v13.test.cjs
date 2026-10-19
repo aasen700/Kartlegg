@@ -3,6 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+const css=require('./css-helper.cjs');
 
 test('Kartlegg has an original reusable mark and demo identity',()=>{
  const html=read('index.html');
@@ -15,20 +16,17 @@ test('Kartlegg has an original reusable mark and demo identity',()=>{
 });
 
 test('mobile header and drawer are deliberately right aligned',()=>{
- const css=read('assets/human-finish-v13.css');
- assert.match(css,/grid-template-columns:minmax\(0,1fr\) 44px 44px/);
- assert.match(css,/\.mobile-toggle\{grid-column:3/);
- assert.match(css,/\.sidebar\{[\s\S]*left:auto!important;right:0!important/);
- assert.match(css,/\.header \.profile-trigger,[\s\S]*display:none!important/);
+ const all=css.all();
+ assert.match(all,/grid-template-columns:minmax\(0,1fr\) 44px 44px/);
+ assert.match(all,/\.mobile-toggle\{[^}]*grid-column:3/);
+ assert.match(all,/\.sidebar\{[^}]*left:auto!important[^}]*right:0!important/);
+ assert.match(all,/\.header \.profile-trigger[^{]*\{[^}]*display:none!important/);
 });
 
-test('human finish is loaded last and quiets only presentation',()=>{
- const html=read('index.html');
- const css=read('assets/human-finish-v13.css');
- assert.match(html,/assets\/human-finish-v13\.css\?v=1301/);
- assert.ok(html.indexOf('assets/surface-styles-v12.css')<html.indexOf('assets/human-finish-v13.css'));
- assert.match(css,/data-surface-style="solid"/);
- assert.match(css,/data-surface-style="glass"|Liquid\s+Glass/);
+test('solid and glass surfaces are styled without touching clinical state',()=>{
+ const themes=css.group('themes');
+ assert.match(themes,/data-surface-style="solid"/);
+ assert.match(themes,/data-surface-style="glass"/);
  for(const forbidden of ['.score.warning','.score.danger','.score.ok','.news-alert','.point-3'])
-  assert.ok(!css.includes(forbidden),'clinical state must stay untouched: '+forbidden);
+  assert.ok(!themes.includes(forbidden),'clinical state must stay untouched: '+forbidden);
 });

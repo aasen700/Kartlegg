@@ -5,6 +5,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const T=require('../assets/theme-engine.js');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+const css=require('./css-helper.cjs');
 
 test('legacy preferences retain current standard appearance and safe defaults',()=>{
  assert.deepEqual(T.normalize({mode:'dark',accent:'green',service:'homecare'}),{
@@ -44,71 +45,57 @@ test('manual season can be previewed in any month, even when auto is silent',()=
  assert.equal(T.activeSeason('auto',new Date(2026,0,1)),'none');
 });
 test('styling leaves clinical status, escalation and scoring tokens unmodified',()=>{
- const css=read('assets/theme-layers-v11.css');
+ const themes=css.group('themes'),decor=css.group('decor');
  const js=read('assets/theme-engine.js');
  for(const forbidden of ['.score.warning','.score.danger','.score.ok','.news-alert','.abcde-v099-emergency','.point-3','.v10-part-score.critical']){
-  assert.ok(!css.includes(forbidden),'clinical styles must not be themed: '+forbidden);
+  assert.ok(!themes.includes(forbidden),'clinical styles must not be themed: '+forbidden);
+  assert.ok(!decor.includes(forbidden),'clinical styles must not be decorated: '+forbidden);
  }
- assert.doesNotMatch(css,/--(?:coral|orange|teal|blue):/);
+ assert.doesNotMatch(themes,/--(?:coral|orange|teal|blue):/);
  assert.doesNotMatch(js,/Scoring\.|readVitals|localStorage|sessionStorage|fetch\(/);
  assert.match(read('index.html'),/assets\/theme-engine\.js\?v=1201/);
- assert.match(read('index.html'),/assets\/theme-layers-v11\.css\?v=1602/);
+ const html=read('index.html');
+ assert.ok(html.indexOf('assets/css/10-themes.css')<html.indexOf('assets/css/11-clinical.css'),'clinical colours load after every theme');
 });
 
 test('solid and liquid glass are explicit, persistent visual choices',()=>{
- const css=read('assets/surface-styles-v12.css');
+ const themes=css.group('themes');
  const js=read('assets/v06.js');
  const html=read('index.html');
- assert.match(html,/assets\/surface-styles-v12\.css\?v=1201/);
- assert.match(html,/assets\/v06\.js\?v=1601/);
- assert.ok(html.indexOf('assets/design-system-v4.css')<html.indexOf('assets/surface-styles-v12.css'));
+ assert.match(html,/assets\/v06\.js\?v=2000/);
  assert.match(js,/name='surfaceStyle'/);
  assert.match(js,/dataset\.surfaceStyle=state\.surface/);
- assert.match(css,/data-surface-style="glass"/);
- assert.match(css,/backdrop-filter:blur\(26px\) saturate\(175%\)/);
- assert.match(css,/prefers-reduced-transparency:reduce/);
- for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])
-  assert.ok(!css.includes(clinical),'Surface material must preserve clinical presentation: '+clinical);
+ assert.match(themes,/data-surface-style="glass"/);
+ assert.match(themes,/backdrop-filter:blur\(26px\) saturate\(175%\)/);
+ assert.match(css.all(),/prefers-reduced-transparency:reduce/);
 });
 
 test('immersive atmosphere remains independent and excludes clinical scores',()=>{
- const css=read('assets/visual-atmospheres-v112.css');
- const html=read('index.html');
- assert.match(html,/assets\/visual-atmospheres-v112\.css\?v=1602/);
- assert.match(html,/assets\/theme-philip\.css\?v=1503/);
- assert.match(html,/assets\/visual-refinement-v2\.css\?v=1602/);
- assert.ok(html.indexOf('assets/personal-modes.css')<html.indexOf('assets/visual-atmospheres-v112.css'));
+ const decor=css.group('decor');
  for(const theme of ['halloween','christmas','breast-cancer','mental-health','pride'])
-  assert.ok(css.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
- assert.match(css,/season-halloween-web\.svg/);
- assert.match(css,/season-christmas-snow\.svg/);
- for(const asset of ['season-halloween-icons.svg','season-christmas-icons.svg','season-breast-cancer-ribbons.svg','season-mental-health-icons.svg','season-pride-icons.svg'])
-  assert.match(css,new RegExp(asset.replace('.','\\.')));
- assert.match(css,/body\{position:relative;isolation:isolate\}/);
- assert.match(css,/\.shell\{position:relative;z-index:1\}/);
- assert.match(css,/body::after\{z-index:0\}/);
- assert.match(css,/--season-glass-edge/);
- assert.match(css,/kartlegg-winter-drift/);
- for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3'])
-  assert.ok(!css.includes(clinical),'Must preserve clinical presentation: '+clinical);
- assert.match(css,/prefers-reduced-motion:reduce/);
- assert.match(css,/pointer-events:none/);
+  assert.ok(decor.includes('data-season-theme="'+theme+'"'),theme+' must work without Philip scope');
+ for(const asset of ['season-halloween-web.svg','season-christmas-snow.svg','season-halloween-icons.svg','season-christmas-icons.svg','season-breast-cancer-ribbons.svg','season-mental-health-icons.svg','season-pride-icons.svg']){
+  assert.match(decor,new RegExp('\\.\\./'+asset.replace('.','\\.')));
+  assert.ok(fs.existsSync(path.join(__dirname,'..','assets',asset)),asset);
+ }
+ assert.match(decor,/--season-glass-edge/);
+ assert.match(decor,/kartlegg-winter-drift/);
+ assert.match(decor,/pointer-events:none/);
+ const all=css.all();
+ assert.match(all,/body\{[^}]*position:relative[^}]*isolation:isolate/);
+ assert.match(all,/\.shell\{[^}]*position:relative[^}]*z-index:1/);
+ assert.match(all,/body::after\{[^}]*z-index:0/);
+ assert.match(all,/prefers-reduced-motion:reduce/);
 });
 
-test('visual refinement owns previews and motion without recoloring clinical states',()=>{
- const css=read('assets/visual-refinement-v2.css');
- const philip=read('assets/theme-philip.css');
+test('theme previews and the Philip glass theme keep their styling',()=>{
+ const all=css.all(),themes=css.group('themes');
  const profile=read('assets/v06.js');
- assert.match(css,/\.base-theme-preview/);
- assert.match(css,/\.season-theme-preview/);
- assert.match(css,/prefers-reduced-motion:reduce/);
- assert.match(philip,/--glass-surface:/);
- assert.match(philip,/backdrop-filter:blur\(28px\)/);
- assert.match(philip,/radial-gradient/);
+ assert.match(all,/\.base-theme-preview/);
+ assert.match(all,/\.season-theme-preview/);
+ assert.match(themes,/--glass-surface:/);
+ assert.match(themes,/backdrop-filter:blur\(28px\)/);
+ assert.match(themes,/radial-gradient/);
  assert.match(profile,/dataset\.themePreview/);
  assert.match(profile,/seasonThemePreview/);
- for(const clinical of ['.score.warning','.score.danger','.score.ok','.news-alert','.v10-part-score.critical','.point-3']){
-  assert.ok(!css.includes(clinical),'Refinement must preserve clinical presentation: '+clinical);
-  assert.ok(!philip.includes(clinical),'Philip glass must preserve clinical presentation: '+clinical);
- }
 });

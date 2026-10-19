@@ -93,6 +93,6 @@
  }
  launch.addEventListener('click',open);
  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
- dialog.addEventListener('close',()=>{dialog.replaceChildren();tabs=[];panel=null;stepInfo=null});
+ dialog.addEventListener('close',()=>{if(dialog.open)return;dialog.replaceChildren();tabs=[];panel=null;stepInfo=null});
  window.KartleggABCDE={open};
 })();

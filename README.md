@@ -4,6 +4,10 @@
 
 [Åpne Kartlegg](https://aasen700.github.io/Kartlegg/) · [Versjonshistorikk](CHANGELOG.md) · [Kontrollmatrise for alle 18 verktøy](KONTROLLMATRISE.md) · [Klinisk kvalitet](KLINISK-KVALITET.md) · [Arkitektur](ARKITEKTUR.md)
 
+## Oppdatering – ett designsystem og felles verktøykort (oktober 2026)
+- All stil ligger nå i tolv filer i `assets/css/`, ordnet etter ansvar (tokens, grunnstil, sideoppsett, komponenter, sidene/modulene, pynt, temaer og kliniske statusfarger). De 32 gamle versjonslagene er fjernet. Se [Arkitektur](ARKITEKTUR.md#stilark-ett-designsystem-i-assetscss).
+- Alle 18 verktøykort har samme oppbygning og hvert sitt ikon. Kliniske beregninger og tekster er uendret.
+
 ## Nye moduler – oktober 2026
 - **Ankel–arm-indeks (AAI/ABI):** separat beregning for høyre og venstre bein fra høyeste systoliske armtrykk og høyeste trykk i dorsalis pedis/tibialis posterior. Verktøyet viser intervall, måleforbehold og direkte vei til TIMES. Det avgjør ikke diagnose eller kompresjonsbehandling.
 - **Legemiddelverkstedet:** fem læringstrinn og seks helt fiktive oppgaver der brukeren regner volum, velger den minste treningssprøyten som rommer volumet og drar stempelet til riktig mengde. Beregning, sprøytevalg og opptrekk vurderes hver for seg. Modulen gir ikke ordinasjon eller praktisk kompetansegodkjenning.
@@ -75,7 +79,7 @@ Scenarioutviklingen er **forhåndsskrevet**, ikke en simulering av virkelig fysi
 - **Ingen overføring** fra øvingen til Kartleggs ordinære vurderings- eller målehistorikk.
 - **Kun pilot, ikke faglig validert.** Bruk bare syntetiske opplysninger; ikke bruk øvingens tekst eller hendelsesforløp som behandlingsinstruks.
 
-Beregningslogikk og testspecifikasjon: `assets/simulation-engine.js` og `tests/simulation-v01.test.cjs`. Visningen eies av `assets/simulation-ui.js`, med isolert `assets/simulation-v01.css`.
+Beregningslogikk og testspecifikasjon: `assets/simulation-engine.js` og `tests/simulation-v01.test.cjs`. Visningen eies av `assets/simulation-ui.js`, med stil i `assets/css/07-simulation.css`.
 
 ## Funksjoner
 

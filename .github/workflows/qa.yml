@@ -42,7 +42,7 @@ jobs:
             if(!fs.existsSync(name)) throw new Error('Missing linked asset: '+name);
             console.log('OK',name);
           }
-          if (!html.includes('v1.1 · Kun demonstrasjon')) throw new Error('Expected version marker v1.1 · Kun demonstrasjon');
+          if (!html.includes('v1.1 · Demo')) throw new Error('Expected version marker v1.1 · Demo');
           JS
 
       - name: Browser smoke test (Chrome)

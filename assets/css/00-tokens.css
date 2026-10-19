@@ -1,0 +1,91 @@
+/* Kartlegg – Designtokens: farger, avstander, typografi og skygger for lys og mørk modus.
+ * Del av designsystemet i assets/css/. Filene lastes i nummerrekkefølge fra index.html.
+ */
+:root {
+  --coral: #f25761;
+  --coral-deep: #db3d4d;
+  --teal: #0ca99a;
+  --blue: #2786c5;
+  --orange: #dd8b20;
+  --accent: #c93644;
+  --accent-on: #fff;
+  --accent-bg: #fff0f1;
+  --accent-border: #edafb7;
+  --ui-radius-xl: 20px;
+  --ui-radius-lg: 16px;
+  --ui-radius-md: 12px;
+  --ui-ease: cubic-bezier(.22,.72,.28,1);
+  --ui-space-1: 4px;
+  --ui-space-2: 8px;
+  --ui-space-3: 12px;
+  --ui-space-4: 16px;
+  --ui-space-5: 22px;
+  --ui-space-6: 30px;
+  --ui-radius-control: 11px;
+  --ui-radius-card: 17px;
+  --ui-radius-panel: 21px;
+  --ui-control-height: 44px;
+  --ui-border-soft: color-mix(in srgb,var(--line) 86%,var(--accent) 14%);
+  --ui-surface-soft: color-mix(in srgb,var(--paper) 94%,var(--accent-bg) 6%);
+  --ui-surface-raised: color-mix(in srgb,var(--paper) 88%,var(--accent-bg) 12%);
+  --ui-shadow-card: 0 12px 36px color-mix(in srgb,var(--ink) 7%,transparent);
+  --ui-shadow-raised: 0 17px 44px color-mix(in srgb,var(--ink) 11%,transparent);
+  --ui-focus: 0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent);
+  --ui-action: #176fa6;
+  --ui-success: #087b65;
+  --ui-attention: #9a6500;
+  --ui-elevated: #b05b00;
+  --ui-danger: #c3374e;
+  --ui-learning: #6d55b7;
+  --ui-card-action: var(--paper);
+  --ui-card-result: color-mix(in srgb,var(--paper) 91%,var(--accent-bg) 9%);
+  --ui-card-info: color-mix(in srgb,var(--paper) 96%,var(--bg) 4%);
+  --ui-field-rest: color-mix(in srgb,var(--paper) 96%,var(--bg) 4%);
+  --ui-field-done: color-mix(in srgb,var(--paper) 93%,#d9f6ec 7%);
+  --ui-nav-height: 64px;
+  --human-radius-panel: 14px;
+  --human-radius-card: 11px;
+  --human-radius-control: 8px;
+  --human-shadow: 0 2px 10px color-mix(in srgb,var(--ink) 7%,transparent);
+}
+:root[data-theme=dark] {
+  --accent: #ff8591;
+  --accent-on: #10253a;
+}
+:root[data-base-theme="standard"][data-service-theme="custom"][data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f7fb;
+  --paper: #fff;
+  --ink: #132f4a;
+  --muted: #60758b;
+  --line: #d8e3ed;
+  --ui-action: #176fa6;
+  --ui-success: #087b65;
+  --ui-attention: #8a6200;
+  --ui-elevated: #a85200;
+  --ui-danger: #bd334a;
+  --ui-learning: #684fb2;
+}
+:root[data-base-theme="standard"][data-service-theme="custom"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #081827;
+  --paper: #122b40;
+  --ink: #edf5fb;
+  --muted: #b4c7d7;
+  --line: #35536c;
+  --accent-bg: #1b4059;
+  --accent-border: #5e8eaa;
+  --ui-action: #72c6ef;
+  --ui-success: #68d5b2;
+  --ui-attention: #f0c66a;
+  --ui-elevated: #f2a45e;
+  --ui-danger: #ff8da1;
+  --ui-learning: #b9a3ff;
+}
+@media(max-width:770px){
+  :root {
+    --ui-shadow-card: 0 6px 18px color-mix(in srgb,var(--ink) 6%,transparent);
+    --ui-shadow-raised: 0 8px 22px color-mix(in srgb,var(--ink) 9%,transparent);
+    --ui-nav-height: 66px;
+  }
+}
