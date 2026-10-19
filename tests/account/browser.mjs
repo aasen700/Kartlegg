@@ -16,7 +16,7 @@ try{
  $('profileName').value='Guest Nurse';$('profileRole').value='Sykepleier';$('saveProfile').click();
  $('accountEmail').value='synthetic@example.test';$('accountPassword').value='synthetic-test-password';
  $('accountForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));await pause();
- assert(!$('accountMember').hidden,'member status visible');assert(!$('accountConflict').hidden,'first import requires explicit choice');assert(writes===0,'no initial silent upload');assert(JSON.parse(localStorage.getItem('kartlegg.account.guest.v1')).settings.profile.name==='','memory-only guest profile not persisted');
+ assert(!$('accountMember').hidden,'member status visible');assert($('page-profil').dataset.account==='member','logged-in profile hides «Husk profilen»');assert(!$('accountConflict').hidden,'first import requires explicit choice');assert(writes===0,'no initial silent upload');assert(JSON.parse(localStorage.getItem('kartlegg.account.guest.v1')).settings.profile.name==='','memory-only guest profile not persisted');
  $('accountUseCloud').click();await pause();
  assert($('profileName').value==='Cloud Nurse','cloud profile populates existing fields');
  assert(window.KartleggToolNavigation.favorites.includes('news2'),'cloud favorites populate existing owner');
@@ -30,7 +30,7 @@ try{
  const before=JSON.stringify(cloud);$('isbarSituation').value='SYNTHETIC CLINICAL TEXT MUST NOT SYNC';$('isbarSituation').dispatchEvent(new Event('input',{bubbles:true}));await app.sync.save();
  assert(JSON.stringify(cloud)===before,'clinical ISBAR input never enters account payload');
  $('accountLogout').click();await pause();
- assert(!$('accountGuest').hidden,'guest UI restored after logout');assert($('profileName').value==='Guest Nurse','guest profile restored');assert(!$('rememberProfile').checked,'guest persistence opt-in restored');
+ assert(!$('accountGuest').hidden,'guest UI restored after logout');assert($('page-profil').dataset.account==='guest','«Husk profilen» returns after logout');assert($('profileName').value==='Guest Nurse','guest profile restored');assert(!$('rememberProfile').checked,'guest persistence opt-in restored');
  assert(!localStorage.getItem('kartlegg.account.owner.v1'),'account owner marker cleared');
  assert(!$('rr').disabled,'clinical assessment remains available');
  assert($('page-profil').dataset.profileView==='main','login returns to the profile');

@@ -91,7 +91,7 @@
  sync();
  const chip=library.querySelector('.intro .chip');if(chip)chip.textContent=cards.length+' tilgjengelige verktøy';
  const description=library.querySelector('.intro p:not(.eyebrow)');
- if(description)description.textContent='Finn en kalkulator, et kartleggingsverktøy, en klinisk veileder eller ferdighetstrening. Filtrer etter kategori eller søk på navn og symptomer.';
+ if(description)description.textContent='Søk på navn eller symptom, eller bla etter kategori.';
  const sectionHeader=library.querySelector('.section-header p');
  if(sectionHeader)sectionHeader.textContent='Velg fagkategori, eller søk etter et konkret verktøy.';
  window.KartleggToolCategories={get active(){return active},get total(){return cards.length}};

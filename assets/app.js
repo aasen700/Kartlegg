@@ -226,8 +226,8 @@ function saveProfile(){
   try{
     if($('rememberProfile').checked) localStorage.setItem(PROFILE_KEY,JSON.stringify(info));
     else localStorage.removeItem(PROFILE_KEY);
-    $('profileStatus').textContent=$('rememberProfile').checked?'Profilen er lagret lokalt.':'Profilen brukes i denne fanen.';
-  }catch(_){$('profileStatus').textContent='Nettleseren tillater ikke varig lagring; profilen brukes kun i fanen.';}
+    $('profileStatus').textContent=$('rememberProfile').checked?'Lagret. Nettleseren husker profilen.':'Lagret for denne fanen.';
+  }catch(_){$('profileStatus').textContent='Lagret for denne fanen. Nettleseren tillater ikke å huske den.';}
   window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 function loadProfile(){
@@ -236,7 +236,6 @@ function loadProfile(){
     if(stored&&typeof stored==='object') {
       for(const id of PROFILE_IDS){const key=id.replace('profile','').toLowerCase();if(typeof stored[key]==='string')$(id).value=stored[key].slice(0,120);}
       $('rememberProfile').checked=true;
-      $('profileStatus').textContent='Lokal profil hentet fra nettleseren.';
     }
   }catch(_){}
 }
@@ -244,7 +243,7 @@ function clearProfile(){
   for(const id of PROFILE_IDS)$(id).value='';
   $('rememberProfile').checked=false;
   try{localStorage.removeItem(PROFILE_KEY);}catch(_){}
-  $('profileStatus').textContent='Profilen er slettet fra Kartlegg.';
+  $('profileStatus').textContent='Profilen er slettet.';
   window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 function buildIsbarText(){

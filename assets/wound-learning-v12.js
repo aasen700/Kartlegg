@@ -12,7 +12,7 @@
  const cases=()=>D.cases.filter(c=>c.level===(mode==='practice'?'Øv':'Test'));
  const course=b('','learn12-course-card wound12-course',()=>open('home'));course.dataset.learnTool='times';
  course.setAttribute('aria-pressed','false');course.append(h('span','learn12-course-symbol','▤'));
- const words=h('span','learn12-course-copy');words.append(h('strong','','TIMES'),h('small','','Seks fiktive kasus · medisinske illustrasjoner'));course.append(words);chooser.append(course);
+ const words=h('span','learn12-course-copy');words.append(h('strong','','TIMES'),h('small','','Seks fiktive sårkasus med illustrasjoner'));course.append(words);chooser.append(course);
  function picture(c,compact=false){
   const fig=h('figure','wound13-picture'+(compact?' compact':''));
   const viewport=h('div','wound13-image-viewport'),img=h('img','wound13-image is-oversikt');

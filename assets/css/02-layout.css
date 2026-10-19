@@ -253,6 +253,12 @@
   }
 }
 /* mobile-toggle */
+/* Over 770 px står sidemenyen alltid fremme, så menyknappen trengs bare på mobil. */
+@media(min-width:771px){
+  .header .mobile-toggle {
+    display: none !important;
+  }
+}
 .mobile-toggle {
   background: none;
   border: 0;

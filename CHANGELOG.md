@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Småpuss på profil, meny og tekster – 20. oktober 2026
+
+- «Husk profilen i denne nettleseren» vises ikke når du er innlogget. Da tar kontoen vare på profilen.
+- Etter «Bruk profil» lukkes skjemaet, og bekreftelsen står under radene: «Lagret for denne fanen», «Lagret. Nettleseren husker profilen» eller «Lagret i kontoen».
+- Meny-knappen i toppen vises bare på mobil. På PC og nettbrett står sidemenyen alltid fremme.
+- Kortere og mer direkte tekster flere steder: «Profil» i menyen, «Verktøy» som sidetittel, hjelpeteksten under tidspunkt, sidene Lær, Simulering og Om Kartlegg og bunnteksten. Kliniske tekster og grenser er ikke endret.
+
 ## Ny profilside med innlogging – 20. oktober 2026
 
 - «Min profil» er nå en egen side i stedet for et vindu. Øverst står kontoen: «Ikke innlogget» med én knapp for å logge inn, eller navn, e-post og synkstatus når du er innlogget.

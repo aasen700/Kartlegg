@@ -217,7 +217,7 @@
   }
   const footer=elt('div','sim-references');
   addParagraph(footer,Engine.caseData.warning);
-  footer.append(elt('strong','','Faglige referanser for scenarioets ramme: '));
+  footer.append(elt('strong','','Faglig grunnlag: '));
   for(const s of Engine.caseData.sources)footer.append(sameTabLink(s.name+' ↗',s.url));
   root.append(footer);
   const announcer=elt('p','sim-sr');announcer.id='simAnnounce';

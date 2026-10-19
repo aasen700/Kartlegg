@@ -881,3 +881,21 @@ dialog.settings-sheet {
   background: none;
   box-shadow: none;
 }
+/* Bekreftelsen etter «Bruk profil» står under radene. Innlogget: kontoen husker profilen, så avkrysningen skjules. */
+.sender-status {
+  margin: 0;
+  padding: 10px 16px 12px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+}
+.sender-status:empty,
+.sender-summary[hidden]+.sender-status {
+  display: none;
+}
+#page-profil[data-account="member"] .profile-save {
+  display: none;
+}
+#page-profil[data-account="member"] .profile-actions {
+  margin-top: 16px;
+}

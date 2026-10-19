@@ -18,7 +18,7 @@
 
  const course=button('','learn12-course-card medication12-course',()=>open('home'));course.dataset.learnTool='medication';course.setAttribute('aria-pressed','false');
  course.append(h('span','learn12-course-symbol','◇'));
- const courseCopy=h('span','learn12-course-copy');courseCopy.append(h('strong','','Legemiddelregning'),h('small','','Regn · velg sprøyte · trekk opp'));course.append(courseCopy);chooser.append(course);
+ const courseCopy=h('span','learn12-course-copy');courseCopy.append(h('strong','','Legemiddelregning'),h('small','','Regn ut, velg sprøyte og trekk opp'));course.append(courseCopy);chooser.append(course);
 
  let mode='home',lesson=0,caseIndex=0,answers={},results={},finished=false;
  const cases=()=>D.cases.filter(item=>item.level===(mode==='practice'?'practice':'test'));

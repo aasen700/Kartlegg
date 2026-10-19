@@ -66,6 +66,9 @@ export function mountAccount({enabled,loadBackend}){
   const c=sync?.conflict;$('accountConflict').hidden=!c;
   if(c){$('accountConflictText').textContent=c.first?'Velg kontoens innstillinger, eller importer innstillingene fra denne enheten.':'Begge versjoner er endret. Ingen av dem er overskrevet.';$('accountLocalPreview').textContent=preview(c.local);$('accountCloudPreview').textContent=preview(c.remote);$('accountUseCloud').disabled=!c.remote||operating||sync.busy}
   document.getElementById('profileTrigger').setAttribute('aria-label',user?'Åpne profil og konto – innlogget':'Åpne profil og konto');
+  const pageEl=document.getElementById('page-profil');if(pageEl)pageEl.dataset.account=user?'member':'guest';
+  const info=document.querySelector('.sender-editor .profile-info');
+  if(info)info.textContent=user?'Profilen lagres i kontoen når du trykker «Bruk profil», og følger deg til mobil og PC.':'Uten konto gjelder profilen bare denne fanen, med mindre du krysser av for «Husk profilen».';
  }
  async function run(action){if(operating||!backend)return;operating=true;host.setAttribute('aria-busy','true');const buttons=[...host.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);
   try{await action()}catch(e){status(e)}finally{operating=false;host.removeAttribute('aria-busy');buttons.forEach(b=>b.disabled=false);render()}}
@@ -118,6 +121,7 @@ export function mountAccount({enabled,loadBackend}){
   await sync.start(next.uid);if(token!==generation)return;render();
  }
  window.addEventListener('kartlegg:settings-changed',()=>sync?.changed());
+ document.getElementById('saveProfile')?.addEventListener('click',()=>{if(user?.emailVerified)document.getElementById('profileStatus').textContent='Lagret i kontoen.'});
  window.addEventListener('online',()=>{if(sync?.active)sync.retry()});
  if(!enabled){host.querySelectorAll('button').forEach(b=>b.disabled=true);status('Konto er under klargjøring og er ikke aktivert. Profil, favoritter og utseende fungerer fortsatt lokalt.');return {host}}
  status('Kobler til kontotjenesten …');host.querySelectorAll('button').forEach(b=>b.disabled=true);

@@ -165,11 +165,12 @@ function refreshSender(){
 }
 function editSender(open,field){
  senderEditor.hidden=!open;senderSummary.hidden=open;
+ if(open)$('profileStatus').textContent='';
  if(open)$(field||'profileName')?.focus();else senderSummary.querySelector('button')?.focus({preventScroll:true});
 }
 senderSummary.querySelectorAll('[data-sender-field]').forEach(b=>b.addEventListener('click',()=>editSender(true,b.dataset.senderField)));
-$('saveProfile')?.addEventListener('click',()=>{refreshSender();editSender(false)});
-$('clearProfile')?.addEventListener('click',refreshSender);
+$('saveProfile')?.addEventListener('click',()=>{refreshSender();initials();editSender(false)});
+$('clearProfile')?.addEventListener('click',()=>{refreshSender();editSender(false)});
 window.addEventListener('kartlegg:profile-applied',refreshSender);
 // Profile page views: main settings, or the login / signup screens. Back (button or browser) returns to main.
 const profilePage=$('page-profil');
