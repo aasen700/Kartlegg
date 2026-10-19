@@ -1,0 +1,20 @@
+/* Account UI inherits Kartlegg's existing buttons, colours and dialog. */
+.account-panel label:not(.account-consent){display:block;margin-top:.75rem;font-weight:600}
+.account-panel input:not([type=checkbox]){width:100%;min-height:44px;box-sizing:border-box}
+.account-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.account-actions .btn{min-height:44px;white-space:normal}
+.account-consent{display:flex;align-items:flex-start;gap:.6rem;margin:.9rem 0;font-size:.9rem}
+.account-consent input{flex:none;margin-top:.3rem}
+.account-tag{font-size:.7em;font-weight:400;opacity:.75}
+.account-panel details{margin-top:1rem}
+.account-panel summary{cursor:pointer;min-height:44px;align-content:center;font-weight:600}
+.account-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.85rem}
+.account-compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.account-compare>div{border:1px solid currentColor;border-radius:12px;padding:.8rem;min-width:0}
+#accountStatus{padding:.8rem;border:1px solid currentColor;border-radius:12px;font-weight:500;overflow-wrap:anywhere}
+#accountIdentity{overflow-wrap:anywhere}
+.account-panel .account-danger{border-color:#bb3131;color:#bb3131}
+.account-panel [hidden]{display:none!important}
+.account-panel button:disabled{opacity:.55;cursor:not-allowed}
+.account-panel :focus-visible{outline:3px solid currentColor;outline-offset:3px}
+@media(max-width:540px){.account-compare{grid-template-columns:1fr}.account-actions .btn{flex:1 1 100%}}

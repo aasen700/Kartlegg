@@ -36,5 +36,5 @@
   // BFCache restores the DOM and the existing profile; keep the heart overlay in sync.
   if(e.persisted)setActive(isMaritha()&&(remember.checked||enabled),false);
  });
- window.KartleggThemeFinale={get marithaMode(){return enabled}};
+ window.KartleggThemeFinale={applyProfile(){setActive(isMaritha(),false)},get marithaMode(){return enabled}};
 })();

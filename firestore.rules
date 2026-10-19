@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function owner(uid) { return request.auth != null && request.auth.uid == uid; }
+  function verified(uid) { return owner(uid) && request.auth.token.email_verified == true; }
+  function recent() { return request.auth.token.auth_time > request.time.toMillis() / 1000 - 300; }
+  function profile(p) {
+   return p is map && p.keys().hasAll(['name','role','work','department'])
+    && p.keys().hasOnly(['name','role','work','department'])
+    && p.name is string && p.name.size() <= 120
+    && p.role is string && p.role.size() <= 120
+    && p.work is string && p.work.size() <= 120
+    && p.department is string && p.department.size() <= 120;
+  }
+  function appearance(a) {
+   return a is map && a.keys().hasAll(['mode','accent','service','base','season','surface'])
+    && a.keys().hasOnly(['mode','accent','service','base','season','surface'])
+    && a.mode in ['light','dark','system'] && a.accent in ['violet','blue','green']
+    && a['service'] in ['custom','hospital','ambulance','urgent','homecare']
+    && a.base in ['standard','philip']
+    && a.season in ['off','auto','halloween','christmas','breast-cancer','mental-health','pride']
+    && a.surface in ['solid','glass'];
+  }
+  function settings(s) {
+   return s is map && s.keys().hasAll(['profile','favorites','appearance'])
+    && s.keys().hasOnly(['profile','favorites','appearance']) && profile(s.profile) && appearance(s.appearance)
+    && s.favorites is list && s.favorites.size() <= 18
+    && s.favorites.toSet().size() == s.favorites.size()
+    && s.favorites.toSet().hasOnly(['news2','qsofa','gcs','4at','nrs','bmi-bsa','resp-timer','mst','tug','esas-r','ortho-bt','fast','skuv','times','palliasjon','abcde','abi','medication-lab']);
+  }
+  function active(d) {
+   return d.keys().hasAll(['schemaVersion','state','revision','settings','updatedAt'])
+    && d.keys().hasOnly(['schemaVersion','state','revision','settings','updatedAt'])
+    && d.schemaVersion == 1 && d.state == 'active'
+    && d.revision is int && d.revision > 0 && d.revision < 2147483647
+    && d.updatedAt == request.time && settings(d.settings);
+  }
+  function tombstone(d) {
+   return d.keys().hasAll(['schemaVersion','state','updatedAt'])
+    && d.keys().hasOnly(['schemaVersion','state','updatedAt'])
+    && d.schemaVersion == 1 && d.state == 'deleting' && d.updatedAt == request.time;
+  }
+  match /users/{uid} {
+   // No collection enumeration, including by the owner. Only document reads.
+   allow get: if owner(uid);
+   allow list: if false;
+   allow create: if owner(uid) && ((verified(uid) && active(request.resource.data) && request.resource.data.revision == 1)
+    || (recent() && tombstone(request.resource.data)));
+   allow update: if owner(uid) && resource.data.state == 'active'
+    && ((verified(uid) && active(request.resource.data) && request.resource.data.revision == resource.data.revision + 1)
+     || (recent() && tombstone(request.resource.data)));
+   // Tombstone cannot be removed/reversed by another active client session.
+   // An administrator cleans it after confirming the Auth user no longer exists.
+   allow delete: if false;
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}

@@ -142,8 +142,9 @@ function apply(){
  const surfaceName=state.surface==='glass'?'Liquid glass':'Solide bokser';
  $('appearanceSummary').textContent=baseName+' · '+surfaceName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
  try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
+ window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
-window.KartleggThemeLayers={get preferences(){return {...prefs}},get effective(){return ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date())}};
+window.KartleggThemeLayers={apply(value){prefs=ThemeEngine.normalize(value);if(prefs.accent==='violet')prefs.accentChoiceVersion=1;apply()},get preferences(){return {...prefs}},get effective(){return ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date())}};
 function openProfile(){initials();apply();drawer.showModal()}
 avatar.addEventListener('click',openProfile);
 $('closeProfile').addEventListener('click',()=>drawer.close());

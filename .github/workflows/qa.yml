@@ -7,12 +7,18 @@ on:
       - 'tests/**'
       - 'index.html'
       - '.github/workflows/qa.yml'
+      - 'firestore.rules'
+      - 'firebase.json'
+      - 'package*.json'
   pull_request:
     paths:
       - 'assets/**'
       - 'tests/**'
       - 'index.html'
       - '.github/workflows/qa.yml'
+      - 'firestore.rules'
+      - 'firebase.json'
+      - 'package*.json'
   workflow_dispatch:
 
 jobs:
@@ -47,3 +53,29 @@ jobs:
 
       - name: Browser smoke test (Chrome)
         run: python3 tests/browser-smoke.py
+
+  account:
+    name: Account model, sync, rules and UI
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Syntax and unit regressions
+        run: |
+          for file in assets/account/*.mjs; do node --check "$file"; done
+          npm test
+      - name: Firestore emulator security rules (no credentials or real project)
+        run: npm run test:rules
+      - name: Account UI with synthetic backend in Chrome
+        run: python3 tests/account/browser-smoke.py

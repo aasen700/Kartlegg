@@ -59,6 +59,7 @@
   if(!R.get(id))return;
   favorites=isFavorite(id)?favorites.filter(x=>x!==id):[...favorites,id];
   persist();renderFavorites();syncCards();
+  window.dispatchEvent(new Event('kartlegg:settings-changed'));
  }
  function directLink(id){return R.linkFor(window.location.href,id)}
  const status=document.createElement('p');status.id='toolNavigationStatus';status.className='tool-navigation-status';
@@ -135,6 +136,7 @@
  dialogSwitches($('isbarDialog'),[['news2','NEWS2'],['gcs','GCS']]);
  window.KartleggToolNavigation=Object.freeze({
   open,copyLink,directLink,toggleFavorite:toggle,
+  applyFavorites(value){favorites=R.sanitizeFavorites(value);persist();renderFavorites();syncCards()},
   get favorites(){return [...favorites]}
  });
  // A deep link can be bookmarked or shared; only allow exact registry IDs.
