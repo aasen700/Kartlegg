@@ -499,58 +499,7 @@
 #page-profil .section>.btn {
   margin: 0 24px 22px;
 }
-/* action-dock */
-.action-dock {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  position: fixed;
-  z-index: 20;
-  bottom: max(12px,env(safe-area-inset-bottom));
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(580px,calc(100vw - 26px));
-  padding: 11px 12px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--paper);
-  box-shadow: 0 11px 40px #0816243c;
-}
-.action-dock .btn {
-  flex: 1;
-  min-height: 47px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-@media(max-width:770px){
-  body.mobile-menu-open .action-dock {
-    display: none !important;
-  }
-}
-@media(max-width:620px){
-  .action-dock {
-    left: 0;
-    bottom: 0;
-    transform: none;
-    width: 100%;
-    z-index: 20;
-    gap: 6px;
-    padding: 7px 8px max(7px,env(safe-area-inset-bottom));
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 -5px 20px #0b25302e;
-  }
-}
-@media(max-width:770px){
-  .action-dock {
-    display: none !important;
-  }
-}
 /* page-vurdering */
-body:has(#page-vurdering[hidden]) .action-dock,
-body:has(dialog[open]) .action-dock {
-  display: none;
-}
 body:has(#page-vurdering:not([hidden])) .main {
   padding-bottom: max(118px,env(safe-area-inset-bottom));
 }

@@ -86,33 +86,26 @@
   const text=document.createElement('span');text.className='tool-card-action-label';text.textContent=label;b.append(text);return b;
  }
  const home=$('homeToolSearch');
- const quick=document.createElement('nav');quick.className='tool-workflow';quick.id='toolWorkflow';
- quick.setAttribute('aria-label','Hurtigflyt mellom NEWS2, GCS og ISBAR');
- for(const [id,label] of [['news2','NEWS2'],['gcs','GCS'],['isbar','ISBAR']]){
-  quick.append(button(label,'tool-workflow-button',()=>open(id)));
- }
  const favBlock=document.createElement('section');favBlock.className='tool-favorites';favBlock.id='toolFavorites';
  favBlock.setAttribute('aria-label','Mine favorittverktøy');
  const favTitle=document.createElement('strong');favTitle.textContent='Mine favoritter';
  const favItems=document.createElement('div');favItems.className='tool-favorites-list';favItems.id='toolFavoritesList';
  favBlock.append(favTitle,favItems);
- home.append(quick,favBlock,status);
+ home.append(favBlock,status);
  const cardControls=new Map();
  function syncCards(){
   for(const [id,star] of cardControls){
    const active=isFavorite(id);
-   star.querySelector('.tool-card-action-label').textContent=active?'Favoritt':'Favoritt';
+   star.querySelector('.tool-card-action-label').textContent='Favoritt';
    star.setAttribute('aria-pressed',String(active));
    star.setAttribute('aria-label',(active?'Fjern ':'Legg til ')+R.get(id).name+(active?' fra favoritter':' som favoritt'));
   }
  }
  function renderFavorites(){
   favItems.replaceChildren();
-  if(!favorites.length){
-   const none=document.createElement('span');none.className='tool-favorites-empty';
-   none.textContent='Stjernemerk verktøy i biblioteket for hurtigtilgang her.';
-   favItems.append(none);return;
-  }
+  // Favorittfeltet vises først når brukeren har stjernemerket noe.
+  favBlock.hidden=!favorites.length;
+  if(!favorites.length)return;
   for(const id of favorites){
    const item=R.get(id);if(!item)continue;
    const shortcut=button(item.name,'tool-favorite-shortcut',()=>open(id));shortcut.dataset.icon='star';favItems.append(shortcut);

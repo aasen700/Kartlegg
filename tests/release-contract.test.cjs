@@ -40,7 +40,6 @@ test('mobile drawer overlays search and dock and locks background scrolling',()=
  assert.match(css,/\.sidebar\{[^}]*z-index:90/);
  assert.match(css,/\.sidebar-backdrop\{[^}]*z-index:80/);
  assert.match(css,/body\.mobile-menu-open\{[^}]*overflow:hidden/);
- assert.match(css,/body\.mobile-menu-open \.action-dock\{[^}]*display:none!important/);
  assert.match(app,/mainContent\.inert=open/);
  assert.match(app,/menuBtn\.setAttribute\('aria-expanded'/);
 });
@@ -55,7 +54,7 @@ test('real patient measurement persistence has not been introduced',()=>{
  const src=['assets/ux-v071.js','assets/homecare-v09-ui.js','assets/times-v091.js','assets/palliation-v091.js'];
  for(const p of src)assert.doesNotMatch(read(p),/\blocalStorage\.|\bsessionStorage\.|\bindexedDB\b|\bdocument\.cookie\b/,p);
  assert.match(app,/const measurements = \[\]/);
- assert.match(html,/Målingene forsvinner ved ny lasting eller når fanen lukkes/);
+ assert.match(html,/de forsvinner når du laster siden på nytt eller lukker fanen/);
 });
 test('About page accurately describes its prototype purpose',()=>{
  assert.match(html,/id="page-om"/);
@@ -139,6 +138,6 @@ test('single canonical registry drives search and direct-linkable 18 tools',()=>
  assert.match(read('assets/tool-categories-v099.js'),/search\.addEventListener\('input',sync\)/);
  assert.doesNotMatch(read('assets/modern-v08-body.js'),/stopImmediatePropagation\(\)/);
  assert.match(read('assets/tool-navigation.js'),/addEventListener\('load',openDeepLink/);
- assert.match(html,/assets\/tool-navigation\.js\?v=2000/);
+ assert.match(html,/assets\/tool-navigation\.js\?v=2010/);
  assert.match(html,/assets\/tool-registry\.js\?v=1201/);
 });

@@ -144,14 +144,4 @@
  form?.addEventListener('input',()=>{if(!result.hidden)result.hidden=true});
  form?.addEventListener('change',()=>{if(!result.hidden)result.hidden=true});
 
- // Persistent-in-viewport action dock (never stores data) for the assessment page.
- const dock=document.createElement('nav');dock.id='actionDock';dock.className='action-dock';dock.setAttribute('aria-label','Hurtighandlinger for vurdering');
- for(const [id,label,source] of [['dockScore','Beregn skårer',null],['dockIsbar','ISBAR','openIsbar'],['dockSave','Lagre måling','saveMeasurement']]){
-  const b=document.createElement('button');b.type='button';b.id=id;b.className=id==='dockScore'?'btn btn-primary':'btn btn-secondary';b.textContent=label;
-  b.addEventListener('click',()=>{
-   if(source)$(source)?.click();else $('vitalsForm')?.requestSubmit();
-  });
-  dock.append(b);
- }
- document.body.append(dock);
 })();

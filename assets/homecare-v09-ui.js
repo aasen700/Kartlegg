@@ -67,7 +67,6 @@
   if(state.stop){state.stop();state.stop=null}
   const head=elem('div','v08-dialog-head');
   const copy=elem('div');
-  copy.append(elem('p','eyebrow','Hjemmesykepleie · demonstrasjon med fiktive data'));
   const h=elem('h2','',item.name+' – '+item.sub);h.id='hcTitle';copy.append(h);
   const close=elem('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk '+item.name);
   close.addEventListener('click',safeClose);

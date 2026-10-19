@@ -15,8 +15,47 @@
 }
 :root[data-service-theme]:not([data-service-theme="custom"]) .header .theme-top-ribbon {
   display: block;
-}
-:root[data-base-theme="philip"] :is(.header,.sidebar,.section,.field,.toolbox,.profile-dialog,.profile-dialog-head,.clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.v081-tool-search,.v081-search-results,.v10-optional-gcs,.action-dock,.dialog-head,.learning-flow,.gcs-learn-hero,.gcs-learn-mode-card,.gcs-learn-sheet,.gcs-learn-summary,.gcs-learn-exam-report,.gcs-learn-check,.gcs-learn-exam,.gcs-learn-soon,.learn12-hero,.learn12-course-card,.learn12-mode,.learn12-lesson,.learn12-summary,.learn12-report,.learn12-patient,.learn12-feedback,.learn12-rule-example,.sim-panel,.sim-finish,.sim-references,.wound12-mode,.wound13-home-hero,.wound13-gallery-card,.wound13-case-media,.wound13-case-panel) {
+}:root[data-base-theme="philip"] :is(.header,
+.sidebar,
+.section,
+.field,
+.toolbox,
+.profile-dialog,
+.profile-dialog-head,
+.clinical-tool-dialog,
+.tool-modal-head,
+.v08-dialog,
+.v08-dialog-head,
+.v081-tool-search,
+.v081-search-results,
+.v10-optional-gcs,
+.dialog-head,
+.learning-flow,
+.gcs-learn-hero,
+.gcs-learn-mode-card,
+.gcs-learn-sheet,
+.gcs-learn-summary,
+.gcs-learn-exam-report,
+.gcs-learn-check,
+.gcs-learn-exam,
+.gcs-learn-soon,
+.learn12-hero,
+.learn12-course-card,
+.learn12-mode,
+.learn12-lesson,
+.learn12-summary,
+.learn12-report,
+.learn12-patient,
+.learn12-feedback,
+.learn12-rule-example,
+.sim-panel,
+.sim-finish,
+.sim-references,
+.wound12-mode,
+.wound13-home-hero,
+.wound13-gallery-card,
+.wound13-case-media,
+.wound13-case-panel) {
   color: var(--ink) !important;
   background: var(--glass-surface) !important;
   border-color: var(--glass-edge) !important;
@@ -620,8 +659,20 @@
     box-shadow: inset 0 1px 0 #ffffffa3,0 20px 50px rgba(0,19,76,.28),0 0 25px #4bc8ff29 !important;
   }
 }
-/* header */
-:root[data-base-theme="philip"][data-surface-style="solid"] :is(.header,.sidebar,.section,.toolbox,.profile-dialog,.profile-dialog-head,.clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.v081-tool-search,.action-dock,.mobile-primary-nav,.next-step-card,.info-panel) {
+/* header */:root[data-base-theme="philip"][data-surface-style="solid"] :is(.header,
+.sidebar,
+.section,
+.toolbox,
+.profile-dialog,
+.profile-dialog-head,
+.clinical-tool-dialog,
+.tool-modal-head,
+.v08-dialog,
+.v08-dialog-head,
+.v081-tool-search,
+.mobile-primary-nav,
+.next-step-card,
+.info-panel) {
   background: #0b3c97 !important;
   border-color: #70a8e6 !important;
   box-shadow: 0 14px 36px rgba(0,20,72,.30) !important;
@@ -1047,8 +1098,27 @@
   background: rgba(2,31,96,.28) !important;
   border-color: rgba(179,220,255,.32) !important;
 }
-/* header */
-:root[data-surface-style="glass"] :is(.header,.sidebar,.section,.toolbox,.hc-tool-card,.v081-tool-search,.tool-favorites,.profile-dialog,.profile-dialog-head,.clinical-tool-dialog,.tool-modal-head,.v08-dialog,.v08-dialog-head,.dialog-head,.action-dock,.mobile-primary-nav,.next-step-card,.info-panel,.learning-flow,.gcs-learn-mode-card,.learn12-course-card,.wound13-gallery-card) {
+/* header */:root[data-surface-style="glass"] :is(.header,
+.sidebar,
+.section,
+.toolbox,
+.hc-tool-card,
+.v081-tool-search,
+.tool-favorites,
+.profile-dialog,
+.profile-dialog-head,
+.clinical-tool-dialog,
+.tool-modal-head,
+.v08-dialog,
+.v08-dialog-head,
+.dialog-head,
+.mobile-primary-nav,
+.next-step-card,
+.info-panel,
+.learning-flow,
+.gcs-learn-mode-card,
+.learn12-course-card,
+.wound13-gallery-card) {
   background: var(--liquid-surface) !important;
   border-color: var(--liquid-edge) !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.82),inset 1px 0 0 rgba(255,255,255,.22),0 18px 48px var(--liquid-text-shadow) !important;

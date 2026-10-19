@@ -1170,9 +1170,6 @@
   .keyboard-open dialog.profile-dialog[open] {
     margin-block: 0;
   }
-  .keyboard-open .action-dock {
-    display: none !important;
-  }
   .keyboard-open .main {
     padding-bottom: 35px;
   }

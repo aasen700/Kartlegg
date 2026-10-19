@@ -64,7 +64,7 @@
   }
  }
  function heading(kicker,name){
-  const section=h('div','learn12-heading');section.append(h('span','learn12-kicker',kicker),h('h3','',name));
+  const section=h('div','learn12-heading');if(kicker)section.append(h('span','learn12-kicker',kicker));section.append(h('h3','',name));
   if(state.mode!=='home')section.append(button('← Til oversikten','learn12-back',()=>setMode('home')));
   root.append(section);
  }
@@ -86,7 +86,6 @@
    text(refs,'Poenggrenser fra RCP NEWS2 (2017). Dette er et eget, interaktivt pedagogisk poengskjema, ikke RCPs originale observasjonsskjema eller en autorisert oversettelse. Skala 2 kun etter dokumentert klinisk beslutning.');
    refs.append(url(D.source.news2,'Royal College of Physicians – NEWS2 ↗'));
   }
-  text(refs,'Øv kun med fiktive data. Ingen klinisk godkjenning, pasientdata eller serverlagring. Resultatene viser skåring, ikke en diagnose eller behandlingsplan.','learn12-disclaimer');
   root.append(refs);
  }
  function landingArtwork(){
@@ -141,12 +140,11 @@
  }
  function landing(){
   const isFour=state.tool==='four';
-  heading('Kartlegg Lær · interaktivt',isFour?'4AT – lær deliriumvurdering':'NEWS2 – lær poengskåring');
+  heading('',isFour?'4AT – lær deliriumvurdering':'NEWS2 – lær poengskåring');
   const hero=h('section','learn12-hero learn12-hero-'+state.tool);
   const copy=h('div','learn12-hero-copy');
-  copy.append(h('span','learn12-hero-pill','Tilgjengelig nå · '+titles[state.tool]));
-  copy.append(h('h4','',isFour?'Fra observasjon til en presis 4AT-skår':
-   'Bli tryggere på skåring av vitale observasjoner'));
+  copy.append(h('h4','',isFour?'Lær å bruke 4AT':
+   'Lær å skåre NEWS2'));
   text(copy,isFour
    ?'Forstå de fire vurderingsområdene, se forskjellen på ulike poengalternativer, og prøv deg på fiktive pasientsituasjoner.'
    :'Lær NEWS2-grensene, øv på å velge riktig felt i poengskjemaet, og test deg på ulike vitale observasjoner og SpO₂-skalaer.',
@@ -156,8 +154,7 @@
   for(const label of [
    count.lessons.length+' læringssteg',
    count.cases.filter(c=>c.level==='Øv').length+' øvingscaser',
-   count.cases.filter(c=>c.level==='Test').length+' testcaser',
-   'Kjører lokalt'
+   count.cases.filter(c=>c.level==='Test').length+' testcaser'
   ])stats.append(h('span','',label));
   copy.append(stats);
   hero.append(copy,landingArtwork());
@@ -187,9 +184,6 @@
    modes.append(card);
   }
   root.append(modes);
-  const note=h('p','learn12-landing-note');
-  note.textContent='Kun pedagogiske øvelser med fiktive data. Ikke klinisk validering eller kompetansebevis.';
-  root.append(note);
  }
  function lessonPage(){
   const list=collections().lessons,q=list[state.lesson];

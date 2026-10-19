@@ -59,7 +59,6 @@
  function open(){
   dialog.replaceChildren();
   const head=h('div','v08-dialog-head');const copy=h('div');
-  copy.append(h('p','eyebrow','Klinisk observasjonsveileder · fiktivt scenario'));
   const heading=h('h2','','ABCDE – systematisk primærvurdering');heading.id='abcdeTitle';copy.append(heading);
   const close=h('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk ABCDE');
   close.addEventListener('click',()=>dialog.close());head.append(copy,close);

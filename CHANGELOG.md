@@ -1,5 +1,16 @@
 # Versjonshistorikk – Kartlegg
 
+## Mindre pynt, roligere språk og en enklere forside – 19. oktober 2026
+
+- Fjernet merkelapper som «Gratis · Ingen AI», «0 kr · Ingen AI», «Kjører lokalt», «Tilgjengelig nå», «NY» og «PILOT».
+- Fjernet de små overskriftene med store bokstaver over sidetitler og i verktøyvinduene.
+- Skrev om Om Kartlegg: kortere tekst uten slagord og punktlister med uthevet stikkord. «Nytt i 1.1» er erstattet med en lenke til versjonshistorikken.
+- Samlet forbeholdene om fiktive data og klinisk bruk på forsiden (ett felt) og Om Kartlegg, i stedet for i hvert verktøy og hver læringsmodul.
+- Forsiden: fjernet den flytende knappelinjen, snarveiene NEWS2/GCS/ISBAR og det tomme favorittfeltet (vises igjen når noe er stjernemerket). ISBAR-knappen står nå ett sted, ved resultatene.
+- Feltene i skjemaet viser ikke lenger grå eksempelverdier (18, 97, 120 …) som kunne forveksles med utfylte verdier.
+- Læringsflisene bruker de samme ikonene som verktøykortene.
+- Ingen beregninger, kliniske grenser eller fagtekster i verktøyene er endret.
+
 ## Ett designsystem og felles verktøykort – 19. oktober 2026
 
 - Slo sammen de 32 versjonslagene med stil (`v06.css` … `human-finish-v13.css`) til tolv filer i `assets/css/`, ordnet etter ansvar: tokens, grunnstil, sideoppsett, komponenter, profil, vurdering, verktøy, simulering, læring, sesongpynt, temaer og kliniske statusfarger. Overstyrte og ubrukte regler er fjernet.

@@ -41,7 +41,7 @@
   return fig;
  }
  function header(kicker,title){
-  const d=h('div','wound12-header');d.append(h('small','',kicker),h('h3','',title));
+  const d=h('div','wound12-header');if(kicker)d.append(h('small','',kicker));d.append(h('h3','',title));
   if(mode!=='home')d.append(b('← Til oversikten','learn12-secondary',()=>setMode('home')));
   root.append(d);
  }
@@ -57,7 +57,7 @@
   if(e.target.closest('[data-learn-tool]')!==course)panel.hidden=true;
  },true);
  function home(){
-  header('Kartlegg Lær · sårvurdering','TIMES – lær, øv og test');
+  header('','TIMES – lær, øv og test');
   root.append(h('p','wound13-lead','Seks fiktive sårkasus med klinisk inspirerte medisinske undervisningsillustrasjoner. Lær å beskrive sårbunn, infeksjons-/inflammasjonstegn, fuktbalanse, sårkant og huden rundt. Ingen pasientfoto, journalføring eller behandlingsråd.'));
   const hero=h('section','wound13-home-hero');
   hero.append(picture(D.cases[0],true));

@@ -2804,3 +2804,8 @@
   color: var(--muted);
   line-height: 1.6;
 }
+
+.learn12-course-symbol .ui-icon-svg {
+  width: 22px;
+  height: 22px;
+}
