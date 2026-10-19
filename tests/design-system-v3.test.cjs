@@ -9,7 +9,7 @@ const css=require('./css-helper.cjs');
 test('the shared design tokens and structure live in assets/css/',()=>{
  const html=read('index.html');
  const tokens=css.group('tokens'),themes=css.group('themes'),all=css.all();
- assert.match(html,/assets\/icon-system\.js\?v=1802/);
+ assert.match(html,/assets\/icon-system\.js\?v=2000/);
  for(const token of ['--ui-space-1:','--ui-radius-control:','--ui-control-height:','--ui-shadow-card:'])assert.ok(tokens.includes(token),token);
  for(const selector of ['data-service-theme="hospital"','data-service-theme="ambulance"','data-service-theme="urgent"','data-service-theme="homecare"'])assert.ok(themes.includes(selector),selector);
  assert.match(all,/@media\(max-width:480px\)/);

@@ -255,11 +255,11 @@
  const gcsCard=document.querySelector('#page-verktoy .toolbox[data-tool-id="gcs"]');
  const toolsBar=gcsCard?.querySelector('.tool-card-actions');
  if(toolsBar&&!toolsBar.querySelector('.gcs-learn-card-button')){
-  const shortcut=btn('✦ Lær GCS','gcs-learn-card-button',()=>{
+  const shortcut=btn('Lær GCS','gcs-learn-card-button',()=>{
    document.querySelector('[data-page="laer"]')?.click();
    if(!window.KartleggLearningHub?.setTool('gcs','learn'))open('learn');
   });
-  shortcut.setAttribute('aria-label','Åpne interaktiv GCS-opplæring');
+  shortcut.dataset.icon='learn';shortcut.setAttribute('aria-label','Åpne interaktiv GCS-opplæring');
   toolsBar.append(shortcut);
  }
  window.KartleggLearnPilot=Object.freeze({

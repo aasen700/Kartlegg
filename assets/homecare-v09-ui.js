@@ -60,7 +60,7 @@
   if(dialog.open)dialog.close();
   dialog.replaceChildren();
  }
- dialog.addEventListener('close',()=>{if(state.stop){state.stop();state.stop=null}dialog.replaceChildren()});
+ dialog.addEventListener('close',()=>{if(dialog.open)return;if(state.stop){state.stop();state.stop=null}dialog.replaceChildren()});
  dialog.addEventListener('cancel',()=>{if(state.stop){state.stop();state.stop=null}});
  dialog.addEventListener('click',e=>{if(e.target===dialog)safeClose()});
  function startDialog(item){

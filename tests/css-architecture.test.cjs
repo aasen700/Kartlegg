@@ -66,3 +66,18 @@ test('mobile drawer overlays content and locks scrolling', () => {
   assert.match(all, /body\.mobile-menu-open\{[^}]*overflow:hidden/);
   assert.match(all, /body\.mobile-menu-open \.action-dock\{[^}]*display:none!important/);
 });
+
+test('tool cards share one layout and one icon per tool', () => {
+  const tools = css.group('tools');
+  for (const part of ['.tool-card-head', '.tool-card-icon', '.tool-card-footer', '.tool-card-primary', '.tool-card-actions'])
+    assert.ok(tools.includes(part), part);
+  const icons = fs.readFileSync(path.join(root, 'assets', 'icon-system.js'), 'utf8');
+  const map = icons.match(/const toolIcons=Object\.freeze\(\{([^}]*)\}\)/)[1];
+  const names = [...map.matchAll(/:'([\w-]+)'/g)].map(m => m[1]);
+  assert.equal(names.length, 18, 'one icon per tool');
+  assert.equal(new Set(names).size, 18, 'every tool icon is unique');
+  for (const name of names) assert.match(icons, new RegExp('\\b' + name + ":'<"), 'icon path missing: ' + name);
+  const cards = fs.readFileSync(path.join(root, 'assets', 'tool-cards.js'), 'utf8');
+  assert.match(cards, /KartleggToolCards/);
+  assert.doesNotMatch(cards, /\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage|indexedDB)\b/);
+});

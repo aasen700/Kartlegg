@@ -29,7 +29,7 @@ test('one SVG icon system covers navigation, actions, dialogs and tool cards',()
  const js=read('assets/icon-system.js');
  for(const icon of ['plus','reset','clock','menu','arrowRight','arrowLeft','close','copy','check'])assert.match(js,new RegExp(icon+":|'"+icon+"'"));
  assert.match(js,/\.dialog-close/);
- assert.match(js,/\.toolbox\[data-tool-id\] h3/);
+ assert.match(js,/toolIcon:id=>/);
  assert.match(js,/button:not\(\[data-ui-action-icon\]\)/);
  assert.doesNotMatch(html,/type="reset">↻|id="saveMeasurement">＋|type="submit">▦/);
 });

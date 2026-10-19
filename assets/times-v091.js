@@ -115,6 +115,6 @@ function open(){
  }
  launch.addEventListener('click',open);
  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
- dialog.addEventListener('close',()=>dialog.replaceChildren());
+ dialog.addEventListener('close',()=>{if(!dialog.open)dialog.replaceChildren()});
  window.KartleggTIMES={open};
 })();

@@ -132,6 +132,6 @@
  launch.addEventListener('click',open);
  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
  // No symptom selections represent a patient record; closing drops the DOM content.
- dialog.addEventListener('close',()=>dialog.replaceChildren());
+ dialog.addEventListener('close',()=>{if(!dialog.open)dialog.replaceChildren()});
  window.KartleggPalliation={open,symptoms:topics.map(x=>({id:x.id,name:x.name}))};
 })();

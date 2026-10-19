@@ -25,7 +25,27 @@ const paths=Object.freeze({
  arrowLeft:'<path d="M19 12H5M10 7l-5 5 5 5"/>',
  close:'<path d="M6 6l12 12M18 6 6 18"/>',
  copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
- check:'<path d="m5 12 4 4L19 6"/>'
+ check:'<path d="m5 12 4 4L19 6"/>',
+ vitals:'<path d="M2.5 12.5h4l2.4-6.5 4.4 13 2.7-8 1.4 1.5h4.1"/>',
+ infection:'<circle cx="12" cy="12" r="4.5"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2.1 2.1M15.9 15.9 18 18M6 18l2.1-2.1M15.9 8.1 18 6"/><path d="M10.6 11h.01M13.2 13.2h.01"/>',
+ eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/>',
+ cognition:'<path d="M9.5 4.5A3 3 0 0 0 4 6a3 3 0 0 0-.2 5.7A3.5 3.5 0 0 0 7 17h2.5ZM14.5 4.5A3 3 0 0 1 20 6a3 3 0 0 1 .2 5.7A3.5 3.5 0 0 1 17 17h-2.5Z"/><path d="M9.5 4.5V20M14.5 4.5V20M7 9h2.5M14.5 12H18"/>',
+ gauge:'<path d="M3.5 17.5a8.5 8.5 0 1 1 17 0"/><path d="m12 17.5 4.2-4.8"/><circle cx="12" cy="17.5" r="1.3"/><path d="M6.3 11.8 7.6 13M12 7.5V9M17.7 11.8 16.4 13"/>',
+ scale:'<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 10.5a4 4 0 0 1 8 0"/><path d="m12 10.5 1.6-2.3"/>',
+ stopwatch:'<circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5M10 2.5h4M12 2.5V6M18.2 7.3l1.6-1.6"/>',
+ nutrition:'<path d="M7 3v18M4.5 3v5a2.5 2.5 0 0 0 5 0V3"/><path d="M17.5 21V3c-2.3 1.3-3.6 4-3.6 7.2V13h3.6"/>',
+ walk:'<circle cx="13.2" cy="4" r="2"/><path d="m9.3 21.5 2.6-6.6 3 3v3.6"/><path d="m11.9 14.9 1.1-6.7 3.1 3.6 3 1"/><path d="M13 8.2 9 10.3 7.6 14.4"/>',
+ sliders:'<path d="M4 6h9.5M18.5 6H20M4 12h3.5M12.5 12H20M4 18h11.5"/><circle cx="16" cy="6" r="2.3"/><circle cx="10" cy="12" r="2.3"/><circle cx="18" cy="18" r="2.3"/>',
+ pressure:'<circle cx="9.5" cy="13" r="6.5"/><path d="m9.5 13 2.9-2.9"/><path d="M19.5 4v16M17.2 6.3 19.5 4l2.3 2.3M17.2 17.7l2.3 2.3 2.3-2.3"/>',
+ face:'<circle cx="12" cy="12" r="9"/><path d="M9 9.5h.01M15 9.5h.01"/><path d="M8.3 15.2c1.1.9 2.4 1.4 3.7 1.4 1 0 1.9-.3 2.6-.7"/><path d="M16.6 14.6l.9-.9"/>',
+ stethoscope:'<path d="M5 3H4v5a5 5 0 0 0 10 0V3h-1"/><path d="M9 13v1.5a5.5 5.5 0 0 0 11 0V12"/><circle cx="20" cy="10" r="2"/>',
+ bandage:'<rect x="2.6" y="8.2" width="18.8" height="7.6" rx="3.8" transform="rotate(-45 12 12)"/><path d="M10.6 10.6h.01M13.4 13.4h.01M10.6 13.4h.01M13.4 10.6h.01"/><path d="m8.2 12.3 3.5 3.5M12.3 8.2l3.5 3.5"/>',
+ care:'<path d="M12 13.5c-2-1.4-4.5-3-4.5-5.2 0-2.4 3-3.3 4.5-1.3 1.5-2 4.5-1.1 4.5 1.3 0 2.2-2.5 3.8-4.5 5.2Z"/><path d="m3 14.5 3.8 4c.9 1 2.1 1.5 3.4 1.5h3.6c1.3 0 2.5-.5 3.4-1.5l3.8-4"/>',
+ checklist:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="m8.5 10 1.5 1.5 3-3M8.5 15.5h7"/>',
+ doppler:'<path d="M8 3v10.5c0 1.6-1.2 3-2.6 4-1 .7-.6 2.5.9 2.5H14c1.4 0 2.4-.9 2.4-2.1 0-.9-.5-1.6-1.5-2L12.5 15V3"/><path d="M17.2 6.8a3 3 0 0 1 0 4.2M19.6 4.6a6.2 6.2 0 0 1 0 8.6"/>',
+ syringe:'<path d="m17.5 2.5 4 4M19.5 4.5l-3 3"/><path d="M17.5 8.5 8 18l-2-2 9.5-9.5"/><path d="m6 18-3.5 3.5M9.5 12.5l1.5 1.5M12.5 9.5l1.5 1.5"/><path d="m14 5 5 5"/>',
+ star:'<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/>',
+ link:'<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.3 1.3"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.3-1.3"/>'
 });
 const svg=name=>`<svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name]||paths.spark}</svg>`;
 const navIcons={vurdering:'assessment',historikk:'history',verktoy:'tools',laer:'learn',simulering:'simulation',om:'info',profil:'profile'};
@@ -47,7 +67,8 @@ const decorateButton=(button,name)=>{
  button.dataset.uiActionIcon=name;
 };
 const glyphActions=Object.freeze({'＋':'plus','+':'plus','↻':'reset','▦':'calculator','▣':'document','◷':'clock','☰':'menu','×':'close','✓':'check','←':'arrowLeft','→':'arrowRight'});
-const toolIcons=Object.freeze({news2:'heart',qsofa:'brain',gcs:'brain','4at':'brain',nrs:'heart','bmi-bsa':'calculator','resp-timer':'clock',mst:'document',tug:'clock','esas-r':'chart','ortho-bt':'heart',fast:'brain',skuv:'document',times:'wound',palliasjon:'heart',abcde:'assessment',abi:'heart','medication-lab':'calculator'});
+// Ett eget ikon per verktøy, brukt av verktøykortene (assets/tool-cards.js).
+const toolIcons=Object.freeze({news2:'vitals',qsofa:'infection',gcs:'eye','4at':'cognition',nrs:'gauge','bmi-bsa':'scale','resp-timer':'stopwatch',mst:'nutrition',tug:'walk','esas-r':'sliders','ortho-bt':'pressure',fast:'face',skuv:'stethoscope',times:'bandage',palliasjon:'care',abcde:'checklist',abi:'doppler','medication-lab':'syringe'});
 const paint=(scope=document)=>{
  scope.querySelectorAll?.(':is(.nav,.mobile-primary-link)[data-page] .ico').forEach(icon=>replace(icon,navIcons[icon.closest('[data-page]').dataset.page]));
  scope.querySelectorAll?.('.section-symbol').forEach(icon=>replace(icon,symbolIcons[icon.textContent.trim()]||'spark'));
@@ -55,11 +76,6 @@ const paint=(scope=document)=>{
  scope.querySelectorAll?.('.about-v0993-card-icon').forEach(icon=>replace(icon,icon.textContent.includes('▣')?'document':'info'));
  scope.querySelectorAll?.('[data-icon]').forEach(button=>decorateButton(button,button.dataset.icon));
  scope.querySelectorAll?.('.dialog-close').forEach(button=>decorateButton(button,'close'));
- scope.querySelectorAll?.('.toolbox[data-tool-id] h3').forEach(heading=>{
-  if(heading.dataset.uiActionIcon)return;
-  heading.textContent=heading.textContent.replace(/^\s*[^\p{L}\p{N}]+\s*/u,'');
-  decorateButton(heading,toolIcons[heading.closest('.toolbox').dataset.toolId]||'tools');
- });
  scope.querySelectorAll?.('button:not([data-ui-action-icon])').forEach(button=>{
   const glyph=(button.textContent.trim().match(/^[＋+↻▦▣◷☰×✓←→]/u)||[])[0];
   if(glyph)decorateButton(button,glyphActions[glyph]);
@@ -69,5 +85,5 @@ paint();
 new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{
  if(node.nodeType===1){paint(node);if(node.matches?.('.section-symbol,.score-icon,.about-v0993-card-icon,.dialog-close,[data-icon],button'))paint(node.parentElement)}
 }))).observe(document.body,{childList:true,subtree:true});
-window.KartleggIconSystem=Object.freeze({names:Object.keys(paths),navigation:Object.keys(navIcons),refresh:paint});
+window.KartleggIconSystem=Object.freeze({names:Object.keys(paths),navigation:Object.keys(navIcons),refresh:paint,svg,toolIcon:id=>toolIcons[id]||'tools'});
 })();

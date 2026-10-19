@@ -66,6 +66,16 @@ Utseendet ble tidligere bygget av 32 versjonslag (`v06.css`, `ux-v071.css`, `fin
 
 Sammenslåingen ble kontrollert maskinelt før designendringene: den gamle og den nye versjonen ble åpnet i Chrome i et stort antall tilstander (alle sider, alle verktøydialoger med og uten utfylte verdier, læringsmodulene, simuleringen, temaer, sesonger, personlige moduser, mørk modus og tilgjengelighetsinnstillinger, ved bredder fra 320 til 1600 px). Regler som aldri vant over andre regler ble fjernet, og skjermbildene var piksel for piksel identiske.
 
+### Verktøykort
+
+Alle 18 kort i verktøybiblioteket har samme oppbygning, laget av `assets/tool-cards.js` etter at verktøymodulene har lagt inn kortene sine. Skriptet flytter eksisterende knapper (med sine hendelser) inn i samme struktur og eier ingen klinisk logikk:
+
+- **Topp:** eget ikon for verktøyet, tittel og merkelapp.
+- **Innhold:** kort beskrivelse, eventuell «Lær …»-lenke og (for NEWS2/qSOFA) parametere.
+- **Bunn:** én hovedknapp («Åpne …» eller «Gå til …») og ikonknapper for *Favoritt* og *Kopier lenke* (med tekst for skjermlesere).
+
+Ikonene ligger i `assets/icon-system.js` (`toolIcons`), ett unikt ikon per verktøy-ID i registeret. Kortflaten (bakgrunn, kant, skygge) arves fra `.toolbox`, slik at temaene virker som før.
+
 ## Kartlegg Lær – GCS og videre læringsmoduler
 
 - `#laer` og `assets/gcs-learning-ui.js` eier den nye pedagogiske brukeropplevelsen. Stilen ligger i `assets/css/08-learning.css`.
@@ -105,7 +115,7 @@ GitHub Actions kjører dette på `main`. Nye funksjoner må ha både rene tester
 - `assets/mobile-ux.js` følger nettleserens visual viewport og skjuler handlingslinjen mens skjermtastaturet tar plass. Dialogene tilpasses synlig høyde, og fokuserte felt holdes synlige.
 - `assets/learning-flow.js` eier navigasjonen Oversikt → Lær → Øv → Test og fremdriftsvisningen for GCS, 4AT, NEWS2, TIMES og Legemiddelverkstedet. Fagdata og skåring ligger fortsatt i hver modul. Øv viser forklaringer underveis; Test viser fasit etter siste oppgave. Ingen nye lagringsnøkler.
 - Philip-temaet (palett, glassflater og kontroller) ligger i `assets/css/10-themes.css`, avgrenset til aktivt Philip-tema.
-- `assets/icon-system.js` eier dekorative ikoner i hovednavigasjon, seksjonsoverskrifter, skårkort, verktøykort, handlingsknapper og dialoglukking. Ikonene er lokale, skjules for hjelpemidler og kan ikke lagre eller sende data.
+- `assets/icon-system.js` eier dekorative ikoner i hovednavigasjon, seksjonsoverskrifter, skårkort, handlingsknapper og dialoglukking, og ett eget ikon per verktøy (`toolIcons`) som `assets/tool-cards.js` bruker i verktøykortene. Ikonene er lokale, skjules for hjelpemidler og kan ikke lagre eller sende data.
 - `assets/assessment-flow-v11.js` eier bare resultatfokus og navigasjon til klinisk respons på forsiden. `assets/app.js` og `assets/scoring.js` beholder fullt eierskap til validering og beregning.
 - `assets/design-system-v4.js` ruter bare den mobile hovedmenyen gjennom eksisterende sideknapper og markerer lokalt om et skjemafelt er ferdig utfylt. Modulen beregner, lagrer eller sender ingenting.
 - Sesongpynt og personlige moduser ligger i `assets/css/09-decor.css`. Dekorasjon skal aldri endre fixed/sticky-plasseringen til menyer eller dialoger.

@@ -192,7 +192,7 @@ function renderCriteria(items){
  wrap.append(stack);return wrap;
 }
 const boxes=one('#page-verktoy .toolgrid')?.querySelectorAll('.toolbox');
-if(boxes?.length>=2)for(const [i,items] of [[0,news],[1,qs]]){const old=boxes[i].querySelector('details');if(!old)continue;const link=old.querySelector('a[href]')?.cloneNode(true);const replacement=renderCriteria(items);if(link){const source=document.createElement('p');source.className='criteria-source';source.append('Kilde: ',link);replacement.append(source)}old.replaceWith(replacement)}
+if(boxes?.length>=2)for(const [i,items] of [[0,news],[1,qs]]){const old=boxes[i].querySelector('details');if(!old)continue;const link=old.querySelector('a[href]')?.cloneNode(true);const replacement=renderCriteria(items);if(link){link.textContent=link.textContent.replace(/^\s*Kilde:\s*/,'');const source=document.createElement('p');source.className='criteria-source';source.append('Kilde: ',link);replacement.append(source)}old.replaceWith(replacement)}
 // Validation with explicit field names, preserving the existing submit/save logic.
 const form=$('vitalsForm');const fieldnames={rr:'Respirasjonsfrekvens',spo2:'Oksygenmetning',sbp:'Systolisk blodtrykk',hr:'Puls',temp:'Temperatur',conscious:'Bevissthet',oxygen:'Tilført oksygen',scale:'SpO₂-skala',gcs:'GCS'};
 function validate(){

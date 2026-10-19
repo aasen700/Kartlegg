@@ -2007,3 +2007,202 @@
 .abi12-caveat p {
   margin: .35rem 0 0;
 }
+
+/* ------------------------------------------------------------------
+ * Verktøykort – ett felles oppsett for alle 18 verktøy.
+ * Struktur (bygges av assets/tool-cards.js):
+ *   .tool-card-head  ikon + tittel + merkelapp
+ *   .tool-card-description
+ *   (parametere for NEWS2/qSOFA)
+ *   .tool-card-footer  hovedknapp + rad med Favoritt / Kopier lenke / Lær
+ * Kortflaten (bakgrunn, kant, skygge) arves fra .toolbox, slik at tjenestetemaer og
+ * mørk modus virker som før. Nye deler bruker tokens.
+ * ------------------------------------------------------------------ */
+#page-verktoy .toolgrid{
+  align-items:stretch;
+}
+#page-verktoy .toolgrid .toolbox.tool-card{
+  display:flex;
+  flex-direction:column;
+  gap:var(--ui-space-3);
+  min-width:0;
+  padding:var(--ui-space-5);
+  border-radius:var(--ui-radius-card);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-head{
+  display:flex;
+  align-items:flex-start;
+  gap:var(--ui-space-3);
+  margin:0;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-icon{
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:var(--accent-bg);
+  color:var(--accent);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-icon .ui-icon-svg{
+  width:24px;
+  height:24px;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-titles{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+  min-width:0;
+  padding-top:1px;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-titles h3{
+  display:block;
+  margin:0;
+  padding:0;
+  font-size:17px;
+  line-height:1.3;
+  font-weight:800;
+  color:var(--ink);
+  overflow-wrap:anywhere;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-titles .tool-tag{
+  margin:0;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-description{
+  margin:0;
+  font-size:14px;
+  line-height:1.55;
+  color:var(--muted);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .criteria-wrap{
+  margin:0;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-learn{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--ui-space-2);
+  margin:0;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-learn-link{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:32px;
+  margin:0;
+  padding:4px 0;
+  border:0;
+  background:none;
+  box-shadow:none;
+  color:var(--accent);
+  font:inherit;
+  font-size:13px;
+  font-weight:750;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-color:var(--accent-border);
+  cursor:pointer;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-learn-link:hover{
+  text-decoration-color:currentColor;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-learn-link .ui-icon-svg{
+  width:16px;
+  height:16px;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-footer{
+  display:flex;
+  align-items:stretch;
+  gap:var(--ui-space-2);
+  width:100%;
+  max-width:none;
+  margin-top:auto;
+  padding-top:var(--ui-space-4);
+  border-top:1px solid var(--line);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-primary{
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  max-width:none;
+  min-width:0;
+  min-height:var(--ui-control-height);
+  margin:0;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions{
+  display:flex;
+  flex:0 0 auto;
+  flex-wrap:nowrap;
+  gap:var(--ui-space-2);
+  width:auto;
+  margin:0;
+  padding:0;
+  border:0;
+  grid-template-columns:none;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions>button{
+  flex:0 0 auto;
+  box-sizing:border-box;
+  display:grid;
+  place-items:center;
+  width:var(--ui-control-height);
+  min-width:0;
+  height:var(--ui-control-height);
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:var(--ui-radius-control);
+  background:var(--paper);
+  color:var(--muted);
+  font:inherit;
+  cursor:pointer;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions>button:hover{
+  border-color:var(--accent-border);
+  background:var(--accent-bg);
+  color:var(--accent);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions>button[aria-pressed="true"]{
+  border-color:var(--accent-border);
+  background:var(--accent-bg);
+  color:var(--accent);
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions>button[aria-pressed="true"] .ui-icon-svg{
+  fill:currentColor;
+}
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-actions .ui-icon-svg{
+  width:18px;
+  height:18px;
+}
+/* Teksten leses av skjermlesere, men vises ikke ved siden av ikonet. */
+#page-verktoy .toolgrid .toolbox.tool-card .tool-card-action-label{
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  white-space:nowrap;
+}
+/* NEWS2 og qSOFA har parametertabeller og får hele bredden. */
+#page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="news2"],
+#page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="qsofa"]{
+  grid-column:1/-1;
+}
+#page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="news2"] .tool-card-primary,
+#page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="qsofa"] .tool-card-primary{
+  flex:0 1 280px;
+}
+@media (max-width:480px){
+  #page-verktoy .toolgrid .toolbox.tool-card{
+    padding:var(--ui-space-4);
+  }
+  #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="news2"] .tool-card-primary,
+  #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="qsofa"] .tool-card-primary{
+    flex:1 1 auto;
+  }
+}

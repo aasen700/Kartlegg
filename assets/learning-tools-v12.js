@@ -55,12 +55,12 @@
   const copy=h('span','learn12-course-copy');copy.append(h('strong','',name),h('small','',description));b.append(copy);
   chooser.append(b);
  }
- for(const [id,cardId,label] of [['four','4at','✦ Lær 4AT'],['news','news2','✦ Lær NEWS2']]){
+ for(const [id,cardId,label] of [['four','4at','Lær 4AT'],['news','news2','Lær NEWS2']]){
   const card=document.querySelector('#page-verktoy .toolbox[data-tool-id="'+cardId+'"]');
   const bar=card?.querySelector('.tool-card-actions');
   if(bar&&!bar.querySelector('.learn12-card-shortcut')){
    const b=button(label,'learn12-card-shortcut',()=>chooseCourse(id,'learn'));
-   b.setAttribute('aria-label','Åpne interaktiv opplæring i '+titles[id]);bar.append(b);
+   b.dataset.icon='learn';b.setAttribute('aria-label','Åpne interaktiv opplæring i '+titles[id]);bar.append(b);
   }
  }
  function heading(kicker,name){
