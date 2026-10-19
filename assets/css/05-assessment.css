@@ -397,11 +397,14 @@
 }
 .criterion summary strong {
   font-size: 14px;
+  min-width: 0;
+  hyphens: auto;
 }
 .criterion summary small {
   font-size: 11px;
   color: var(--muted);
   margin-left: auto;
+  white-space: nowrap;
 }
 @media(max-width:480px){
   .criterion summary {
@@ -1350,11 +1353,7 @@
     grid-row: 1;
   }
   #vitalsForm #saveMeasurement {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  #vitalsForm #openIsbar {
-    grid-column: 2;
+    grid-column: 1/-1;
     grid-row: 2;
   }
 }
