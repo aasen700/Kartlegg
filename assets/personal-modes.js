@@ -72,6 +72,7 @@
   clear.addEventListener('click',()=>setMode(null,false));
   win.KartleggPersonalModes=Object.freeze({
    get active(){return active},
+   applyProfile(){setMode(resolvePersonalMode(name.value),false)},
    resolvePersonalMode
   });
  }

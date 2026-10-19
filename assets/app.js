@@ -228,6 +228,7 @@ function saveProfile(){
     else localStorage.removeItem(PROFILE_KEY);
     $('profileStatus').textContent=$('rememberProfile').checked?'Profilen er lagret lokalt.':'Profilen brukes i denne fanen.';
   }catch(_){$('profileStatus').textContent='Nettleseren tillater ikke varig lagring; profilen brukes kun i fanen.';}
+  window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 function loadProfile(){
   try{
@@ -244,6 +245,7 @@ function clearProfile(){
   $('rememberProfile').checked=false;
   try{localStorage.removeItem(PROFILE_KEY);}catch(_){}
   $('profileStatus').textContent='Profilen er slettet fra Kartlegg.';
+  window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 function buildIsbarText(){
   const p=readProfile(),v=readVitals(),stamp=getTimeData();
@@ -341,3 +343,6 @@ $('clearProfile').addEventListener('click',clearProfile);
 for(const [id,step] of [['smallerScript',-2],['largerScript',2]])$(id).addEventListener('click',()=>{scriptFontSize=Math.max(15,Math.min(29,scriptFontSize+step));$('isbarOutput').style.fontSize=scriptFontSize+'px';});
 window.addEventListener('hashchange',()=>showPage(location.hash.slice(1),false));
 loadProfile();setTimeNow();clearResults();showPage(location.hash.slice(1)||'vurdering',false);
+
+// Explicit account adapter: only the four sender fields; never ISBAR or observations.
+window.KartleggSenderProfile={read:readProfile,apply(info){for(const id of PROFILE_IDS){const key=id.replace('profile','').toLowerCase();$(id).value=typeof info?.[key]==='string'?info[key].slice(0,120):'';}saveProfile();renderIsbar();$('profileName').dispatchEvent(new Event('input',{bubbles:true}));}};

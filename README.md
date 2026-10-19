@@ -128,3 +128,10 @@ Utviklingshistorikken finnes i [Kartlegg-test](https://github.com/aasen700/Kartl
 - TIMES Lær har et responsivt todelt kasusoppsett med zoom til sårbunn/sårkant, analyse, systematisk T-I-M-E-S-vurdering, videre vurderingsmomenter og fasit.
 - Ingen kunstige tidspunkter eller sårprogresjonsdata vises. Fasit er sperret frem til innlevering (og samlet til slutt i testmodus).
 - Ingen endring i vurderingsalgoritme, pasientdatalagring eller øvrige kliniske verktøy. Illustrasjonenes medisinske detaljer krever faglig gjennomgang før annet enn pedagogisk demonstrasjon.
+
+
+## Kartlegg Konto
+
+Valgfri innlogging med Google eller e-post/passord. Egen avsenderprofil, favorittverktøy og utseende kan synkroniseres mellom enheter med Firebase Authentication og Firestore på Spark-planen. Kliniske målinger, historikk, manus og øvingssvar inngår aldri. Eksisterende bruk uten konto er bevart.
+
+Se [KONTOSYSTEM.md](KONTOSYSTEM.md) for arkitektur, regler, sletting, driftsansvar og testresultater. Kontosletting fjerner profilinnhold og Auth-konto, men en minimal slettemarkør krever manuell administratoropprydding.
