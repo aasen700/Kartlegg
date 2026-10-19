@@ -68,11 +68,13 @@ const decorateButton=(button,name)=>{
 };
 const glyphActions=Object.freeze({'＋':'plus','+':'plus','↻':'reset','▦':'calculator','▣':'document','◷':'clock','☰':'menu','×':'close','✓':'check','←':'arrowLeft','→':'arrowRight'});
 // Ett eget ikon per verktøy, brukt av verktøykortene (assets/tool-cards.js).
+const learnIcons=Object.freeze({gcs:'eye',four:'cognition',news:'vitals',medication:'syringe',times:'bandage'});
 const toolIcons=Object.freeze({news2:'vitals',qsofa:'infection',gcs:'eye','4at':'cognition',nrs:'gauge','bmi-bsa':'scale','resp-timer':'stopwatch',mst:'nutrition',tug:'walk','esas-r':'sliders','ortho-bt':'pressure',fast:'face',skuv:'stethoscope',times:'bandage',palliasjon:'care',abcde:'checklist',abi:'doppler','medication-lab':'syringe'});
 const paint=(scope=document)=>{
  scope.querySelectorAll?.(':is(.nav,.mobile-primary-link)[data-page] .ico').forEach(icon=>replace(icon,navIcons[icon.closest('[data-page]').dataset.page]));
  scope.querySelectorAll?.('.section-symbol').forEach(icon=>replace(icon,symbolIcons[icon.textContent.trim()]||'spark'));
  scope.querySelectorAll?.('.score-icon').forEach(icon=>replace(icon,icon.closest('#qCard')?'brain':'chart'));
+ scope.querySelectorAll?.('.learn12-course-card[data-learn-tool] .learn12-course-symbol').forEach(icon=>replace(icon,learnIcons[icon.closest('[data-learn-tool]').dataset.learnTool]||'learn'));
  scope.querySelectorAll?.('.about-v0993-card-icon').forEach(icon=>replace(icon,icon.textContent.includes('▣')?'document':'info'));
  scope.querySelectorAll?.('[data-icon]').forEach(button=>decorateButton(button,button.dataset.icon));
  scope.querySelectorAll?.('.dialog-close').forEach(button=>decorateButton(button,'close'));
@@ -83,7 +85,7 @@ const paint=(scope=document)=>{
 };
 paint();
 new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{
- if(node.nodeType===1){paint(node);if(node.matches?.('.section-symbol,.score-icon,.about-v0993-card-icon,.dialog-close,[data-icon],button'))paint(node.parentElement)}
+ if(node.nodeType===1){paint(node);if(node.matches?.('.learn12-course-symbol,.section-symbol,.score-icon,.about-v0993-card-icon,.dialog-close,[data-icon],button'))paint(node.parentElement)}
 }))).observe(document.body,{childList:true,subtree:true});
 window.KartleggIconSystem=Object.freeze({names:Object.keys(paths),navigation:Object.keys(navIcons),refresh:paint,svg,toolIcon:id=>toolIcons[id]||'tools'});
 })();

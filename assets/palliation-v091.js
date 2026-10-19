@@ -82,7 +82,7 @@
  function open(topicId){
   dialog.replaceChildren();
   const header=h('div','v08-dialog-head');
-  const copy=h('div');copy.append(h('p','eyebrow','Faglig oppslagsverktøy · kun fiktive data'));
+  const copy=h('div');
   const hd=h('h2','','Lindring ved livets slutt');hd.id='pallDialogTitle';copy.append(hd);
   const close=h('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk symptomveileder');close.addEventListener('click',()=>dialog.close());
   header.append(copy,close);

@@ -64,7 +64,6 @@ test('mobile drawer overlays content and locks scrolling', () => {
   assert.match(all, /\.sidebar\{[^}]*z-index:90/);
   assert.match(all, /\.sidebar-backdrop\{[^}]*z-index:80/);
   assert.match(all, /body\.mobile-menu-open\{[^}]*overflow:hidden/);
-  assert.match(all, /body\.mobile-menu-open \.action-dock\{[^}]*display:none!important/);
 });
 
 test('tool cards share one layout and one icon per tool', () => {

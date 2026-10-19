@@ -754,18 +754,8 @@
 }
 @media(max-width:620px){
   /* Regel fra «layout» som må komme etter reglene over for å vinne */
-  .action-dock .btn {
-    min-height: 44px;
-    font-size: 12px;
-    line-height: 1.2;
-    padding: 8px 5px;
-  }
 }
-@media(max-width:365px){
-  .action-dock .btn {
-    font-size: 11px;
-  }
-}
+
 @media(max-width:480px){
   /* Regel fra «components» som må komme etter reglene over for å vinne */
   .form-actions .btn,

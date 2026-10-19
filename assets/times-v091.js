@@ -24,7 +24,6 @@ function url(href,text){const a=H('a','hc-source',text);a.href=href;a.target='_b
 function open(){
  dialog.replaceChildren();
  const header=H('div','v08-dialog-head'),heading=H('div');
- heading.append(H('p','eyebrow','TIMES · sårvurdering · fiktive data'));
  const title=H('h2','','TIMES – sårvurdering');title.id='timesTitle';heading.append(title);
  const close=H('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk TIMES');close.addEventListener('click',()=>dialog.close());
  header.append(heading,close);

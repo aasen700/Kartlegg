@@ -127,22 +127,13 @@ script=r"""
   assert(document.querySelector('#homeToolResults').hidden,'empty search should stay compact');
   assert(document.querySelector('#homeToolSearch').nextElementSibling.id==='vurdering','NEWS2 assessment must immediately follow search');
 
-  assert(!!document.querySelector('#actionDock #dockScore'),'sticky score button missing');
-  assert(!!document.querySelector('#actionDock #dockIsbar'),'sticky ISBAR button missing');
-  assert(!!document.querySelector('#actionDock #dockSave'),'sticky save button missing');
-  document.querySelector('[data-page=vurdering]').click();
-  document.activeElement?.blur();
-  if(matchMedia('(max-width:770px)').matches){
-   assert(getComputedStyle(document.querySelector('#actionDock')).display==='none','action dock must not cover mobile content');
-  }else{
-   assert(getComputedStyle(document.querySelector('#actionDock')).position==='fixed','desktop action dock must stay fixed on scroll');
-   assert(getComputedStyle(document.querySelector('#actionDock')).display!=='none','desktop action dock should be visible on assessment page');
-   document.querySelector('#dockIsbar').click();
-   assert(document.querySelector('#isbarDialog').open,'desktop ISBAR action does not open script');
-   document.querySelector('#closeIsbar').click();
-  }
-  document.querySelector('[data-page=historikk]').click();
-  assert(getComputedStyle(document.querySelector('#actionDock')).display==='none','action dock must hide on history page');
+  // The front page has one ISBAR button (after the scores) and no floating action bar.
+  assert(!document.querySelector('#actionDock'),'floating action bar should be gone');
+  assert(document.querySelectorAll('#page-vurdering #openIsbar').length===1&&document.querySelector('#openIsbar').closest('.result-actions'),'ISBAR action belongs with the results');
+  document.querySelector('#openIsbar').click();
+  assert(document.querySelector('#isbarDialog').open,'ISBAR action does not open script');
+  document.querySelector('#closeIsbar').click();
+  assert(document.querySelector('#toolFavorites').hidden===(window.KartleggToolNavigation.favorites.length===0),'empty favorites panel must stay hidden');
   document.querySelector('[data-page=vurdering]').click();
   // v0.8.1: original compact NEWS2-first form and score cards restored.
   assert(document.querySelectorAll('#vitalsForm .v08-field-group').length===0,'v0.8 oversized field groups should be gone');
@@ -476,7 +467,7 @@ script=r"""
    assert(color(meta)!=='rgb(27, 52, 77)','theme meta panel must not be legacy blue');
    assert(color(unit)!=='rgb(27, 52, 77)','legacy blue unit background persists in '+id);
    assert(color(datainput)!=='rgb(23, 46, 69)','legacy dark blue date input remains in '+id);
-   assert(color(chip)!=='rgb(27, 52, 77)','legacy blue version badge remains in '+id);
+   if(chip)assert(color(chip)!=='rgb(27, 52, 77)','legacy blue version badge remains in '+id);
    assert(getComputedStyle(document.querySelector('#rr')).color!== 'rgb(22, 47, 75)','old navy input text remains in '+id);
    if(clinical)assert(color(clinical)===baselineClinical,'clinical danger colors must not change with '+id);
   }
@@ -627,7 +618,7 @@ script=r"""
   // Mobile regression: navigation, compact header, quick tools and content must never overlap.
   if(matchMedia('(max-width:770px)').matches){
    const toggle=document.querySelector('#menuButton'),sidebar=document.querySelector('#sidebar'),backdrop=document.querySelector('#backdrop');
-   const dock=document.querySelector('#actionDock'),main=document.querySelector('main');
+   const main=document.querySelector('main');
    assert(getComputedStyle(toggle).display!=='none','hamburger must be visible at the mobile breakpoint');
    const toggleRect=toggle.getBoundingClientRect(),themeRect=document.querySelector('.header-right').getBoundingClientRect(),brandRect=document.querySelector('.header .brand').getBoundingClientRect();
    assert(toggleRect.left>themeRect.left&&themeRect.left>brandRect.left,'mobile header order must be brand, theme and menu');
@@ -640,7 +631,6 @@ script=r"""
    assert(main.inert,'page behind an open drawer must be inert');
    assert(document.body.classList.contains('mobile-menu-open'),'background scroll lock missing');
    assert(getComputedStyle(document.body).overflow==='hidden','page can still scroll behind mobile drawer');
-   assert(getComputedStyle(dock).display==='none','sticky action dock must not cover mobile menu');
    assert(Number(getComputedStyle(sidebar).zIndex)>Number(getComputedStyle(document.querySelector('#homeToolSearch')).zIndex),'sidebar layers below search');
    assert(Number(getComputedStyle(backdrop).zIndex)>Number(getComputedStyle(document.querySelector('#homeToolSearch')).zIndex),'backdrop layers below search');
    const sidebarRect=sidebar.getBoundingClientRect(),searchRect=document.querySelector('#homeToolSearch').getBoundingClientRect();
@@ -670,18 +660,12 @@ script=r"""
    assert(!main.inert&&!document.body.classList.contains('mobile-menu-open'),'profile dialog should restore mobile background state');
    assert(document.querySelector('#profileDialog').open,'profile navigation should open profile dialog');
    document.querySelector('#closeProfile').click();
-   assert(getComputedStyle(dock).display==='none','mobile action dock must remain hidden');
    assert(getComputedStyle(toggle.querySelector('.v10-menu-label')).display==='none','mobile menu label should not crowd the header');
    assert(toggle.querySelectorAll('.ui-icon-svg').length===1,'mobile menu must show one icon');
    assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','demo badge should not crowd the mobile header');
-   const quickButtons=[...document.querySelectorAll('#toolWorkflow .tool-workflow-button')];
-   const quickRects=quickButtons.map(button=>button.getBoundingClientRect());
    const searchRectAfter=document.querySelector('#homeToolSearch').getBoundingClientRect();
-   assert(quickButtons.length===3,'mobile quick workflow must keep three shortcuts');
-   assert(Math.max(...quickRects.map(rect=>rect.top))-Math.min(...quickRects.map(rect=>rect.top))<3,'mobile quick shortcuts must stay on one row');
-   assert(quickRects.every(rect=>rect.left>=searchRectAfter.left-2&&rect.right<=searchRectAfter.right+2),'mobile quick shortcuts overflow the search card');
    const favoritesRect=document.querySelector('#toolFavorites').getBoundingClientRect();
-   assert(favoritesRect.left>=searchRectAfter.left-2&&favoritesRect.right<=searchRectAfter.right+2,'favorites panel overflows the search card');
+   assert(document.querySelector('#toolFavorites').hidden||favoritesRect.left>=searchRectAfter.left-2&&favoritesRect.right<=searchRectAfter.right+2,'favorites panel overflows the search card');
    assert(document.documentElement.scrollWidth<=document.documentElement.clientWidth+3,'horizontal viewport overflow on mobile');
   }
   // Even on desktop, the search and scoring layout must survive the release cleanup.
@@ -731,7 +715,7 @@ script=r"""
   document.querySelector('#reviewResponse').click();
   assert(document.activeElement===document.querySelector('#info-heading'),'next-step action did not focus intervention heading');
   window.KartleggIconSystem.refresh();
-  assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===4,'form actions did not receive shared SVG icons');
+  assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===3,'form actions did not receive shared SVG icons');
   assert(document.querySelectorAll('.dialog-close:not([data-ui-action-icon])').length===0,'dialog close controls still use legacy glyphs');
   const scoreParts=document.querySelector('#v10ClinicalParts');
   assert(!scoreParts.hidden,'NEWS2 subscore visualization missing');
