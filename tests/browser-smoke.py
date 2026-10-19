@@ -525,12 +525,10 @@ script=r"""
   root.dataset.theme=originalMode;
   const primaryButton=document.querySelector('#launchABCDE');
   const pageColors={
-   kristian:{header:'rgb(100, 15, 37)',button:'rgb(255, 255, 255)',panel:'rgb(255, 253, 253)'},
    kent:{header:'rgb(10, 37, 73)',button:'rgb(248, 204, 71)',panel:'rgb(248, 252, 251)'},
    philip:{header:'rgb(8, 28, 45)',panel:'rgb(248, 251, 250)'}
   };
   for(const [name,mode,title] of [
-   ['Kristian Bøe','kristian','Kristian-modus aktivert'],
    ['Kent Ole Hansen','kent','Kent-modus aktivert'],
    ['Philip Aasen','philip','Philip-modus aktivert']
   ]){
@@ -576,13 +574,9 @@ script=r"""
    assert(getComputedStyle(riskAlert).backgroundColor===(mode==='philip'?darkRiskAlert:initialRiskAlert),'personal mode changed clinical alert background '+mode);
    document.querySelector('#closePersonalMode').click();
   }
-  put('profileName','Kristian');
-  document.querySelector('#saveProfile').click();
-  assert(!root.dataset.personalMode,'partial name must not trigger personal mode');
   put('profileName','Kristian Bøe');
   document.querySelector('#saveProfile').click();
-  assert(root.dataset.personalMode==='kristian','matching full name must work again');
-  document.querySelector('#closePersonalMode').click();
+  assert(!root.dataset.personalMode,'removed red theme must not activate');
   document.querySelector('#clearProfile').click();
   assert(!root.dataset.personalMode&&!personalPopup.open,'clearing profile must disable personal decoration');
   assert(!!document.querySelector('#newsCard')&&!!document.querySelector('#qCard'),'theme decorations must not disturb clinical score cards');

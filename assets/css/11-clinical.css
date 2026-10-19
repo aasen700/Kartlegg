@@ -230,10 +230,6 @@
   background: var(--line);
 }
 /* Regel fra «decor» som må komme etter reglene over for å vinne */
-:root[data-personal-mode="kristian"] .personal-mode-popup[data-mode="kristian"] {
-  border-top: 8px solid #af1630;
-  background: linear-gradient(155deg,#fff,#ffe3e9);
-}
 :root[data-personal-mode="kent"] .personal-mode-popup[data-mode="kent"] {
   border-top: 8px solid #d9b53f;
   background: linear-gradient(155deg,#fff,#e0f4ec);

@@ -9,7 +9,6 @@
  if(root&&root.document)api.init(root.document,root);
 })(typeof globalThis==='undefined'?this:globalThis,function(){
  const profiles=Object.freeze({
-  'kristian bøe':Object.freeze({id:'kristian',title:'Kristian-modus aktivert',subtitle:'Rød stadionstemning over hele Kartlegg, hvite kontrastknapper og tribune i toppbanneret. Heia Brann!',signature:'TRIBUNEN // KB',symbol:'⚽'}),
   'kent ole hansen':Object.freeze({id:'kent',title:'Kent-modus aktivert',subtitle:'Nordlys-inspirert landskap, dype blågrønne bakgrunner og gullgule knapper med samisk-inspirerte fargedetaljer.',signature:'NORDLYS // KENT',symbol:'☀'}),
   'philip aasen':Object.freeze({id:'philip',title:'Philip-modus aktivert',subtitle:'FOUNDER EDITION. Koboltblå bakgrunn, halvgjennomsiktige glassflater og myke lysreflekser.',signature:'FOUNDER // PA',symbol:'✦'})
  });
@@ -19,7 +18,6 @@
   return profiles[key]||null;
  }
  const banners={
-  kristian:'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="24" viewBox="0 0 240 24"><defs><pattern id="fans" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="5" cy="7" r="2.4" fill="#fff0f2"/><path d="M1 15V12Q5 9 9 12V15" fill="#e42b45"/><circle cx="15" cy="8" r="2.4" fill="#d9bfc3"/><path d="M11 16V13Q15 10 19 13V16" fill="#f5f5f5"/></pattern></defs><rect width="240" height="24" fill="#520b19"/><path d="M0 2H240" stroke="#ed3149" stroke-width="3"/><rect y="4" width="240" height="17" fill="url(#fans)"/><path d="M0 17H240M0 22H240" stroke="#f6f3f2" stroke-width="1.3" opacity=".8"/><path d="M115 0V24M122 0V24" stroke="#351018" stroke-width="1.5"/><path d="M112 3H125" stroke="#fff4bd" stroke-width="3"/></svg>',
   kent:'<svg xmlns="http://www.w3.org/2000/svg" width="200" height="24" viewBox="0 0 200 24"><rect width="200" height="24" fill="#132d56"/><path d="M0 18 32 8 51 16 85 3 118 17 148 9 180 18 200 13V24H0Z" fill="#226a57"/><path d="M0 20 30 12 52 20 85 7 117 21 152 13 184 22 200 16" fill="none" stroke="#edf0e7" stroke-width="1.4" opacity=".85"/><path d="M0 2H200" stroke="#df3b41" stroke-width="3"/><path d="M0 5H200" stroke="#f0c431" stroke-width="2"/><circle cx="165" cy="11" r="8" fill="none" stroke="#d73b43" stroke-width="2.6"/><path d="M165 3V19" stroke="#f1c332" stroke-width="2"/><path d="M0 23H200" stroke="#2c9a60" stroke-width="2"/></svg>',
   philip:'<svg xmlns="http://www.w3.org/2000/svg" width="260" height="24" viewBox="0 0 260 24"><rect width="260" height="24" fill="#071e32"/><path d="M0 24 25 13 39 18 67 5 91 20 119 10 144 24Z" fill="#16455b"/><path d="M145 24 165 16 183 5 205 17 225 10 260 23" fill="#1c5267"/><path d="M57 10 67 5 76 13M176 11 183 5 190 11" fill="none" stroke="#ddf6f4" stroke-width="1.5"/><path d="M0 13H99L108 9 115 18 123 2 130 13H158L165 10 171 15H260" fill="none" stroke="#47dfd6" stroke-width="1.7" stroke-linejoin="round"/><circle cx="223" cy="4" r="1.7" fill="#ebcf86"/><circle cx="235" cy="9" r="1" fill="#ebcf86"/><path d="M0 23H260" stroke="#d4b46b" stroke-width="1" opacity=".8"/></svg>'
  };
