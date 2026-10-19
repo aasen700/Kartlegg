@@ -206,5 +206,5 @@ $('saveMeasurement')?.addEventListener('click',e=>{if(!validate()){e.preventDefa
 form?.addEventListener('reset',()=>{form.querySelectorAll('.field-invalid').forEach(el=>el.classList.remove('field-invalid'))});
 $('historyRows')?.addEventListener('click',e=>{const b=e.target.closest('button[aria-label^="Slett måling"]');if(b&&!confirm('Slette denne målingen fra tidslinjen?')){e.preventDefault();e.stopImmediatePropagation()}},true);
 form?.querySelector('button[type=reset]')?.addEventListener('click',e=>{if(Object.keys(fieldnames).some(id=>$(id)?.value.trim())&&!confirm('Nullstille registreringsskjemaet?')){e.preventDefault();e.stopImmediatePropagation()}},true);
-const isbar=$('openIsbar');if(isbar){isbar.textContent='☎ Åpne ISBAR-manus';isbar.setAttribute('aria-label','Åpne ferdig ISBAR-manus')};
+
 })();

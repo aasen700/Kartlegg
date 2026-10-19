@@ -34,13 +34,13 @@
  }
  chooser.addEventListener('click',event=>{if(event.target.closest('[data-learn-tool]')!==course)panel.hidden=true},true);
  const heading=(kicker,title)=>{
-  const head=h('div','medication12-heading');head.append(h('small','',kicker),h('h3','',title));
+  const head=h('div','medication12-heading');if(kicker)head.append(h('small','',kicker));head.append(h('h3','',title));
   if(mode!=='home')head.append(button('← Til oversikten','learn12-secondary',()=>reset('home')));root.append(head);
  };
  function home(){
-  heading('Kartlegg Lær · praktisk øving','Legemiddelverkstedet');
+  heading('','Legemiddelverkstedet');
   const hero=h('section','medication12-hero'),heroCopy=h('div','medication12-hero-copy');
-  heroCopy.append(h('span','medication12-pill','Kun fiktive preparater'),h('h4','','Fra ordinasjon til opptrukket volum'),h('p','','Øv på å kontrollere dose og styrke, regne om enheter, velge den minste treningssprøyten som rommer volumet og dra stempelet til riktig skalastrek.'));
+  heroCopy.append(h('h4','','Regn ut volum og trekk opp riktig mengde'),h('p','','Øv på å kontrollere dose og styrke, regne om enheter, velge den minste treningssprøyten som rommer volumet og dra stempelet til riktig skalastrek.'));
   const mini=h('div','medication12-mini-ampoule');mini.append(h('span','','ØVING'),h('strong','','1 mg/ml'),h('small','','2 ml'));hero.append(heroCopy,mini);root.append(hero);
   const modes=h('div','wound12-modes');
   for(const [key,num,name,text] of [['learn','01','Lær','Fem korte steg om formelen, enheter, ampulleetikett, sprøytevalg og kontroll.'],['practice','02','Øv','Tre oppgaver med fasit og forklaring etter hver oppgave.'],['test','03','Test deg selv','Tre oppgaver uten fasit før hele testen er levert.']]){

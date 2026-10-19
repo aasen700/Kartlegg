@@ -190,18 +190,13 @@
   root.replaceChildren();
   const top=elt('div','sim-top');
   const meta=elt('div','sim-case-meta');
-  meta.append(elt('span','sim-pill','Scenario 01 · '+Engine.caseData.level));
-  meta.append(elt('span','sim-pill','0 kr · Ingen AI'));
   top.append(meta);
   const intro=elt('p','sim-copy',Engine.caseData.opening);
   root.append(top,intro);
   if(!started){
    const overview=section('Hva øver du på?','sim-overview');
    addParagraph(overview,'Du bestemmer hvilke spørsmål, observasjoner og tiltak du gjør. Noen funn er skjult til du undersøker dem. Øv på klinisk prioritering, NEWS2 og ISBAR før du sammenligner med en refleksjonssjekkliste.');
-   const ul=elt('ul','sim-intro-list');
-   for(const line of ['Én forhåndsdefinert pasient og ett manusstyrt forløp','Kjører lokalt uten serverlagring','Ingen ekte pasientopplysninger – kun øving med syntetiske data','Scenarioet er ikke klinisk godkjent og erstatter ikke lokale prosedyrer'])
-    ul.append(elt('li','',line));
-   overview.append(ul,button('Start pasientcasen →','btn btn-primary',begin));root.append(overview);
+   overview.append(button('Start pasientcasen →','btn btn-primary',begin));root.append(overview);
   }else if(state.finished){
    root.append(reportPanel());
   }else{

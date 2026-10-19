@@ -40,7 +40,8 @@
  const readablePart=(part,value)=>({eyes:'E',verbal:'V',motor:'M'})[part]+(value==='NT'?'-NT':value);
  function heading(title,subtitle,mode){
   const wrap=h('div','gcs-learn-title');
-  wrap.append(h('p','gcs-learn-eyebrow',subtitle),h('h3','',title));
+  if(subtitle)wrap.append(h('p','gcs-learn-eyebrow',subtitle));
+  wrap.append(h('h3','',title));
   if(mode!=='home')wrap.append(btn('← Til oversikten','gcs-learn-back',()=>open('home')));
   return wrap;
  }
@@ -205,13 +206,12 @@
   root.append(actions);
  }
  function homeScreen(){
-  root.append(heading('Lær kliniske verktøy – ett om gangen','Kartlegg Lær · Gratis og uten AI','home'));
+  root.append(heading('Oversikt','','home'));
   const hero=h('section','gcs-learn-hero');
   const left=h('div','gcs-learn-hero-copy');
-  left.append(h('span','gcs-learn-pill','Tilgjengelig nå · GCS'),
-   h('h4','','Fra usikker til tryggere på E, V og M'));
+  left.append(h('h4','','Lær å skåre øyeåpning, verbal og motorisk respons'));
   para(left,'Lær skåringsreglene, prøv korte fiktive pasientsituasjoner med veiledning, og test deg selv uten fasit underveis.');
-  const tag=h('div','gcs-learn-tags');for(const s of ['6 læringssteg','9 veiledede spørsmål','4 testcaser','Kjører lokalt'])tag.append(h('span','',s));
+  const tag=h('div','gcs-learn-tags');for(const s of ['6 læringssteg','9 veiledede spørsmål','4 testcaser'])tag.append(h('span','',s));
   left.append(tag);hero.append(left,picture('intro','Illustrasjonen er symbolsk og erstatter ikke klinisk demonstrasjon.'));
   root.append(hero);
   const modes=h('div','gcs-learn-modes');
@@ -236,7 +236,6 @@
   box.append(anchor('Offisiell norsk GCS-veiledning ↗',D.source.url),
    anchor('Offisiell veiledning om dokumentasjon ↗',D.source.recording),
    anchor('Åpne GCS-kalkulatoren ↗','?tool=gcs#verktoy'));
-  para(box,'Kun fiktive situasjoner. Ikke brukt til pasientbehandling, ikke klinisk validert eller kompetansegodkjennende. Ingen fremdrift eller svar lagres etter at siden lukkes.');
   root.append(box);
  }
  function render(){

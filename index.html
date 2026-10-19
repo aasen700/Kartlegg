@@ -7,18 +7,18 @@
   <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
   <link rel="icon" href="assets/kartlegg-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/00-tokens.css?v=2000">
-  <link rel="stylesheet" href="assets/css/01-base.css?v=2000">
-  <link rel="stylesheet" href="assets/css/02-layout.css?v=2000">
-  <link rel="stylesheet" href="assets/css/03-components.css?v=2000">
-  <link rel="stylesheet" href="assets/css/04-profile.css?v=2000">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=2000">
-  <link rel="stylesheet" href="assets/css/06-tools.css?v=2000">
-  <link rel="stylesheet" href="assets/css/07-simulation.css?v=2000">
-  <link rel="stylesheet" href="assets/css/08-learning.css?v=2000">
-  <link rel="stylesheet" href="assets/css/09-decor.css?v=2000">
-  <link rel="stylesheet" href="assets/css/10-themes.css?v=2000">
-  <link rel="stylesheet" href="assets/css/11-clinical.css?v=2000">
+  <link rel="stylesheet" href="assets/css/00-tokens.css?v=2010">
+  <link rel="stylesheet" href="assets/css/01-base.css?v=2010">
+  <link rel="stylesheet" href="assets/css/02-layout.css?v=2010">
+  <link rel="stylesheet" href="assets/css/03-components.css?v=2010">
+  <link rel="stylesheet" href="assets/css/04-profile.css?v=2010">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=2010">
+  <link rel="stylesheet" href="assets/css/06-tools.css?v=2010">
+  <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
+  <link rel="stylesheet" href="assets/css/08-learning.css?v=2010">
+  <link rel="stylesheet" href="assets/css/09-decor.css?v=2010">
+  <link rel="stylesheet" href="assets/css/10-themes.css?v=2010">
+  <link rel="stylesheet" href="assets/css/11-clinical.css?v=2010">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -29,22 +29,21 @@
         <span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#173b55"/><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14v36" stroke-width="5"/><path d="M47 14c-12 0-20 7-29 18 9 11 17 18 29 18" stroke-width="5"/><path d="M42 20c-7 1-13 5-19 12 6 7 12 11 19 12" stroke-width="2.5" opacity=".48"/></g><circle cx="18" cy="32" r="4.2" fill="#ef5b68"/></svg></span>
         Kartlegg <span class="brand-small">DEMO</span>
       </a>
-      <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><span class="header-note">✦ Målinger kun i denne fanen</span><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
+      <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
     </header>
     <div class="sidebar-backdrop" id="backdrop"></div>
     <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
       <button class="nav active" data-page="vurdering" aria-current="page"><span class="ico">✚</span> Ny vurdering</button>
       <button class="nav" data-page="historikk"><span class="ico">◷</span> Målinger over tid</button>
       <button class="nav" data-page="verktoy"><span class="ico">▤</span> Kliniske verktøy</button>
-      <button class="nav" data-page="laer"><span class="ico">✦</span> Lær verktøy <small class="sim-nav-tag">NY</small></button>
-      <button class="nav" data-page="simulering"><span class="ico">◇</span> Avansert case <small class="sim-nav-tag">PILOT</small></button>
+      <button class="nav" data-page="laer"><span class="ico">✦</span> Lær</button>
+      <button class="nav" data-page="simulering"><span class="ico">◇</span> Simulering</button>
       <button class="nav" data-page="om"><span class="ico">ⓘ</span> Om Kartlegg</button>
       <button class="nav" data-page="profil"><span class="ico">♙</span> Min profil</button>
-      <div class="sidebar-bottom"><strong>Fra målinger til oversikt</strong><p>Én registrering, flere skårer. Denne versjonen er laget for utprøving med fiktive data.</p></div>
     </nav>
     <main class="main" id="top" tabindex="-1">
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
-      <div class="intro"><div><p class="eyebrow">Kartlegging og opplæring</p><h1>Ny pasientvurdering</h1><p>Registrer målinger og se skår, responsnivå og neste steg.</p></div><span class="chip">v1.1 · Demo</span></div>
+      <div class="intro"><div><h1>Ny pasientvurdering</h1><p>Registrer målinger og se skår, responsnivå og neste steg.</p></div></div>
       <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
         <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Registrer målinger</h2><p>Fyll ut de obligatoriske observasjonene for NEWS2. GCS er valgfritt og brukes ved qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
@@ -55,11 +54,11 @@
               <small>Du kan registrere f.eks. kl. 13:00 og 20:00. Trykk «Lagre måling» for å legge tidspunktet til tidslinjen.</small>
             </div>
             <div class="fields">
-              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◍</span><label for="rr">Respirasjonsfrekvens <span class="required">*</span></label></div><div class="control-wrap"><input id="rr" name="rr" inputmode="numeric" type="number" min="1" max="150" step="1" placeholder="18" required><span class="unit">/min</span></div><p class="hint">Antall åndedrag per minutt</p></div>
-              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">O₂</span><label for="spo2">Oksygenmetning (SpO₂) <span class="required">*</span></label></div><div class="control-wrap"><input id="spo2" name="spo2" inputmode="numeric" type="number" min="1" max="100" step="1" placeholder="97" required><span class="unit">%</span></div><p class="hint">Målt med pulsoksymeter</p></div>
-              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">↓</span><label for="sbp">Systolisk blodtrykk <span class="required">*</span></label></div><div class="control-wrap"><input id="sbp" name="sbp" inputmode="numeric" type="number" min="1" max="350" step="1" placeholder="120" required><span class="unit">mmHg</span></div><p class="hint">Overtrykk, ikke diastolisk</p></div>
-              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♥</span><label for="hr">Puls <span class="required">*</span></label></div><div class="control-wrap"><input id="hr" name="hr" inputmode="numeric" type="number" min="1" max="300" step="1" placeholder="80" required><span class="unit">/min</span></div><p class="hint">Hjertefrekvens</p></div>
-              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♧</span><label for="temp">Temperatur <span class="required">*</span></label></div><div class="control-wrap"><input id="temp" name="temp" inputmode="decimal" type="number" min="25" max="45" step="0.1" placeholder="37,0" required><span class="unit">°C</span></div><p class="hint">Bruk én desimal</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◍</span><label for="rr">Respirasjons&shy;frekvens <span class="required">*</span></label></div><div class="control-wrap"><input id="rr" name="rr" inputmode="numeric" type="number" min="1" max="150" step="1" required><span class="unit">/min</span></div><p class="hint">Antall åndedrag per minutt</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">O₂</span><label for="spo2">Oksygenmetning (SpO₂) <span class="required">*</span></label></div><div class="control-wrap"><input id="spo2" name="spo2" inputmode="numeric" type="number" min="1" max="100" step="1" required><span class="unit">%</span></div><p class="hint">Målt med pulsoksymeter</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">↓</span><label for="sbp">Systolisk blodtrykk <span class="required">*</span></label></div><div class="control-wrap"><input id="sbp" name="sbp" inputmode="numeric" type="number" min="1" max="350" step="1" required><span class="unit">mmHg</span></div><p class="hint">Overtrykk, ikke diastolisk</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♥</span><label for="hr">Puls <span class="required">*</span></label></div><div class="control-wrap"><input id="hr" name="hr" inputmode="numeric" type="number" min="1" max="300" step="1" required><span class="unit">/min</span></div><p class="hint">Hjertefrekvens</p></div>
+              <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">♧</span><label for="temp">Temperatur <span class="required">*</span></label></div><div class="control-wrap"><input id="temp" name="temp" inputmode="decimal" type="number" min="25" max="45" step="0.1" required><span class="unit">°C</span></div><p class="hint">Bruk én desimal</p></div>
               <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◉</span><label for="conscious">Bevissthetsnivå (AVPU) <span class="required">*</span></label></div><div class="control-wrap"><select id="conscious" name="conscious" required><option value="">Velg nivå …</option><option value="A">A – våken</option><option value="V">V – reagerer på tiltale</option><option value="P">P – reagerer på smerte</option><option value="U">U – ingen respons</option></select></div><p class="hint">V/P/U gir 3 poeng i NEWS2</p></div>
               <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">G</span><label for="gcs">GCS totalskår (valgfritt)</label></div><div class="control-wrap"><input id="gcs" name="gcs" inputmode="numeric" type="number" min="3" max="15" step="1" placeholder="3–15"><span class="unit">/15</span></div><p class="hint">Må være vurdert separat. Brukes for qSOFA (GCS &lt;15).</p></div>
               <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">O₂</span><label for="oxygen">Tilført oksygen <span class="required">*</span></label></div><div class="control-wrap"><select id="oxygen" name="oxygen" required><option value="">Velg …</option><option value="no">Nei – romluft</option><option value="yes">Ja – tilført O₂</option></select></div><p class="hint">NEWS2: +2 ved tilført O₂</p></div>
@@ -67,7 +66,7 @@
               <div class="field wide"><div class="field-head"><span class="field-icon" aria-hidden="true">?</span><span class="field-label" id="confusion-label">Nyoppstått forvirring / endret mental status <span class="required">*</span></span></div><div class="toggle-group" role="radiogroup" aria-labelledby="confusion-label"><label class="choice"><input name="confusion" type="radio" value="yes" required><span>Ja</span></label><label class="choice"><input name="confusion" type="radio" value="no" required><span>Nei</span></label></div><p class="hint">Gjelder nyoppstått forvirring, ikke kronisk kognitiv svikt alene</p></div>
             </div>
             <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
-            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-tertiary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-isbar" type="button" id="openIsbar" data-icon="document">ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
+            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-tertiary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
           </div>
         </form>
       </section>
@@ -78,15 +77,15 @@
           <article class="score neutral" id="qCard"><div class="score-top"><span class="score-icon">◉</span><div><strong>qSOFA</strong><small>Quick Sequential Organ Failure Assessment</small></div></div><div class="score-number muted" id="qNumber">–</div><span class="score-status" id="qStatus">Ikke beregnet</span><p id="qDesc">Fyll inn målingene ovenfor for å se qSOFA-skåren.</p><div class="score-meter-block is-waiting" id="qMeterBlock"><div class="score-meter-heading"><span>Antall kriterier</span><strong id="qMeterLabel">Venter på GCS</strong></div><div class="score-meter qsofa-meter" id="qMeter" role="img" aria-label="qSOFA: venter på komplett skår"><span class="score-meter-segment band-q0"></span><span class="score-meter-segment band-q1"></span><span class="score-meter-segment band-q2"></span><span class="score-meter-segment band-q3"></span><span class="score-meter-marker" id="qMeterMarker" aria-hidden="true"></span></div><div class="score-meter-scale qsofa-meter-scale" aria-hidden="true"><span><b>0</b></span><span><b>1</b></span><span><b>2</b></span><span><b>3</b></span></div><small class="score-meter-note">Ved ≥2: undersøk organdysfunksjon og vurder tettere oppfølging. qSOFA har ikke egne NEWS2-lignende eskaleringsfarger.</small></div><div class="score-bottom" id="qBreakdown">Kriteriene vises her.</div></article>
         </div>
         <div class="result-actions" aria-label="Neste steg etter beregning">
-          <button class="btn btn-primary" type="button" id="reviewResponse" data-icon="arrowRight" disabled>Gå til tiltak og forbehold</button>
-          <button class="btn btn-secondary" type="button" id="resultIsbar" data-icon="document">Lag ISBAR-manus</button>
+          <button class="btn btn-primary" type="button" id="reviewResponse" data-icon="arrowRight" disabled>Se tiltak</button>
+          <button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button>
         </div>
       </section>
-      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Skåringslogikken er foreløpig ikke uavhengig klinisk validert eller regulatorisk avklart. Vitale målinger kan være personopplysninger når de knyttes til en pasient. Bruk kun fiktive data i denne demoversjonen. Ved klinisk bekymring må kvalifisert personell følge gjeldende rutiner.</p></div><div class="info-panel education"><strong>Skårer er ikke diagnoser</strong><p>NEWS2 er et hjelpemiddel ved vurdering av akutt sykdom. qSOFA bør ikke brukes alene til å utelukke sepsis. Klinisk skjønn og lokale prosedyrer er alltid nødvendig.</p></div></div></section>
+      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
-        <div class="intro"><div><p class="eyebrow">Oversikt og utvikling</p><h1>Målinger over tid</h1><p>Registrer flere observasjonstidspunkter og sammenlign utviklingen i målinger og skårer.</p></div><span class="chip" id="historyCounter">0 registrerte</span></div>
+        <div class="intro"><div><h1>Målinger over tid</h1><p>Registrer flere observasjonstidspunkter og sammenlign utviklingen i målinger og skårer.</p></div><span class="chip" id="historyCounter">0 registrerte</span></div>
         <section class="section">
           <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Målinger i én midlertidig serie vises kronologisk. Ikke bland målinger fra ulike personer.</p></div></div>
           <div class="history-toolbar"><span class="helper">Målingene oppbevares bare i minnet mens fanen er åpen. Oppdatering av siden sletter dem.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
@@ -100,8 +99,8 @@
         </section>
       </div><!-- /page-historikk -->
       <div class="page" id="page-verktoy" hidden>
-        <div class="intro"><div><p class="eyebrow">Faglig verktøybibliotek</p><h1>Verktøy og parametere</h1><p>Utforsk kliniske kalkulatorer, kartleggingsverktøy og faglige veiledere.</p></div><span class="chip">Klinisk verktøybibliotek</span></div>
-        <section class="section"><div class="section-header"><div class="section-symbol teal">▤</div><div><h2>Verktøybibliotek</h2><p>Velg kategori eller søk etter verktøyet du trenger.</p></div></div>
+        <div class="intro"><div><h1>Verktøy og parametere</h1><p>Utforsk kliniske kalkulatorer, kartleggingsverktøy og faglige veiledere.</p></div></div>
+        <section class="section" aria-label="Verktøybibliotek">
           <div class="panel-content"><div class="toolgrid">
             <article class="toolbox"><h3>🫀 NEWS2</h3><span class="tool-tag">Kan beregnes automatisk</span><p>National Early Warning Score 2. Systematisk skår av syv observasjonskomponenter hos voksne. SpO₂-skala 2 er kun aktuell ved særskilt klinisk indikasjon.</p>
               <details><summary>Vis parametere og poenggrenser</summary>
@@ -133,16 +132,15 @@
         </section>
       </div><!-- /page-verktoy -->
       <div class="page" id="page-laer" hidden>
-        <div class="intro"><div><p class="eyebrow">Kartlegg · interaktiv læring</p>
-          <h1>Lær å bruke verktøyene</h1>
-          <p>Lær kliniske skåringsverktøy og praktiske ferdigheter gjennom interaktive eksempler. Velg GCS, 4AT, NEWS2, TIMES eller Legemiddelverkstedet.</p></div>
-          <span class="chip">Gratis · Ingen AI</span></div>
+        <div class="intro"><div><h1>Lær å bruke verktøyene</h1>
+          <p>Øv på GCS, 4AT, NEWS2, TIMES og legemiddelregning med tenkte pasienteksempler.</p></div>
+          </div>
         <nav id="learningHubChooser" aria-label="Velg verktøy for opplæring"></nav>
         <section class="section" id="learnGcsModule" aria-labelledby="gcsLearningHeading">
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">✦</div>
-            <div><h2 id="gcsLearningHeading">GCS – interaktiv læringsmodul</h2>
-              <p>Lær, øv og test deg selv. Faglig grunnlag: den offisielle Glasgow Coma Scale-veiledningen.</p></div></div>
-          <div id="gcsLearningRoot"><p class="helper">Læringsmodulen lastes lokalt i nettleseren, uten konto eller pasientopplysninger.</p></div>
+            <div><h2 id="gcsLearningHeading">GCS – Glasgow Coma Scale</h2>
+              <p>Bygger på den offisielle norske GCS-veiledningen.</p></div></div>
+          <div id="gcsLearningRoot"></div>
         </section>
         <section class="section" id="learn4atModule" aria-labelledby="fourLearningHeading" hidden>
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">◈</div>
@@ -156,7 +154,7 @@
               <p>Les pasientens vitale parametere og velg det riktige poengfeltet i hver rad. Øv på begge SpO₂-skalaer og oksygentilførsel.</p></div></div>
         </section>
         <section class="section" id="learnTimesModule" aria-labelledby="timesLearningHeading" hidden>
-          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▤</div><div><h2 id="timesLearningHeading">TIMES – lær sårvurdering</h2><p>Seks fiktive sårkasus med medisinske undervisningsillustrasjoner, Lær, Øv og Test deg selv.</p></div></div>
+          <div class="section-header"><div class="section-symbol teal" aria-hidden="true">▤</div><div><h2 id="timesLearningHeading">TIMES – lær sårvurdering</h2><p>Seks sårkasus med illustrasjoner.</p></div></div>
           <div id="woundLearningRoot"></div>
         </section>
         <section class="section" id="learnMedicationModule" aria-labelledby="medicationLearningHeading" hidden>
@@ -165,21 +163,20 @@
         </section>
       </div><!-- /page-laer -->
       <div class="page" id="page-simulering" hidden>
-        <div class="intro"><div><p class="eyebrow">Kartlegg · pedagogisk pilot</p><h1>Pasientsimulering</h1>
-          <p>Tren på klinisk observasjon, NEWS2 og ISBAR i én interaktiv, forhåndsdefinert situasjon fra hjemmesykepleien – helt uten AI eller abonnement.</p></div>
-          <span class="chip">Pilot · Kun fiktive data</span></div>
+        <div class="intro"><div><h1>Pasientsimulering</h1>
+          <p>Øv på observasjon, NEWS2 og ISBAR i en tenkt situasjon fra hjemmesykepleien.</p></div></div>
         <section class="section" aria-labelledby="simHeading">
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">✧</div>
-            <div><h2 id="simHeading">Scenario 01 · Akutt forverring</h2>
-            <p>Utforsk hva pasienten forteller, velg undersøkelser og vurder hvordan du vil prioritere. Dette er ikke en klinisk godkjent simulering.</p></div>
+            <div><h2 id="simHeading">Akutt forverring hjemme</h2>
+            <p>Spør pasienten, velg hva du vil undersøke, og bestem når du ringer etter hjelp.</p></div>
           </div>
           <div id="simulationRoot" aria-label="Interaktiv pasientsimulering">
-            <p class="helper">Simuleringen lastes lokalt i nettleseren. Ingen pasientopplysninger sendes til en server.</p>
+            
           </div>
         </section>
       </div><!-- /page-simulering -->
       <div class="page" id="page-profil" hidden>
-        <div class="intro"><div><p class="eyebrow">Dine innstillinger</p><h1>Min profil</h1><p>Brukes til introduksjonen i ISBAR-manuset – aldri til å identifisere pasienten.</p></div><span class="chip">Valgfri lagring lokalt</span></div>
+        <div class="intro"><div><h1>Min profil</h1><p>Brukes til introduksjonen i ISBAR-manuset – aldri til å identifisere pasienten.</p></div></div>
         <section class="section"><div class="section-header"><div class="section-symbol teal">♙</div><div><h2>Avsender i telefonsamtalen</h2><p>Fyll inn eget navn, stilling og arbeidssted. ISBAR bruker dette automatisk.</p></div></div>
         <div class="profile-body">
           <div class="profile-grid">
@@ -194,77 +191,40 @@
         </div></section>
       </div><!-- /page-profil -->
       <div class="page" id="page-om" hidden>
-        <div class="intro">
-          <div>
-            <p class="eyebrow">Bak prosjektet</p>
-            <h1>Om Kartlegg</h1>
-            <p>Hvorfor vi utvikler verktøyet, hvem som står bak, og hvordan opplysningene håndteres.</p>
-          </div>
-          <span class="chip">Utviklingsprosjekt</span>
-        </div>
+        <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som står bak, hvorfor, og hva som skjer med opplysningene du skriver inn.</p></div></div>
         <section class="section about-v0993-hero" aria-labelledby="about-purpose-title">
           <div class="about-v0993-hero-inner">
-            <div class="about-v0993-hero-mark" aria-hidden="true">✚</div>
-            <p class="eyebrow">Enklere tilgang til kliniske verktøy</p>
-            <h2 id="about-purpose-title">Fra observasjon til oversikt.</h2>
-            <p>Kartlegg startet med et enkelt mål: å samle kliniske skåringsverktøy som NEWS2 og qSOFA på ett sted, med en tydelig og rask måte å bruke dem på. Siden har prosjektet vokst med flere kalkulatorer, kartleggingsverktøy og faglige veiledere – blant annet for hjemmesykepleie.</p>
-            <p>Ambisjonen er at det skal være lett å finne frem til relevant fagkunnskap, forstå hva man skal observere og se hvordan en beregning henger sammen med funnene som er lagt inn.</p>
+            <h2 id="about-purpose-title">Hvorfor Kartlegg?</h2>
+            <p>Kartlegg startet som et forsøk på å samle NEWS2 og qSOFA på ett sted, med en rask måte å føre inn målingene. Etter hvert har det kommet flere kalkulatorer, kartleggingsverktøy og veiledere, blant annet for hjemmesykepleien.</p>
+            <p>Tanken er at du skal se hvordan en skår henger sammen med det du har observert, og hvor grensene kommer fra – ikke bare få et tall.</p>
           </div>
         </section>
-        <div class="about-v0993-grid">
-          <section class="section about-v0993-card" aria-labelledby="about-developer-title">
-            <div class="about-v0993-card-icon" aria-hidden="true">♙</div>
-            <h2 id="about-developer-title">Hvem står bak?</h2>
-            <p><strong>Philip Aasen</strong> er sykepleierstudent ved Høgskulen på Vestlandet, med erfaring og interesse innen kommunale helse- og omsorgstjenester, klinisk observasjon og praktisk beslutningsstøtte.</p>
-            <p>Kartlegg utvikles som et selvstendig lærings- og utviklingsprosjekt. Målet er å kombinere sykepleiefaglig kunnskap med et brukervennlig digitalt grensesnitt.</p>
-            <p class="about-v0993-footnote">Kartlegg representerer ikke Høgskulen på Vestlandet eller noen helsetjeneste.</p>
-          </section>
-          <section class="section about-v0993-card" aria-labelledby="about-principles-title">
-            <div class="about-v0993-card-icon" aria-hidden="true">◎</div>
-            <h2 id="about-principles-title">Hva ønsker vi å oppnå?</h2>
-            <ul class="about-v0993-points">
-              <li><strong>Tilgjengelighet:</strong> Finn relevante verktøy uten å lete på mange forskjellige nettsider.</li>
-              <li><strong>Forståelse:</strong> Se kriterier, vurderingspunkter og kilder – ikke bare et tall.</li>
-              <li><strong>Praktisk nytte:</strong> Gi plass til kliniske utfordringer fra både akuttmedisin og hjemmebaserte tjenester.</li>
-              <li><strong>Enkelhet:</strong> Behold NEWS2 som en tydelig hovedfunksjon, mens øvrige verktøy kan søkes opp ved behov.</li>
-            </ul>
-          </section>
-        </div>
-        <section class="section about-v0993-card release-v11" aria-labelledby="about-release-title">
-          <div class="about-v0993-card-icon" aria-hidden="true">✦</div>
-          <h2 id="about-release-title">Nytt i Kartlegg 1.1</h2>
-          <p>Førstesiden leder fra målinger til skår og klinisk respons uten en egen trinnlinje. Mobilvisning, tastaturfokus, 200 % zoom, berøringsflater og ikoner er samordnet på tvers av temaene.</p>
-          <p>TIMES-kasusene er gjennomgått mot det opprinnelige TIME-rammeverket, internasjonal sårkonsensus og kilder for de enkelte sårtypene. Gjennomgangen er redaksjonell og kildebasert; uavhengig klinisk signering gjenstår.</p>
-          <p><a href="https://github.com/aasen700/Kartlegg/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Les hele versjonshistorikken</a></p>
+        <section class="section about-v0993-card" aria-labelledby="about-developer-title">
+          <h2 id="about-developer-title">Hvem står bak?</h2>
+          <p>Kartlegg er laget av Philip Aasen, sykepleierstudent ved Høgskulen på Vestlandet. Det er et eget lærings- og utviklingsprosjekt og representerer ikke høgskolen eller noen helsetjeneste.</p>
+          <p>Har du innspill eller ser en feil? <a href="mailto:aasen700@gmail.com">Send meg en e-post</a>.</p>
         </section>
         <section class="section about-v0993-storage" aria-labelledby="about-storage-title">
-          <div class="about-v0993-section-head">
-            <span class="about-v0993-card-icon" aria-hidden="true">▣</span>
-            <div><h2 id="about-storage-title">Profiler og målinger – hva lagres?</h2><p>En tydelig oversikt over hvordan demoversjonen håndterer opplysningene.</p></div>
-          </div>
+          <h2 id="about-storage-title">Hva lagres?</h2>
           <div class="about-v0993-storage-grid">
             <div class="about-v0993-storage-item">
-              <h3>Avsenderprofil</h3>
-              <p>Du kan lagre eget navn, stilling og arbeidssted <strong>lokalt i nettleseren</strong> ved å velge «Husk profilen» og deretter «Bruk profil». Uten dette valget brukes profilen kun i den åpne fanen. Den kan slettes i profilinnstillingene.</p>
+              <h3>Målinger</h3>
+              <p>Målinger du lagrer i tidslinjen, finnes bare i fanen mens den er åpen. De sendes ikke noe sted og er ikke lagret varig: de forsvinner når du laster siden på nytt eller lukker fanen.</p>
             </div>
             <div class="about-v0993-storage-item">
-              <h3>Målinger og vurderinger</h3>
-              <p>Du kan lagre <strong>midlertidige demomålinger</strong> i tidslinjen og se dem i fanen mens den er åpen. De sendes ikke til en server og er <strong>ikke lagret varig</strong>. Målingene forsvinner ved ny lasting eller når fanen lukkes.</p>
+              <h3>Avsenderprofil</h3>
+              <p>Navn, stilling og arbeidssted til ISBAR-manuset lagres lokalt i nettleseren, og bare hvis du krysser av for «Husk profilen». Du kan slette den under Min profil.</p>
             </div>
           </div>
-          <p class="about-v0993-caution"><strong>Viktig:</strong> Ikke registrer ekte pasientopplysninger i Kartlegg. Dette er ikke et journalsystem eller et sikkert system for lagring av helseopplysninger. Bruk virksomhetens godkjente løsninger til dokumentasjon.</p>
+          <p class="about-v0993-caution">Ikke registrer ekte pasientopplysninger i Kartlegg. Det er ikke et journalsystem. Bruk virksomhetens egne løsninger til dokumentasjon.</p>
         </section>
         <section class="section about-v0993-notice" aria-labelledby="about-limits-title">
           <h2 id="about-limits-title">Faglig ansvar og begrensninger</h2>
-          <p>Kartlegg er en <strong>demoversjon for utprøving med fiktive data</strong>. Selv om programvaren har automatiske tester, er den ikke uavhengig klinisk validert eller regulatorisk avklart for bruk i reell pasientbehandling.</p>
-          <p>Veiledere og beregninger erstatter ikke klinisk skjønn, lokale prosedyrer, gyldig ordinasjon eller ansvarlig helsepersonell. Faglige kilder finnes i verktøyene og nederst på nettsiden.</p>
+          <p>Kartlegg er en demoversjon. Beregningene har automatiske tester, men verktøyet er ikke uavhengig klinisk validert eller regulatorisk avklart for bruk i pasientbehandling.</p>
+          <p>Veiledere og beregninger erstatter ikke klinisk skjønn, lokale prosedyrer, ordinasjon eller ansvarlig helsepersonell. Kildene står i hvert verktøy og nederst på siden. Endringer finner du i <a href="https://github.com/aasen700/Kartlegg/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">versjonshistorikken</a>.</p>
         </section>
-        <div class="about-v0993-contacts">
-          <a href="mailto:aasen700@gmail.com">✉ Kontakt utvikleren</a>
-          <span>Utviklet av Philip Aasen · Kartlegg</span>
-        </div>
       </div><!-- /page-om -->
-      <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/12654015/" target="_blank" rel="noopener noreferrer">Schultz mfl. – TIME</a> · <a href="https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf" target="_blank" rel="noopener noreferrer">IWII 2022</a>.<br>ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>Kartlegg v1.1 · Beregninger i nettleseren · Midlertidig målehistorikk i fanen · Ingen analyse- eller sporingstjenester.<br><span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a> · <a href="tel:+4795554040">955 54 040</a></span></footer>
+      <footer class="footer links" id="kilder">Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/12654015/" target="_blank" rel="noopener noreferrer">Schultz mfl. – TIME</a> · <a href="https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf" target="_blank" rel="noopener noreferrer">IWII 2022</a>.<br>ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>Kartlegg v1.1 · Demo · Ingen analyse- eller sporingstjenester.<br><span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a> · <a href="tel:+4795554040">955 54 040</a></span></footer>
     </main>
     <nav class="mobile-primary-nav" aria-label="Hovedmeny på mobil">
       <button type="button" class="mobile-primary-link" data-page="vurdering"><span class="ico" aria-hidden="true">✚</span><span>Vurdering</span></button>
@@ -295,41 +255,41 @@
   <script src="assets/app.js?v=1011"></script>
   <script src="assets/enhancements.js?v=1023"></script>
   <script src="assets/theme-engine.js?v=1201"></script>
-  <script src="assets/v06.js?v=2000"></script>
+  <script src="assets/v06.js?v=2010"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
-  <script src="assets/clinical-ui.js?v=0701"></script>
-  <script src="assets/ux-v071.js?v=0711"></script>
+  <script src="assets/clinical-ui.js?v=2010"></script>
+  <script src="assets/ux-v071.js?v=2010"></script>
   <script src="assets/modern-v08-scoring.js?v=0802"></script>
   <script src="assets/modern-v08-timer.js?v=0803"></script>
   <script src="assets/modern-v08-body.js?v=0992"></script>
   <script src="assets/tool-registry.js?v=1201"></script>
   <script src="assets/news-first-v081.js?v=1110"></script>
   <script src="assets/homecare-v09-scoring.js?v=0901"></script>
-  <script src="assets/homecare-v09-ui.js?v=2000"></script>
+  <script src="assets/homecare-v09-ui.js?v=2010"></script>
   <script src="assets/wound-v091-scoring.js?v=0992"></script>
-  <script src="assets/times-v091.js?v=2000"></script>
-  <script src="assets/palliation-v091.js?v=2000"></script>
-  <script src="assets/abcde-v099.js?v=2000"></script>
+  <script src="assets/times-v091.js?v=2010"></script>
+  <script src="assets/palliation-v091.js?v=2010"></script>
+  <script src="assets/abcde-v099.js?v=2010"></script>
   <script src="assets/abi-v12-scoring.js?v=1201"></script>
   <script src="assets/medication-learning-data-v12.js?v=1201"></script>
   <script src="assets/abi-v12-ui.js?v=2000"></script>
-  <script src="assets/medication-learning-v12.js?v=1201"></script>
+  <script src="assets/medication-learning-v12.js?v=2010"></script>
   <script src="assets/tool-categories-v099.js?v=1201"></script>
   <script src="assets/theme-finalize-v0992.js?v=09921"></script>
   <script src="assets/final-polish-v10.js?v=1011"></script>
   <script src="assets/personal-modes.js?v=1021"></script>
-  <script src="assets/tool-navigation.js?v=2000"></script>
+  <script src="assets/tool-navigation.js?v=2010"></script>
   <script src="assets/simulation-engine.js?v=101"></script>
-  <script src="assets/simulation-ui.js?v=102"></script>
+  <script src="assets/simulation-ui.js?v=2010"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
   <script src="assets/learning-flow.js?v=1401"></script>
-  <script src="assets/gcs-learning-ui.js?v=2000"></script>
+  <script src="assets/gcs-learning-ui.js?v=2010"></script>
   <script src="assets/learning-content-v12.js?v=1203"></script>
-  <script src="assets/learning-tools-v12.js?v=2000"></script>
+  <script src="assets/learning-tools-v12.js?v=2010"></script>
   <script src="assets/wound-learning-data-v12.js?v=1401"></script>
-  <script src="assets/wound-learning-v12.js?v=1401"></script>
+  <script src="assets/wound-learning-v12.js?v=2010"></script>
   <script src="assets/mobile-ux.js?v=1401"></script>
-  <script src="assets/icon-system.js?v=2000"></script>
+  <script src="assets/icon-system.js?v=2010"></script>
   <script src="assets/tool-cards.js?v=2000"></script>
   <script src="assets/assessment-flow-v11.js?v=1201"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>

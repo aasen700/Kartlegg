@@ -531,10 +531,8 @@
   font-size: 13px;
   font-weight: 750;
   cursor: pointer;
-}
-.quick-tool-link:focus-visible,
-.tool-finder input:focus-visible,
-.action-dock button:focus-visible {
+}.quick-tool-link:focus-visible,
+.tool-finder input:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
@@ -1359,4 +1357,9 @@
     grid-column: 2;
     grid-row: 2;
   }
+}
+
+/* Favorittfeltet på forsiden vises først når noe er stjernemerket. */
+.tool-favorites[hidden] {
+  display: none;
 }
