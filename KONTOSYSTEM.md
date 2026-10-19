@@ -8,7 +8,7 @@ The owner requested the first production rollout with `accountEnabled = true` in
 
 ## Architecture and data boundary
 
-Plain HTML/CSS/JS, no new framework/build step. `entry.mjs` mounts the existing profile dialog; `firebase.mjs` dynamically loads pinned modular Firebase SDK 13.0.0 (Auth + Firestore only). No Analytics, Storage, Functions, App Check provider, or paid services initialized. Developer dependencies are test-only; package-lock pins them.
+Plain HTML/CSS/JS, no new framework/build step. `entry.mjs` mounts the account card and the login/signup screens on the profile page (`#page-profil`); `firebase.mjs` dynamically loads pinned modular Firebase SDK 13.0.0 (Auth + Firestore only). No Analytics, Storage, Functions, App Check provider, or paid services initialized. Developer dependencies are test-only; package-lock pins them.
 
 Existing owners remain responsible for values/UI:
 
@@ -141,4 +141,4 @@ Executed locally on 19 Oct 2026:
 - `node --check` for all account modules, `git diff --check` and production-dependency audit passed.
 - Chrome cannot start locally because this execution environment blocks required sockets. The first GitHub Actions run passed both the existing full browser smoke suite and the account browser test. The updated final commit is checked again by CI; see the PR checks for its exact status.
 
-Account browser tests use actual app HTML/JS and synthetic backend data to check the existing profile dialog, explicit import, profile/favorites/theme adapters, personal theme, clinical text exclusion, logout, guest profile restoration and persistence choices. They also check the disabled account gate. Mobile visual review, real-domain OAuth, actual email delivery and the manual acceptance matrix remain outstanding and are not represented as passing.
+Account browser tests use actual app HTML/JS and synthetic backend data to check the profile page and its login screen, explicit import, profile/favorites/theme adapters, personal theme, clinical text exclusion, logout, guest profile restoration and persistence choices. They also check the disabled account gate. Mobile visual review, real-domain OAuth, actual email delivery and the manual acceptance matrix remain outstanding and are not represented as passing.

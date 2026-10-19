@@ -393,8 +393,9 @@ script=r"""
   assert(profileButton.getAttribute('aria-label')==='Åpne profil og utseende','profile shortcut needs meaningful accessible name');
   assert(profileButton.getAttribute('aria-hidden')!=='true','profile shortcut must not be hidden from assistive technology');
   profileButton.click();
-  const profileDialog=document.querySelector('#profileDialog');
-  assert(profileDialog.open,'profile drawer did not open');
+  // The profile is a page; theme choices live in sheets inside #profileSettings.
+  const profileDialog=document.querySelector('#profileSettings');
+  assert(!document.querySelector('#page-profil').hidden,'profile page did not open');
   assert(profileDialog.querySelectorAll('[name=serviceTheme]').length===5,'4 service presets plus custom are required');
   assert(profileDialog.querySelectorAll('[name=surfaceStyle]').length===2,'solid and liquid glass choices are required');
   const root=document.documentElement;
@@ -580,8 +581,8 @@ script=r"""
   document.querySelector('#clearProfile').click();
   assert(!root.dataset.personalMode&&!personalPopup.open,'clearing profile must disable personal decoration');
   assert(!!document.querySelector('#newsCard')&&!!document.querySelector('#qCard'),'theme decorations must not disturb clinical score cards');
-  document.querySelector('#closeProfile').click();
-  assert(!profileDialog.open,'profile drawer did not close');
+  document.querySelector('[data-page=vurdering]').click();
+  assert(document.querySelector('#page-profil').hidden,'profile page did not close');
   assert(document.querySelector('#homeToolSearch').nextElementSibling.id==='vurdering','service themes must not alter NEWS2 positioning');
   // v0.99.3: About Kartlegg page explains authorship, purpose and actual storage guarantees.
   const aboutNav=document.querySelector('[data-page=om]');
@@ -652,8 +653,8 @@ script=r"""
    sidebar.querySelector('[data-page=profil]').click();
    assert(!sidebar.classList.contains('open'),'opening profile should close the mobile navigation');
    assert(!main.inert&&!document.body.classList.contains('mobile-menu-open'),'profile dialog should restore mobile background state');
-   assert(document.querySelector('#profileDialog').open,'profile navigation should open profile dialog');
-   document.querySelector('#closeProfile').click();
+   assert(!document.querySelector('#page-profil').hidden,'profile navigation should open the profile page');
+   document.querySelector('[data-page=vurdering]').click();
    assert(getComputedStyle(toggle.querySelector('.v10-menu-label')).display==='none','mobile menu label should not crowd the header');
    assert(toggle.querySelectorAll('.ui-icon-svg').length===1,'mobile menu must show one icon');
    assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','demo badge should not crowd the mobile header');
@@ -735,8 +736,8 @@ script=r"""
   // Independent theme layers tested at all five viewport widths.
   assert(!!window.KartleggThemeLayers&&!!window.KartleggThemeEngine,'theme module missing');
   document.querySelector('#profileTrigger').click();
-  const dlg=document.querySelector('#profileDialog');
-  assert(dlg.open,'theme drawer inaccessible');
+  const dlg=document.querySelector('#profileSettings');
+  assert(!document.querySelector('#page-profil').hidden,'theme settings inaccessible');
   const setRadio=(name,value)=>{
    const el=dlg.querySelector('input[name="'+name+'"][value="'+value+'"]');
    assert(!!el,'missing '+name+': '+value);el.checked=true;
@@ -777,8 +778,8 @@ script=r"""
   assert(document.querySelector('#newsClinicalAlert').textContent.includes('Respirasjonsfrekvens'),'theme changed clinical escalation');
   setRadio('baseTheme','standard');
   assert(document.documentElement.dataset.baseTheme==='standard','standard theme not restored');
-  document.querySelector('#closeProfile').click();
-  assert(!dlg.open,'theme dialog did not close');
+  document.querySelector('[data-page=vurdering]').click();
+  assert(document.querySelector('#page-profil').hidden,'profile page did not close');
   // v1.1: full registry, favorite toggle, direct URLs and NEWS2↔GCS↔ISBAR switching.
   const tools=window.KartleggToolRegistry,nav=window.KartleggToolNavigation;
   assert(!!tools&&!!nav,'navigation registry or controller not initialized');

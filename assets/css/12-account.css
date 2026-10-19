@@ -1,20 +1,68 @@
-/* Account UI inherits Kartlegg's existing buttons, colours and dialog. */
-.account-panel label:not(.account-consent){display:block;margin-top:.75rem;font-weight:600}
-.account-panel input:not([type=checkbox]){width:100%;min-height:44px;box-sizing:border-box}
-.account-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
-.account-actions .btn{min-height:44px;white-space:normal}
-.account-consent{display:flex;align-items:flex-start;gap:.6rem;margin:.9rem 0;font-size:.9rem}
-.account-consent input{flex:none;margin-top:.3rem}
-.account-tag{font-size:.7em;font-weight:400;opacity:.75}
-.account-panel details{margin-top:1rem}
-.account-panel summary{cursor:pointer;min-height:44px;align-content:center;font-weight:600}
+/* Kartlegg Konto: kortet øverst på profilsiden, egne skjermer for innlogging og ny konto,
+ * og arkene for personvern og kontoadministrasjon. Arver farger fra tokens og temaer. */
+.account-card{display:grid;gap:14px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
+#accountGuest,#accountMember{display:grid;gap:14px;min-width:0}
+.account-card-head{display:flex;align-items:center;gap:12px;min-width:0}
+.account-avatar{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--accent-on);font-size:18px;font-weight:800}
+.account-avatar.is-empty{background:var(--accent-bg);color:var(--accent)}
+.account-avatar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.account-card-text{display:grid;gap:2px;min-width:0}
+.account-card-text h2{margin:0;font-size:17px;line-height:1.3}
+.account-card-text p{margin:0;font-size:14px;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}
+.account-panel .account-wide{width:100%;min-width:0;min-height:48px;margin:0}
+.account-switch{margin:0;text-align:center;font-size:15px;color:var(--muted)}
+.account-link{display:inline;min-height:0;margin:0;padding:6px 2px;border:0;background:none;box-shadow:none;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;cursor:pointer}
+.account-link:hover{text-decoration-color:currentColor}
+.account-rows{overflow:hidden;border:1px solid var(--line);border-radius:14px}
+.account-logout .settings-row-label{color:var(--accent);font-weight:650}
+.account-footnote{margin:0;text-align:center;font-size:13px;line-height:1.5;color:var(--muted)}
+.account-notice{padding:12px 14px;border:1px solid var(--accent-border,var(--line));border-radius:12px;background:var(--accent-bg);font-size:14px;line-height:1.45}
+.account-notice p,.account-notice h4{margin:0 0 8px}
+.account-status{margin:0;padding:10px 12px;border-radius:10px;background:var(--accent-bg);color:var(--ink);font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+.account-status:empty{display:none}
+.account-status-slot{display:contents}
+
+/* Skjermene for innlogging og ny konto erstatter resten av profilsiden mens de vises. */
+.account-auth-view{display:none;gap:20px;max-width:440px;margin:0 auto}
+#page-profil[data-profile-view="login"] [data-profile-view-panel="login"],
+#page-profil[data-profile-view="signup"] [data-profile-view-panel="signup"]{display:grid}
+#page-profil:not([data-profile-view="main"]) .profile-main-only{display:none!important}
+.account-back{justify-self:start;display:inline-flex;align-items:center;gap:4px;min-height:44px;margin:0 0 -8px -6px;padding:0 10px 0 2px;border:0;background:none;box-shadow:none;color:var(--accent);font:inherit;font-size:16px;cursor:pointer}
+.account-back svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.account-auth-view h1{margin:0;font-size:30px;line-height:1.15;letter-spacing:-.03em}
+.account-lede{margin:-12px 0 0;font-size:16px;line-height:1.45;color:var(--muted)}
+.account-google{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;margin:0;border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:none;color:var(--ink);font:inherit;font-size:16px;font-weight:650;cursor:pointer}
+.account-google-mark{width:20px;height:20px;flex:none}
+.account-divider{display:flex;align-items:center;gap:12px;margin:0;font-size:14px;color:var(--muted)}
+.account-divider::before,.account-divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.account-form{display:grid;gap:6px}
+.account-form>label{margin-top:10px;font-size:14px;font-weight:650}
+.account-form>label:first-child{margin-top:0}
+.account-form input:not([type=checkbox]),.account-admin input:not([type=checkbox]){width:100%;min-height:50px;box-sizing:border-box;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
+.account-password{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.account-password:focus-within{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:1px}
+.account-form .account-password input{flex:1 1 auto;min-width:0;border:0;background:transparent;outline:0}
+.account-reveal{flex:none;min-width:60px;margin:0;padding:0 12px;border:0;background:none;box-shadow:none;color:var(--accent);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.account-forgot{justify-self:end;font-size:14px}
+.account-form .account-wide{margin-top:12px}
+.account-hint{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.account-consent,.account-form>label.account-consent{display:flex;align-items:flex-start;gap:10px;margin:12px 0 0;font-size:14px;font-weight:400;line-height:1.45;color:var(--muted)}
+.account-consent input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
+.account-auth-view>.account-consent{margin:-8px 0 0}
+
+/* Arkene: personvern og kontoadministrasjon. */
+.account-privacy p{margin:0 0 12px;font-size:14px;line-height:1.55}
+.account-admin{display:grid;gap:10px;font-size:14px;line-height:1.5}
+.account-admin p{margin:0}
+.account-admin label:not(.account-consent){font-weight:650}
+.account-admin .account-consent{color:var(--ink)}
+.account-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0}
+.account-panel .account-actions .btn,.account-admin>.btn{min-width:0;min-height:44px;white-space:normal}
 .account-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.85rem}
-.account-compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.account-compare>div{border:1px solid currentColor;border-radius:12px;padding:.8rem;min-width:0}
-#accountStatus{padding:.8rem;border:1px solid currentColor;border-radius:12px;font-weight:500;overflow-wrap:anywhere}
-#accountIdentity{overflow-wrap:anywhere}
+.account-compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:8px}
+.account-compare>div{min-width:0;padding:.8rem;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
 .account-panel .account-danger{border-color:#bb3131;color:#bb3131}
 .account-panel [hidden]{display:none!important}
 .account-panel button:disabled{opacity:.55;cursor:not-allowed}
-.account-panel :focus-visible{outline:3px solid currentColor;outline-offset:3px}
+.account-panel :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:540px){.account-compare{grid-template-columns:1fr}.account-actions .btn{flex:1 1 100%}}

@@ -20,9 +20,9 @@ try{
  else {const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}
 }catch(_){}
 const avatar=one('#profileTrigger'); // Accessible native button is rendered in index.html.
-const drawer=document.createElement('dialog');drawer.id='profileDialog';drawer.className='profile-dialog';drawer.setAttribute('aria-labelledby','profileDialogTitle');
-drawer.innerHTML='<div class="profile-dialog-head"><div><h2 id="profileDialogTitle">Min profil</h2><p>Din avsenderprofil og utseende</p></div><button id="closeProfile" type="button" class="dialog-close" aria-label="Lukk">×</button></div><div class="profile-dialog-scroll"><section class="profile-dialog-section"><h3>Profil for ISBAR</h3><p>Ikke skriv inn pasientopplysninger her.</p><div id="profileMount"></div></section><section class="profile-dialog-section"><h3>Utseende</h3><p id="appearanceSummary"></p><fieldset class="appearance-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> ☀ Dag</label><label><input type="radio" name="appearanceMode" value="dark"> ☾ Natt</label><label><input type="radio" name="appearanceMode" value="system"> ◐ System</label></fieldset><fieldset class="appearance-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="violet"><i class="swatch violet"></i> Fiolett</label><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i> Blå</label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i> Grønn</label></fieldset><p class="personalization-note">Valgt tema endrer ikke kliniske risiko- og skåringsfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p></section></div>';
-document.body.append(drawer);
+// The profile is a page (#page-profil); its static markup lives in index.html. Theme choices open as small sheets.
+const drawer=$('profileSettings');
+const sheetBody=name=>drawer.querySelector('[data-sheet-body="'+name+'"]');
 // Visual layers remain independently selectable; existing saved settings migrate safely.
 let philipUnlocked=false;
 const baseOptions=document.createElement('fieldset');baseOptions.className='base-theme-options';baseOptions.hidden=true;
@@ -64,7 +64,7 @@ for(const id of services){
  option.append(radio,sample,label,detail);serviceGrid.append(option);
 }
 serviceOptions.append(serviceGrid);
-drawer.querySelector('.personalization-note')?.before(serviceOptions);
+sheetBody('service').append(serviceOptions);
 const seasonOptions=document.createElement('fieldset');seasonOptions.className='season-theme-options';
 const seasonLegend=document.createElement('legend');seasonLegend.textContent='Sesong og markering';seasonOptions.append(seasonLegend);
 const seasonControls=document.createElement('div');seasonControls.className='season-theme-controls';
@@ -84,13 +84,11 @@ const seasonHint=document.createElement('p');seasonHint.className='theme-layer-h
 seasonHint.textContent='Valgfri bakgrunnsdekor med tydelige sesongmotiv. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
 seasonOptions.append(seasonHint);
 serviceOptions.querySelector('legend').textContent='Tjenestetema';
-serviceOptions.after(seasonOptions);
+sheetBody('season').append(seasonOptions);
 const seasonNotice=document.createElement('span');seasonNotice.className='season-notice';seasonNotice.id='seasonNotice';seasonNotice.hidden=true;
 one('#page-vurdering .intro > div')?.append(seasonNotice);
 const seasonHighlight=document.createElement('div');seasonHighlight.className='season-highlight';seasonHighlight.id='seasonHighlight';seasonHighlight.hidden=true;
 seasonHighlight.setAttribute('aria-hidden','true');one('.header')?.append(seasonHighlight);
-const profile=one('#page-profil .profile-body');if(profile)$('profileMount').append(profile);
-const placeholder=one('#page-profil .section');if(placeholder){const b=document.createElement('button');b.type='button';b.className='btn btn-primary';b.textContent='Åpne profilinnstillinger';b.addEventListener('click',openProfile);placeholder.append(b)}
 function initials(){const name=$('profileName')?.value.trim()||'';avatar.textContent=name?name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'K'}
 for(const input of drawer.querySelectorAll('[name=appearanceMode]'))input.closest('label').dataset.previewMode=input.value;
 for(const input of drawer.querySelectorAll('[name=accentChoice]'))input.closest('label').dataset.previewAccent=input.value;
@@ -109,7 +107,7 @@ for(const [id,title,info] of [
  label.append(input,preview,copy);surfaceGrid.append(label);
 }
 surfaceOptions.append(surfaceGrid);
-drawer.querySelectorAll('.appearance-options')[1]?.after(surfaceOptions);
+sheetBody('surface').append(surfaceOptions);
 function apply(){
  if(!philipUnlocked)prefs.base='standard';
  baseOptions.hidden=!philipUnlocked;
@@ -141,17 +139,61 @@ function apply(){
  const baseName=state.base==='philip'?'Philip liquid cobalt':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
  const surfaceName=state.surface==='glass'?'Liquid glass':'Solide bokser';
  $('appearanceSummary').textContent=baseName+' · '+surfaceName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);
+ $('serviceThemeValue').textContent=serviceNames[prefs.service];
+ $('surfaceStyleValue').textContent=prefs.surface==='glass'?'Liquid glass':'Solide';
+ $('seasonThemeValue').textContent=prefs.season==='off'?'Av':(prefs.season==='auto'?'Automatisk':seasonNames[prefs.season]);
  try{localStorage.setItem(key,JSON.stringify(prefs))}catch(_){}
  window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 window.KartleggThemeLayers={apply(value){prefs=ThemeEngine.normalize(value);if(prefs.accent==='violet')prefs.accentChoiceVersion=1;apply()},get preferences(){return {...prefs}},get effective(){return ThemeEngine.resolve(prefs,Boolean(media?.matches),new Date())}};
-function openProfile(){initials();apply();drawer.showModal()}
+function openProfile(){initials();apply();(one('#sidebar [data-page=profil]')||one('[data-page=profil]'))?.click()}
 avatar.addEventListener('click',openProfile);
-$('closeProfile').addEventListener('click',()=>drawer.close());
-drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.close()});
 $('profileName')?.addEventListener('input',initials);
 $('clearProfile')?.addEventListener('click',initials);
-const profileNav=one('[data-page=profil]');profileNav?.addEventListener('click',e=>{e.stopImmediatePropagation();if(one('#sidebar')?.classList.contains('open'))one('#menuButton')?.click();openProfile()},true);
+// Sheets: a row with data-sheet opens its dialog; «Ferdig» or a tap outside closes it.
+document.addEventListener('click',e=>{
+ const opener=e.target.closest?.('[data-sheet]');
+ if(opener){const sheet=$(opener.dataset.sheet);if(sheet&&!sheet.open){sheet.showModal();sheet.querySelector('input:checked,select,input')?.focus({preventScroll:true})}return}
+ const closer=e.target.closest?.('[data-sheet-close]');if(closer){closer.closest('dialog')?.close();return}
+ if(e.target.matches?.('dialog.settings-sheet'))e.target.close();
+});
+// Sender profile: rows show a summary; tapping one opens the existing form at that field.
+const senderSummary=$('senderSummary'),senderEditor=$('senderEditor');
+function refreshSender(){
+ const value=id=>$(id)?.value.trim()||'Ikke satt';
+ $('senderNameValue').textContent=value('profileName');$('senderRoleValue').textContent=value('profileRole');$('senderWorkValue').textContent=value('profileWork');
+}
+function editSender(open,field){
+ senderEditor.hidden=!open;senderSummary.hidden=open;
+ if(open)$(field||'profileName')?.focus();else senderSummary.querySelector('button')?.focus({preventScroll:true});
+}
+senderSummary.querySelectorAll('[data-sender-field]').forEach(b=>b.addEventListener('click',()=>editSender(true,b.dataset.senderField)));
+$('saveProfile')?.addEventListener('click',()=>{refreshSender();editSender(false)});
+$('clearProfile')?.addEventListener('click',refreshSender);
+window.addEventListener('kartlegg:profile-applied',refreshSender);
+// Profile page views: main settings, or the login / signup screens. Back (button or browser) returns to main.
+const profilePage=$('page-profil');
+function showProfileView(view,push){
+ view=view==='login'||view==='signup'?view:'main';
+ if(profilePage.dataset.profileView===view)return;
+ profilePage.dataset.profileView=view;
+ if(push&&view!=='main')history.pushState({profileView:view},'',location.href);
+ window.dispatchEvent(new CustomEvent('kartlegg:profile-view',{detail:{view}}));
+ window.scrollTo({top:0,behavior:'instant'});
+ const heading=view==='main'?profilePage.querySelector('.intro h1'):profilePage.querySelector('[data-profile-view-panel="'+view+'"] h1');
+ if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}
+}
+window.KartleggProfilePage={
+ show(view){showProfileView(view,true)},
+ back(){if(history.state?.profileView)history.back();else showProfileView('main',false)},
+ get view(){return profilePage.dataset.profileView}
+};
+window.addEventListener('popstate',e=>{if(location.hash==='#profil')showProfileView(e.state?.profileView||'main',false)});
+// Any navigation (menu, bottom bar, links, hash) returns the profile to its main view with fresh values.
+function profileNavigated(){showProfileView('main',false);refreshSender();initials()}
+document.addEventListener('click',e=>{if(e.target.closest?.('[data-page]'))profileNavigated()},true);
+window.addEventListener('hashchange',profileNavigated);
+refreshSender();
 drawer.querySelectorAll('[name=baseTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.base=philipUnlocked?el.value:'standard';apply()}));
 drawer.querySelectorAll('[name=surfaceStyle]').forEach(el=>el.addEventListener('change',()=>{prefs.surface=el.value;apply()}));
 window.addEventListener('kartlegg:personal-mode',e=>{

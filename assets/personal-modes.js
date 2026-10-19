@@ -30,7 +30,7 @@
   signature.className='personal-mode-signature';signature.hidden=true;
   header.querySelector('.brand')?.after(signature);
   const info=doc.createElement('p');info.id='personalModeInfo';info.className='personal-mode-info';info.hidden=true;
-  doc.querySelector('.profile-dialog .personalization-note')?.after(info);
+  doc.querySelector('.personalization-note')?.after(info);
   const popup=doc.createElement('dialog');popup.id='personalModePopup';popup.className='personal-mode-popup';
   popup.setAttribute('aria-labelledby','personalModeTitle');
   popup.setAttribute('aria-describedby','personalModeDescription');

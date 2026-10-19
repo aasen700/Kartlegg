@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/01-base.css?v=2013">
   <link rel="stylesheet" href="assets/css/02-layout.css?v=2013">
   <link rel="stylesheet" href="assets/css/03-components.css?v=2013">
-  <link rel="stylesheet" href="assets/css/04-profile.css?v=2011">
+  <link rel="stylesheet" href="assets/css/04-profile.css?v=profile1">
   <link rel="stylesheet" href="assets/css/05-assessment.css?v=2013">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=2013">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="assets/css/09-decor.css?v=2011">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=2012">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=2011">
-  <link rel="stylesheet" href="assets/css/12-account.css?v=1">
+  <link rel="stylesheet" href="assets/css/12-account.css?v=profile1">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -176,10 +176,21 @@
           </div>
         </section>
       </div><!-- /page-simulering -->
-      <div class="page" id="page-profil" hidden>
-        <div class="intro"><div><h1>Min profil</h1><p>Brukes til introduksjonen i ISBAR-manuset – aldri til å identifisere pasienten.</p></div></div>
-        <section class="section"><div class="section-header"><div class="section-symbol teal">♙</div><div><h2>Avsender i telefonsamtalen</h2><p>Fyll inn eget navn, stilling og arbeidssted. ISBAR bruker dette automatisk.</p></div></div>
-        <div class="profile-body">
+      <div class="page" id="page-profil" data-profile-view="main" hidden>
+        <div class="intro profile-main-only"><div><h1>Profil</h1></div></div>
+        <div id="accountMount"></div>
+        <div id="profileSettings" class="profile-settings">
+          <section class="settings-group profile-main-only" aria-labelledby="senderGroupTitle">
+            <h2 class="settings-group-title" id="senderGroupTitle">Avsender i ISBAR</h2>
+            <div class="settings-card">
+              <div class="sender-summary" id="senderSummary">
+                <button type="button" class="settings-row" data-sender-field="profileName"><span class="settings-row-label">Navn</span><span class="settings-row-value" id="senderNameValue">Ikke satt</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+                <button type="button" class="settings-row" data-sender-field="profileRole"><span class="settings-row-label">Stilling</span><span class="settings-row-value" id="senderRoleValue">Ikke satt</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+                <button type="button" class="settings-row" data-sender-field="profileWork"><span class="settings-row-label">Arbeidssted</span><span class="settings-row-value" id="senderWorkValue">Ikke satt</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+              </div>
+              <div class="sender-editor" id="senderEditor" hidden>
+                <div id="profileMount">
+          <div class="profile-body">
           <div class="profile-grid">
             <label class="profile-field">Navn<input id="profileName" type="text" maxlength="100" placeholder="Eksempel: Kari Nordmann" autocomplete="off"></label>
             <label class="profile-field">Stilling<select id="profileRole"><option value="">Velg stilling</option><option>Sykepleier</option><option>Sykepleierstudent</option><option>Vernepleier</option><option>Helsefagarbeider</option><option>Lege</option><option>Ambulansearbeider</option><option>Helsepersonell</option></select></label>
@@ -188,8 +199,38 @@
           </div>
           <label class="profile-save"><input id="rememberProfile" type="checkbox"> Husk profilen i denne nettleseren etter at fanen lukkes</label>
           <div class="profile-actions"><button class="btn btn-primary" id="saveProfile" type="button">✓ Bruk profil</button><button class="btn btn-secondary" type="button" id="clearProfile">Slett profil</button><span class="profile-status" id="profileStatus" role="status" aria-live="polite"></span></div>
-          <p class="profile-info">Uten konto brukes opplysningene bare i fanen, med mindre du velger «Husk profilen». Når du er innlogget og har valgt kontosynkronisering, lagres avsenderprofilen i kontoen når du trykker «Bruk profil». Se kontostatus og personverninformasjon ovenfor. Ikke fyll inn pasientopplysninger. Logg ut på delte enheter.</p>
-        </div></section>
+          <p class="profile-info">Uten konto gjelder profilen bare denne fanen, med mindre du krysser av for «Husk profilen». Er du innlogget, lagres den i kontoen når du trykker «Bruk profil».</p>
+        </div>
+                </div>
+              </div>
+            </div>
+            <p class="settings-group-note">Brukes i innledningen til ISBAR. Aldri pasientopplysninger.</p>
+          </section>
+          <section class="settings-group profile-main-only" aria-labelledby="appearanceGroupTitle">
+            <h2 class="settings-group-title" id="appearanceGroupTitle">Utseende</h2>
+            <p id="appearanceSummary" class="sr-only"></p>
+            <div class="settings-card settings-card-padded" id="appearanceCard">
+              <fieldset class="appearance-options appearance-mode-options"><legend>Visning</legend><label><input type="radio" name="appearanceMode" value="light"> Dag</label><label><input type="radio" name="appearanceMode" value="dark"> Natt</label><label><input type="radio" name="appearanceMode" value="system"> System</label></fieldset>
+              <fieldset class="appearance-options appearance-accent-options"><legend>Aksentfarge</legend><label><input type="radio" name="accentChoice" value="blue"><i class="swatch blue"></i><span class="sr-only">Blå</span></label><label><input type="radio" name="accentChoice" value="green"><i class="swatch green"></i><span class="sr-only">Grønn</span></label><label><input type="radio" name="accentChoice" value="violet"><i class="swatch violet"></i><span class="sr-only">Fiolett</span></label></fieldset>
+            </div>
+            <div class="settings-card">
+              <button type="button" class="settings-row" data-sheet="serviceSheet"><span class="settings-row-label">Tjenestetema</span><span class="settings-row-value" id="serviceThemeValue">Egendefinert</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+              <button type="button" class="settings-row" data-sheet="surfaceSheet"><span class="settings-row-label">Kort og bokser</span><span class="settings-row-value" id="surfaceStyleValue">Solide</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+              <button type="button" class="settings-row" data-sheet="seasonSheet"><span class="settings-row-label">Sesongpynt</span><span class="settings-row-value" id="seasonThemeValue">Av</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+            </div>
+            <p class="personalization-note settings-group-note">Temaet endrer ikke kliniske skår- og varselfarger. Utseendet lagres på denne enheten; målingene gjør det ikke.</p>
+            <dialog class="settings-sheet" id="serviceSheet" aria-labelledby="serviceSheetTitle"><div class="settings-sheet-head"><h2 id="serviceSheetTitle">Tjenestetema</h2><button type="button" class="settings-sheet-close" data-sheet-close aria-label="Lukk">Ferdig</button></div><div class="settings-sheet-body" data-sheet-body="service"></div></dialog>
+            <dialog class="settings-sheet" id="surfaceSheet" aria-labelledby="surfaceSheetTitle"><div class="settings-sheet-head"><h2 id="surfaceSheetTitle">Kort og bokser</h2><button type="button" class="settings-sheet-close" data-sheet-close aria-label="Lukk">Ferdig</button></div><div class="settings-sheet-body" data-sheet-body="surface"></div></dialog>
+            <dialog class="settings-sheet" id="seasonSheet" aria-labelledby="seasonSheetTitle"><div class="settings-sheet-head"><h2 id="seasonSheetTitle">Sesongpynt</h2><button type="button" class="settings-sheet-close" data-sheet-close aria-label="Lukk">Ferdig</button></div><div class="settings-sheet-body" data-sheet-body="season"></div></dialog>
+          </section>
+          <section class="settings-group profile-main-only" aria-labelledby="aboutGroupTitle">
+            <h2 class="settings-group-title" id="aboutGroupTitle">Om og personvern</h2>
+            <div class="settings-card">
+              <button type="button" class="settings-row" data-sheet="privacySheet"><span class="settings-row-label">Hva lagres hvor</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+              <a class="settings-row" href="#om"><span class="settings-row-label">Om Kartlegg</span><span class="settings-row-value">v1.1</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
+            </div>
+          </section>
+        </div>
       </div><!-- /page-profil -->
       <div class="page" id="page-om" hidden>
         <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som står bak, hvorfor, og hva som skjer med opplysningene du skriver inn.</p></div></div>
@@ -262,7 +303,7 @@
   <script src="assets/app.js?v=account1"></script>
   <script src="assets/enhancements.js?v=1023"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
-  <script src="assets/v06.js?v=account1"></script>
+  <script src="assets/v06.js?v=profile1"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
   <script src="assets/clinical-ui.js?v=2010"></script>
   <script src="assets/ux-v071.js?v=2013"></script>
@@ -284,7 +325,7 @@
   <script src="assets/tool-categories-v099.js?v=1201"></script>
   <script src="assets/theme-finalize-v0992.js?v=account1"></script>
   <script src="assets/final-polish-v10.js?v=1011"></script>
-  <script src="assets/personal-modes.js?v=account1"></script>
+  <script src="assets/personal-modes.js?v=profile1"></script>
   <script src="assets/tool-navigation.js?v=account1"></script>
   <script src="assets/simulation-engine.js?v=101"></script>
   <script src="assets/simulation-ui.js?v=2010"></script>
@@ -300,6 +341,6 @@
   <script src="assets/tool-cards.js?v=2000"></script>
   <script src="assets/assessment-flow-v11.js?v=1201"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=profile1"></script>
 </body>
 </html>

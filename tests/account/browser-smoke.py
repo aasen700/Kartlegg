@@ -5,7 +5,7 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 import threading, shutil, subprocess, re, sys, tempfile
 root=Path(__file__).resolve().parents[2]
 source=(root/'index.html').read_text()
-source=source.replace('<script type="module" src="assets/account/entry.mjs?v=1"></script>','<script type="module" src="tests/account/browser.mjs"></script>')
+source=source.replace('<script type="module" src="assets/account/entry.mjs?v=profile1"></script>','<script type="module" src="tests/account/browser.mjs"></script>')
 class Handler(SimpleHTTPRequestHandler):
  def __init__(self,*args,**kwargs):super().__init__(*args,directory=str(root),**kwargs)
  def do_GET(self):

@@ -590,3 +590,294 @@
     height: 48px;
   }
 }
+/* ------------------------------------------------------------------
+ * Profilsiden: grupper med kort og rader, slik som innstillinger på en telefon.
+ * Kontokortet øverst ligger i 12-account.css.
+ * ------------------------------------------------------------------ */
+#page-profil {
+  max-width: 680px;
+}
+.profile-settings {
+  display: grid;
+  gap: 26px;
+  margin-top: 26px;
+}
+.settings-group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.settings-group-title {
+  margin: 0 4px;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+.settings-group-note {
+  margin: 0 4px;
+  font-size: 13px !important;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.settings-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+.settings-card-padded {
+  display: grid;
+  gap: 18px;
+  padding: 16px;
+}
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.settings-row:last-child {
+  border-bottom: 0;
+}
+.settings-row:hover {
+  background: color-mix(in srgb,var(--accent-bg) 45%,transparent);
+}
+.settings-row:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+.settings-row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.settings-row-value {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 58%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 15px;
+  color: var(--muted);
+}
+.settings-row-chevron {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sender-summary[hidden],
+.sender-editor[hidden] {
+  display: none;
+}
+.sender-editor {
+  padding: 16px;
+}
+.sender-editor .profile-body {
+  padding: 0;
+}
+@media(max-width:620px){
+  .sender-editor .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Visning som segmentert valg og aksentfarge som runde fargeprøver. */
+#appearanceCard .appearance-options {
+  position: relative;
+  margin: 0;
+  gap: 6px;
+}
+#appearanceCard .appearance-options legend {
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+}
+#appearanceCard .appearance-options label {
+  position: relative;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+#appearanceCard .appearance-options label::after {
+  content: none;
+}
+#appearanceCard .appearance-options input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+#appearanceCard .appearance-options label:has(input:checked) {
+  border: 0;
+  background: var(--accent-bg);
+  box-shadow: inset 0 0 0 1px var(--accent-border,var(--accent));
+  color: var(--ink);
+  font-weight: 750;
+}
+#appearanceCard .appearance-options label:has(input:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+#appearanceCard .appearance-accent-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#appearanceCard .appearance-accent-options label {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+#appearanceCard .appearance-accent-options .swatch {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 50%;
+}
+#appearanceCard .swatch.blue {
+  background: #2f7fd6;
+}
+#appearanceCard .swatch.green {
+  background: #16865e;
+}
+#appearanceCard .swatch.violet {
+  background: #7652a6;
+}
+#appearanceCard .appearance-accent-options label:has(input:checked) {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+/* Tjenestetema, kort og sesongpynt åpnes som ark nederst på mobil og som vindu på PC. */
+dialog.settings-sheet {
+  width: min(560px,100vw);
+  max-width: 100vw;
+  max-height: min(86dvh,760px);
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 20px 20px 0 0;
+  background: var(--paper);
+  color: var(--ink);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+@media(min-width:771px){
+  dialog.settings-sheet {
+    margin: auto;
+    border-radius: 20px;
+  }
+}
+.settings-sheet::backdrop {
+  background: #061525b8;
+}
+.settings-sheet-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 10px 12px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+.settings-sheet-head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.settings-sheet-close {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.settings-sheet-body {
+  padding: 16px 20px calc(22px + env(safe-area-inset-bottom));
+}
+.settings-sheet-body>fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.settings-sheet-body>fieldset>legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}
+/* Skjemaet for avsenderprofilen inne i kortet. */
+.sender-editor .profile-grid {
+  gap: 14px;
+}
+.sender-editor .profile-save {
+  padding: 16px 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.sender-editor .profile-actions .btn {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+.sender-editor .profile-status:empty {
+  display: none;
+}
+.sender-editor .profile-info {
+  margin: 0;
+  padding-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.settings-sheet-body .season-theme-controls {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}

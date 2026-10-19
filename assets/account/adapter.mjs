@@ -8,4 +8,5 @@ export function applySettings(value){
  window.KartleggThemeFinale?.applyProfile();
  window.KartleggToolNavigation.applyFavorites(s.favorites);
  window.KartleggThemeLayers.apply(s.appearance);
+ window.dispatchEvent(new Event('kartlegg:profile-applied'));
 }

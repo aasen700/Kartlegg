@@ -11,7 +11,8 @@ assert(disabled.host.querySelector('#accountLogin').disabled,'account gate disab
 const app=mountAccount({enabled:true,loadBackend:async()=>backend});
 try{
  await pause();
- $('profileTrigger').click();assert($('profileDialog').open,'profile dialog opens with account');
+ $('profileTrigger').click();assert(!$('page-profil').hidden,'profile page opens with account');
+ $('accountOpenLogin').click();assert($('page-profil').dataset.profileView==='login','guest card opens the login screen');
  $('profileName').value='Guest Nurse';$('profileRole').value='Sykepleier';$('saveProfile').click();
  $('accountEmail').value='synthetic@example.test';$('accountPassword').value='synthetic-test-password';
  $('accountForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));await pause();
@@ -32,6 +33,7 @@ try{
  assert(!$('accountGuest').hidden,'guest UI restored after logout');assert($('profileName').value==='Guest Nurse','guest profile restored');assert(!$('rememberProfile').checked,'guest persistence opt-in restored');
  assert(!localStorage.getItem('kartlegg.account.owner.v1'),'account owner marker cleared');
  assert(!$('rr').disabled,'clinical assessment remains available');
- $('closeProfile').click();$('profileTrigger').focus();$('profileTrigger').click();assert($('profileDialog').open,'profile remains reachable');
+ assert($('page-profil').dataset.profileView==='main','login returns to the profile');
+ document.querySelector('[data-page=vurdering]').click();$('profileTrigger').focus();$('profileTrigger').click();assert(!$('page-profil').hidden,'profile remains reachable');
  const output=document.createElement('pre');output.id='account-test-result';output.textContent='PASS: account UI, import, profile/favorites/theme adapters, clinical exclusion, logout and guest restore';document.body.append(output);
 }catch(e){const output=document.createElement('pre');output.id='account-test-result';output.textContent='FAIL: '+e.stack;document.body.append(output)}

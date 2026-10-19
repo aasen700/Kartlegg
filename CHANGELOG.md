@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Ny profilside med innlogging – 20. oktober 2026
+
+- «Min profil» er nå en egen side i stedet for et vindu. Øverst står kontoen: «Ikke innlogget» med én knapp for å logge inn, eller navn, e-post og synkstatus når du er innlogget.
+- Avsenderprofilen for ISBAR vises som rader (navn, stilling, arbeidssted). Trykk på en rad for å redigere.
+- Utseende: dag/natt/system som ett valg, aksentfarge som fargeprøver, og tjenestetema, kort og sesongpynt som rader som åpner et ark nederst på skjermen.
+- Innlogging og ny konto har fått egne skjermer med tilbakeknapp: Google øverst, e-post og passord under, «Vis» for passordet og «Glemt passord?» som lenke. Samtykket vises bare når du oppretter konto eller velger Google.
+- Personverninformasjonen og kontoadministrasjonen (koble Google, laste ned, slette konto) ligger i egne ark. Innholdet og reglene for samtykke, synkronisering og sletting er uendret.
+- Testet i Chrome ved 320 og 375 px i lys og mørk modus. Ingen beregninger, kliniske grenser eller fagtekster er endret.
+
 ## Rettet valg av aksentfarge etter tjenestetema – 19. oktober 2026
 
 - Når et tjenestetema (sykehus, ambulanse, legevakt, hjemmesykepleie) er valgt i «Min profil», vises ikke lenger dag/natt- og aksentvalget for «Egendefinert» som avkrysset. Før kunne et klikk på den allerede avkryssede fargen (nå blå som standard) ikke føre tilbake til egendefinert utseende.
