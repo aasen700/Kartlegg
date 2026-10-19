@@ -27,7 +27,7 @@ export class SyncSession {
  clearPending(){try{this.storage?.removeItem(this.key())}catch(_){}}
  receive(remote){
   if(!this.active||this.deleting)return;
-  if(!remote){this.active=false;this.emit(Object.assign(Error(),{code:'account-deleting'}));return}
+  if(!remote){if(this.busy||(this.revision||0)===0)return;this.active=false;this.emit(Object.assign(Error(),{code:'account-deleting'}));return}
   if(remote.revision<(this.revision||0))return;
   if(this.busy){this.deferred=remote;return}
   const local=settings(this.read()), result=reconcile(this.base,local,remote.settings);
