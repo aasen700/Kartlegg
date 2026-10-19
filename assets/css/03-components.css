@@ -451,6 +451,12 @@
   font-weight: 820;
   letter-spacing: -.008em;
 }
+@media(max-width:770px){
+  /* På mobil er knappene fullbredde; minstebredden ville ellers klemme nabo-knapper i samme rad */
+  .btn-primary {
+    min-width: 0;
+  }
+}
 .btn-secondary {
   background: #fff;
   color: #486079;
