@@ -12,7 +12,7 @@
  const ACCENTS=Object.freeze(['violet','blue','green']);
  const SURFACES=Object.freeze(['solid','glass']);
  const serviceModes=Object.freeze({hospital:'light',ambulance:'dark',urgent:'dark',homecare:'light'});
- const fallback=Object.freeze({mode:'system',accent:'violet',service:'custom',base:'standard',season:'off',surface:'solid'});
+ const fallback=Object.freeze({mode:'system',accent:'blue',service:'custom',base:'standard',season:'off',surface:'solid'});
  function normalize(raw){
   const p=raw&&typeof raw==='object'?raw:{};
   return {

@@ -7,10 +7,10 @@
   --teal: #0ca99a;
   --blue: #2786c5;
   --orange: #dd8b20;
-  --accent: #7652a6;
+  --accent: #185cab;
   --accent-on: #fff;
-  --accent-bg: #f3effb;
-  --accent-border: #cbbce5;
+  --accent-bg: #eaf3ff;
+  --accent-border: #a9c9eb;
   --ui-radius-xl: 20px;
   --ui-radius-lg: 16px;
   --ui-radius-md: 12px;
@@ -49,7 +49,7 @@
   --human-shadow: 0 2px 10px color-mix(in srgb,var(--ink) 7%,transparent);
 }
 :root[data-theme=dark] {
-  --accent: #c9b2ff;
+  --accent: #87b8ff;
   --accent-on: #10253a;
 }
 :root[data-base-theme="standard"][data-service-theme="custom"][data-theme="light"] {

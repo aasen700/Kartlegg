@@ -6,13 +6,17 @@ const html=document.documentElement, key='kartlegg.appearance.v06';
 const media=window.matchMedia?.('(prefers-color-scheme: dark)');
 const ThemeEngine=window.KartleggThemeEngine;
 if(!ThemeEngine)throw new Error('Kartlegg theme engine missing');
-const modes=['light','dark','system'], accents=['coral','blue','green'];
+const modes=['light','dark','system'], accents=['violet','blue','green'];
 const services=ThemeEngine.SERVICES;
 const serviceNames={custom:'Egendefinert',hospital:'Sykehus / akuttmottak',ambulance:'Ambulanse / prehospital',urgent:'Legevakt / akuttmedisin',homecare:'Hjemmesykepleie'};
 let prefs=ThemeEngine.normalize(null);
 try{
  const saved=JSON.parse(localStorage.getItem(key)||'null');
- if(saved&&modes.includes(saved.mode)&&accents.includes(saved.accent))prefs=ThemeEngine.normalize(saved);
+ if(saved&&modes.includes(saved.mode)&&accents.includes(saved.accent)){
+  // v2011 made violet the fallback by mistake. Migrate that former default to blue; explicit blue and green choices stay unchanged.
+  if(saved.accent==='violet'&&!saved.accentChoiceVersion)saved.accent='blue';
+  prefs=ThemeEngine.normalize(saved);
+ }
  else {const old=localStorage.getItem('kartlegg.theme.v05');if(modes.includes(old))prefs.mode=old}
 }catch(_){}
 const avatar=one('#profileTrigger'); // Accessible native button is rendered in index.html.
@@ -153,7 +157,7 @@ window.addEventListener('kartlegg:personal-mode',e=>{
  apply();
 });
 drawer.querySelectorAll('[name=appearanceMode]').forEach(el=>el.addEventListener('change',()=>{prefs.mode=el.value;prefs.base='standard';prefs.service='custom';apply()}));
-drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.base='standard';prefs.service='custom';apply()}));
+drawer.querySelectorAll('[name=accentChoice]').forEach(el=>el.addEventListener('change',()=>{prefs.accent=el.value;prefs.accentChoiceVersion=el.value==='violet'?1:undefined;prefs.base='standard';prefs.service='custom';apply()}));
 drawer.querySelectorAll('[name=serviceTheme]').forEach(el=>el.addEventListener('change',()=>{prefs.service=el.value;apply()}));
 seasonSelect.addEventListener('change',()=>{prefs.season=seasonSelect.value;apply()});
 // Prevent the previous v0.5 click listener from immediately toggling the theme back.

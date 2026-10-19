@@ -617,7 +617,10 @@ body:has(#page-vurdering:not([hidden])) .main {
 }
 @media(max-width:770px){
   body:has(#page-vurdering:not([hidden])) .main {
-    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+    padding-bottom: max(128px,calc(82px + env(safe-area-inset-bottom)));
+  }
+  #page-vurdering :is(input,select,button) {
+    scroll-margin-bottom: calc(var(--ui-nav-height) + env(safe-area-inset-bottom) + 26px);
   }
 }
 /* page-om */
