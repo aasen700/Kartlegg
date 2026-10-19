@@ -1,5 +1,10 @@
 # Versjonshistorikk – Kartlegg
 
+## Rettet valg av aksentfarge etter tjenestetema – 19. oktober 2026
+
+- Når et tjenestetema (sykehus, ambulanse, legevakt, hjemmesykepleie) er valgt i «Min profil», vises ikke lenger dag/natt- og aksentvalget for «Egendefinert» som avkrysset. Før kunne et klikk på den allerede avkryssede fargen (nå blå som standard) ikke føre tilbake til egendefinert utseende.
+- Ingen beregninger, kliniske grenser eller fagtekster er endret.
+
 ## Bedre mobilvisning – 19. oktober 2026
 
 - NEWS2-øvingen i Kartlegg Lær viser hver observasjon som et eget kort med poengfeltene i tre kolonner på mobil, i stedet for et 820 px bredt skjema som ble kuttet og måtte sveipes sidelengs.

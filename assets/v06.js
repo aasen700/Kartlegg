@@ -123,8 +123,10 @@ function apply(){
   toggle.setAttribute('aria-label',state.base==='philip'?'Bytt fra Philip-tema til standard dagmodus':(resolved==='dark'?'Bytt til dagmodus':'Bytt til nattmodus'));
   toggle.setAttribute('aria-pressed',String(resolved==='dark'));
  }
- drawer.querySelectorAll('[name=appearanceMode]').forEach(x=>x.checked=x.value===prefs.mode);
- drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=x.value===prefs.accent);
+ // A service preset overrides day/night and accent, so leave the custom choices unchecked; otherwise clicking the stored choice fires no change and cannot return to custom.
+ const custom=prefs.service==='custom';
+ drawer.querySelectorAll('[name=appearanceMode]').forEach(x=>x.checked=custom&&x.value===prefs.mode);
+ drawer.querySelectorAll('[name=accentChoice]').forEach(x=>x.checked=custom&&x.value===prefs.accent);
  drawer.querySelectorAll('[name=serviceTheme]').forEach(x=>x.checked=x.value===prefs.service);
  drawer.querySelectorAll('[name=baseTheme]').forEach(x=>x.checked=x.value===prefs.base);
  drawer.querySelectorAll('[name=surfaceStyle]').forEach(x=>x.checked=x.value===prefs.surface);
