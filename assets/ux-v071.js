@@ -34,7 +34,7 @@
  // Search at TOP of tools page; filter without removing scored references or changing clinical data.
  const finder=document.createElement('div');finder.className='tool-finder';finder.id='toolFinder';
  const searchLabel=document.createElement('label');searchLabel.htmlFor='toolSearch';searchLabel.textContent='Finn et kartleggingsverktøy';
- const input=document.createElement('input');input.type='search';input.id='toolSearch';input.placeholder='Søk etter GCS, NRS, 4AT, NEWS2, qSOFA …';input.autocomplete='off';
+ const input=document.createElement('input');input.type='search';input.id='toolSearch';input.placeholder='Søk: GCS, NRS, 4AT, NEWS2 …';input.autocomplete='off';
  const count=document.createElement('span');count.className='tool-match-count';count.id='toolSearchCount';count.setAttribute('aria-live','polite');
  const empty=document.createElement('p');empty.className='tool-no-matches';empty.id='toolNoMatches';empty.textContent='Ingen verktøy funnet. Prøv et annet søkeord.';empty.hidden=true;
  finder.append(searchLabel,input,count);
