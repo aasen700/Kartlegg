@@ -2,6 +2,7 @@
 'use strict';
 (()=>{
 const paths=Object.freeze({
+ home:'<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5.5h4V20"/>',
  assessment:'<path d="M12 3v18M3 12h18"/><path d="M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/>',
  history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>',
  tools:'<path d="M9 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8l-4-4h-3"/><path d="M9 3h6v4H9zM8 12h8M8 16h5"/>',
@@ -48,7 +49,7 @@ const paths=Object.freeze({
  link:'<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.3 1.3"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.3-1.3"/>'
 });
 const svg=name=>`<svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name]||paths.spark}</svg>`;
-const navIcons={vurdering:'assessment',historikk:'history',verktoy:'tools',laer:'learn',simulering:'simulation',om:'info',profil:'profile'};
+const navIcons={vurdering:'assessment',historikk:'history',verktoy:'tools',laer:'learn',simulering:'simulation',om:'info',profil:'profile',start:'home',konto:'profile'};
 const symbolIcons={'▤':'tools','▥':'chart','◷':'history','↗':'trend','✦':'learn','◈':'brain','▦':'calculator','✧':'spark','♙':'profile','▣':'document','i':'info'};
 const replace=(icon,name)=>{
  if(icon.dataset.uiIcon)return;

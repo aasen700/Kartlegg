@@ -406,3 +406,20 @@
     gap: 8px;
   }
 }
+
+/* Bunnmeny på mobil: gjester får Start, Om og Logg inn i stedet for fire låste valg. */
+.mobile-guest-nav {
+  display: none !important;
+}
+@media(max-width:770px){
+  :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-primary-nav:not(.mobile-guest-nav) {
+    display: none !important;
+  }
+  :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-guest-nav {
+    display: grid !important;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+  .mobile-guest-nav .mobile-primary-link {
+    text-decoration: none;
+  }
+}

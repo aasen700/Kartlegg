@@ -37,7 +37,9 @@ script=r"""
   assert(!!window.KartleggDesignSystemV4,'v4 design interaction layer did not load');
   assert(!document.querySelector('.assessment-flow'),'redundant assessment step bar should be absent');
   assert(!!document.querySelector('.skip-link'),'skip link missing');
-  assert(document.querySelectorAll('.mobile-primary-nav .mobile-primary-link').length===4,'mobile primary navigation needs four destinations');
+  assert(document.querySelectorAll('.mobile-primary-nav:not(.mobile-guest-nav) .mobile-primary-link').length===4,'mobile primary navigation needs four destinations');
+  assert(document.querySelectorAll('.mobile-guest-nav .mobile-primary-link').length===3,'guest navigation needs Start, Om and Logg inn');
+  assert(getComputedStyle(document.querySelector('.mobile-guest-nav')).display==='none','guest navigation is hidden for signed-in users');
   assert(!!document.querySelector('.assessment-workspace'),'assessment workspace missing');
   assert(!!document.querySelector('.surface-action')&&!!document.querySelector('.surface-result')&&!!document.querySelector('.surface-info'),'card roles missing');
   const mobileTools=document.querySelector('.mobile-primary-link[data-page="verktoy"]');

@@ -6,6 +6,19 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
+  <link rel="canonical" href="https://kartlegg.com/">
+  <!-- Forhåndsvisning når lenken deles (Messenger, Teams, SMS, Slack, LinkedIn). -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kartlegg">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:url" content="https://kartlegg.com/">
+  <meta property="og:title" content="Kartlegg – kliniske verktøy, læring og simulering">
+  <meta property="og:description" content="NEWS2, GCS, 4AT, TIMES og flere kliniske verktøy, interaktive læringsmoduler og pasientsimulering for studenter og helsepersonell.">
+  <meta property="og:image" content="https://kartlegg.com/assets/kartlegg-deling.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Kartlegg-logoen og teksten «Kliniske verktøy, læring og simulering samlet på ett sted».">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/kartlegg-mark.svg?v=2026" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/kartlegg-touch-icon.png">
   <link rel="stylesheet" href="assets/css/00-tokens.css?v=2012">
@@ -21,7 +34,7 @@
   <link rel="stylesheet" href="assets/css/10-themes.css?v=logo2026">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=2011">
   <link rel="stylesheet" href="assets/css/12-account.css?v=gate1">
-  <link rel="stylesheet" href="assets/css/13-public.css?v=1">
+  <link rel="stylesheet" href="assets/css/13-public.css?v=gjest1">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -444,6 +457,11 @@
       <button type="button" class="mobile-primary-link" data-page="laer"><span class="ico" aria-hidden="true">✦</span><span>Lær</span></button>
       <button type="button" class="mobile-primary-link" data-page="profil"><span class="ico" aria-hidden="true">♙</span><span>Profil</span></button>
     </nav>
+    <nav class="mobile-primary-nav mobile-guest-nav" aria-label="Meny på mobil">
+      <a class="mobile-primary-link" href="#start" data-page="start"><span class="ico" aria-hidden="true">⌂</span><span>Start</span></a>
+      <a class="mobile-primary-link" href="#om" data-page="om"><span class="ico" aria-hidden="true">ⓘ</span><span>Om</span></a>
+      <a class="mobile-primary-link" href="#konto" data-page="konto" data-auth-view="login"><span class="ico" aria-hidden="true">♙</span><span>Logg inn</span></a>
+    </nav>
   </div>
   <dialog id="isbarDialog" aria-labelledby="isbarModalTitle">
     <div class="dialog-head"><div class="section-symbol coral">▣</div><div><h2 id="isbarModalTitle">ISBAR – klart til å lese høyt</h2><p>Et sammenhengende samtalemanus, ikke et huskekort.</p></div><button class="dialog-close" id="closeIsbar" type="button" aria-label="Lukk ISBAR">×</button></div>
@@ -503,7 +521,7 @@
   <script src="assets/wound-learning-data-v12.js?v=1401"></script>
   <script src="assets/wound-learning-v12.js?v=profile2"></script>
   <script src="assets/mobile-ux.js?v=1401"></script>
-  <script src="assets/icon-system.js?v=2010"></script>
+  <script src="assets/icon-system.js?v=gjest1"></script>
   <script src="assets/tool-cards.js?v=profile3"></script>
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>

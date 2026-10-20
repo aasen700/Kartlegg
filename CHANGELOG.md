@@ -1,5 +1,10 @@
 # Versjonshistorikk – Kartlegg
 
+## Bunnmeny for besøkende og delingsbilde – 20. oktober 2026
+
+- På mobil får besøkende som ikke er innlogget en egen bunnmeny med Start, Om og Logg inn, i stedet for fire låste valg. Innloggede har samme meny som før.
+- Når kartlegg.com deles i Messenger, Teams, SMS, Slack eller LinkedIn, vises et forhåndsbilde med den nye logoen og en kort beskrivelse.
+
 ## Ny logo – 20. oktober 2026
 
 - Ny logo fra logoarket (Designpartner, versjon 1.0): symbol med pulskurve og ordmerket «Kartlegg» i Schibsted Grotesk, i Kartlegg-blå #173B58. Mørk modus bruker den negative varianten.
