@@ -27,8 +27,8 @@
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=profil2026">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forside3">
-  <link rel="stylesheet" href="assets/css/06-tools.css?v=2013">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=velkommen1">
+  <link rel="stylesheet" href="assets/css/06-tools.css?v=2014">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
   <link rel="stylesheet" href="assets/css/09-decor.css?v=profil2026">
@@ -61,6 +61,7 @@
     <main class="main" id="top" tabindex="-1">
       <div class="auth-loading" id="authLoading" role="status" aria-live="polite"><span class="auth-loading-spinner" aria-hidden="true"></span><span>Sjekker innlogging …</span></div>
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
+      <aside class="welcome-note" id="welcomeNote" aria-labelledby="welcomeTitle" hidden><div><strong id="welcomeTitle">Velkommen til Kartlegg</strong><p>Fyll inn målingene under og trykk «Beregn skårer». Flere kartleggingsverktøy finner du under Kliniske verktøy, og under Lær kan du øve. Bruk bare tenkte pasienter.</p></div><button class="btn btn-secondary" type="button" data-welcome-close>Skjønner</button></aside>
       <div class="intro home-intro"><div><h1>Kartlegg</h1><p>Regn ut NEWS2, finn riktig kartleggingsverktøy eller øv på tenkte pasienter.</p></div></div>
       <nav class="home-entries" aria-label="Kom i gang">
         <a class="home-entry is-primary" href="#vurdering" data-home-start><span class="home-entry-icon" aria-hidden="true"><svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v18M3 12h18"/><path d="M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg></span><span class="home-entry-text"><strong>Start vurdering</strong><small>NEWS2 og qSOFA fra vitale målinger</small></span><svg class="home-entry-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
@@ -485,6 +486,7 @@
   <script src="assets/auth-gate.js?v=forside2"></script>
   <script src="assets/measurement-store.js?v=1"></script>
   <script src="assets/app.js?v=gate1"></script>
+  <script src="assets/welcome.js?v=1"></script>
   <script src="assets/enhancements.js?v=home1"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
   <script src="assets/v06.js?v=profil2026"></script>

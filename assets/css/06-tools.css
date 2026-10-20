@@ -1111,6 +1111,7 @@
   font-weight: 800;
 }
 .hc-esas-number {
+  min-width: 48px;
   max-width: 70px;
   height: 39px;
   background: var(--paper);

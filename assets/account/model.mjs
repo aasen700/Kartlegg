@@ -41,13 +41,19 @@ export function errorMessage(error) {
   'auth/credential-already-in-use':'Denne Google-kontoen er allerede knyttet til en annen konto. Logg inn med den eksisterende kontoen.',
   'auth/provider-already-linked':'Google er allerede koblet til kontoen.',
   'auth/weak-password':'Velg et sterkere passord med minst 12 tegn.',
-  'auth/password-does-not-meet-requirements':'Passordet oppfyller ikke sikkerhetskravene i Firebase.',
+  'auth/password-does-not-meet-requirements':'Passordet er for svakt. Bruk minst 12 tegn, gjerne noen ord etter hverandre.',
+  'auth/missing-password':'Skriv inn passordet ditt.',
+  'auth/missing-email':'Skriv inn e-postadressen din.',
+  'auth/user-token-expired':'Du er blitt logget ut. Logg inn igjen.',
+  'auth/invalid-user-token':'Du er blitt logget ut. Logg inn igjen.',
+  'auth/internal-error':'Innloggingstjenesten svarte ikke som den skulle. Vent litt og prøv igjen.',
+  'auth/quota-exceeded':'Innloggingstjenesten har nådd dagens grense. Prøv igjen senere.',
   'auth/popup-blocked':'Nettleseren blokkerte Google-vinduet. Tillat popupvinduer og trykk Google igjen, eller bruk e-post.',
   'auth/popup-closed-by-user':'Google-innloggingen ble avbrutt. Prøv igjen når du er klar.',
   'auth/cancelled-popup-request':'Et Google-vindu er allerede åpent.',
-  'auth/unauthorized-domain':'Dette testdomenet er ikke godkjent for innlogging ennå. Bruk Kartlegg lokalt inntil oppsettet er klart.',
-  'auth/network-request-failed':'Ingen kontakt med innloggingstjenesten. Kontroller nettet og prøv igjen.',
-  'auth/too-many-requests':'For mange forsøk. Vent litt før du prøver igjen.',
+  'auth/unauthorized-domain':'Innlogging er ikke slått på for denne adressen ennå. Bruk kartlegg.com.',
+  'auth/network-request-failed':'Fikk ikke kontakt med innloggingen. Sjekk at du er på nett, og prøv igjen.',
+  'auth/too-many-requests':'For mange forsøk på kort tid. Vent noen minutter, eller trykk «Glemt passord?».',
   'auth/requires-recent-login':'Bekreft innloggingen på nytt før du fortsetter.',
   'auth/user-disabled':'Kontoen er deaktivert. Kontakt den som drifter Kartlegg.',
   'auth/operation-not-allowed':'Denne innloggingsmetoden er ikke aktivert ennå.',
@@ -56,5 +62,5 @@ export function errorMessage(error) {
   'resource-exhausted':'Gratisgrensen for skylagring er nådd. Bruk Kartlegg lokalt og prøv senere.',
   'account-deleting':'Sletting av kontoen er påbegynt. Fullfør sletting under kontoadministrasjon.',
   'conflict':'Innstillingene er også endret på en annen enhet. Velg hvilken versjon du vil bruke.'
- })[code]||'Handlingen kunne ikke fullføres. Lokale innstillinger er beholdt. Prøv igjen.';
+ })[code]||'Noe gikk galt, og det ble ikke lagret noe nytt. Prøv igjen om litt.';
 }

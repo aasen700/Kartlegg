@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Velkomst og tydeligere feilmeldinger – 20. oktober 2026
+
+- Første gang du er innlogget, viser forsiden en kort velkomst med hvor du finner verktøyene. Den forsvinner når du trykker «Skjønner».
+- Feilmeldingene ved innlogging er skrevet om, så de sier hva som skjedde og hva du kan gjøre. Flere feil har fått egen melding: manglende passord, utløpt innlogging, for mange forsøk og feil hos innloggingstjenesten.
+- Tallfeltene i ESAS-r er litt bredere, så «10» får plass på mobil.
+
 ## Innlogging til forsiden og ISBAR ved Beregn – 20. oktober 2026
 
 - Etter innlogging kommer du til forsiden med NEWS2, ikke til Profil.
