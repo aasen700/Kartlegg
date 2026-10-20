@@ -100,9 +100,9 @@
   }
 }
 .header .logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 9px;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  border-radius: 0;
   background: transparent !important;
   color: inherit !important;
   box-shadow: none !important;
@@ -136,11 +136,6 @@
     max-width: 100%;
     font-size: 20px;
   }
-  .header .logo {
-    width: 35px;
-    height: 35px;
-    border-radius: 9px;
-  }
 }
 @media(max-width:370px){
   .header {
@@ -151,10 +146,6 @@
   .header .brand {
     font-size: 18px;
     gap: 7px;
-  }
-  .header .logo {
-    width: 33px;
-    height: 33px;
   }
 }
 .brand {
@@ -167,11 +158,49 @@
   white-space: nowrap;
 }
 .brand-word {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.08em;
-  font-weight: 700;
-  letter-spacing: -.07em;
+  display: flex;
+  align-items: center;
   line-height: 1;
+}
+/* Logo (logoark oktober 2026): symbol og ordmerke i samme høyde. Mørk modus bruker den negative varianten.
+   Ikke strekk, endre farger eller legg skygge eller andre effekter på logoen. */
+:root {
+  --logo-ink: #173b58;
+  --logo-square: #173b58;
+  --logo-pulse: #ffffff;
+  --logo-size: 40px;
+}
+:root[data-theme=dark] {
+  --logo-ink: #ffffff;
+  --logo-square: #ffffff;
+  --logo-pulse: #173b58;
+}
+.header .brand-word {
+  color: var(--logo-ink);
+}
+.header :is(.logo,.brand-word) {
+  flex: none;
+}
+.header .brand-word svg {
+  display: block;
+  width: auto;
+  height: var(--logo-size);
+}
+.logo-square {
+  fill: var(--logo-square);
+}
+.logo-pulse {
+  fill: var(--logo-pulse);
+}
+@media(max-width:770px){
+  :root {
+    --logo-size: 32px;
+  }
+}
+@media(max-width:370px){
+  :root {
+    --logo-size: 28px;
+  }
 }
 .logo {
   display: grid;

@@ -47,11 +47,6 @@
 :root[data-personal-mode] .header .theme-top-ribbon::after {
   display: none !important;
 }
-:root[data-personal-mode] .header .logo {
-  background: var(--pm-primary) !important;
-  color: #fff !important;
-  box-shadow: 0 5px 18px #0b26462b !important;
-}
 :root[data-personal-mode] .header .profile-trigger {
   outline: 2px solid var(--pm-border);
   outline-offset: 2px;

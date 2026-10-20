@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Ny logo – 20. oktober 2026
+
+- Ny logo fra logoarket (Designpartner, versjon 1.0): symbol med pulskurve og ordmerket «Kartlegg» i Schibsted Grotesk, i Kartlegg-blå #173B58. Mørk modus bruker den negative varianten.
+- Ny favicon og eget ikon for hjemskjermen på iPhone. Logofilene ligger i `assets/` (`kartlegg-logo.svg`, `kartlegg-logo-negativ.svg`, `kartlegg-mark.svg`).
+- Temaene legger ikke lenger farger, gradienter eller skygge på logoen, i tråd med logoarket.
+- Fjernet punkt 12 («Bør avklares …») fra bruksvilkårene.
+
 ## Innloggingsbeskyttet plattform – 20. oktober 2026
 
 - Offentlig forside med presentasjon av verktøy, læring, simulering og målinger, og knappene «Logg inn» og «Opprett gratis konto».

@@ -5,16 +5,24 @@ const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const css=require('./css-helper.cjs');
 
-test('Kartlegg has an original reusable mark and demo identity',()=>{
+// Logoark oktober 2026 (Designpartner): symbol med pulskurve og ordmerke i Schibsted Grotesk, Kartlegg-blå #173B58.
+test('Kartlegg uses the official 2026 logo and keeps its demo identity',()=>{
  const html=read('index.html');
  const mark=read('assets/kartlegg-mark.svg');
  assert.match(html,/assets\/kartlegg-mark\.svg/);
+ assert.match(html,/rel="apple-touch-icon" href="assets\/kartlegg-touch-icon\.png"/);
  assert.match(html,/brand-small">DEMO</);
  assert.doesNotMatch(html,/brand-small">PROTOTYPE</);
- assert.match(html,/class="brand-word">Kartlegg/);
- assert.match(html,/data-brand-mark="kartlegg-2a"/);
- assert.match(mark,/data-brand-mark="kartlegg-2a"/);
- assert.match(mark,/aria-label="Kartlegg monogram"/);
+ assert.match(html,/class="brand-word"><svg[^>]*aria-hidden="true"[\s\S]*?<span class="sr-only">Kartlegg<\/span>/);
+ assert.match(html,/data-brand-mark="kartlegg-2026"/);
+ assert.doesNotMatch(html,/data-brand-mark="kartlegg-2a"/);
+ assert.match(mark,/data-brand-mark="kartlegg-2026"/);
+ assert.match(mark,/aria-label="Kartlegg-symbol"/);
+ assert.match(mark,/#173b58/i);
+ for(const f of ['assets/kartlegg-logo.svg','assets/kartlegg-logo-negativ.svg'])assert.ok(fs.existsSync(path.join(__dirname,'..',f)),f);
+ const layout=css.group('layout');
+ assert.match(layout,/--logo-square:#173b58/);
+ assert.match(layout,/\[data-theme=dark\]\{--logo-ink:#ffffff;--logo-square:#ffffff;--logo-pulse:#173b58/);
 });
 
 test('mobile header and drawer are deliberately right aligned',()=>{
