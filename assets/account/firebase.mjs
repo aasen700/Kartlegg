@@ -1,9 +1,13 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
 import {getAuth,browserLocalPersistence,browserSessionPersistence,inMemoryPersistence,setPersistence,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,sendEmailVerification,sendPasswordResetEmail,signOut,deleteUser,reload,getIdToken,EmailAuthProvider,reauthenticateWithCredential,reauthenticateWithPopup,linkWithPopup} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
 import {initializeFirestore,memoryLocalCache,doc,getDocFromServer,onSnapshot,runTransaction,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
-import {firebaseConfig} from './config.mjs';
+import {firebaseConfig,appCheckSiteKey,termsVersion} from './config.mjs';
 import {documentData,validDocument} from './model.mjs';
 const app=initializeApp(firebaseConfig);
+// App Check (valgfritt): beviser overfor Firestore at forespørselen kommer fra Kartlegg, ikke et skript.
+if(appCheckSiteKey){
+ try{const ac=await import('https://www.gstatic.com/firebasejs/13.0.0/firebase-app-check.js');ac.initializeAppCheck(app,{provider:new ac.ReCaptchaV3Provider(appCheckSiteKey),isTokenAutoRefreshEnabled:true})}catch(_){}
+}
 const auth=getAuth(app);auth.languageCode='nb';
 const db=initializeFirestore(app,{localCache:memoryLocalCache()});
 const google=new GoogleAuthProvider();google.setCustomParameters({prompt:'select_account'});
@@ -11,6 +15,7 @@ const google=new GoogleAuthProvider();google.setCustomParameters({prompt:'select
 // Valget lagres av ui.mjs; denne modulen lagrer ingenting selv.
 async function persist(on){try{await setPersistence(auth,on?browserLocalPersistence:browserSessionPersistence)}catch(_){await setPersistence(auth,inMemoryPersistence)}}
 const ref=uid=>doc(db,'users',uid);
+const consentRef=uid=>doc(db,'consents',uid);
 const failure=code=>Object.assign(Error(code),{code});
 function unpack(snapshot){
  if(!snapshot.exists())return null;
@@ -38,6 +43,10 @@ export const backend={
   return reauthenticateWithPopup(u,google);
  },
  async read(uid){return unpack(await getDocFromServer(ref(uid)))},
+ // Bekreftelsene ved registrering: versjon av vilkårene og tidspunkt. Bare eieren kan lese og skrive (firestore.rules).
+ async readConsent(uid){const s=await getDocFromServer(consentRef(uid));return s.exists()?s.data():null},
+ async writeConsent(uid){await runTransaction(db,async tx=>{const old=await tx.get(consentRef(uid));const d={version:termsVersion,terms:true,patientData:true,clinicalResponsibility:true,acceptedAt:serverTimestamp()};old.exists()?tx.update(consentRef(uid),d):tx.set(consentRef(uid),d)})},
+ termsVersion,
  watch(uid,receive,error){return onSnapshot(ref(uid),{includeMetadataChanges:true},snap=>{if(snap.metadata.fromCache||snap.metadata.hasPendingWrites)return;try{receive(unpack(snap))}catch(e){error(e)}},error)},
  async write(uid,value,expected){
   return runTransaction(db,async tx=>{

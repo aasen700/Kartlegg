@@ -1,0 +1,408 @@
+/* Kartlegg – offentlige sider og innloggingsstatus: lasteskjerm, låste menyvalg, forside, vilkår og personvern.
+ * Del av designsystemet i assets/css/. Bruker tokens, så lys/mørk modus og temaer virker.
+ */
+
+/* Mens Firebase sjekker en lagret innlogging, vises bare en rolig lasteindikator (ingen blinking mellom tilstander). */
+.auth-loading {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 50vh;
+  color: var(--muted);
+  font-size: 15px;
+}
+:root[data-auth="checking"] .auth-loading {
+  display: flex;
+}
+:root[data-auth="checking"] .main>.page,
+:root[data-auth="checking"] .main>.footer {
+  display: none !important;
+}
+.auth-loading-spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: auth-spin .8s linear infinite;
+}
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}
+@media(prefers-reduced-motion:reduce){
+  .auth-loading-spinner { animation-duration: 2.4s; }
+}
+
+/* «Logg inn» i toppen for den som ikke er innlogget; profilknappen for den som er det. */
+.header-login {
+  display: none;
+  flex: none;
+  white-space: nowrap;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-on);
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+}
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .header-login {
+  display: inline-flex;
+}
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"],[data-auth="checking"]) .header .profile-trigger {
+  display: none !important;
+}
+
+/* Låste menyvalg: hengelås ved siden av navnet. Et klikk åpner innloggingen med forklaring. */
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) :is(.sidebar .nav,.mobile-primary-link):is([data-page="vurdering"],[data-page="historikk"],[data-page="verktoy"],[data-page="laer"],[data-page="simulering"],[data-page="profil"])::after {
+  content: "";
+  flex: none;
+  width: 13px;
+  height: 13px;
+  margin-left: auto;
+  background: currentColor;
+  opacity: .6;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-primary-link::after {
+  position: absolute;
+  top: 7px;
+  right: calc(50% - 20px);
+  margin: 0;
+}
+.mobile-primary-link {
+  position: relative;
+}
+
+/* Kontosiden: begrunnelse når man kom fra et låst menyvalg. */
+.konto-reason {
+  max-width: 440px;
+  margin: 0 auto 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  color: var(--ink);
+  font-size: 15px;
+}
+.konto-reason:empty {
+  display: none;
+}
+
+/* ------------------------------------------------------------------
+ * Offentlig forside
+ * ------------------------------------------------------------------ */
+.public-page {
+  display: grid;
+  gap: 40px;
+  max-width: 1080px;
+}
+.public-page[hidden] {
+  display: none;
+}
+.public-hero {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+  padding-top: 8px;
+}
+@media(min-width:900px){
+  .public-hero {
+    grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr);
+    gap: 48px;
+    padding-top: 24px;
+  }
+}
+.public-hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(30px,4.4vw,46px);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  max-width: 18ch;
+}
+.public-lede {
+  margin: 0 0 22px;
+  font-size: clamp(16px,1.6vw,19px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 52ch;
+}
+.public-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.public-actions .public-cta {
+  min-width: 0;
+  min-height: 50px;
+  padding: 0 22px;
+  text-decoration: none;
+}
+@media(max-width:520px){
+  .public-actions .public-cta {
+    flex: 1 1 100%;
+  }
+}
+.public-note {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+/* Forhåndsvisninger: illustrasjoner av funksjonene, ikke de faktiske verktøyene. */
+.preview-card {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: var(--ui-shadow-raised);
+}
+.preview-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+.preview-chip {
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+.preview-score {
+  margin: 10px 0 0;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+.preview-status {
+  margin: 6px 0 16px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.preview-meter {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr 2fr;
+  gap: 3px;
+  height: 10px;
+}
+.preview-meter span {
+  border-radius: 4px;
+}
+.preview-meter span:nth-child(1) { background: #2f8a63; }
+.preview-meter span:nth-child(2) { background: #6cc49a; }
+.preview-meter span:nth-child(3) { background: #f0b43c; box-shadow: 0 0 0 2px var(--paper),0 0 0 4px var(--ink); }
+.preview-meter span:nth-child(4) { background: #e2575c; }
+.preview-meter-labels {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr 2fr;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.public-section h2,
+.public-disclaimer h2 {
+  margin: 0 0 16px;
+  font-size: clamp(22px,2.4vw,28px);
+  letter-spacing: -.02em;
+}
+.public-features {
+  display: grid;
+  gap: 14px;
+}
+@media(min-width:700px){
+  .public-features {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 18px;
+  }
+}
+.public-feature {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+}
+.public-feature h3 {
+  margin: 6px 0 0;
+  font-size: 18px;
+}
+.public-feature p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.public-feature-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 64px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg);
+}
+.preview-tools span,
+.preview-steps span {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+.preview-steps span:first-child {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.preview-quote p {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-style: italic;
+}
+.preview-trend svg {
+  width: 100%;
+  max-width: 220px;
+  height: 44px;
+}
+.preview-trend polyline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.public-split {
+  display: grid;
+  gap: 18px;
+}
+@media(min-width:900px){
+  .public-split {
+    grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+    gap: 28px;
+    align-items: start;
+  }
+}
+.public-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.public-list li {
+  position: relative;
+  padding-left: 26px;
+  line-height: 1.55;
+}
+.public-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.public-disclaimer {
+  padding: 20px;
+  border: 1px solid var(--accent-border,var(--line));
+  border-radius: 18px;
+  background: var(--accent-bg);
+}
+.public-disclaimer h2 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+.public-disclaimer p {
+  margin: 0 0 8px;
+  line-height: 1.55;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+/* ------------------------------------------------------------------
+ * Bruksvilkår og personvernerklæring
+ * ------------------------------------------------------------------ */
+.legal-doc {
+  max-width: 720px;
+  padding: clamp(18px,4vw,36px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  line-height: 1.6;
+}
+.legal-doc h1 {
+  margin: 4px 0 2px;
+  font-size: clamp(26px,3.4vw,34px);
+  letter-spacing: -.025em;
+}
+.legal-doc h2 {
+  margin: 26px 0 6px;
+  font-size: 18px;
+}
+.legal-doc p,
+.legal-doc li {
+  color: var(--ink);
+}
+.legal-doc ul {
+  padding-left: 20px;
+}
+.legal-doc li+li {
+  margin-top: 6px;
+}
+.legal-meta {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.legal-draft {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  font-size: 14px;
+}
+@media(max-width:770px){
+  .header-login {
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+}
+/* På de smaleste telefonene er det ikke plass til både «Logg inn» og tema-knappen i toppen. */
+@media(max-width:400px){
+  :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .header .theme-switch {
+    display: none;
+  }
+}
+/* Mobil: toppen har en fast 44 px-kolonne til tema-knappen. Med «Logg inn» trengs plass til innholdet. */
+@media(max-width:770px){
+  :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .header {
+    grid-template-columns: minmax(0,1fr) auto 44px !important;
+  }
+  :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .header-right {
+    width: auto !important;
+    gap: 8px;
+  }
+}

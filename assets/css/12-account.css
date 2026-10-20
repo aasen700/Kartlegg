@@ -70,3 +70,22 @@
 .account-form-row .account-forgot{justify-self:auto}
 .account-remember,.account-form>label.account-remember{display:flex;align-items:center;gap:10px;min-height:44px;margin:0;font-size:14px;font-weight:500;color:var(--ink)}
 .account-remember input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
+
+/* Kontosiden (#konto): én skjerm om gangen – innlogging, ny konto, e-postbekreftelse eller vilkår. */
+.account-auth{max-width:440px;margin:0 auto}
+#page-konto[data-konto-view="login"] [data-konto-view="login"],
+#page-konto[data-konto-view="signup"] [data-konto-view="signup"],
+#page-konto[data-konto-view="verify"] [data-konto-view="verify"],
+#page-konto[data-konto-view="consent"] [data-konto-view="consent"]{display:grid}
+.account-consents{display:grid;gap:12px;min-width:0;margin:14px 0 0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.account-consents legend{padding:0 4px;font-size:14px;font-weight:750;color:var(--ink)}
+.account-consents .account-consent{margin:0;color:var(--ink)}
+.account-consents .account-consent a{color:var(--accent);font-weight:650}
+.account-consent input[aria-invalid="true"]{outline:2px solid #c0392b;outline-offset:2px}
+.account-field-error{margin:4px 0 0;font-size:13px;font-weight:600;color:#b3261e}
+:root[data-theme=dark] .account-field-error{color:#ffb4ab}
+.account-form input[aria-invalid="true"],.account-password:has(input[aria-invalid="true"]){border-color:#c0392b}
+.account-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.account-verify-actions{display:grid;gap:10px}
+.account-lede strong{color:var(--ink);overflow-wrap:anywhere}
+.account-footnote a{color:var(--accent)}

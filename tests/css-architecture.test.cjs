@@ -10,7 +10,7 @@ const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 
 const EXPECTED = ['00-tokens.css', '01-base.css', '02-layout.css', '03-components.css', '04-profile.css', '05-assessment.css',
-  '06-tools.css', '07-simulation.css', '08-learning.css', '09-decor.css', '10-themes.css', '11-clinical.css', '12-account.css'];
+  '06-tools.css', '07-simulation.css', '08-learning.css', '09-decor.css', '10-themes.css', '11-clinical.css', '12-account.css', '13-public.css'];
 
 test('index.html loads exactly the numbered design-system files, in order', () => {
   const links = [...html.matchAll(/<link rel="stylesheet" href="assets\/([^"?]+)(?:\?[^"]*)?">/g)].map(m => m[1]);

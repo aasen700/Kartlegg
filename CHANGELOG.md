@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Innloggingsbeskyttet plattform – 20. oktober 2026
+
+- Offentlig forside med presentasjon av verktøy, læring, simulering og målinger, og knappene «Logg inn» og «Opprett gratis konto».
+- Ny vurdering, Målinger over tid, Kliniske verktøy, Lær, Simulering og Profil krever innlogget konto med bekreftet e-post. Låste menyvalg har hengelås og sender til innlogging med forklaring, og tilbake til ønsket side etterpå.
+- Registrering med gjentatt passord, tydelige feilmeldinger og tre separate bekreftelser (bruksvilkår, pasientopplysninger, klinisk ansvar). Eksisterende kontoer bekrefter én gang ved neste innlogging.
+- Utkast til bruksvilkår og personvernerklæring.
+- «Målinger over tid» lagres på enheten i høyst 24 timer for innlogget bruker, og slettes ved utlogging.
+- Se PLATTFORM-INNLOGGING.md for sikkerhetsmodell, manuelle Firebase-steg og tester.
+
 ## Ny førsteside og «Husk meg» – 20. oktober 2026
 
 - Førsteside: tre innganger øverst – «Start vurdering» (går rett til NEWS2-skjemaet), «Finn verktøy» og «Lær og øv» – så nye besøkende ser hva Kartlegg tilbyr.

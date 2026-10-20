@@ -12,6 +12,9 @@ import sys
 
 root=Path(__file__).resolve().parents[1]
 source=(root/"index.html").read_text(encoding="utf-8")
+# The app now requires sign-in (auth-gate.js). Smoke checks run as a signed-in user; this flag only
+# changes which page is shown and gives no access to any data (that is enforced by Firestore rules).
+source=source.replace("<head>","<head><script>window.__KARTLEGG_TEST_AUTH__='member'</script>",1)
 chrome=next((v for v in (
   "google-chrome","google-chrome-stable","chromium","chromium-browser",
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -599,7 +602,7 @@ script=r"""
   const storage=about.querySelector('.about-v0993-storage');
   assert(!!storage,'profile and measurement data explainer missing');
   assert(storage.textContent.includes('lokalt i nettleseren'),'opt-in profile storage not explained');
-  assert(storage.textContent.includes('ikke lagret varig'),'temporary session-only measurement storage not explained');
+  assert(storage.textContent.includes('slettes automatisk etter høyst 24 timer'),'24-hour device-only measurement storage not explained');
   assert(storage.textContent.includes('Ikke registrer ekte pasientopplysninger'),'patient data warning missing');
   assert(about.textContent.includes('ikke uavhengig klinisk validert'),'clinical prototype caveat missing');
   // Hash route must support opening About after a hard refresh.

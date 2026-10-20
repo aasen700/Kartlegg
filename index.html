@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb">
+<html lang="nb" data-auth="checking">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
@@ -19,7 +19,8 @@
   <link rel="stylesheet" href="assets/css/09-decor.css?v=profile3">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=profile3">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=2011">
-  <link rel="stylesheet" href="assets/css/12-account.css?v=home1">
+  <link rel="stylesheet" href="assets/css/12-account.css?v=gate1">
+  <link rel="stylesheet" href="assets/css/13-public.css?v=1">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -30,7 +31,7 @@
         <span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64" data-brand-mark="kartlegg-2a"><rect width="64" height="64" rx="14" fill="#123a63"/><path fill="#f8fbff" d="M15 12h9v15.2L39.8 12H52L35.1 31.6 53 52H40.5L24 36.5V52h-9z"/><path fill="#8fc9ef" d="m24 27.2 15.8-15.2H52L35.1 31.6z"/></svg></span>
         <span class="brand-word">Kartlegg</span> <span class="brand-small">DEMO</span>
       </a>
-      <div class="header-right"><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
+      <div class="header-right"><a class="header-login" id="headerLogin" href="#konto" data-auth-view="login">Logg inn</a><button type="button" id="themeToggle" class="theme-switch" aria-label="Bytt mellom dag- og nattmodus">☾ Nattmodus</button><button type="button" class="avatar profile-trigger" id="profileTrigger" aria-label="Åpne profil og utseende">K</button></div>
     </header>
     <div class="sidebar-backdrop" id="backdrop"></div>
     <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
@@ -43,6 +44,7 @@
       <button class="nav" data-page="profil"><span class="ico">♙</span> Profil</button>
     </nav>
     <main class="main" id="top" tabindex="-1">
+      <div class="auth-loading" id="authLoading" role="status" aria-live="polite"><span class="auth-loading-spinner" aria-hidden="true"></span><span>Sjekker innlogging …</span></div>
       <div class="page assessment-page assessment-workspace" id="page-vurdering">
       <div class="intro home-intro"><div><h1>Kartlegg</h1><p>Regn ut NEWS2, finn riktig kartleggingsverktøy eller øv på tenkte pasienter.</p></div></div>
       <nav class="home-entries" aria-label="Kom i gang">
@@ -93,8 +95,8 @@
       <div class="page" id="page-historikk" hidden>
         <div class="intro"><div><h1>Målinger over tid</h1><p>Registrer flere observasjonstidspunkter og sammenlign utviklingen i målinger og skårer.</p></div><span class="chip" id="historyCounter">0 registrerte</span></div>
         <section class="section">
-          <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Målinger i én midlertidig serie vises kronologisk. Ikke bland målinger fra ulike personer.</p></div></div>
-          <div class="history-toolbar"><span class="helper">Målingene oppbevares bare i minnet mens fanen er åpen. Oppdatering av siden sletter dem.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
+          <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Følg utviklingen mellom flere tidspunkter. Bruk bare fiktive eller reelt anonymiserte verdier, og bland ikke målinger fra ulike personer.</p></div></div>
+          <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
           <div class="empty-state" id="emptyHistory">Ingen målinger lagret ennå. Gå til «Ny vurdering», fyll ut målingene og trykk «Lagre måling».</div>
           <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Lagrede målinger"><thead><tr><th>Dato og tid</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
         </section>
@@ -232,12 +234,172 @@
           <section class="settings-group profile-main-only" aria-labelledby="aboutGroupTitle">
             <h2 class="settings-group-title" id="aboutGroupTitle">Om og personvern</h2>
             <div class="settings-card">
-              <button type="button" class="settings-row" data-sheet="privacySheet"><span class="settings-row-label">Hva lagres hvor</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button>
+              <a class="settings-row" href="#vilkar"><span class="settings-row-label">Bruksvilkår</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
+              <a class="settings-row" href="#personvern"><span class="settings-row-label">Personvern og lagring</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
               <a class="settings-row" href="#om"><span class="settings-row-label">Om Kartlegg</span><span class="settings-row-value">v1.1</span><svg class="settings-row-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
             </div>
           </section>
         </div>
       </div><!-- /page-profil -->
+      <div class="page public-page" id="page-start" hidden>
+        <section class="public-hero" aria-labelledby="publicTitle">
+          <div class="public-hero-copy">
+            <h1 id="publicTitle">Kliniske verktøy, læring og simulering samlet på ett sted</h1>
+            <p class="public-lede">Kartlegg hjelper sykepleiere, studenter og annet helsepersonell med å regne ut skårer, finne riktig kartleggingsverktøy og øve på tenkte pasienter.</p>
+            <div class="public-actions">
+              <a class="btn btn-primary public-cta" href="#konto" data-auth-view="signup">Opprett gratis konto</a>
+              <a class="btn btn-secondary public-cta" href="#konto" data-auth-view="login">Logg inn</a>
+            </div>
+            <p class="public-note">Gratis å bruke. Ingen reklame og ingen sporing.</p>
+          </div>
+          <div class="public-hero-preview" aria-hidden="true">
+            <div class="preview-card preview-news">
+              <div class="preview-card-head"><strong>NEWS2</strong><span class="preview-chip">Eksempel</span></div>
+              <div class="preview-score">5</div>
+              <p class="preview-status">Middels risiko</p>
+              <div class="preview-meter"><span></span><span></span><span></span><span></span></div>
+              <div class="preview-meter-labels"><span>0</span><span>1–4</span><span>5–6</span><span>≥7</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="public-section" aria-labelledby="publicFeaturesTitle">
+          <h2 id="publicFeaturesTitle">Dette får du</h2>
+          <div class="public-features">
+            <article class="public-feature">
+              <div class="public-feature-preview preview-tools" aria-hidden="true"><span>NEWS2</span><span>GCS</span><span>4AT</span><span>TIMES</span><span>qSOFA</span><span>AAI</span></div>
+              <h3>Kliniske verktøy</h3>
+              <p>18 skårer, kalkulatorer og veiledere, blant annet NEWS2, qSOFA, GCS, 4AT, TIMES og ankel–arm-indeks. Kildene står ved hvert verktøy.</p>
+            </article>
+            <article class="public-feature">
+              <div class="public-feature-preview preview-steps" aria-hidden="true"><span>01 Lær</span><span>02 Øv</span><span>03 Test</span></div>
+              <h3>Lær</h3>
+              <p>Korte, interaktive moduler med fiktive pasienter: GCS, 4AT, NEWS2, TIMES og legemiddelregning. Du får forklaring på hvert svar.</p>
+            </article>
+            <article class="public-feature">
+              <div class="public-feature-preview preview-quote" aria-hidden="true"><p>«Det er blitt så tungt å puste i dag.»</p></div>
+              <h3>Simulering</h3>
+              <p>Øv på observasjon, prioritering og ISBAR i en tenkt situasjon fra hjemmesykepleien. Du bestemmer selv hva du undersøker.</p>
+            </article>
+            <article class="public-feature">
+              <div class="public-feature-preview preview-trend" aria-hidden="true"><svg viewBox="0 0 120 40" focusable="false"><polyline points="4,30 28,26 52,28 76,16 100,12 116,8"/></svg></div>
+              <h3>Målinger over tid</h3>
+              <p>Se hvordan NEWS2 utvikler seg mellom flere tidspunkter. Bare for fiktive verdier, og lagret på enheten din i høyst 24 timer.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="public-section public-split" aria-labelledby="publicAudienceTitle">
+          <div>
+            <h2 id="publicAudienceTitle">Hvem er Kartlegg for?</h2>
+            <ul class="public-list">
+              <li>Sykepleier- og helsefagstudenter som vil forstå hvordan skårene henger sammen med observasjonene.</li>
+              <li>Sykepleiere og annet helsepersonell som vil ha verktøyene samlet og kildene tilgjengelige.</li>
+              <li>Undervisere som trenger fiktive kasus til øving.</li>
+            </ul>
+          </div>
+          <aside class="public-disclaimer" aria-labelledby="publicDisclaimerTitle">
+            <h2 id="publicDisclaimerTitle">Viktig å vite</h2>
+            <p>Kartlegg er et støtteverktøy og en demoversjon. Beregningene er ikke uavhengig klinisk validert. Kartlegg erstatter ikke klinisk vurdering, faglige retningslinjer, virksomhetens rutiner eller ditt faglige ansvar.</p>
+            <p><strong>Bruk aldri ekte pasientopplysninger.</strong></p>
+          </aside>
+        </section>
+
+      </div><!-- /page-start -->
+
+      <div class="page" id="page-konto" hidden>
+        <p class="konto-reason" id="kontoReason" role="status" aria-live="polite"></p>
+        <div id="authMount"></div>
+      </div><!-- /page-konto -->
+
+      <div class="page legal-page" id="page-vilkar" hidden>
+        <article class="legal-doc" aria-labelledby="termsTitle">
+          <p class="legal-draft"><strong>Utkast.</strong> Vilkårene er ikke juridisk kvalitetssikret. Se punkt 12 for hva som bør avklares.</p>
+          <h1 id="termsTitle">Bruksvilkår for Kartlegg</h1>
+          <p class="legal-meta">Versjon 2026-10-20</p>
+          <h2>1. Om tjenesten</h2>
+          <p>Kartlegg er et gratis, ikke-kommersielt lærings- og støtteverktøy for helsefag. Tjenesten er laget og drives av Philip Aasen som et eget prosjekt, og representerer ikke noen høgskole eller helsetjeneste. Kartlegg er en demoversjon.</p>
+          <h2>2. Hvem tjenesten er for</h2>
+          <p>Kartlegg er laget for studenter, helsepersonell og undervisere. Du trenger en konto for å bruke verktøyene, læringsmodulene, simuleringen og «Målinger over tid». Forsiden, «Om Kartlegg», disse vilkårene og personvernerklæringen er åpne for alle.</p>
+          <h2>3. Kontoen din</h2>
+          <ul>
+            <li>Kontoen er personlig. Del ikke passordet ditt med andre.</li>
+            <li>Logg ut når du bruker en delt PC, og kryss ikke av for «Husk meg» på delte enheter.</li>
+            <li>Gi beskjed hvis du tror noen andre har brukt kontoen din.</li>
+          </ul>
+          <h2>4. Pasientopplysninger</h2>
+          <p>Kartlegg er ikke en pasientjournal og er ikke laget for å behandle helseopplysninger om virkelige pasienter. Du forplikter deg til å:</p>
+          <ul>
+            <li>bare bruke fiktive eller reelt anonymiserte verdier i beregninger, «Målinger over tid», ISBAR og øvinger,</li>
+            <li>aldri registrere navn, fødselsnummer, journalnummer, adresse, bilde eller andre opplysninger som direkte eller indirekte kan identifisere en pasient,</li>
+            <li>bare skrive dine egne opplysninger i profilfeltene (navn, stilling, arbeidssted og avdeling).</li>
+          </ul>
+          <p>Reelt anonymisert betyr at verken du eller andre med rimelige midler kan finne tilbake til hvem opplysningene gjelder. Å fjerne navnet er ofte ikke nok.</p>
+          <h2>5. Faglig ansvar</h2>
+          <p>Kartlegg er et støtteverktøy. Beregninger, veiledere og læringsinnhold erstatter ikke selvstendig klinisk vurdering, faglige retningslinjer, virksomhetens rutiner, ordinasjon eller ansvaret du har som helsepersonell. Du er selv ansvarlig for hvordan du bruker informasjonen. Kartlegg er ikke uavhengig klinisk validert og skal ikke brukes som grunnlag for reell pasientbehandling i demoversjonen.</p>
+          <h2>6. Kilder og innhold</h2>
+          <p>Kildene står ved hvert verktøy. NEWS2 er gjengitt med kildehenvisning til Royal College of Physicians. 4AT er tilpasset etter CC BY 4.0. Øvrige tekster og illustrasjoner er laget for Kartlegg. Feil kan forekomme. Si gjerne fra hvis du finner noe.</p>
+          <h2>7. Akseptabel bruk</h2>
+          <p>Du skal ikke forsøke å omgå tilgangskontroller, belaste tjenesten unødig med automatiserte forespørsler, opprette kontoer automatisk eller bruke tjenesten i strid med lov. Kontoer som brukes slik, kan bli stengt.</p>
+          <h2>8. Tilgjengelighet og endringer</h2>
+          <p>Kartlegg leveres som den er, uten garanti for oppetid eller feilfrihet. Funksjoner kan endres eller fjernes. Ved vesentlige endringer i vilkårene får du beskjed, og du må godta den nye versjonen for å fortsette å bruke kontoen.</p>
+          <h2>9. Ansvarsbegrensning</h2>
+          <p>Så langt loven tillater det, er ikke Kartlegg ansvarlig for tap eller skade som følge av bruk av beregninger, veiledere eller læringsinnhold. Begrensningen gjelder ikke ved forsett eller grov uaktsomhet, og ikke der ufravikelig lov gir deg rettigheter.</p>
+          <h2>10. Personvern</h2>
+          <p>Hvordan opplysninger om deg behandles, står i <a href="#personvern">personvernerklæringen</a>. Å godta disse vilkårene er ikke et samtykke etter personvernforordningen.</p>
+          <h2>11. Avslutning, lovvalg og kontakt</h2>
+          <p>Du kan slette kontoen når som helst under Profil. Vilkårene reguleres av norsk rett. Spørsmål kan sendes til <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a>.</p>
+          <h2>12. Bør avklares før vilkårene regnes som endelige</h2>
+          <ul>
+            <li>Om noen funksjoner kan regnes som medisinsk utstyr etter forordning (EU) 2017/745 (MDR), og hva det i så fall krever.</li>
+            <li>Om ansvarsbegrensningen i punkt 9 er gyldig og dekkende for en gratis, ikke-kommersiell tjeneste.</li>
+            <li>Om det bør settes en aldersgrense for å opprette konto.</li>
+          </ul>
+        </article>
+      </div><!-- /page-vilkar -->
+
+      <div class="page legal-page" id="page-personvern" hidden>
+        <article class="legal-doc" aria-labelledby="privacyTitle">
+          <p class="legal-draft"><strong>Utkast.</strong> Personvernerklæringen er ikke juridisk kvalitetssikret. Den beskriver hvordan Kartlegg faktisk er bygget i dag.</p>
+          <h1 id="privacyTitle">Personvernerklæring</h1>
+          <p class="legal-meta">Versjon 2026-10-20</p>
+          <h2>Hvem er ansvarlig?</h2>
+          <p>Philip Aasen er behandlingsansvarlig for Kartlegg. Spørsmål om personvern, innsyn, retting eller sletting sendes til <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a>.</p>
+          <h2>Hva vi behandler</h2>
+          <ul>
+            <li><strong>Innlogging (Firebase Authentication):</strong> e-postadresse, bruker-ID, innloggingsmetode (e-post eller Google), tidspunkt for opprettelse og siste innlogging, og sikkerhetsdata som Firebase trenger. Kartlegg ser og lagrer aldri passordet ditt.</li>
+            <li><strong>Kontoinnstillinger (Cloud Firestore):</strong> navn, stilling, arbeidssted og avdeling hvis du fyller dem inn, favorittverktøy, utseende, et teknisk versjonsnummer og siste lagringstidspunkt.</li>
+            <li><strong>Bekreftelsene ved registrering (Cloud Firestore):</strong> hvilken versjon av vilkårene du har godtatt, at du har bekreftet de tre punktene, og tidspunktet.</li>
+          </ul>
+          <h2>Hva vi ikke behandler</h2>
+          <p>Måleverdier, skårer, ISBAR-tekst og svar i øvinger sendes aldri til Firebase eller andre tjenester. Beregningene skjer i nettleseren din.</p>
+          <h2>Lagring på enheten din</h2>
+          <ul>
+            <li><strong>Målinger over tid:</strong> lagres bare i nettleseren på denne enheten, knyttet til kontoen din, og slettes automatisk etter høyst 24 timer, når du logger ut, eller når du sletter dem selv. De er ikke kryptert, så bruk bare fiktive verdier.</li>
+            <li><strong>Innlogging:</strong> varer til du lukker nettleseren, eller til du logger ut hvis du har krysset av for «Husk meg på denne enheten».</li>
+            <li><strong>Innstillinger:</strong> utseende, favoritter og eventuelt avsenderprofilen hvis du har valgt «Husk profilen».</li>
+          </ul>
+          <h2>Formål og behandlingsgrunnlag</h2>
+          <ul>
+            <li>Konto, innlogging og synkronisering av innstillinger: for å levere tjenesten du ber om (personvernforordningen artikkel 6 nr. 1 bokstav b).</li>
+            <li>Å dokumentere at du har godtatt vilkårene og sikre tjenesten mot misbruk: berettiget interesse (artikkel 6 nr. 1 bokstav f).</li>
+          </ul>
+          <p>Bekreftelsene du gir ved registrering, er avtalevilkår og bekreftelser. De er ikke samtykke etter personvernforordningen, og de fritar ikke Kartlegg for ansvar for å behandle opplysninger lovlig.</p>
+          <h2>Databehandler og overføring</h2>
+          <p>Google (Firebase) behandler opplysningene på vegne av Kartlegg etter Googles <a href="https://firebase.google.com/terms/data-processing-terms" target="_blank" rel="noopener noreferrer">databehandlingsvilkår</a>. Innlogging og driftsdata kan behandles utenfor EØS. Se <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase sin personverninformasjon</a> for overføringsgrunnlag, underleverandører og sikkerhetskopier.</p>
+          <h2>Hvor lenge</h2>
+          <p>Kontoopplysninger beholdes til du sletter kontoen. Ved sletting fjernes innstillingene før innloggingen slettes. En teknisk slettemarkør med bruker-ID og tidspunkt beholdes kort for å hindre gjenoppretting, og fjernes manuelt. Bekreftelsen av vilkårene kan beholdes så lenge det er nødvendig for å dokumentere avtalen. Google kan beholde sikkerhetslogger og sikkerhetskopier etter sine vilkår.</p>
+          <h2>Dine rettigheter</h2>
+          <p>Du kan be om innsyn, retting, sletting, begrensning og dataportabilitet, og protestere mot behandling som bygger på berettiget interesse. Du kan laste ned innstillingene og slette kontoen under Profil. Du kan klage til <a href="https://www.datatilsynet.no/" target="_blank" rel="noopener noreferrer">Datatilsynet</a>.</p>
+          <h2>Sikkerhet</h2>
+          <p>Hver bruker kan bare lese og endre sine egne kontodata. Dette håndheves av Firestore-reglene på serveren, ikke bare i nettleseren. Innstillinger lagres i skyen først når e-postadressen er bekreftet.</p>
+          <h2>Bør avklares</h2>
+          <ul>
+            <li>Om databehandleravtale og overføringsgrunnlag med Google er tilstrekkelig dokumentert for denne bruken.</li>
+            <li>Om det trengs en vurdering av personvernkonsekvenser (DPIA), særlig hvis tjenesten tas i bruk i undervisning eller i virksomheter.</li>
+          </ul>
+        </article>
+      </div><!-- /page-personvern -->
       <div class="page" id="page-om" hidden>
         <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som står bak, hvorfor, og hva som skjer med opplysningene du skriver inn.</p></div></div>
         <section class="section about-v0993-hero" aria-labelledby="about-purpose-title">
@@ -257,7 +419,7 @@
           <div class="about-v0993-storage-grid">
             <div class="about-v0993-storage-item">
               <h3>Målinger</h3>
-              <p>Målinger du lagrer i tidslinjen, finnes bare i fanen mens den er åpen. De sendes ikke noe sted og er ikke lagret varig: de forsvinner når du laster siden på nytt eller lukker fanen.</p>
+              <p>Målinger du lagrer i tidslinjen, finnes bare i nettleseren på denne enheten. De sendes ikke noe sted, slettes automatisk etter høyst 24 timer og når du logger ut. Bruk bare fiktive verdier.</p>
             </div>
             <div class="about-v0993-storage-item">
               <h3>Avsenderprofil</h3>
@@ -277,7 +439,8 @@
         ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>
         NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>
         Kartlegg v1.1 · Demo. Ingen sporing eller analyseverktøy.<br>
-        <span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a></span>
+        <span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a></span><br>
+        <span class="footer-links"><a href="#om">Om Kartlegg</a> · <a href="#vilkar">Bruksvilkår</a> · <a href="#personvern">Personvernerklæring</a></span>
       </footer>
     </main>
     <nav class="mobile-primary-nav" aria-label="Hovedmeny på mobil">
@@ -306,7 +469,9 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/app.js?v=profile2"></script>
+  <script src="assets/auth-gate.js?v=1"></script>
+  <script src="assets/measurement-store.js?v=1"></script>
+  <script src="assets/app.js?v=gate1"></script>
   <script src="assets/enhancements.js?v=home1"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
   <script src="assets/v06.js?v=profile2"></script>
@@ -332,7 +497,7 @@
   <script src="assets/theme-finalize-v0992.js?v=account1"></script>
   <script src="assets/final-polish-v10.js?v=1011"></script>
   <script src="assets/personal-modes.js?v=profile1"></script>
-  <script src="assets/tool-navigation.js?v=account1"></script>
+  <script src="assets/tool-navigation.js?v=gate1"></script>
   <script src="assets/simulation-engine.js?v=101"></script>
   <script src="assets/simulation-ui.js?v=profile2"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
@@ -347,6 +512,6 @@
   <script src="assets/tool-cards.js?v=profile3"></script>
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=home1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=gate1"></script>
 </body>
 </html>

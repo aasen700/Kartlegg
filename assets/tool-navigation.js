@@ -142,7 +142,8 @@
  // A deep link can be bookmarked or shared; only allow exact registry IDs.
  const param=new URLSearchParams(window.location.search).get('tool');
  if(param&&(param==='isbar'||R.get(param))){
-  const openDeepLink=()=>open(param);
+  // Verktøy krever innlogging: lenken åpnes først når brukeren er inne (eventuelt etter innlogging).
+  const openDeepLink=()=>(window.KartleggGate?window.KartleggGate.whenMember():Promise.resolve()).then(()=>open(param));
   if(document.readyState==='complete')openDeepLink();
   else window.addEventListener('load',openDeepLink,{once:true});
  }

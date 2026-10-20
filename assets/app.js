@@ -4,7 +4,8 @@
 const $ = id => document.getElementById(id);
 const form = $('vitalsForm');
 const notice = $('formNotice');
-const measurements = []; // RAM-only: no localStorage, IndexedDB, cookies, or network submission.
+const measurements = []; // Working copy. Persisted only by measurement-store.js: this device, signed-in user, max 24 h, never sent anywhere.
+const Store=window.KartleggMeasurementStore, Gate=window.KartleggGate;
 let currentPage = 'vurdering';
 const formatNumber = (value, digits = 0) => Number(value).toLocaleString('nb-NO', {minimumFractionDigits:digits, maximumFractionDigits:digits});
 const pad = value => String(value).padStart(2, '0');
@@ -126,7 +127,9 @@ function updateScores() {
   return true;
 }
 function showPage(page, setHash=true) {
-  if(!['vurdering','historikk','verktoy','laer','simulering','profil','om'].includes(page)) page='vurdering';
+  if(!['start','vurdering','historikk','verktoy','laer','simulering','profil','om','konto','vilkar','personvern'].includes(page)) page='start';
+  // The gate decides what a visitor may see (UX only; data is protected by Firestore rules).
+  if(Gate) page=Gate.resolve(page);
   currentPage=page;
   document.querySelectorAll('.page').forEach(el=>{el.hidden=el.id!==`page-${page}`;});
   document.querySelectorAll('[data-page]').forEach(button=>{
@@ -138,6 +141,7 @@ function showPage(page, setHash=true) {
   if(setHash) history.replaceState(null,'',`#${page}`);
   closeMenu();
   window.scrollTo({top:0,behavior:'instant'});
+  window.dispatchEvent(new CustomEvent('kartlegg:page',{detail:{page}}));
 }
 function getSnapshot() {
   const v=readVitals(), stamp=getTimeData();
@@ -149,9 +153,10 @@ function saveSnapshot() {
   const snapshot=getSnapshot();if(!snapshot)return;
   const existing=measurements.findIndex(m=>m.iso===snapshot.iso);
   if(existing<0&&measurements.length>=48){showNotice('Maksimalt 48 målinger i én midlertidig økt. Slett noen målinger før du legger til flere.');return;}
-  if(existing>=0)measurements.splice(existing,1,snapshot);else measurements.push(snapshot);
+  if(existing>=0)measurements.splice(existing,1,{...snapshot,savedAt:measurements[existing].savedAt});else measurements.push({...snapshot,savedAt:Date.now()});
   measurements.sort((a,b)=>a.iso.localeCompare(b.iso));
-  showNotice('Målingen er '+(existing>=0?'oppdatert':'lagret')+' midlertidig i denne fanen. Den er ikke lagret på noen server.');
+  persistMeasurements();
+  showNotice('Målingen er '+(existing>=0?'oppdatert':'lagret')+' på denne enheten i inntil 24 timer. Den sendes ikke til noen server.');
   updateScores();
   showPage('historikk');
 }
@@ -181,7 +186,7 @@ function renderHistory(){
     }
     const actions=makeElement('td');
     const load=makeElement('button','Åpne','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne måling ${m.date} kl. ${m.time}`);load.addEventListener('click',()=>applySnapshot(m));
-    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett måling ${m.date} kl. ${m.time}`);remove.addEventListener('click',()=>{measurements.splice(measurements.indexOf(m),1);renderHistory();});
+    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett måling ${m.date} kl. ${m.time}`);remove.addEventListener('click',()=>{measurements.splice(measurements.indexOf(m),1);persistMeasurements();renderHistory();});
     actions.append(load,remove);row.append(actions);$('historyRows').append(row);
   }
   if(measurements.length>=2) renderTrend();
@@ -333,7 +338,7 @@ $('newMeasurement').addEventListener('click',()=>{form.reset();setTimeout(()=>{s
 $('openIsbar').addEventListener('click',openIsbar);
 $('closeIsbar').addEventListener('click',closeIsbar);
 $('doneIsbar').addEventListener('click',closeIsbar);
-$('clearHistory').addEventListener('click',()=>{if(measurements.length&&window.confirm('Vil du slette alle de midlertidige målingene?')){measurements.length=0;renderHistory();}});
+$('clearHistory').addEventListener('click',()=>{if(measurements.length&&window.confirm('Vil du slette alle målingene på denne enheten nå?')){measurements.length=0;persistMeasurements();renderHistory();}});
 $('copyIsbar').addEventListener('click',copyIsbar);
 for(const id of ['isbarSituation','isbarBackground','isbarExtra','isbarRequest',...PROFILE_IDS])$(id).addEventListener('input',renderIsbar);
 $('profileRole').addEventListener('change',renderIsbar);
@@ -341,7 +346,21 @@ $('saveProfile').addEventListener('click',saveProfile);
 $('clearProfile').addEventListener('click',clearProfile);
 for(const [id,step] of [['smallerScript',-2],['largerScript',2]])$(id).addEventListener('click',()=>{scriptFontSize=Math.max(15,Math.min(29,scriptFontSize+step));$('isbarOutput').style.fontSize=scriptFontSize+'px';});
 window.addEventListener('hashchange',()=>showPage(location.hash.slice(1),false));
-loadProfile();setTimeNow();clearResults();showPage(location.hash.slice(1)||'vurdering',false);
+// «Målinger over tid»: load the signed-in user's device copy, drop anything older than 24 hours,
+// and wipe the device copy when nobody is signed in (shared devices).
+function withScores(item){return {...item,news:calculateNEWS2(item.v),q:calculateQSOFA(item.v)};}
+function persistMeasurements(){if(Store&&Gate?.owner)Store.save(Gate.owner,measurements.map(({savedAt,date,time,v})=>({savedAt,date,time,v})));}
+function loadMeasurements(){
+  const owner=Gate?.owner;
+  measurements.splice(0,measurements.length,...(Store&&owner?Store.load(owner).map(withScores):[]));
+  measurements.sort((a,b)=>a.iso.localeCompare(b.iso));
+  if(currentPage==='historikk')renderHistory();
+}
+Gate?.onChange(state=>{if(state==='guest')Store?.clearAll();loadMeasurements();});
+setInterval(loadMeasurements,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadMeasurements();});
+window.KartleggShowPage=showPage;
+loadProfile();setTimeNow();clearResults();loadMeasurements();showPage(location.hash.slice(1)||'start',false);
 
 // Explicit account adapter: only the four sender fields; never ISBAR or observations.
 window.KartleggSenderProfile={read:readProfile,apply(info){for(const id of PROFILE_IDS){const key=id.replace('profile','').toLowerCase();$(id).value=typeof info?.[key]==='string'?info[key].slice(0,120):'';}saveProfile();renderIsbar();$('profileName').dispatchEvent(new Event('input',{bubbles:true}));}};

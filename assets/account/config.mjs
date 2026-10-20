@@ -8,3 +8,8 @@ export const firebaseConfig = Object.freeze({
 });
 // Enabled for the first production rollout, authorized by the owner on 2026-10-19.
 export const accountEnabled = true;
+// Gjeldende versjon av bruksvilkårene. Ny versjon = alle må bekrefte på nytt ved neste innlogging.
+export const termsVersion = '2026-10-20';
+// Firebase App Check med reCAPTCHA v3 (gratis). Tom streng = av. Fyll inn nettstedsnøkkelen fra
+// Firebase-konsollen (App Check → Apps → reCAPTCHA v3) og slå på håndhevelse for Cloud Firestore der.
+export const appCheckSiteKey = '';

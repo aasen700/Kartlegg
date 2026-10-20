@@ -50,11 +50,14 @@ test('custom themes and service-theme choices are not replaced',()=>{
  assert.match(cssThemes,/--accent:#ffff00/);
  assert.match(cssThemes,/--accent:#ffcc00/);
 });
-test('real patient measurement persistence has not been introduced',()=>{
+// Oktober 2026: «Målinger over tid» lagres på enheten i høyst 24 timer (measurement-store.js). Verktøyene lagrer fortsatt ingenting.
+test('measurements persist only through the 24-hour device store, never in tool modules',()=>{
  const src=['assets/ux-v071.js','assets/homecare-v09-ui.js','assets/times-v091.js','assets/palliation-v091.js'];
  for(const p of src)assert.doesNotMatch(read(p),/\blocalStorage\.|\bsessionStorage\.|\bindexedDB\b|\bdocument\.cookie\b/,p);
  assert.match(app,/const measurements = \[\]/);
- assert.match(html,/de forsvinner når du laster siden på nytt eller lukker fanen/);
+ assert.match(html,/slettes automatisk etter høyst 24 timer/);
+ assert.match(html,/Dette er ikke en pasientjournal/);
+ assert.doesNotMatch(app,/fetch\s*\(|XMLHttpRequest|sendBeacon|gstatic\.com|getFirestore/);
 });
 test('About page accurately describes its prototype purpose',()=>{
  assert.match(html,/id="page-om"/);
@@ -138,6 +141,6 @@ test('single canonical registry drives search and direct-linkable 18 tools',()=>
  assert.match(read('assets/tool-categories-v099.js'),/search\.addEventListener\('input',sync\)/);
  assert.doesNotMatch(read('assets/modern-v08-body.js'),/stopImmediatePropagation\(\)/);
  assert.match(read('assets/tool-navigation.js'),/addEventListener\('load',openDeepLink/);
- assert.match(html,/assets\/tool-navigation\.js\?v=account1/);
+ assert.match(html,/assets\/tool-navigation\.js\?v=gate1/);
  assert.match(html,/assets\/tool-registry\.js\?v=1201/);
 });

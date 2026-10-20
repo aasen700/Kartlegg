@@ -53,6 +53,22 @@ service cloud.firestore {
    // An administrator cleans it after confirming the Auth user no longer exists.
    allow delete: if false;
   }
+  // Bekreftelsene ved registrering (vilkår, pasientopplysninger, klinisk ansvar). Eieren kan lese sin egen,
+  // opprette den og oppdatere den til en ny vilkårsversjon. Tidspunktet settes av serveren. Ingen kan liste eller slette.
+  function consent(d) {
+   return d.keys().hasAll(['version','terms','patientData','clinicalResponsibility','acceptedAt'])
+    && d.keys().hasOnly(['version','terms','patientData','clinicalResponsibility','acceptedAt'])
+    && d.version is string && d.version.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+    && d.terms == true && d.patientData == true && d.clinicalResponsibility == true
+    && d.acceptedAt == request.time;
+  }
+  match /consents/{uid} {
+   allow get: if owner(uid);
+   allow list: if false;
+   allow create: if owner(uid) && consent(request.resource.data);
+   allow update: if owner(uid) && consent(request.resource.data) && request.resource.data.version >= resource.data.version;
+   allow delete: if false;
+  }
   match /{document=**} { allow read, write: if false; }
  }
 }
