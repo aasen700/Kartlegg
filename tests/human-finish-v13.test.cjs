@@ -11,7 +11,10 @@ test('Kartlegg uses the official 2026 logo and keeps its demo identity',()=>{
  const mark=read('assets/kartlegg-mark.svg');
  assert.match(html,/assets\/kartlegg-mark\.svg/);
  assert.match(html,/rel="apple-touch-icon" href="assets\/kartlegg-touch-icon\.png"/);
- assert.match(html,/brand-small">DEMO</);
+ // Logoarket: ingen annen tekst i frisonen. Demo-statusen står i bunnteksten og i ansvarsfraskrivelsen.
+ assert.doesNotMatch(html,/class="brand-small"/);
+ assert.match(html,/Kartlegg v1\.1 · Demo/);
+ assert.match(html,/Kartlegg er et støtteverktøy og en demoversjon/);
  assert.doesNotMatch(html,/brand-small">PROTOTYPE</);
  assert.match(html,/class="brand-word"><svg[^>]*aria-hidden="true"[\s\S]*?<span class="sr-only">Kartlegg<\/span>/);
  assert.match(html,/data-brand-mark="kartlegg-2026"/);

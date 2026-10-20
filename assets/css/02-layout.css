@@ -94,11 +94,6 @@
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
-@media(max-width:770px){
-  .header .brand-small {
-    display: none !important;
-  }
-}
 .header .logo {
   width: var(--logo-size);
   height: var(--logo-size);
@@ -205,18 +200,6 @@
 .logo {
   display: grid;
   place-items: center;
-}
-.brand-small {
-  font-weight: 700;
-  margin-left: 2px;
-  padding: 4px 7px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  background: transparent !important;
-  color: var(--muted) !important;
-  font-size: 9px;
-  letter-spacing: .11em;
-  box-shadow: none !important;
 }
 /* header-right */
 .header-right {

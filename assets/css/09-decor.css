@@ -64,11 +64,6 @@
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header :is(.brand,.header-right,.header-note) {
   color: var(--pm-header-ink) !important;
 }
-:root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header .brand-small {
-  background: #ffffff19 !important;
-  color: var(--pm-header-ink) !important;
-  border: 1px solid #ffffff4c !important;
-}
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .header :is(.theme-switch,.mobile-toggle) {
   background: #ffffff18 !important;
   color: var(--pm-header-ink) !important;
@@ -529,9 +524,6 @@
 }
 :root[data-personal-mode] .intro .eyebrow {
   color: var(--pm-text) !important;
-}
-:root[data-personal-mode] .brand-small {
-  border-color: var(--pm-border);
 }
 /* personal-mode-signature */
 .personal-mode-signature {

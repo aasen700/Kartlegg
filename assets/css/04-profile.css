@@ -668,7 +668,10 @@
   border-radius: 50%;
 }
 #appearanceCard .swatch.blue {
-  background: #2f7fd6;
+  background: #173b58;
+}
+:root[data-theme=dark] #appearanceCard .swatch.blue {
+  background: #87b8ff;
 }
 #appearanceCard .swatch.green {
   background: #16865e;

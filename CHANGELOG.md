@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Kartlegg-blå, Schibsted Grotesk og ryddigere logo – 20. oktober 2026
+
+- Kartlegg-blå (#173B58) er hovedfargen i lys modus. Mørk modus beholder lys blå, så knappene synes mot den mørke bakgrunnen.
+- Overskrifter i Schibsted Grotesk, samme skrift som ordmerket. Skriften ligger på kartlegg.com selv, så besøket ikke kontakter Google.
+- «DEMO»-merket ved logoen er fjernet, slik logoarket krever. Demo-statusen står fortsatt i bunnteksten og i ansvarsfraskrivelsen.
+- Lyse knapper har tydeligere kant, og valgt side i menyene har tydeligere markering. Kontrasten er kontrollert maskinelt i lys og mørk modus, alle aksentfarger, alle tjenestetemaer, glass og Philip-tema, på mobil og PC.
+
 ## Bunnmeny for besøkende og delingsbilde – 20. oktober 2026
 
 - På mobil får besøkende som ikke er innlogget en egen bunnmeny med Start, Om og Logg inn, i stedet for fire låste valg. Innloggede har samme meny som før.

@@ -662,7 +662,7 @@ script=r"""
    document.querySelector('[data-page=vurdering]').click();
    assert(getComputedStyle(toggle.querySelector('.v10-menu-label')).display==='none','mobile menu label should not crowd the header');
    assert(toggle.querySelectorAll('.ui-icon-svg').length===1,'mobile menu must show one icon');
-   assert(getComputedStyle(document.querySelector('.brand-small')).display==='none','demo badge should not crowd the mobile header');
+   assert(!document.querySelector('.header .brand-small'),'no demo badge inside the logo clear space');
    const searchRectAfter=document.querySelector('#homeToolSearch').getBoundingClientRect();
    const favoritesRect=document.querySelector('#toolFavorites').getBoundingClientRect();
    assert(document.querySelector('#toolFavorites').hidden||favoritesRect.left>=searchRectAfter.left-2&&favoritesRect.right<=searchRectAfter.right+2,'favorites panel overflows the search card');

@@ -266,7 +266,7 @@
   --accent-border: #8169ad;
 }
 :root[data-accent=blue] {
-  --accent: #185cab;
+  --accent: #173b58; /* Kartlegg-blå i lys modus. Mørk modus beholder lys blå, så knappene ikke forsvinner mot den mørke bakgrunnen. */
   --accent-bg: #eaf3ff;
   --accent-border: #a9c9eb;
 }
@@ -1012,9 +1012,6 @@
 }
 :root[data-base-theme="philip"] :is(.brand,.header-right,.header-note,.nav) {
   color: #edf7ff !important;
-}
-:root[data-base-theme="philip"] .brand-small {
-  border: 1px solid rgba(175,219,255,.35);
 }
 :root[data-base-theme="philip"] :is(.btn-primary,.tool-launch,.hc-launch,.gcs-learn-primary,.learn12-primary,.wound13-tab.active) {
   background: linear-gradient(132deg,#d7f3ff,#72c8ff 42%,#286fe8) !important;

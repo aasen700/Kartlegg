@@ -438,6 +438,10 @@
 .btn-primary:hover {
   filter: brightness(.95);
 }
+/* Kartlegg-blå er så mørk at «litt mørkere» ikke synes. Lys modus lysner knappen ved pekerover i stedet. */
+:root[data-accent=blue]:not([data-theme=dark]) .btn-primary:hover {
+  filter: brightness(1.3);
+}
 @media(hover:hover) and (pointer:fine){
   /* btn */
   :is(.btn,.btn-inline,.nav,.service-theme-option,.base-theme-option):hover {
@@ -1363,4 +1367,22 @@
   box-shadow: inset 0 1px 0 #fff,0 5px 12px rgba(15,34,93,.22);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
+}
+
+/* Lyse knapper (hvit eller lys flate) må ikke gli inn i bakgrunnen: tydeligere kant i alle temaer og moduser. */
+:is(.btn-secondary,.btn-tertiary,.detail-button,.account-google,.home-entry:not(.is-primary),.v10-now-button) {
+  border-color: color-mix(in srgb,var(--ink) 32%,var(--paper)) !important;
+}
+:is(.btn-secondary,.btn-tertiary,.detail-button,.account-google,.home-entry:not(.is-primary),.v10-now-button):hover {
+  border-color: var(--accent) !important;
+}
+/* Valgt side i menyene: tydeligere markering enn den lyse aksentflaten alene. */
+:is(.sidebar .nav.active,.mobile-primary-link.active) {
+  background: color-mix(in srgb,var(--accent) 16%,var(--paper)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent) !important;
+}
+/* Aksenttekst på lys aksentflate blir for svak i noen tjenestetemaer. Teksten dras mot tekstfargen,
+   så den holder minst 4,5:1 i både lys og mørk modus. */
+:is(.v10-now-button,.v099-category-button[aria-pressed=true],.mobile-primary-link.active) {
+  color: color-mix(in srgb,var(--accent) 55%,var(--ink)) !important;
 }

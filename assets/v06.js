@@ -51,7 +51,7 @@ const serviceIntro=document.createElement('p');serviceIntro.className='service-t
 serviceIntro.textContent='Velg en fargeprofil for tjenesten. Faglige risiko- og skåringsfarger påvirkes ikke.';
 serviceOptions.append(serviceIntro);
 const serviceGrid=document.createElement('div');serviceGrid.className='service-theme-grid';
-const colorPair={custom:['#f25761','#185cab'],hospital:['#002244','#0077ee'],ambulance:['#222222','#ffff00'],urgent:['#005544','#ffcc00'],homecare:['#12675f','#36b5a8']};
+const colorPair={custom:['#173b58','#87b8ff'],hospital:['#002244','#0077ee'],ambulance:['#222222','#ffff00'],urgent:['#005544','#ffcc00'],homecare:['#12675f','#36b5a8']};
 for(const id of services){
  const option=document.createElement('label');option.className='service-theme-option';option.dataset.serviceOption=id;
  const radio=document.createElement('input');radio.type='radio';radio.name='serviceTheme';radio.value=id;
