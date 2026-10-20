@@ -1,5 +1,5 @@
 import {errorMessage,settings,same} from './model.mjs';
-import {SyncSession} from './sync.mjs';
+import {SyncSession} from './sync.mjs?v=forside2';
 import {readSettings,applySettings} from './adapter.mjs?v=gate1';
 import {termsVersion as TERMS_VERSION} from './config.mjs';
 
@@ -217,6 +217,8 @@ export function mountAccount({enabled,loadBackend}){
   if(token!==generation)return;
   status('');gate?.setState('member',next.uid);
   await sync.start(next.uid);if(token!==generation)return;render();
+  // Både enheten og kontoen har innhold: valget står på Profil, så brukeren tas dit.
+  if(sync.conflict)location.hash='profil';
  }
  window.addEventListener('kartlegg:settings-changed',()=>sync?.changed());
  document.getElementById('saveProfile')?.addEventListener('click',()=>{if(user?.emailVerified)document.getElementById('profileStatus').textContent='Lagret i kontoen.'});

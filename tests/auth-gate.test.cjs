@@ -38,3 +38,9 @@ test('whenMember waits for login',async()=>{
  await Promise.resolve();assert.equal(done,false);
  g.setState('member','u');await p;assert.equal(done,true);
 });
+test('logging in from Profil lands on the front page with NEWS2',()=>{
+ const g=createGate({storage:session()});g.setState('guest');
+ assert.equal(g.resolve('profil'),'konto');
+ g.setState('member','u');
+ assert.equal(g.resolve('konto'),'vurdering');
+});

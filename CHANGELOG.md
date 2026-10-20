@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Innlogging til forsiden og ISBAR ved Beregn – 20. oktober 2026
+
+- Etter innlogging kommer du til forsiden med NEWS2, ikke til Profil.
+- Spørsmålet om å bruke innstillingene fra enheten eller kontoen vises bare når begge faktisk har noe å velge mellom. Ellers brukes kontoen uten å spørre.
+- «Lag ISBAR-manus» ligger nå sammen med «Beregn skårer», «Lagre måling» og «Nullstill» under skjemaet.
+
 ## Kartlegg-blå, Schibsted Grotesk og ryddigere logo – 20. oktober 2026
 
 - Kartlegg-blå (#173B58) er hovedfargen i lys modus. Mørk modus beholder lys blå, så knappene synes mot den mørke bakgrunnen.

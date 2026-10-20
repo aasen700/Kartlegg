@@ -68,7 +68,7 @@ try{
  for(const id of ['gateConsentTerms','gateConsentPatient','gateConsentClinical'])$(id).checked=true;
  $('accountConsentForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));await pause(120);
  assert(gate.state==='member','confirmed account enters the app');
- assert(page()==='page-profil','after login the user returns to the page they wanted');
+ assert(page()==='page-profil','a real import choice takes the user to Profil, where the choice is');
  assert(!$('accountMember').hidden,'member status visible');assert($('page-profil').dataset.account==='member','logged-in profile hides «Husk profilen»');assert(!$('accountConflict').hidden,'first import requires explicit choice');assert(writes===0,'no initial silent upload');assert(JSON.parse(localStorage.getItem('kartlegg.account.guest.v1')).settings.profile.name==='','memory-only guest profile not persisted');
  $('accountUseCloud').click();await pause();
  assert($('profileName').value==='Cloud Nurse','cloud profile populates existing fields');

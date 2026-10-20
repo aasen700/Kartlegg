@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=profil2026">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=home1">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forside3">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=2013">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
@@ -89,7 +89,7 @@
               <div class="field wide"><div class="field-head"><span class="field-icon" aria-hidden="true">?</span><span class="field-label" id="confusion-label">Nyoppstått forvirring / endret mental status <span class="required">*</span></span></div><div class="toggle-group" role="radiogroup" aria-labelledby="confusion-label"><label class="choice"><input name="confusion" type="radio" value="yes" required><span>Ja</span></label><label class="choice"><input name="confusion" type="radio" value="no" required><span>Nei</span></label></div><p class="hint">Gjelder nyoppstått forvirring, ikke kronisk kognitiv svikt alene</p></div>
             </div>
             <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
-            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-tertiary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
+            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-tertiary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
           </div>
         </form>
       </section>
@@ -101,7 +101,6 @@
         </div>
         <div class="result-actions" aria-label="Neste steg etter beregning">
           <button class="btn btn-primary" type="button" id="reviewResponse" data-icon="arrowRight" disabled>Se tiltak</button>
-          <button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button>
         </div>
       </section>
       <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><details class="read-more" id="responseDetails"><summary>Les mer om tiltak og tolkning</summary><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div></details><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
@@ -483,7 +482,7 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/auth-gate.js?v=1"></script>
+  <script src="assets/auth-gate.js?v=forside2"></script>
   <script src="assets/measurement-store.js?v=1"></script>
   <script src="assets/app.js?v=gate1"></script>
   <script src="assets/enhancements.js?v=home1"></script>
@@ -526,6 +525,6 @@
   <script src="assets/tool-cards.js?v=profile3"></script>
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=gate1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=forside2"></script>
 </body>
 </html>

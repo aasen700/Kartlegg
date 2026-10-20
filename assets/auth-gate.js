@@ -22,7 +22,8 @@
    if(state==='checking')return page;
    if(full()){
     if(page==='start')return 'vurdering';
-    if(page==='konto'){const back=read();write('');return back&&!PUBLIC.includes(back)?back:'vurdering'}
+    // Etter innlogging: tilbake til siden brukeren ville til, men Profil gir forsiden med NEWS2.
+    if(page==='konto'){const back=read();write('');return back&&!PUBLIC.includes(back)&&back!=='profil'?back:'vurdering'}
     return page;
    }
    if(PUBLIC.includes(page)){if(page==='konto'&&state==='guest')reason='';return page}

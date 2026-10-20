@@ -132,9 +132,10 @@ script=r"""
   assert(document.querySelector('#homeToolResults').hidden,'empty search should stay compact');
   assert(document.querySelector('#homeToolSearch').nextElementSibling.id==='vurdering','NEWS2 assessment must immediately follow search');
 
-  // The front page has one ISBAR button (after the scores) and no floating action bar.
+  // The front page has one ISBAR button, next to «Beregn skårer» and «Lagre måling», and no floating action bar.
   assert(!document.querySelector('#actionDock'),'floating action bar should be gone');
-  assert(document.querySelectorAll('#page-vurdering #openIsbar').length===1&&document.querySelector('#openIsbar').closest('.result-actions'),'ISBAR action belongs with the results');
+  assert(document.querySelectorAll('#page-vurdering #openIsbar').length===1&&document.querySelector('#openIsbar').closest('#vitalsForm .form-actions'),'ISBAR action belongs with the form actions');
+  assert(document.querySelector('#openIsbar').type==='button','ISBAR button must not submit the form');
   document.querySelector('#openIsbar').click();
   assert(document.querySelector('#isbarDialog').open,'ISBAR action does not open script');
   document.querySelector('#closeIsbar').click();
@@ -715,7 +716,7 @@ script=r"""
   document.querySelector('#reviewResponse').click();
   assert(document.activeElement===document.querySelector('#info-heading'),'next-step action did not focus intervention heading');
   window.KartleggIconSystem.refresh();
-  assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===3,'form actions did not receive shared SVG icons');
+  assert(document.querySelectorAll('.form-actions .ui-icon-svg').length===4,'form actions (Nullstill, Lagre måling, ISBAR, Beregn) did not receive shared SVG icons');
   assert(document.querySelectorAll('.dialog-close:not([data-ui-action-icon])').length===0,'dialog close controls still use legacy glyphs');
   const scoreParts=document.querySelector('#v10ClinicalParts');
   assert(!scoreParts.hidden,'NEWS2 subscore visualization missing');

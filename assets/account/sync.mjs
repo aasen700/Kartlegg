@@ -7,9 +7,13 @@ export class SyncSession {
  stop(){this.generation++;clearTimeout(this.timer);this.unsubscribe?.();this.unsubscribe=null;this.active=false;this.uid=null;this.conflict=null;this.base=null;this.remote=null;this.busy=false;this.deleting=false;this.deferred=null}
  async start(uid){
   this.stop();this.uid=uid;const generation=this.generation;this.initial= settings(this.read());
-  try{const p=JSON.parse(this.storage?.getItem(this.key())||'null');if(p?.settings){this.initial=settings(p.settings);this.emit('Ulagrede kontoendringer fra denne enheten er funnet. Velg hvordan de skal brukes.')}}catch(_){}
+  let pending=false;try{const p=JSON.parse(this.storage?.getItem(this.key())||'null');if(p?.settings){pending=true;this.initial=settings(p.settings);this.emit('Ulagrede kontoendringer fra denne enheten er funnet. Velg hvordan de skal brukes.')}}catch(_){}
   this.emit('Henter kontoinnstillinger …');
-  try{const remote=await this.backend.read(uid);if(generation!==this.generation)return;this.remote=remote;this.revision=remote?.revision||0;this.conflict={local:this.initial,remote:remote?.settings||null,first:true};this.emit('Velg innstillinger for kontoen. Ingen lokale data er lastet opp.');}
+  try{const remote=await this.backend.read(uid);if(generation!==this.generation)return;this.remote=remote;this.revision=remote?.revision||0;this.conflict={local:this.initial,remote:remote?.settings||null,first:true};this.emit('Velg innstillinger for kontoen. Ingen lokale data er lastet opp.');
+   // Ingenting å importere fra enheten (ingen profilfelt, ingen favoritter, ingen ventende endringer):
+   // bruk kontoen uten å spørre. Har kontoen ingenting ennå, lagres enhetens standardvalg.
+   const blank=!pending&&Object.values(this.initial.profile).every(v=>!v)&&!this.initial.favorites.length;
+   if(blank){await this.choose(remote?'cloud':'local');return}}
   catch(e){if(generation===this.generation)this.emit(e)}
  }
  applyValue(value){this.applying=true;try{this.apply(settings(value))}finally{this.applying=false}}

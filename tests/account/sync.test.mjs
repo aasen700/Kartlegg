@@ -29,3 +29,8 @@ test('pending settings are isolated by UID',async()=>{const f=fixture();f.memory
 test('missing browser storage gives an explicit memory-only warning',async()=>{const f=fixture();f.sync.storage=undefined;await f.sync.start('a');await f.sync.choose('local');assert.ok(f.messages.some(m=>typeof m==='string'&&m.includes('bare i denne fanen')));f.sync.stop()});
 
 test('empty initial server snapshot cannot disable a first-time account import',async()=>{const f=fixture();f.backend.watch=(uid,receive)=>{receive(null);return ()=>{}};await f.sync.start('a');await f.sync.choose('local');assert.equal(f.sync.active,true);assert.equal(f.cloud.revision,1);f.local=s('next edit');await f.sync.save();assert.equal(f.cloud.revision,2);assert.equal(f.cloud.settings.profile.name,'next edit');f.sync.stop()});
+
+// Oktober 2026: ingen spørsmål ved innlogging når enheten ikke har noe å importere.
+test('blank device uses the account settings without asking',async()=>{const f=fixture(documentData(s('cloud'),3,null));f.local=settings();await f.sync.start('a');assert.equal(f.sync.conflict,null);assert.equal(f.sync.active,true);assert.equal(f.local.profile.name,'cloud');assert.equal(f.writes,0);f.sync.stop()});
+test('blank device on a brand new account starts syncing without asking',async()=>{const f=fixture();f.local=settings();await f.sync.start('a');assert.equal(f.sync.conflict,null);assert.equal(f.sync.active,true);f.sync.stop()});
+test('a device with its own profile still has to choose',async()=>{const f=fixture(documentData(s('cloud'),3,null));await f.sync.start('a');assert.ok(f.sync.conflict);assert.equal(f.local.profile.name,'local');f.sync.stop()});

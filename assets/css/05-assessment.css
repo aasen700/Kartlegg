@@ -1357,6 +1357,10 @@
     grid-column: 1/-1;
     grid-row: 2;
   }
+  #vitalsForm #openIsbar {
+    grid-column: 1/-1;
+    grid-row: 3;
+  }
 }
 
 /* Favorittfeltet på forsiden vises først når noe er stjernemerket. */
@@ -1499,5 +1503,38 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
+  }
+}
+/* PC: «Beregn skårer» over hele bredden, og Lagre måling, Lag ISBAR-manus og Nullstill side om side under. */
+@media(min-width:771px){
+  #vitalsForm .form-actions {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 10px;
+  }
+  #vitalsForm .actions-right {
+    display: contents;
+  }
+  #vitalsForm .form-actions .btn {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    white-space: nowrap;
+  }
+  #vitalsForm .actions-right .btn-primary {
+    grid-column: 1/-1;
+    grid-row: 1;
+  }
+  #vitalsForm #saveMeasurement {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  #vitalsForm #openIsbar {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #vitalsForm .form-actions>[type=reset] {
+    grid-column: 3;
+    grid-row: 2;
   }
 }

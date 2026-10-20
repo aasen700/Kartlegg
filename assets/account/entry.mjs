@@ -1,3 +1,3 @@
 import {accountEnabled} from './config.mjs';
-import {mountAccount} from './ui.mjs?v=gate1';
+import {mountAccount} from './ui.mjs?v=forside2';
 mountAccount({enabled:accountEnabled,loadBackend:()=>import('./firebase.mjs?v=gate1').then(m=>m.backend)});
