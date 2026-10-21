@@ -1160,3 +1160,64 @@
 :root[data-base-theme="standard"][data-surface-style="solid"] .about-v0993-hero::after {
   display: none;
 }
+
+
+/* Liquid Glass (oktober 2026): gjennomsiktig glass over en svak blå/hvit (lys) eller mørk blå (mørk) gradient.
+ * Kortene, toppen, menyen og bunnmenyen er tynt glass med lys kant og myk skygge; innholdet bak synes uskarpt.
+ * Felt, skårer og resultater er nesten tette, så tall og svar alltid er lette å lese.
+ * Gjelder ikke Philip-temaet, som har sitt eget koboltglass. */
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]){
+ --g-base:#e7ebf0;
+ --g-shapes:radial-gradient(38% 30% at 14% 18%,#c4cfdc 0,transparent 70%),radial-gradient(34% 28% at 86% 12%,#d3dbe6 0,transparent 70%),radial-gradient(40% 34% at 72% 62%,#c9d3df 0,transparent 72%),radial-gradient(36% 30% at 22% 86%,#d7dee8 0,transparent 70%);
+ --g-fill:rgba(255,255,255,.26);--g-fill-pill:rgba(255,255,255,.34);--g-fill-bar:rgba(255,255,255,.38);--g-solid:rgba(255,255,255,.78);
+ --g-edge:rgba(255,255,255,.75);--g-edge-soft:rgba(255,255,255,.35);--g-in-top:rgba(255,255,255,.95);--g-in-bot:rgba(30,45,70,.08);--g-drop:rgba(30,45,70,.12)}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-theme="dark"]{
+ --g-base:#10141a;
+ --g-shapes:radial-gradient(38% 30% at 14% 18%,#26303d 0,transparent 70%),radial-gradient(34% 28% at 86% 12%,#1f2833 0,transparent 70%),radial-gradient(40% 34% at 72% 62%,#2a3442 0,transparent 72%),radial-gradient(36% 30% at 22% 86%,#1d2530 0,transparent 70%);
+ --g-fill:rgba(255,255,255,.05);--g-fill-pill:rgba(255,255,255,.08);--g-fill-bar:rgba(20,25,32,.42);--g-solid:rgba(24,30,38,.86);
+ --g-edge:rgba(255,255,255,.22);--g-edge-soft:rgba(255,255,255,.08);--g-in-top:rgba(255,255,255,.22);--g-in-bot:rgba(0,0,0,.4);--g-drop:rgba(0,0,0,.45)}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"]:not([data-personal-mode]) body{background:var(--g-shapes),var(--g-base)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.forlop-item,.hc-tool-card,.learn12-course-card,.home-entry,.next-step-card){
+ background:var(--g-fill)!important;border:1px solid var(--g-edge-soft)!important;border-top-color:var(--g-edge)!important;border-left-color:var(--g-edge)!important;border-radius:26px!important;
+ -webkit-backdrop-filter:blur(10px) saturate(160%)!important;backdrop-filter:blur(10px) saturate(160%)!important;
+ box-shadow:inset 0 1px 0 var(--g-in-top),inset 1px 0 0 var(--g-edge-soft),inset 0 -1px 0 var(--g-in-bot),0 10px 30px -12px var(--g-drop)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.home-entry,.forlop-item,.learn12-course-card){border-radius:22px!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox) :is(.toolbox,.hc-tool-card,.learn12-course-card,.forlop-item,.home-entry){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.header,.sidebar){background:var(--g-fill-bar)!important;border-color:var(--g-edge-soft)!important;
+ -webkit-backdrop-filter:blur(16px) saturate(180%)!important;backdrop-filter:blur(16px) saturate(180%)!important;box-shadow:inset 0 -1px 0 var(--g-edge-soft)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) .mobile-primary-nav{background:var(--g-fill-bar)!important;border:1px solid var(--g-edge)!important;border-radius:32px!important;
+ -webkit-backdrop-filter:blur(12px) saturate(190%)!important;backdrop-filter:blur(12px) saturate(190%)!important;box-shadow:inset 0 1px 0 var(--g-in-top),0 16px 36px -10px var(--g-drop)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) .mobile-primary-link:is([aria-current],.active){border-radius:24px!important;background:var(--g-fill-pill)!important;box-shadow:inset 0 1px 0 var(--g-in-top)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.btn-secondary,.v099-category-button,.theme-switch,.tool-card-favorite,.tool-card-copy,.v08-timer-launch,.detail-button,.sidebar .nav.active){
+ background:var(--g-fill-pill)!important;border:1px solid var(--g-edge)!important;border-radius:999px!important;color:var(--ink)!important;
+ -webkit-backdrop-filter:blur(8px) saturate(180%)!important;backdrop-filter:blur(8px) saturate(180%)!important;box-shadow:inset 0 1px 0 var(--g-in-top),inset 0 -1px 2px var(--g-in-bot),0 4px 12px -6px var(--g-drop)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) .sidebar .nav.active{border-radius:18px!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) .btn-primary{border-radius:999px!important}
+
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.field,.meta-line,.score,.score-meter,.forlop-line,.compare-box,.control-wrap,.v081-search-field){
+ background:var(--g-solid)!important;border:1px solid var(--g-edge-soft)!important;-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;box-shadow:inset 0 1px 0 var(--g-in-top)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.field,.meta-line,.score,.score-meter,.forlop-line,.compare-box){border-radius:18px!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.control-wrap,.v081-search-field){border-radius:14px!important}
+
+
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(150,190,235,.55),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(120,150,190,.35),transparent 70%),linear-gradient(160deg,#f7f9fc 0%,#e6edf6 45%,#cfd9e6 100%)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-theme="dark"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(60,100,160,.35),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(40,70,120,.28),transparent 70%),linear-gradient(160deg,#1a2230 0%,#121820 50%,#0a0d12 100%)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.30)!important;-webkit-backdrop-filter:blur(5px) saturate(150%)!important;backdrop-filter:blur(5px) saturate(150%)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.045)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.header,.sidebar){background:rgba(255,255,255,.28)!important;-webkit-backdrop-filter:blur(8px) saturate(180%)!important;backdrop-filter:blur(8px) saturate(180%)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.header,.sidebar){background:rgba(16,20,26,.38)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] .mobile-primary-nav{background:rgba(255,255,255,.30)!important;-webkit-backdrop-filter:blur(6px) saturate(190%)!important;backdrop-filter:blur(6px) saturate(190%)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] .mobile-primary-nav{background:rgba(20,25,32,.35)!important}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.header,.sidebar,.mobile-primary-nav) {
+    background: var(--g-solid) !important;
+  }
+}
+@media(prefers-reduced-transparency:reduce){
+  :root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.header,.sidebar,.mobile-primary-nav,.btn-secondary,.v099-category-button) {
+    background: var(--g-solid) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}

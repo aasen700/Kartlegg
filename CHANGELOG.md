@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Nytt Liquid Glass – 21. oktober 2026
+
+- Glassmodus (Profil → Utseende → Liquid glass) er laget på nytt: kortene, toppen, menyen og bunnmenyen er tynt, gjennomsiktig glass med lys kant og myk skygge, så innholdet bak synes uskarpt gjennom.
+- Bakgrunnen er en svak gradient: lys blå til hvit i dagmodus, mørk blå til nesten svart i nattmodus.
+- Knapper, filtervalg og aktivt menyvalg er glasspiller.
+- Felt, skårer og resultater er nesten tette, så tall og svar alltid er lette å lese. Kontrasten er sjekket mot den mørkeste og lyseste delen av gradienten.
+- Ved «Redusert gjennomsiktighet» i operativsystemet, og i nettlesere uten støtte for uskarphet, blir glasset tett.
+- Philip-temaet, tjenestetemaene og sesongtemaene beholder sine egne bakgrunner.
+
 ## Sesongtema med effekter på kortene – 21. oktober 2026
 
 - Bakgrunnen er gradienter i stedet for én farge: varmt lys øverst og en farget glød nederst (rødt på jul, oransje på Halloween, rødt på 17. mai). De rolige temaene har en myk tone over hele siden.
