@@ -3,7 +3,7 @@ export const TOOL_IDS = Object.freeze(['news2','qsofa','gcs','4at','nrs','bmi-bs
 export const OPTIONS = Object.freeze({
   mode:['light','dark','system'], accent:['violet','blue','green'],
   service:['custom','hospital','ambulance','urgent','homecare'],
-  base:['standard','philip'], season:['off','auto','halloween','christmas','breast-cancer','mental-health','pride'], surface:['solid','glass']
+  base:['standard','philip'], season:['off','auto','halloween','christmas','breast-cancer','mental-health','pride','may17','nurses-day','hand-hygiene','patient-safety','heart-day','diabetes-day','mens-health','sami-day','easter','winter','spring','summer','autumn'], surface:['solid','glass']
 });
 const defaults={mode:'system',accent:'blue',service:'custom',base:'standard',season:'off',surface:'solid'};
 export function settings(raw={}) {

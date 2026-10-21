@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Nye sesongtemaer i to nivåer – 21. oktober 2026
+
+- Sesongpynten er tegnet på nytt: ett banner øverst på siden i stedet for et gjentatt mønster bak alt innhold. Kortene, skårene og resultatene får aldri pynt.
+- Stor: jul, Halloween og 17. mai har farget bakgrunn bak hele siden, hvit tittel og et kraftig banner. Jul har rolig snøfall (av for dem som har valgt redusert bevegelse).
+- Rolig: alle andre temaer har et lyst banner øverst til høyre som tones ut.
+- Nye merkedager: Samefolkets dag (6. februar), påske (palmesøndag til andre påskedag, regnes ut hvert år), håndhygienedagen (5. mai), Sykepleiernes dag (12. mai), 17. mai, pasientsikkerhetsdagen (17. september), Verdens hjertedag (29. september), menns helse (november) og Verdens diabetesdag (14. november).
+- Nye årstider for resten av året: vinter (januar–februar), vår (mars–mai), sommer (juli–august) og høst (september).
+- På mobil blir banneret en smal stripe over tittelen. Alle temaer er sjekket i lys og mørk modus, og tekst på farget bakgrunn har god nok kontrast.
+- Innstillingene viser forhåndsvisning av temaet og hvilket tema som kommer neste gang («Neste: Halloween fra 25. oktober»).
+
 ## Øvingsforløp fungerer på mobil – 21. oktober 2026
 
 - Første måling ber ikke lenger om tid siden forrige måling. Tidsvalget vises først fra måling 2 (det var synlig hele tiden på grunn av en stilfeil).

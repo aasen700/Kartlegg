@@ -771,7 +771,7 @@ script=r"""
   assert(document.documentElement.dataset.surfaceStyle==='glass','Philip easter egg should initially use liquid glass');
   setRadio('serviceTheme','homecare');
   assert(document.documentElement.dataset.serviceTheme==='homecare'&&document.documentElement.dataset.baseTheme==='philip','theme layers not independent');
-  for(const value of ['halloween','christmas','breast-cancer','mental-health','pride']){
+  for(const value of ['halloween','christmas','may17','breast-cancer','mental-health','pride','nurses-day','winter']){
    season.value=value;season.dispatchEvent(new Event('change',{bubbles:true}));
    assert(document.documentElement.dataset.seasonTheme===value,'season '+value+' not applied');
    assert(dlg.querySelector('#seasonThemePreview').dataset.seasonPreview===value,'season preview not synchronized for '+value);

@@ -105,10 +105,6 @@
     height: 8px !important;
   }
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) :is(.header,.sidebar,.section,.toolbox,.settings-card,.account-card,.v081-tool-search,.mobile-primary-nav) {
-  outline: 1px solid var(--season-glass-edge);
-  outline-offset: -1px;
-}
 :root[data-base-theme="standard"][data-service-theme="custom"]:not([data-personal-mode]) :is(.header,.sidebar) {
   background: color-mix(in srgb,var(--paper) 91%,transparent);
   -webkit-backdrop-filter: blur(18px) saturate(125%);
@@ -272,6 +268,97 @@
   --season-glow: #7d6eb6;
   --season-glass-edge: rgba(128,110,190,.22);
 }
+:root[data-season-theme="may17"] {
+  --season-ink: color-mix(in srgb,#e31b3d 62%,#1b2633);
+  --season-bg: #eef3fb;
+  --season-edge: #e31b3d;
+  --season-glow: #e31b3d;
+  --season-glass-edge: color-mix(in srgb,#e31b3d 28%,transparent);
+}
+:root[data-season-theme="nurses-day"] {
+  --season-ink: color-mix(in srgb,#d9a441 62%,#1b2633);
+  --season-bg: #fdf3e1;
+  --season-edge: #d9a441;
+  --season-glow: #d9a441;
+  --season-glass-edge: color-mix(in srgb,#d9a441 28%,transparent);
+}
+:root[data-season-theme="hand-hygiene"] {
+  --season-ink: color-mix(in srgb,#3c9be0 62%,#1b2633);
+  --season-bg: #e8f5fd;
+  --season-edge: #3c9be0;
+  --season-glow: #3c9be0;
+  --season-glass-edge: color-mix(in srgb,#3c9be0 28%,transparent);
+}
+:root[data-season-theme="patient-safety"] {
+  --season-ink: color-mix(in srgb,#2f7fb8 62%,#1b2633);
+  --season-bg: #e9f2fb;
+  --season-edge: #2f7fb8;
+  --season-glow: #2f7fb8;
+  --season-glass-edge: color-mix(in srgb,#2f7fb8 28%,transparent);
+}
+:root[data-season-theme="heart-day"] {
+  --season-ink: color-mix(in srgb,#e0485a 62%,#1b2633);
+  --season-bg: #fdecee;
+  --season-edge: #e0485a;
+  --season-glow: #e0485a;
+  --season-glass-edge: color-mix(in srgb,#e0485a 28%,transparent);
+}
+:root[data-season-theme="diabetes-day"] {
+  --season-ink: color-mix(in srgb,#3b7fd4 62%,#1b2633);
+  --season-bg: #eaf2fd;
+  --season-edge: #3b7fd4;
+  --season-glow: #3b7fd4;
+  --season-glass-edge: color-mix(in srgb,#3b7fd4 28%,transparent);
+}
+:root[data-season-theme="mens-health"] {
+  --season-ink: color-mix(in srgb,#4f8fd6 62%,#1b2633);
+  --season-bg: #eaf0f8;
+  --season-edge: #4f8fd6;
+  --season-glow: #4f8fd6;
+  --season-glass-edge: color-mix(in srgb,#4f8fd6 28%,transparent);
+}
+:root[data-season-theme="sami-day"] {
+  --season-ink: color-mix(in srgb,#d52b1e 62%,#1b2633);
+  --season-bg: #fdf3e6;
+  --season-edge: #d52b1e;
+  --season-glow: #d52b1e;
+  --season-glass-edge: color-mix(in srgb,#d52b1e 28%,transparent);
+}
+:root[data-season-theme="easter"] {
+  --season-ink: color-mix(in srgb,#e0a800 62%,#1b2633);
+  --season-bg: #fff8dd;
+  --season-edge: #e0a800;
+  --season-glow: #e0a800;
+  --season-glass-edge: color-mix(in srgb,#e0a800 28%,transparent);
+}
+:root[data-season-theme="winter"] {
+  --season-ink: color-mix(in srgb,#3fb8a0 62%,#1b2633);
+  --season-bg: #e4eef9;
+  --season-edge: #3fb8a0;
+  --season-glow: #3fb8a0;
+  --season-glass-edge: color-mix(in srgb,#3fb8a0 28%,transparent);
+}
+:root[data-season-theme="spring"] {
+  --season-ink: color-mix(in srgb,#5d9d55 62%,#1b2633);
+  --season-bg: #eef8ee;
+  --season-edge: #5d9d55;
+  --season-glow: #5d9d55;
+  --season-glass-edge: color-mix(in srgb,#5d9d55 28%,transparent);
+}
+:root[data-season-theme="summer"] {
+  --season-ink: color-mix(in srgb,#e8a21c 62%,#1b2633);
+  --season-bg: #fff6dc;
+  --season-edge: #e8a21c;
+  --season-glow: #e8a21c;
+  --season-glass-edge: color-mix(in srgb,#e8a21c 28%,transparent);
+}
+:root[data-season-theme="autumn"] {
+  --season-ink: color-mix(in srgb,#d65a2a 62%,#1b2633);
+  --season-bg: #fdf0e3;
+  --season-edge: #d65a2a;
+  --season-glow: #d65a2a;
+  --season-glass-edge: color-mix(in srgb,#d65a2a 28%,transparent);
+}
 :root[data-personal-mode="kent"] {
   --pm-primary: #19558c;
   --pm-tint: #eaf4fb;
@@ -302,97 +389,224 @@
   background: var(--pm-page) !important;
   background-attachment: fixed !important;
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) body {
+/* Sesongtema i to nivåer (oktober 2026).
+ * Stor (jul, Halloween, 17. mai): farget bakgrunn bak hele siden, hvit tittel og et kraftig banner.
+ * Rolig (alle andre): et lyst banner øverst til høyre som tones ut mot venstre og nedover.
+ * Kortene beholder sin egen bakgrunn, og skårer og resultater får aldri pynt.
+ * Bannerne ligger i assets/season/<tema>.svg med gjennomsiktig bakgrunn, så de virker i lys og mørk modus. */
+:root[data-season-theme="christmas"] {
+  --season-banner: url("../season/christmas.svg");
+  --season-line: #c8283c;
+  --season-page: linear-gradient(180deg,#14402f 0,#0e3326 420px,#0c2c21 100%);
+  --season-page-color: #0e3326;
+}
+:root[data-season-theme="halloween"] {
+  --season-banner: url("../season/halloween.svg");
+  --season-line: #f07a1c;
+  --season-page: linear-gradient(180deg,#2e1745 0,#22103a 420px,#1a0c2c 100%);
+  --season-page-color: #22103a;
+}
+:root[data-season-theme="may17"] {
+  --season-banner: url("../season/may17.svg");
+  --season-line: #e31b3d;
+  --season-page: linear-gradient(180deg,#0c2d6b 0,#06245f 420px,#041d4f 100%);
+  --season-page-color: #06245f;
+}
+:root[data-season-theme="breast-cancer"] {
+  --season-banner: url("../season/breast-cancer.svg");
+  --season-line: #d66f9f;
+  --season-tint: #fdeef5;
+  --season-tint-dark: #3a2230;
+}
+:root[data-season-theme="mental-health"] {
+  --season-banner: url("../season/mental-health.svg");
+  --season-line: #398f8b;
+  --season-tint: #e8f7f1;
+  --season-tint-dark: #183a33;
+}
+:root[data-season-theme="pride"] {
+  --season-banner: url("../season/pride.svg");
+  --season-line: #7768ae;
+  --season-tint: #f3f0ff;
+  --season-tint-dark: #2a2545;
+}
+:root[data-season-theme="nurses-day"] {
+  --season-banner: url("../season/nurses-day.svg");
+  --season-line: #d9a441;
+  --season-tint: #fdf3e1;
+  --season-tint-dark: #3a2e17;
+}
+:root[data-season-theme="hand-hygiene"] {
+  --season-banner: url("../season/hand-hygiene.svg");
+  --season-line: #3c9be0;
+  --season-tint: #e8f5fd;
+  --season-tint-dark: #15334a;
+}
+:root[data-season-theme="patient-safety"] {
+  --season-banner: url("../season/patient-safety.svg");
+  --season-line: #2f7fb8;
+  --season-tint: #e9f2fb;
+  --season-tint-dark: #17304a;
+}
+:root[data-season-theme="heart-day"] {
+  --season-banner: url("../season/heart-day.svg");
+  --season-line: #e0485a;
+  --season-tint: #fdecee;
+  --season-tint-dark: #3d1d24;
+}
+:root[data-season-theme="diabetes-day"] {
+  --season-banner: url("../season/diabetes-day.svg");
+  --season-line: #3b7fd4;
+  --season-tint: #eaf2fd;
+  --season-tint-dark: #182c4d;
+}
+:root[data-season-theme="mens-health"] {
+  --season-banner: url("../season/mens-health.svg");
+  --season-line: #4f8fd6;
+  --season-tint: #eaf0f8;
+  --season-tint-dark: #1e2a3d;
+}
+:root[data-season-theme="sami-day"] {
+  --season-banner: url("../season/sami-day.svg");
+  --season-line: #d52b1e;
+  --season-tint: #fdf3e6;
+  --season-tint-dark: #2f2a1c;
+}
+:root[data-season-theme="easter"] {
+  --season-banner: url("../season/easter.svg");
+  --season-line: #e0a800;
+  --season-tint: #fff8dd;
+  --season-tint-dark: #3a3416;
+}
+:root[data-season-theme="winter"] {
+  --season-banner: url("../season/winter.svg");
+  --season-line: #3fb8a0;
+  --season-tint: #e4eef9;
+  --season-tint-dark: #142a40;
+}
+:root[data-season-theme="spring"] {
+  --season-banner: url("../season/spring.svg");
+  --season-line: #5d9d55;
+  --season-tint: #eef8ee;
+  --season-tint-dark: #1a3322;
+}
+:root[data-season-theme="summer"] {
+  --season-banner: url("../season/summer.svg");
+  --season-line: #e8a21c;
+  --season-tint: #fff6dc;
+  --season-tint-dark: #1b3446;
+}
+:root[data-season-theme="autumn"] {
+  --season-banner: url("../season/autumn.svg");
+  --season-line: #d65a2a;
+  --season-tint: #fdf0e3;
+  --season-tint-dark: #3a2616;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) body {
   position: relative;
   isolation: isolate;
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) body::before,
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) body::after {
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .shell {
+  position: relative;
+  z-index: 1;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main {
+  position: relative;
+  isolation: isolate;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  pointer-events: none;
+  background: var(--season-banner) right top / auto 170px no-repeat;
+  -webkit-mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 78%,transparent);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 78%,transparent);
+  mask-composite: intersect;
+}
+:root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) {
+  --season-wash: var(--season-tint);
+}
+:root[data-theme=dark]:root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) {
+  --season-wash: var(--season-tint-dark);
+}
+:root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main::before {
+  background: var(--season-banner) right top / auto 170px no-repeat,linear-gradient(to left,var(--season-wash) 0,transparent 78%);
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"])[data-season-theme][data-season-theme][data-season-theme][data-season-theme] body {
+  background: var(--season-page) !important;
+  background-color: var(--season-page-color) !important;
+  background-attachment: fixed !important;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.main>.page>.intro,.main>.page>.intro :is(h1,h2,p,small,.season-notice),.footer,.footer a,.footer .credit) {
+  color: #fff !important;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .main>.page>.intro p {
+  color: rgba(255,255,255,.88) !important;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .footer {
+  color: rgba(255,255,255,.85) !important;
+}
+/* Tekst som står rett på den fargede bakgrunnen (ikke i et kort) blir lys. */
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.settings-group-title,.settings-group-note,.personalization-note) {
+  color: rgba(255,255,255,.9) !important;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) #page-start :is(h1,h2,p,li,a):not(:is(.public-feature,.public-disclaimer,.preview-card,.public-hero-preview) *):not(.btn) {
+  color: #fff !important;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) #page-start :is(.public-lede,.public-note) {
+  color: rgba(255,255,255,.9) !important;
+}
+/* Jul: rolig snø som faller (av for redusert bevegelse). */
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) body::after {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) body::before {
-  z-index: 0;
-}
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) body::after {
-  z-index: 0;
-}
-:root[data-season-theme="halloween"] body::before {
-  background: radial-gradient(ellipse at 82% 5%,rgba(255,142,45,.52),transparent 35%),
-  radial-gradient(ellipse at 12% 91%,rgba(112,48,145,.46),transparent 42%),
-  radial-gradient(ellipse at 54% 46%,rgba(91,37,88,.28),transparent 47%),
-  linear-gradient(145deg,rgba(9,16,35,.28),rgba(48,20,55,.34) 55%,rgba(73,36,23,.26));
-}
-:root[data-season-theme="halloween"] body::after {
-  background: url("../season-halloween-icons.svg") repeat 5vw 38px / 360px 260px;
-  opacity: .42;
-}
-:root[data-season-theme="christmas"] body::before {
-  background: radial-gradient(ellipse at 88% 3%,rgba(201,38,52,.55),transparent 38%),
-  radial-gradient(ellipse at 8% 90%,rgba(151,20,38,.43),transparent 44%),
-  radial-gradient(ellipse at 52% 38%,rgba(193,232,255,.32),transparent 50%),
-  linear-gradient(128deg,rgba(77,7,22,.27),rgba(14,70,89,.21) 48%,rgba(144,22,40,.30));
-}
 :root[data-season-theme="christmas"] body::after {
-  background-image: url("../season-christmas-icons.svg"),
-  radial-gradient(circle,rgba(255,255,255,.94) 0 1.2px,transparent 1.8px),
-  radial-gradient(circle,rgba(203,241,255,.82) 0 .8px,transparent 1.5px),
-  linear-gradient(112deg,transparent 15%,rgba(116,233,215,.10) 38%,rgba(119,188,255,.13) 55%,transparent 78%);
-  background-size: 360px 260px,181px 197px,109px 143px,100% 100%;
-  background-position: 4vw 24px,17px 22px,61px 79px,0 0;
-  opacity: .52;
+  background-image: none,radial-gradient(circle,rgba(255,255,255,.9) 0 1.3px,transparent 1.9px),radial-gradient(circle,rgba(220,240,255,.7) 0 .9px,transparent 1.5px),none;
+  background-size: 100% 100%,181px 197px,109px 143px,100% 100%;
+  opacity: .55;
+  animation: kartlegg-winter-drift 60s linear infinite;
 }
-:root[data-season-theme="breast-cancer"] body::before {
-  background: radial-gradient(ellipse at 87% 8%,rgba(233,123,172,.38),transparent 39%),
-  radial-gradient(ellipse at 7% 92%,rgba(196,92,147,.26),transparent 43%),
-  linear-gradient(145deg,rgba(106,43,85,.10),rgba(255,190,216,.20));
+/* Tynn farget linje under toppen i alle temaer; regnbue under Pride. */
+.season-highlight {
+  height: 4px;
+  background: var(--season-line,var(--season-glow));
 }
-:root[data-season-theme="breast-cancer"] body::after {
-  opacity: .38;
-  background: url("../season-breast-cancer-ribbons.svg") repeat 7vw 34px / 360px 260px;
-}
-:root[data-season-theme="mental-health"] body::before {
-  background: radial-gradient(ellipse at 84% 10%,rgba(82,184,174,.34),transparent 40%),
-  radial-gradient(ellipse at 8% 88%,rgba(188,174,121,.23),transparent 44%),
-  linear-gradient(150deg,rgba(20,81,86,.11),rgba(118,197,172,.19));
-}
-:root[data-season-theme="mental-health"] body::after {
-  opacity: .34;
-  background: url("../season-mental-health-icons.svg") repeat 3vw 46px / 360px 260px;
-}
-:root[data-season-theme="pride"] body::before {
-  background: radial-gradient(ellipse at 89% 4%,rgba(150,102,209,.43),transparent 35%),
-  radial-gradient(ellipse at 5% 91%,rgba(73,153,202,.38),transparent 41%),
-  linear-gradient(118deg,rgba(218,86,109,.23),rgba(229,172,67,.22) 26%,rgba(90,171,128,.22) 50%,rgba(79,139,202,.22) 73%,rgba(142,91,185,.25));
-}
-:root[data-season-theme="pride"] body::after {
-  opacity: .40;
-  background: url("../season-pride-icons.svg") repeat 6vw 28px / 360px 260px;
+:root[data-season-theme="pride"] .season-highlight {
+  background: linear-gradient(90deg,#e4524f,#f08a3e,#f2c94c,#5fb26b,#4f8fd6,#8a5cc2);
 }
 @media(max-width:770px){
-  :root[data-season-theme="breast-cancer"] body::after {
-    opacity: .31;
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main {
+    padding-top: 86px;
   }
-  :root[data-season-theme="mental-health"] body::after {
-    opacity: .29;
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main::before {
+    height: 70px;
+    background-size: auto 70px;
+    -webkit-mask: linear-gradient(to right,transparent 0,#000 30%);
+    mask: linear-gradient(to right,transparent 0,#000 30%);
   }
-  :root[data-season-theme="halloween"] body::after {
-    opacity: .35;
-    background-size: 310px 224px;
-  }
-  :root[data-season-theme="christmas"] body::after {
-    opacity: .43;
-  }
-  :root[data-season-theme="pride"] body::after {
-    opacity: .34;
-    background-size: 310px 224px;
+  :root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main::before {
+    background: var(--season-banner) right top / auto 70px no-repeat,linear-gradient(to left,var(--season-wash) 0,transparent 85%);
   }
 }
 @media(prefers-reduced-motion:reduce){
   :root[data-season-theme="christmas"] body::after {
     animation: none;
+  }
+}
+@media print{
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) .main::before,
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) body::after {
+    display: none;
   }
 }
 :root[data-base-theme="standard"][data-service-theme="custom"]:not([data-personal-mode]) body {
@@ -431,25 +645,6 @@
   background: var(--season-edge);
   flex: none;
 }
-:root[data-season-theme="halloween"] .season-notice::before,
-:root[data-season-theme="christmas"] .season-notice::before,
-:root[data-season-theme="pride"] .season-notice::before {
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  background: none;
-  font-size: 15px;
-  line-height: 1;
-}
-:root[data-season-theme="halloween"] .season-notice::before {
-  content: "🎃";
-}
-:root[data-season-theme="christmas"] .season-notice::before {
-  content: "❄️";
-}
-:root[data-season-theme="pride"] .season-notice::before {
-  content: "🌈";
-}
 @media(max-width:480px){
   .season-notice {
     font-size: 11px;
@@ -465,27 +660,6 @@
   z-index: 5;
   pointer-events: none;
   background: linear-gradient(90deg,transparent 3%,var(--season-glow) 48%,transparent 97%);
-}
-:root[data-season-theme="pride"] .season-highlight {
-  background: linear-gradient(90deg,#d95b6d,#e4ab47,#6eac82,#6898cd,#9266b7);
-  height: 6px;
-  opacity: .94;
-  box-shadow: 0 3px 15px rgba(108,91,186,.34);
-}
-:root[data-season-theme="halloween"] .season-highlight {
-  background: linear-gradient(90deg,#503268,#bc6f3d 34%,#e2aa65 56%,#6f3d72);
-}
-:root[data-season-theme="christmas"] .season-highlight {
-  background: linear-gradient(90deg,#8f1729,#df3d50 34%,#fff 50%,#d63248 66%,#8f1729);
-  height: 5px;
-  opacity: .94;
-  box-shadow: 0 3px 16px rgba(192,34,56,.34);
-}
-:root[data-season-theme="breast-cancer"] .season-highlight {
-  background: linear-gradient(90deg,#a94777,#ef9dbd 50%,#a94777);
-}
-:root[data-season-theme="mental-health"] .season-highlight {
-  background: linear-gradient(90deg,#287a7b,#85b9a5 50%,#287a7b);
 }
 @media(prefers-reduced-motion:reduce){
   .season-highlight,
@@ -738,50 +912,6 @@
   color: var(--pm-card-ink) !important;
   border-color: var(--pm-card-border) !important;
 }
-:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card) {
-  position: relative;
-}
-:root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card)::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  width: clamp(88px,20%,154px);
-  height: 96px;
-  border-radius: inherit;
-  pointer-events: none;
-  background: url("../season-halloween-web.svg") no-repeat right top / contain;
-  opacity: .58;
-}
-:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card) {
-  position: relative;
-}
-:root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card)::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: -1px;
-  left: 7px;
-  right: 7px;
-  height: 17px;
-  border-radius: inherit;
-  pointer-events: none;
-  background: url("../season-christmas-snow.svg") repeat-x left top / 238px 17px;
-  opacity: .88;
-}
-@media(max-width:770px){
-  :root[data-season-theme="halloween"] :is(.section,.v081-tool-search,.settings-card,.account-card)::before {
-    width: 88px;
-    height: 62px;
-    opacity: .45;
-  }
-  :root[data-season-theme="christmas"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card)::before {
-    height: 14px;
-    background-size: 196px 14px;
-    opacity: .82;
-  }
-}
 :root[data-personal-mode] :is(.section,.toolbox,.field,.v081-tool-search,.settings-sheet,.settings-card,.account-card,.clinical-tool-dialog,.v08-dialog) {
   border-radius: var(--ui-radius-lg);
 }
@@ -938,10 +1068,6 @@
   color: var(--pm-soft-action-ink) !important;
   border-color: var(--pm-action-border) !important;
 }
-:root:is([data-season-theme="halloween"],[data-season-theme="christmas"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"]) .shell {
-  position: relative;
-  z-index: 1;
-}
 @keyframes kartlegg-winter-drift{from{background-position:4vw 24px,17px -197px,61px -143px,0 0}to{background-position:4vw 24px,17px 197px,61px 143px,0 0}}
 /* simulationRoot */
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) #simulationRoot :is(.sim-panel,.sim-references) {
@@ -1029,35 +1155,116 @@
   background: #aeb8c4;
   opacity: .65;
 }
-.season-theme-preview[data-season-preview="halloween"] {
-  background: radial-gradient(circle at 82% 18%,#e7a05b66,transparent 28%),linear-gradient(145deg,#18223a,#44294d 58%,#68412c);
-}
-.season-theme-preview[data-season-preview="halloween"]::after {
-  background: linear-gradient(90deg,#523367,#c57942,#e0ac67,#6e3c72);
-}
 .season-theme-preview[data-season-preview="christmas"] {
-  background: radial-gradient(circle at 78% 20%,#effcff88,transparent 33%),linear-gradient(145deg,#69152a,#bc2d42 58%,#174e64);
+  background: url("../season/christmas.svg") right center / auto 100% no-repeat,#0e3326;
 }
 .season-theme-preview[data-season-preview="christmas"]::after {
-  background: linear-gradient(90deg,#8f1729,#df3d50,#fff,#d63248,#8f1729);
+  background: #c8283c;
+}
+.season-theme-preview[data-season-preview="halloween"] {
+  background: url("../season/halloween.svg") right center / auto 100% no-repeat,#22103a;
+}
+.season-theme-preview[data-season-preview="halloween"]::after {
+  background: #f07a1c;
+}
+.season-theme-preview[data-season-preview="may17"] {
+  background: url("../season/may17.svg") right center / auto 100% no-repeat,#06245f;
+}
+.season-theme-preview[data-season-preview="may17"]::after {
+  background: #e31b3d;
 }
 .season-theme-preview[data-season-preview="breast-cancer"] {
-  background: radial-gradient(circle at 80% 22%,#f2a8c766,transparent 33%),linear-gradient(145deg,#fff4f8,#eed7e3);
+  background: url("../season/breast-cancer.svg") right center / auto 100% no-repeat,#fdeef5;
 }
 .season-theme-preview[data-season-preview="breast-cancer"]::after {
-  background: linear-gradient(90deg,#a84a78,#ed94b9,#b74e84);
+  background: #d66f9f;
 }
 .season-theme-preview[data-season-preview="mental-health"] {
-  background: radial-gradient(circle at 80% 20%,#7fc6ba55,transparent 34%),linear-gradient(145deg,#edf9f5,#d8e8df);
+  background: url("../season/mental-health.svg") right center / auto 100% no-repeat,#e8f7f1;
 }
 .season-theme-preview[data-season-preview="mental-health"]::after {
-  background: linear-gradient(90deg,#327f80,#86b9a7,#4a9690);
+  background: #398f8b;
 }
 .season-theme-preview[data-season-preview="pride"] {
-  background: linear-gradient(145deg,#f4f1ff,#e2e6f8);
+  background: url("../season/pride.svg") right center / auto 100% no-repeat,#f3f0ff;
 }
 .season-theme-preview[data-season-preview="pride"]::after {
-  background: linear-gradient(90deg,#d95b6d,#e4ab47,#6eac82,#6898cd,#9266b7);
+  background: #7768ae;
+}
+.season-theme-preview[data-season-preview="nurses-day"] {
+  background: url("../season/nurses-day.svg") right center / auto 100% no-repeat,#fdf3e1;
+}
+.season-theme-preview[data-season-preview="nurses-day"]::after {
+  background: #d9a441;
+}
+.season-theme-preview[data-season-preview="hand-hygiene"] {
+  background: url("../season/hand-hygiene.svg") right center / auto 100% no-repeat,#e8f5fd;
+}
+.season-theme-preview[data-season-preview="hand-hygiene"]::after {
+  background: #3c9be0;
+}
+.season-theme-preview[data-season-preview="patient-safety"] {
+  background: url("../season/patient-safety.svg") right center / auto 100% no-repeat,#e9f2fb;
+}
+.season-theme-preview[data-season-preview="patient-safety"]::after {
+  background: #2f7fb8;
+}
+.season-theme-preview[data-season-preview="heart-day"] {
+  background: url("../season/heart-day.svg") right center / auto 100% no-repeat,#fdecee;
+}
+.season-theme-preview[data-season-preview="heart-day"]::after {
+  background: #e0485a;
+}
+.season-theme-preview[data-season-preview="diabetes-day"] {
+  background: url("../season/diabetes-day.svg") right center / auto 100% no-repeat,#eaf2fd;
+}
+.season-theme-preview[data-season-preview="diabetes-day"]::after {
+  background: #3b7fd4;
+}
+.season-theme-preview[data-season-preview="mens-health"] {
+  background: url("../season/mens-health.svg") right center / auto 100% no-repeat,#eaf0f8;
+}
+.season-theme-preview[data-season-preview="mens-health"]::after {
+  background: #4f8fd6;
+}
+.season-theme-preview[data-season-preview="sami-day"] {
+  background: url("../season/sami-day.svg") right center / auto 100% no-repeat,#fdf3e6;
+}
+.season-theme-preview[data-season-preview="sami-day"]::after {
+  background: #d52b1e;
+}
+.season-theme-preview[data-season-preview="easter"] {
+  background: url("../season/easter.svg") right center / auto 100% no-repeat,#fff8dd;
+}
+.season-theme-preview[data-season-preview="easter"]::after {
+  background: #e0a800;
+}
+.season-theme-preview[data-season-preview="winter"] {
+  background: url("../season/winter.svg") right center / auto 100% no-repeat,#e4eef9;
+}
+.season-theme-preview[data-season-preview="winter"]::after {
+  background: #3fb8a0;
+}
+.season-theme-preview[data-season-preview="spring"] {
+  background: url("../season/spring.svg") right center / auto 100% no-repeat,#eef8ee;
+}
+.season-theme-preview[data-season-preview="spring"]::after {
+  background: #5d9d55;
+}
+.season-theme-preview[data-season-preview="summer"] {
+  background: url("../season/summer.svg") right center / auto 100% no-repeat,#fff6dc;
+}
+.season-theme-preview[data-season-preview="summer"]::after {
+  background: #e8a21c;
+}
+.season-theme-preview[data-season-preview="autumn"] {
+  background: url("../season/autumn.svg") right center / auto 100% no-repeat,#fdf0e3;
+}
+.season-theme-preview[data-season-preview="autumn"]::after {
+  background: #d65a2a;
+}
+:root[data-theme=dark] .season-theme-preview:is([data-season-preview="breast-cancer"],[data-season-preview="mental-health"],[data-season-preview="pride"],[data-season-preview="nurses-day"],[data-season-preview="hand-hygiene"],[data-season-preview="patient-safety"],[data-season-preview="heart-day"],[data-season-preview="diabetes-day"],[data-season-preview="mens-health"],[data-season-preview="sami-day"],[data-season-preview="easter"],[data-season-preview="winter"],[data-season-preview="spring"],[data-season-preview="summer"],[data-season-preview="autumn"]) {
+  background-color: #1a2b3c;
 }
 :root[data-personal-mode]:where(:not([data-personal-mode="philip"])) .section-symbol {
   background: var(--pm-subpanel) !important;

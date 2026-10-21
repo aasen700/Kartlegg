@@ -72,7 +72,10 @@ const seasonLabel=document.createElement('label');seasonLabel.htmlFor='seasonThe
 const seasonSelect=document.createElement('select');seasonSelect.id='seasonThemeSelect';
 const seasonNames={
  off:'Av – ingen pynt',auto:'Automatisk etter dato',halloween:'Halloween',
- christmas:'Jul', 'breast-cancer':'Brystkreftmåned', 'mental-health':'Verdensdagen for psykisk helse',pride:'Pride'
+ christmas:'Jul',may17:'17. mai','breast-cancer':'Brystkreftmåned','mental-health':'Verdensdagen for psykisk helse',pride:'Pride',
+ 'nurses-day':'Sykepleiernes dag','hand-hygiene':'Håndhygienedagen','patient-safety':'Pasientsikkerhetsdagen','heart-day':'Verdens hjertedag',
+ 'diabetes-day':'Verdens diabetesdag','mens-health':'Menns helse i november','sami-day':'Samefolkets dag',easter:'Påske',
+ winter:'Vinter',spring:'Vår',summer:'Sommer',autumn:'Høst'
 };
 for(const id of ThemeEngine.SEASONS){
  const option=document.createElement('option');option.value=id;option.textContent=seasonNames[id];seasonSelect.append(option);
@@ -81,7 +84,7 @@ const seasonMessage=document.createElement('p');seasonMessage.className='season-
 const seasonPreview=document.createElement('span');seasonPreview.className='season-theme-preview';seasonPreview.id='seasonThemePreview';seasonPreview.setAttribute('aria-hidden','true');
 seasonControls.append(seasonLabel,seasonSelect,seasonPreview,seasonMessage);seasonOptions.append(seasonControls);
 const seasonHint=document.createElement('p');seasonHint.className='theme-layer-hint';
-seasonHint.textContent='Valgfri bakgrunnsdekor med tydelige sesongmotiv. Automatisk: Pride i juni, brystkreftmåned i oktober, psykisk helse 10. oktober, Halloween 25.–31. oktober og jul i desember. Ingen offisiell kampanjetilknytning.';
+seasonHint.textContent='Valgfri pynt øverst på siden. Jul, Halloween og 17. mai får farget bakgrunn; de andre er rolige. Automatisk følger merkedagene (blant annet Samefolkets dag, påske, håndhygienedagen 5. mai, Sykepleiernes dag 12. mai, 17. mai, Pride i juni, pasientsikkerhetsdagen 17. september, hjertedagen 29. september, oktober, menns helse og diabetesdagen i november og jul) og ellers årstiden. Ingen offisiell kampanjetilknytning.';
 seasonOptions.append(seasonHint);
 serviceOptions.querySelector('legend').textContent='Tjenestetema';
 sheetBody('season').append(seasonOptions);
@@ -133,9 +136,11 @@ function apply(){
  seasonNotice.hidden=state.season==='none';
  seasonHighlight.hidden=state.season==='none';
  if(state.season!=='none')seasonNotice.textContent='✦ '+seasonNames[state.season]+' · dekorativt tema';
+ const upcoming=prefs.season==='auto'&&ThemeEngine.nextSeason?ThemeEngine.nextSeason(new Date()):null;
+ const upcomingText=upcoming?' Neste: '+seasonNames[upcoming.season]+' fra '+upcoming.date.toLocaleDateString('nb-NO',{day:'numeric',month:'long'})+'.':'';
  seasonMessage.textContent=prefs.season==='off'?'Sesonglaget er slått av.':
   (state.season==='none'?'Ingen markering på denne datoen.':
-   (prefs.season==='auto'?'Automatisk valgt: ':'Manuelt valgt: ')+seasonNames[state.season]+'.');
+   (prefs.season==='auto'?'Automatisk valgt: ':'Manuelt valgt: ')+seasonNames[state.season]+'.')+upcomingText;
  const baseName=state.base==='philip'?'Philip liquid cobalt':(resolved==='dark'?'Mørkt standardtema':'Lyst standardtema');
  const surfaceName=state.surface==='glass'?'Liquid glass':'Solide bokser';
  $('appearanceSummary').textContent=baseName+' · '+surfaceName+' · '+serviceNames[state.service]+(state.season==='none'?'':' · '+seasonNames[state.season]);

@@ -18,7 +18,7 @@ service cloud.firestore {
     && a.mode in ['light','dark','system'] && a.accent in ['violet','blue','green']
     && a['service'] in ['custom','hospital','ambulance','urgent','homecare']
     && a.base in ['standard','philip']
-    && a.season in ['off','auto','halloween','christmas','breast-cancer','mental-health','pride']
+    && a.season in ['off','auto','halloween','christmas','breast-cancer','mental-health','pride','may17','nurses-day','hand-hygiene','patient-safety','heart-day','diabetes-day','mens-health','sami-day','easter','winter','spring','summer','autumn']
     && a.surface in ['solid','glass'];
   }
   function settings(s) {
