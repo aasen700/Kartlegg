@@ -14,7 +14,7 @@
 | Utkast til bruksvilkår og personvernerklæring, åpne før og etter innlogging | `index.html` (`#page-vilkar`, `#page-personvern`) | Utkast – ikke juridisk kvalitetssikret |
 | «Målinger over tid» lagret lokalt i høyst 24 timer, bare tall og faste valg, knyttet til bruker, slettet ved utlogging | `assets/measurement-store.js`, `assets/app.js` | Ferdig |
 | Tiltak mot automatisk registrering: e-postbekreftelse før tilgang, skjult felt og minstetid i skjemaet | `assets/account/ui.mjs` | Ferdig |
-| Firebase App Check (reCAPTCHA v3) | `assets/account/config.mjs`, `assets/account/firebase.mjs` | Klar i kode, **av** til nøkkel er lagt inn |
+| Firebase App Check (reCAPTCHA v3) | `assets/account/config.mjs`, `assets/account/firebase.mjs` | Klar i kode, men **av**. Satt på vent 21. oktober 2026 (se under) |
 
 ### Sider
 
@@ -45,7 +45,7 @@ Test- og produksjonskoden bruker **samme Firebase-prosjekt** (`kartlegg`). Endri
 
 1. ~~Publiser Firestore-reglene~~ **Gjort 20. oktober 2026** etter godkjenning. Bare `consents/{uid}` ble lagt til; reglene for `users` er uendret. Kontrollert etterpå: uinnlogget lesing av `users` og `consents` gir 403.
 2. **Aktiver beskyttelse mot opplisting av e-post** (Authentication → Settings → User actions → Email enumeration protection). Gratis.
-3. **App Check** (gratis innenfor reCAPTCHA v3-kvoten): registrer nettappen under App Check med reCAPTCHA v3, lim inn nettstedsnøkkelen i `assets/account/config.mjs` (`appCheckSiteKey`), test, og slå deretter på håndhevelse for Cloud Firestore. Ikke slå på håndhevelse for Authentication uten å sjekke om det krever Identity Platform.
+3. **App Check: satt på vent 21. oktober 2026.** Firebase tar ikke lenger imot den gamle reCAPTCHA v3-typen («reCAPTCHA Classic is deprecated»). Den nye typen, Google Cloud Fraud Defense (tidligere reCAPTCHA Enterprise), ser ut til å kreve en betalingskonto, også innenfor gratiskvoten på 10 000 sjekker i måneden. Eieren valgte å holde prosjektet gratis. Koden står klar: for å slå det på senere, bytt til `ReCaptchaEnterpriseProvider` i `firebase.mjs`, legg nøkkelen i `appCheckSiteKey`, og test før håndheving slås på.
 4. **Godkjente domener** (Authentication → Settings → Authorized domains): legg til testdomenet hvis du lager en testpublisering (se under).
 5. **E-postmaler** (Authentication → Templates): sett språk til norsk og sjekk avsendernavn for bekreftelse og tilbakestilling av passord.
 
