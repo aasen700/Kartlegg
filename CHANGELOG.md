@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Små forbedringer i alle deler – 21. oktober 2026
+
+- Ny vurdering: dato og klokkeslett vises som én linje («Målt i dag kl. 10:46») med «Endre tidspunkt». Feltene åpnes av seg selv hvis tidspunktet mangler eller er feil.
+- Ny vurdering: tydeligere knapper. «Beregn skårer» er hovedknappen, «Lagre måling» og «Lag ISBAR-manus» er likeverdige under, og «Nullstill» er en diskret lenke nederst.
+- Målinger over tid: viser når den eldste målingen slettes automatisk. Sletting kan angres i 15 sekunder, og «Slett alle» spør ikke lenger først fordi den kan angres.
+- Kliniske verktøy: poenggrensene for NEWS2 og qSOFA er flyttet fra biblioteket til «Tiltak, tolkning og forbehold» i Ny vurdering. Kortene har en lenke dit, så de er like korte som de andre. Favoritter vises øverst.
+- Om Kartlegg: konkret utviklingsstatus (tilgjengelig, kontrollert, under arbeid) og en egen «Meld feil»-knapp med ferdig e-postmal.
+- Profil: viser «Synkronisert med kontoen kl. …», hvilke innloggingsmetoder kontoen har, og bare handlingene som passer (for eksempel ikke «Koble til Google» når Google allerede er koblet til).
+
 ## Verktøyene åpne for alle – 21. oktober 2026
 
 - Ny vurdering (NEWS2, qSOFA og ISBAR) og Kliniske verktøy kan brukes uten konto. Beregningene skjer i nettleseren og lagres ikke, så kontoen ga ingen sikkerhet her. Delte lenker som `?tool=gcs` åpner verktøyet direkte.

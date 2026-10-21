@@ -2220,3 +2220,30 @@
     flex:1 1 auto;
   }
 }
+
+/* NEWS2- og qSOFA-kortet: poenggrensene ligger i Ny vurdering, kortet har bare lenke og kilde. */
+.criteria-card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+.criteria-card-foot .criteria-link {
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ui-action);
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.criteria-card-foot .criteria-source {
+  margin: 0;
+}
+/* Favoritter øverst i Kliniske verktøy. */
+#libraryFavorites {
+  margin: 0 0 18px;
+}

@@ -25,16 +25,18 @@ export function mountAccount({enabled,loadBackend}){
  <div id="accountGuest" hidden><div class="account-card-head"><div class="account-card-text"><h2>Ikke innlogget</h2><p>Logg inn for å se profilen din.</p></div></div><a class="btn btn-primary account-wide" href="#konto" data-auth-view="login">Logg inn</a></div>
  <div id="accountMember" hidden><div class="account-card-head"><span class="account-avatar" id="accountAvatar" aria-hidden="true">K</span><div class="account-card-text"><h2 id="accountName">Innlogget</h2><p id="accountIdentity"></p></div></div>
  <div id="accountConflict" class="account-notice" hidden><h4>Velg innstillinger</h4><p id="accountConflictText"></p><div class="account-compare"><div><strong>Denne enheten / ulagrede endringer</strong><pre id="accountLocalPreview"></pre></div><div><strong>Kontoen</strong><pre id="accountCloudPreview"></pre></div></div><p>Valget erstatter den andre versjonen. Se gjennom begge før du velger. Favoritter og profil fra en delt enhet kan tilhøre noen andre.</p><div class="account-actions"><button class="btn btn-secondary" type="button" id="accountUseCloud">Bruk kontoens innstillinger</button><button class="btn btn-secondary" type="button" id="accountUseLocal">Bruk enhetens innstillinger i kontoen</button></div></div>
+ <p class="account-sync-state" id="accountSyncState" role="status"></p>
  <div class="account-rows"><button class="settings-row" type="button" id="accountSync"><span class="settings-row-label">Synkroniser nå</span></button><button class="settings-row" type="button" data-sheet="accountAdminSheet"><span class="settings-row-label">Kontoadministrasjon</span>${chev}</button><button class="settings-row account-logout" type="button" id="accountLogout"><span class="settings-row-label">Logg ut</span></button></div>
  <p class="account-footnote">Bruker du en delt PC, logg ut når du er ferdig.</p></div>
  <div class="account-status-slot" data-status-slot="main"><p id="accountStatus" class="account-status" role="status" aria-live="polite"></p></div>
  </section>
- <dialog class="settings-sheet" id="accountAdminSheet" aria-labelledby="accountAdminTitle"><div class="settings-sheet-head"><h2 id="accountAdminTitle">Kontoadministrasjon</h2><button class="settings-sheet-close" type="button" data-sheet-close aria-label="Lukk">Ferdig</button></div><div class="settings-sheet-body account-admin"><p>For å koble innloggingsmetoder eller slette kontoen må du bekrefte innloggingen. For Google-konto: la passordfeltet stå tomt og bruk Google-vinduet.</p>
- <label for="accountReauthPassword">Nåværende passord (e-postkonto)</label><input id="accountReauthPassword" type="password" autocomplete="current-password" maxlength="128">
+ <dialog class="settings-sheet" id="accountAdminSheet" aria-labelledby="accountAdminTitle"><div class="settings-sheet-head"><h2 id="accountAdminTitle">Kontoadministrasjon</h2><button class="settings-sheet-close" type="button" data-sheet-close aria-label="Lukk">Ferdig</button></div><div class="settings-sheet-body account-admin"><p class="account-methods" id="accountMethods" hidden></p>
+ <p id="accountReauthIntro">For å koble innloggingsmetoder eller slette kontoen må du bekrefte innloggingen. For Google-konto: la passordfeltet stå tomt og bruk Google-vinduet.</p>
+ <div id="accountReauthPasswordBlock"><label for="accountReauthPassword">Nåværende passord (e-postkonto)</label><input id="accountReauthPassword" type="password" autocomplete="current-password" maxlength="128"></div>
  <button class="btn btn-secondary" type="button" id="accountReauth">Bekreft innlogging</button>
- <div class="account-actions"><button class="btn btn-secondary" type="button" id="accountLinkGoogle">Koble til Google</button></div>
- <p>Vil du bruke passord på Google-kontoen din? Firebase sender en lenke til kontoens e-postadresse. Velg passord der; begge innloggingsmetodene bruker den samme kontoen.</p><button class="btn btn-secondary" type="button" id="accountAddPassword">Send lenke for å velge passord</button>
- <p>Du kan også tilbakestille passord med «Glemt passord». Passord håndteres bare av Firebase Authentication.</p>
+ <div class="account-actions" id="accountLinkGoogleBlock"><button class="btn btn-secondary" type="button" id="accountLinkGoogle">Koble til Google</button></div>
+ <div id="accountAddPasswordBlock"><p>Vil du bruke passord på Google-kontoen din? Firebase sender en lenke til kontoens e-postadresse. Velg passord der; begge innloggingsmetodene bruker den samme kontoen.</p><button class="btn btn-secondary" type="button" id="accountAddPassword">Send lenke for å velge passord</button></div>
+ <p id="accountPasswordResetNote">Du kan også tilbakestille passord med «Glemt passord». Passord håndteres bare av Firebase Authentication.</p>
  <button class="btn btn-secondary" type="button" id="accountExport">Last ned kontoinnstillinger</button>
  <label class="account-consent"><input id="accountDeleteConfirm" type="checkbox"> Jeg vil slette kontoen og alle profilinnstillinger i skyen permanent. Lokale kontoendringer på denne enheten fjernes også.</label><button class="btn btn-secondary account-danger" type="button" id="accountDelete">Slett kontoen permanent</button></div></dialog>`;
  const auth=document.createElement('div');auth.className='account-panel account-auth';auth.id='accountAuth';
@@ -105,7 +107,32 @@ export function mountAccount({enabled,loadBackend}){
  $('accountToSignup').onclick=()=>{status('');showView('signup');focusView()};
  $('accountToLogin').onclick=()=>{status('');showView('login');focusView()};
 
+ // Synkstatus i klartekst, og bare de kontohandlingene som passer innloggingsmetodene kontoen faktisk har.
+ const METHOD_NAMES={password:'E-post og passord','google.com':'Google'};
+ function renderAccountState(){
+  const state=$('accountSyncState');
+  if(state){
+   const time=d=>String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+   state.textContent=!user?'':sync?.conflict?'Venter på at du velger innstillinger.':syncPending?'Lagrer endringer i kontoen …':syncedAt?'Synkronisert med kontoen kl. '+time(syncedAt)+'.':'Ikke synkronisert ennå.';
+   state.dataset.state=sync?.conflict?'conflict':syncPending?'pending':syncedAt?'ok':'none';
+  }
+  const ids=(user?.providerData||[]).map(p=>p?.providerId).filter(Boolean),known=ids.length>0;
+  const hasPassword=!known||ids.includes('password'),hasGoogle=known&&ids.includes('google.com');
+  const methods=$('accountMethods');
+  if(methods){methods.hidden=!known;methods.textContent=known?'Innloggingsmetoder: '+ids.map(id=>METHOD_NAMES[id]||id).join(' og ')+'.':''}
+  const show=(id,on)=>{const el=$(id);if(el)el.hidden=!on};
+  show('accountReauthPasswordBlock',hasPassword);
+  show('accountLinkGoogleBlock',!hasGoogle);
+  show('accountAddPasswordBlock',known&&!hasPassword);
+  show('accountPasswordResetNote',hasPassword);
+  const intro=$('accountReauthIntro');
+  if(intro)intro.textContent=!known?'For å koble innloggingsmetoder eller slette kontoen må du bekrefte innloggingen. For Google-konto: la passordfeltet stå tomt og bruk Google-vinduet.':hasPassword?'For å koble til Google eller slette kontoen må du bekrefte innloggingen med passordet ditt.':'For å slette kontoen eller legge til passord må du bekrefte innloggingen i Google-vinduet.';
+  const reauth=$('accountReauth');if(reauth)reauth.textContent=known&&!hasPassword?'Bekreft med Google':'Bekreft innlogging';
+ }
+ let syncedAt=null,syncPending=false;
+ function noteSync(message){const m=typeof message==='string'?message:'';if(/^(Synkronisert med kontoen|Kontoinnstillingene er hentet)/.test(m)){syncedAt=new Date();syncPending=false}else if(/venter|Lagrer innstillinger|Synkroniserer/.test(m))syncPending=true;else if(!m&&!user)syncedAt=null}
  function render(){
+  renderAccountState();
   $('accountGuest').hidden=!!user;$('accountMember').hidden=!user;
   const name=document.getElementById('profileName')?.value.trim()||'';
   $('accountIdentity').textContent=user?(user.email||'Google-bruker'):'';
@@ -203,7 +230,7 @@ export function mountAccount({enabled,loadBackend}){
  async function changedUser(next){
   const token=++generation;
   const old=user;sync?.stop();user=next;
-  if(!next){if(old)wipePending(old.uid);if(guest){sync.applying=true;document.getElementById('rememberProfile').checked=guestRemember;applySettings(guest);sync.applying=false;guest=null}try{localStorage.removeItem('kartlegg.account.guest.v1')}catch(_){}try{localStorage.removeItem('kartlegg.account.owner.v1')}catch(_){}render();gate?.setState('guest');showView('login');return}
+  if(!next){syncedAt=null;syncPending=false;if(old)wipePending(old.uid);if(guest){sync.applying=true;document.getElementById('rememberProfile').checked=guestRemember;applySettings(guest);sync.applying=false;guest=null}try{localStorage.removeItem('kartlegg.account.guest.v1')}catch(_){}try{localStorage.removeItem('kartlegg.account.owner.v1')}catch(_){}render();gate?.setState('guest');showView('login');return}
   if(old&&old.uid!==next.uid){wipePending(old.uid);sync.applying=true;applySettings(guest||settings());sync.applying=false}
   if(!guest){guest=readSettings();guestRemember=document.getElementById('rememberProfile').checked;}
   try{localStorage.setItem('kartlegg.account.guest.v1',JSON.stringify({settings:settings({...guest,profile:guestRemember?guest.profile:{}}),remember:guestRemember}))}catch(_){}
@@ -226,6 +253,6 @@ export function mountAccount({enabled,loadBackend}){
  showView(pendingView);
  if(!enabled){buttons().forEach(b=>b.disabled=true);status('Konto er ikke aktivert. Verktøyene er åpne inntil videre.');gate?.setState('open');return {host,auth}}
  status('Kobler til kontotjenesten …');buttons().forEach(b=>b.disabled=true);
- loadBackend().then(async b=>{backend=b;try{await b.remember?.(remembered())}catch(_){}let storage;try{storage=localStorage}catch(_){}sync=new SyncSession({backend,read:readSettings,apply:applySettings,storage,notify(message){status(message);render()}});buttons().forEach(x=>x.disabled=false);status('');backend.observe(changedUser)}).catch(()=>{status('Innloggingstjenesten kunne ikke lastes. Kontroller nettet og last siden på nytt.');gate?.setState('guest')});
+ loadBackend().then(async b=>{backend=b;try{await b.remember?.(remembered())}catch(_){}let storage;try{storage=localStorage}catch(_){}sync=new SyncSession({backend,read:readSettings,apply:applySettings,storage,notify(message){noteSync(message);status(message);render()}});buttons().forEach(x=>x.disabled=false);status('');backend.observe(changedUser)}).catch(()=>{status('Innloggingstjenesten kunne ikke lastes. Kontroller nettet og last siden på nytt.');gate?.setState('guest')});
  return {host,auth,get sync(){return sync}};
 }

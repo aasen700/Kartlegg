@@ -1504,37 +1504,69 @@
     box-shadow: none;
   }
 }
-/* PC: «Beregn skårer» over hele bredden, og Lagre måling, Lag ISBAR-manus og Nullstill side om side under. */
+/* Knappene under skjemaet har tre nivåer: «Beregn skårer» er hovedvalget over hele bredden,
+ * «Lagre måling» og «Lag ISBAR-manus» er likeverdige valg under, og «Nullstill» er en diskret lenke nederst. */
+#vitalsForm .form-actions {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+}
+#vitalsForm .actions-right {
+  display: contents;
+}
+#vitalsForm .form-actions .btn {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+#vitalsForm .actions-right .btn-primary {
+  grid-column: 1/-1;
+  grid-row: 1;
+  min-height: 52px;
+  font-size: 16px;
+}
+#vitalsForm #saveMeasurement {
+  grid-column: 1;
+  grid-row: 2;
+}
+#vitalsForm #openIsbar {
+  grid-column: 2;
+  grid-row: 2;
+}
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) #vitalsForm #openIsbar {
+  grid-column: 1/-1;
+}
+#vitalsForm .form-actions>[type=reset] {
+  grid-column: 1/-1;
+  grid-row: 3;
+  justify-self: center;
+  width: auto;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 @media(min-width:771px){
-  #vitalsForm .form-actions {
-    display: grid;
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    gap: 10px;
-  }
-  #vitalsForm .actions-right {
-    display: contents;
-  }
   #vitalsForm .form-actions .btn {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
     white-space: nowrap;
   }
-  #vitalsForm .actions-right .btn-primary {
-    grid-column: 1/-1;
-    grid-row: 1;
+}
+@media(max-width:480px){
+  #vitalsForm .form-actions {
+    grid-template-columns: minmax(0,1fr);
   }
-  #vitalsForm #saveMeasurement {
+  #vitalsForm :is(#saveMeasurement,#openIsbar) {
     grid-column: 1;
-    grid-row: 2;
-  }
-  #vitalsForm #openIsbar {
-    grid-column: 2;
-    grid-row: 2;
+    grid-row: auto;
   }
   #vitalsForm .form-actions>[type=reset] {
-    grid-column: 3;
-    grid-row: 2;
+    grid-row: auto;
+    order: 1;
   }
 }
 /* Velkomst første gang man er innlogget. */
@@ -1604,5 +1636,82 @@
   #page-vurdering .meta-line .v10-now-button {
     grid-column: 2;
     align-self: end;
+  }
+}
+
+/* Kompakt tidspunkt (vurdering-tid.js): én linje med «Endre tidspunkt» som åpner dato, klokkeslett og «Nå». */
+.time-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 1 1 100%;
+  grid-column: 1/-1;
+  min-width: 0;
+}
+.time-summary-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.time-summary-edit {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--ui-action);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#vitalsForm .meta-line.is-collapsed>:not(.time-summary) {
+  display: none !important;
+}
+#vitalsForm .meta-line.is-collapsed {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Angre sletting i «Målinger over tid». */
+.history-undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 25px 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent-border,var(--line));
+  border-radius: 12px;
+  background: var(--accent-bg,var(--paper));
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 650;
+}
+.history-undo[hidden] {
+  display: none;
+}
+@media(max-width:770px){
+  .history-undo {
+    margin: 0 14px 12px;
+  }
+}
+
+/* Poenggrenser for NEWS2 og qSOFA under «Tiltak, tolkning og forbehold». */
+.criteria-home .criteria-home-title {
+  margin: 18px 25px 6px;
+  font-size: 17px;
+}
+.criteria-home .criteria-wrap {
+  margin: 0 25px 12px;
+}
+@media(max-width:770px){
+  .criteria-home .criteria-home-title,
+  .criteria-home .criteria-wrap {
+    margin-left: 14px;
+    margin-right: 14px;
   }
 }

@@ -89,3 +89,34 @@
 .account-verify-actions{display:grid;gap:10px}
 .account-lede strong{color:var(--ink);overflow-wrap:anywhere}
 .account-footnote a{color:var(--accent)}
+
+/* Synkstatus i Profil: «Synkronisert med kontoen kl. …». */
+.account-sync-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.account-sync-state:empty {
+  display: none;
+}
+.account-sync-state::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.account-sync-state[data-state="ok"]::before {
+  background: var(--ui-success);
+}
+.account-sync-state:is([data-state="pending"],[data-state="conflict"])::before {
+  background: var(--ui-attention);
+}
+.account-methods {
+  margin: 0 0 12px;
+  font-weight: 700;
+}

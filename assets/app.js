@@ -173,8 +173,34 @@ function applySnapshot(m) {
   updateScores();
 }
 function makeElement(tag,textValue,cls){const el=document.createElement(tag);if(textValue!==undefined)el.textContent=textValue;if(cls)el.className=cls;return el;}
+// Sletting skjer med en gang, men kan angres en kort stund. Angre legger målingene tilbake i samme rekkefølge.
+let undoTimer=0,undoItems=null;
+function removeMeasurements(items){
+  const removed=items.map(m=>({m,index:measurements.indexOf(m)})).filter(x=>x.index>=0).sort((a,b)=>a.index-b.index);
+  if(!removed.length)return;
+  for(const {m} of removed)measurements.splice(measurements.indexOf(m),1);
+  persistMeasurements();undoItems=removed;renderHistory();
+  const box=$('historyUndo'),n=removed.length;
+  $('historyUndoText').textContent=n===1?'Målingen er slettet.':`${n} målinger er slettet.`;
+  box.hidden=false;$('historyUndoButton').focus();
+  clearTimeout(undoTimer);undoTimer=setTimeout(()=>{box.hidden=true;undoItems=null;},15000);
+}
+function undoRemove(){
+  if(!undoItems)return;
+  for(const {m,index} of undoItems)measurements.splice(Math.min(index,measurements.length),0,m);
+  undoItems=null;clearTimeout(undoTimer);$('historyUndo').hidden=true;
+  persistMeasurements();renderHistory();showNotice('');
+}
+function expiryText(){
+  const at=Store?.expiresAt?.(measurements);
+  if(!at)return 'Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.';
+  const d=new Date(at),today=new Date(),tomorrow=new Date();tomorrow.setDate(today.getDate()+1);
+  const day=d.toDateString()===today.toDateString()?'i dag':d.toDateString()===tomorrow.toDateString()?'i morgen':prettyDate(`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`);
+  return `Den eldste målingen slettes automatisk ${day} kl. ${pad(d.getHours())}:${pad(d.getMinutes())}. Målingene lagres bare på denne enheten i høyst 24 timer og slettes når du logger ut. Dette er ikke en pasientjournal.`;
+}
 function renderHistory(){
   $('historyCounter').textContent=`${measurements.length} registrerte`;
+  $('historyStorageNote').textContent=expiryText();
   $('emptyHistory').hidden=measurements.length>0;
   $('historyTableContainer').hidden=measurements.length===0;
   $('trendSection').hidden=measurements.length<2;
@@ -186,7 +212,7 @@ function renderHistory(){
     }
     const actions=makeElement('td');
     const load=makeElement('button','Åpne','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne måling ${m.date} kl. ${m.time}`);load.addEventListener('click',()=>applySnapshot(m));
-    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett måling ${m.date} kl. ${m.time}`);remove.addEventListener('click',()=>{measurements.splice(measurements.indexOf(m),1);persistMeasurements();renderHistory();});
+    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett måling ${m.date} kl. ${m.time}`);remove.addEventListener('click',()=>removeMeasurements([m]));
     actions.append(load,remove);row.append(actions);$('historyRows').append(row);
   }
   if(measurements.length>=2) renderTrend();
@@ -338,7 +364,8 @@ $('newMeasurement').addEventListener('click',()=>{form.reset();setTimeout(()=>{s
 $('openIsbar').addEventListener('click',openIsbar);
 $('closeIsbar').addEventListener('click',closeIsbar);
 $('doneIsbar').addEventListener('click',closeIsbar);
-$('clearHistory').addEventListener('click',()=>{if(measurements.length&&window.confirm('Vil du slette alle målingene på denne enheten nå?')){measurements.length=0;persistMeasurements();renderHistory();}});
+$('clearHistory').addEventListener('click',()=>removeMeasurements([...measurements]));
+$('historyUndoButton').addEventListener('click',undoRemove);
 $('copyIsbar').addEventListener('click',copyIsbar);
 for(const id of ['isbarSituation','isbarBackground','isbarExtra','isbarRequest',...PROFILE_IDS])$(id).addEventListener('input',renderIsbar);
 $('profileRole').addEventListener('change',renderIsbar);

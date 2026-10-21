@@ -79,6 +79,8 @@ try{
  $('rememberProfile').checked=true;
  $('profileName').value='Updated Nurse';$('saveProfile').click();await app.sync.save();
  assert(cloud.settings.profile.name==='Updated Nurse','existing save button syncs profile');
+ assert(/^Synkronisert med kontoen kl\. \d{2}:\d{2}\.$/.test($('accountSyncState').textContent),'profile shows when the account was last synchronised');
+ assert($('accountMethods').hidden&&!$('accountLinkGoogleBlock').hidden,'unknown sign-in methods keep every account action available');
  window.KartleggSenderProfile.apply({name:'Philip Aasen'});window.KartleggPersonalModes.applyProfile();window.KartleggThemeLayers.apply({...settings().appearance,base:'philip',surface:'glass'});
  assert(document.documentElement.dataset.baseTheme==='philip','personal theme applies through existing owner');
  await app.sync.save();

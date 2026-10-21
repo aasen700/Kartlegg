@@ -242,7 +242,16 @@ function renderCriteria(items){
  wrap.append(stack);return wrap;
 }
 const boxes=one('#page-verktoy .toolgrid')?.querySelectorAll('.toolbox');
-if(boxes?.length>=2)for(const [i,items] of [[0,news],[1,qs]]){const old=boxes[i].querySelector('details');if(!old)continue;const link=old.querySelector('a[href]')?.cloneNode(true);const replacement=renderCriteria(items);if(link){link.textContent=link.textContent.replace(/^\s*Kilde:\s*/,'');const source=document.createElement('p');source.className='criteria-source';source.append('Kilde: ',link);replacement.append(source)}old.replaceWith(replacement)}
+// Poenggrensene hører hjemme i selve vurderingen, ikke i biblioteket: kortene holdes like korte,
+// og NEWS2- og qSOFA-kortet får bare kilde og en lenke til grensene.
+const criteriaHome=(()=>{const info=$('forklaring');if(!info)return null;const d=document.createElement('details');d.className='read-more criteria-home';d.id='scoreCriteria';
+ const s=document.createElement('summary');s.textContent='Poenggrenser for NEWS2 og qSOFA';d.append(s);info.append(d);return d})();
+function showCriteria(){window.KartleggShowPage?.('vurdering');if(criteriaHome){criteriaHome.open=true;setTimeout(()=>{criteriaHome.scrollIntoView({block:'start'});criteriaHome.querySelector('summary')?.focus({preventScroll:true})},300)}}
+if(boxes?.length>=2)for(const [i,items,label] of [[0,news,'NEWS2'],[1,qs,'qSOFA']]){const old=boxes[i].querySelector('details');if(!old)continue;const link=old.querySelector('a[href]')?.cloneNode(true);const replacement=renderCriteria(items);let source=null;if(link){link.textContent=link.textContent.replace(/^\s*Kilde:\s*/,'');source=document.createElement('p');source.className='criteria-source';source.append('Kilde: ',link);replacement.append(source.cloneNode(true))}
+ if(!criteriaHome){old.replaceWith(replacement);continue}
+ const h=document.createElement('h3');h.className='criteria-home-title';h.textContent=label;criteriaHome.append(h,replacement);
+ const go=document.createElement('button');go.type='button';go.className='btn-inline criteria-link';go.textContent='Poenggrenser';go.setAttribute('aria-label','Se poenggrensene for '+label);go.addEventListener('click',showCriteria);
+ const box=document.createElement('div');box.className='criteria-card-foot';box.append(go);if(source)box.append(source);old.replaceWith(box)}
 // Validation with explicit field names, preserving the existing submit/save logic.
 const form=$('vitalsForm');const fieldnames={rr:'Respirasjonsfrekvens',spo2:'Oksygenmetning',sbp:'Systolisk blodtrykk',hr:'Puls',temp:'Temperatur',conscious:'Bevissthet',oxygen:'Tilført oksygen',scale:'SpO₂-skala',gcs:'GCS'};
 function validate(){

@@ -93,6 +93,11 @@
  const favItems=document.createElement('div');favItems.className='tool-favorites-list';favItems.id='toolFavoritesList';
  favBlock.append(favTitle,favItems);
  home.append(favBlock,status);
+ // Favorittene vises også øverst i Kliniske verktøy.
+ const libraryFav=favBlock.cloneNode(false);libraryFav.id='libraryFavorites';
+ const libraryFavItems=favItems.cloneNode(false);libraryFavItems.id='libraryFavoritesList';
+ libraryFav.append(favTitle.cloneNode(true),libraryFavItems);
+ document.querySelector('#page-verktoy>.intro')?.after(libraryFav);
  const cardControls=new Map();
  function syncCards(){
   for(const [id,star] of cardControls){
@@ -106,10 +111,12 @@
   favItems.replaceChildren();
   // Favorittfeltet vises først når brukeren har stjernemerket noe.
   favBlock.hidden=!favorites.length;
+  libraryFavItems.replaceChildren();libraryFav.hidden=!favorites.length;
   if(!favorites.length)return;
   for(const id of favorites){
    const item=R.get(id);if(!item)continue;
    const shortcut=button(item.name,'tool-favorite-shortcut',()=>open(id));shortcut.dataset.icon='star';favItems.append(shortcut);
+   const copy=button(item.name,'tool-favorite-shortcut',()=>open(id));copy.dataset.icon='star';libraryFavItems.append(copy);
   }
  }
  for(const item of R.all){

@@ -26,15 +26,15 @@
   <link rel="stylesheet" href="assets/css/01-base.css?v=uu1">
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=uu1">
-  <link rel="stylesheet" href="assets/css/04-profile.css?v=profil2026">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=apne1">
-  <link rel="stylesheet" href="assets/css/06-tools.css?v=uu1">
+  <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=sma1">
+  <link rel="stylesheet" href="assets/css/06-tools.css?v=sma1">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
   <link rel="stylesheet" href="assets/css/09-decor.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=uu1">
-  <link rel="stylesheet" href="assets/css/12-account.css?v=gate1">
+  <link rel="stylesheet" href="assets/css/12-account.css?v=sma1">
   <link rel="stylesheet" href="assets/css/13-public.css?v=apne1">
 </head>
 <body>
@@ -89,7 +89,7 @@
               <div class="field wide"><div class="field-head"><span class="field-icon" aria-hidden="true">?</span><span class="field-label" id="confusion-label">Nyoppstått forvirring / endret mental status <span class="required">*</span></span></div><div class="toggle-group" role="radiogroup" aria-labelledby="confusion-label"><label class="choice"><input name="confusion" type="radio" value="yes" required><span>Ja</span></label><label class="choice"><input name="confusion" type="radio" value="no" required><span>Nei</span></label></div><p class="hint">Gjelder nyoppstått forvirring, ikke kronisk kognitiv svikt alene</p></div>
             </div>
             <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
-            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-tertiary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
+            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-secondary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
           </div>
         </form>
       </section>
@@ -111,6 +111,7 @@
         <section class="section">
           <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Følg utviklingen mellom flere tidspunkter. Bruk bare fiktive eller reelt anonymiserte verdier, og bland ikke målinger fra ulike personer.</p></div></div>
           <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
+          <div class="history-undo" id="historyUndo" role="status" hidden><span id="historyUndoText"></span><button class="btn-inline" id="historyUndoButton" type="button">Angre</button></div>
           <div class="empty-state" id="emptyHistory">Ingen målinger lagret ennå. Gå til «Ny vurdering», fyll ut målingene og trykk «Lagre måling».</div>
           <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Lagrede målinger"><thead><tr><th>Dato og tid</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
         </section>
@@ -429,7 +430,45 @@
         <section class="section about-v0993-card" aria-labelledby="about-developer-title">
           <h2 id="about-developer-title">Hvem står bak?</h2>
           <p>Kartlegg er laget av Philip Aasen, sykepleierstudent ved Høgskulen på Vestlandet. Det er et eget lærings- og utviklingsprosjekt og representerer ikke høgskolen eller noen helsetjeneste.</p>
-          <p>Har du innspill eller ser en feil? <a href="mailto:aasen700@gmail.com">Send meg en e-post</a>.</p>
+          <p>Har du innspill eller ser en feil? Se <a href="#meld-feil">Meld feil</a> lenger ned.</p>
+        </section>
+        <section class="section about-v0993-card about-status" aria-labelledby="about-status-title">
+          <h2 id="about-status-title">Utviklingsstatus</h2>
+          <p class="about-status-meta">Oppdatert 21. oktober 2026 · versjon 1.1 (demo)</p>
+          <div class="about-status-grid">
+            <div class="about-status-item">
+              <h3>Tilgjengelig nå</h3>
+              <ul>
+                <li>18 kliniske verktøy, blant annet NEWS2, qSOFA, GCS, 4AT, NRS, MST, TUG, ESAS-r, ankel–arm-indeks, TIMES og ABCDE. Åpne for alle.</li>
+                <li>Lær: GCS, 4AT, NEWS2, TIMES og legemiddelregning (med konto).</li>
+                <li>Én simulering fra hjemmesykepleien (med konto).</li>
+                <li>Målinger over tid i høyst 24 timer, og ISBAR-manus.</li>
+              </ul>
+            </div>
+            <div class="about-status-item">
+              <h3>Kontrollert</h3>
+              <ul>
+                <li>Over 250 automatiske tester kjøres ved hver endring, blant annet av grenseverdiene i NEWS2 (RCP 2017) og qSOFA (Sepsis-3).</li>
+                <li>Alle sider testes i nettleser på mobil og PC, i lys og mørk modus.</li>
+                <li>Tilgjengelighet gjennomgått i oktober 2026: kontrast etter WCAG AA og bruk med bare tastatur.</li>
+                <li>Ikke kontrollert: uavhengig klinisk validering. Kartlegg er ikke et medisinsk utstyr.</li>
+              </ul>
+            </div>
+            <div class="about-status-item">
+              <h3>Under arbeid</h3>
+              <ul>
+                <li>Sammenligning av to målinger i «Målinger over tid».</li>
+                <li>Fremdrift og resultathistorikk i Lær.</li>
+                <li>Flere simuleringskasus med tilbakemelding på prioritering.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="section about-v0993-card about-report" id="meld-feil" aria-labelledby="about-report-title">
+          <h2 id="about-report-title">Meld feil eller foreslå forbedringer</h2>
+          <p>Ser du en feil i en beregning, en tekst som er uklar, eller noe som ikke virker på telefonen din? Si fra, så retter jeg det. Faglige feil prioriteres først.</p>
+          <a class="btn btn-primary about-report-button" href="mailto:aasen700@gmail.com?subject=Feil%20i%20Kartlegg&amp;body=Hvilket%20verkt%C3%B8y%20eller%20hvilken%20side%20gjelder%20det%3F%0A%0AHva%20gjorde%20du%2C%20og%20hva%20skjedde%3F%0A%0AHva%20forventet%20du%20skulle%20skje%3F%0A%0AEnhet%20og%20nettleser%20%28for%20eksempel%20iPhone%2C%20Safari%29%3A%0A%0AIkke%20send%20navn%20eller%20andre%20opplysninger%20om%20pasienter.">Meld feil på e-post</a>
+          <p class="about-report-note">Skriv hvilket verktøy det gjelder og hva som skjedde. Ikke send opplysninger om pasienter.</p>
         </section>
         <section class="section about-v0993-storage" aria-labelledby="about-storage-title">
           <h2 id="about-storage-title">Hva lagres?</h2>
@@ -494,11 +533,11 @@
   <script src="assets/scoring.js?v=061a"></script>
   <script src="assets/auth-gate.js?v=apne1"></script>
   <script src="assets/measurement-store.js?v=1"></script>
-  <script src="assets/app.js?v=gate1"></script>
+  <script src="assets/app.js?v=sma1"></script>
   <script src="assets/welcome.js?v=1"></script>
   <script src="assets/enhancements.js?v=home1"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
-  <script src="assets/v06.js?v=profil2026"></script>
+  <script src="assets/v06.js?v=sma1"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
   <script src="assets/clinical-ui.js?v=2010"></script>
   <script src="assets/ux-v071.js?v=2013"></script>
@@ -520,8 +559,9 @@
   <script src="assets/tool-categories-v099.js?v=profile2"></script>
   <script src="assets/theme-finalize-v0992.js?v=account1"></script>
   <script src="assets/final-polish-v10.js?v=1011"></script>
+  <script src="assets/vurdering-tid.js?v=1"></script>
   <script src="assets/personal-modes.js?v=profile1"></script>
-  <script src="assets/tool-navigation.js?v=apne1"></script>
+  <script src="assets/tool-navigation.js?v=sma1"></script>
   <script src="assets/simulation-engine.js?v=101"></script>
   <script src="assets/simulation-ui.js?v=profile2"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
@@ -536,6 +576,6 @@
   <script src="assets/tool-cards.js?v=profile3"></script>
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=forside2"></script>
+  <script type="module" src="assets/account/entry.mjs?v=sma1"></script>
 </body>
 </html>
