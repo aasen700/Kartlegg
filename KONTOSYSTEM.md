@@ -80,7 +80,7 @@ Owner-only `get`, no collection lists or subcollections. Active writes require v
 
 ## Privacy requirements still requiring the owner's decisions
 
-The production notice identifies Philip Aasen as responsible for Kartlegg Konto and uses the Firebase-configured support contact aasen700@gmail.com. It explains the requested account/sync service under GDPR art. 6(1)(b), optional profile fields, categories, providers, local storage, rights, and the manual deletion-marker process. The following remain operational responsibilities as use expands:
+The production notice identifies Philip Aasen as responsible for Kartlegg Konto and uses the public contact address kontaktkartlegg@gmail.com. It explains the requested account/sync service under GDPR art. 6(1)(b), optional profile fields, categories, providers, local storage, rights, and the manual deletion-marker process. The following remain operational responsibilities as use expands:
 
 - Confirm the legal controller (Philip Aasen personally, or a named organization) and a dedicated reachable contact for privacy requests.
 - Record the legal basis for each purpose. Necessary account/sync processing may be based on GDPR art. 6(1)(b) if its conditions actually apply; optional profile fields should remain optional. A checkbox acknowledging the notice is **not** by itself a GDPR consent/legal basis.

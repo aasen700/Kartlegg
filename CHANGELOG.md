@@ -1,5 +1,9 @@
 # Versjonshistorikk – Kartlegg
 
+## Egen kontaktadresse – 21. oktober 2026
+
+- All kontakt på nettsiden går nå til kontaktkartlegg@gmail.com: bunnteksten, «Meld feil», bruksvilkårene, personvernerklæringen og «Kilder og lisenser».
+
 ## Tiltenkt formål og lisenser – 21. oktober 2026
 
 - Ny side «Kilder og lisenser» (#lisenser) med kilde, rettighetshaver, vilkår og status for hvert verktøy. Hvert verktøykort har en lenke dit. MST, ESAS-r, GCS (undervisning) og SKUV er merket «Tillatelse etterspurt».
