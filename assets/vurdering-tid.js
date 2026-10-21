@@ -1,4 +1,4 @@
-/* Kartlegg – kompakt tidspunkt i Ny vurdering.
+/* Kartlegg – kompakt tidspunkt i NEWS2 og qSOFA.
  * Dato og klokkeslett vises som én linje («Målt i dag kl. 10:46») med en knapp som åpner feltene.
  * Feltene, «Nå»-knappen og valideringen er uendret; denne fila styrer bare hva som vises.
  */

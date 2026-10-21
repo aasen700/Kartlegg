@@ -4,8 +4,8 @@ const test=require('node:test');const assert=require('node:assert/strict');
 const {createGate,PUBLIC,OPEN}=require('../assets/auth-gate.js');
 const session=()=>{const m=new Map();return {getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)}};
 
-test('public pages are the front page, About, login and the two legal pages',()=>{
- assert.deepEqual([...PUBLIC].sort(),['konto','om','personvern','start','vilkar']);
+test('public pages are the front page, About, login, the two legal pages and sources and licences',()=>{
+ assert.deepEqual([...PUBLIC].sort(),['konto','lisenser','om','personvern','start','vilkar']);
 });
 test('assessment and clinical tools are open to everyone, because they compute locally and store nothing',()=>{
  assert.deepEqual([...OPEN].sort(),['verktoy','vurdering']);

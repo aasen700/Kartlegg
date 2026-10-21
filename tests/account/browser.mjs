@@ -1,6 +1,7 @@
 // Real HTML and existing JS owners; only the remote account backend is fake.
 import {mountAccount} from '../../assets/account/ui.mjs';
 import {settings,documentData,same} from '../../assets/account/model.mjs';
+import {termsVersion} from '../../assets/account/config.mjs';
 const $=id=>document.getElementById(id), assert=(v,m)=>{if(!v)throw Error(m)};
 const pause=(ms=40)=>new Promise(r=>setTimeout(r,ms));
 const page=()=>[...document.querySelectorAll('.page')].find(p=>!p.hidden)?.id;
@@ -10,7 +11,7 @@ const verified={uid:'synthetic-account',email:'synthetic@example.test',emailVeri
 const backend={user:null,remembered:false,async remember(on){this.remembered=on},
  observe(cb){observer=cb;cb(null)},async read(){return cloud},watch(){return ()=>{}},
  async write(uid,value,revision){writes++;if(revision!==cloud.revision)throw {code:'conflict'};cloud=documentData(value,revision+1,null);return cloud},
- async readConsent(){return consentDoc},async writeConsent(){consentDoc={version:'2026-10-20',terms:true,patientData:true,clinicalResponsibility:true}},
+ async readConsent(){return consentDoc},async writeConsent(){consentDoc={version:termsVersion,terms:true,patientData:true,clinicalResponsibility:true}},
  async register(email){if(registered.includes(email))throw {code:'auth/email-already-in-use'};registered.push(email);this.user={uid:'new-'+email,email,emailVerified:false};await observer(this.user)},
  async verify(){},async refresh(){},
  async login(){backend.user=verified;await observer(verified)},async logout(){backend.user=null;await observer(null)},async remove(){backend.user=null;cloud=null;await observer(null)}};
@@ -26,6 +27,7 @@ try{
  await go('#om');assert(page()==='page-om','About is public');
  await go('#vilkar');assert(page()==='page-vilkar','terms are public');
  await go('#personvern');assert(page()==='page-personvern','privacy notice is public');
+ await go('#lisenser');assert(page()==='page-lisenser','sources and licences are public');
  await go('#vurdering');assert(page()==='page-vurdering','NEWS2 is open without an account');
  await go('#verktoy');assert(page()==='page-verktoy','clinical tools are open without an account');
  await go('#laer');assert(page()==='page-konto','a protected page leads to login');

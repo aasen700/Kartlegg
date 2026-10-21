@@ -5,11 +5,11 @@
  */
 'use strict';
 (root=>{
- const PUBLIC=Object.freeze(['start','om','konto','vilkar','personvern']);
+ const PUBLIC=Object.freeze(['start','om','konto','vilkar','personvern','lisenser']);
  // Verktøyene regner lokalt og lagrer ingenting, så de er åpne for alle. Konto gir Lær, simulering,
  // målinger over tid og profil med synkronisering.
  const OPEN=Object.freeze(['vurdering','verktoy']);
- const NAMES=Object.freeze({vurdering:'Ny vurdering',historikk:'Målinger over tid',verktoy:'Kliniske verktøy',laer:'Lær',simulering:'Simulering',profil:'Profil'});
+ const NAMES=Object.freeze({vurdering:'NEWS2 og qSOFA',historikk:'Målinger over tid',verktoy:'Kliniske verktøy',laer:'Lær',simulering:'Simulering',profil:'Profil'});
  const RETURN_KEY='kartlegg.returnTo';
  // checking: Firebase sjekker en lagret innlogging. guest: ikke innlogget.
  // verify/consent: innlogget, men e-post eller vilkår mangler. member: full tilgang. open: kontoer er slått av.

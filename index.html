@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Kartlegg – norsk demoverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
+  <meta name="description" content="Kartlegg – norsk opplærings- og øvingsverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
   <link rel="canonical" href="https://kartlegg.com/">
   <!-- Forhåndsvisning når lenken deles (Messenger, Teams, SMS, Slack, LinkedIn). -->
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="nb_NO">
   <meta property="og:url" content="https://kartlegg.com/">
   <meta property="og:title" content="Kartlegg – kliniske verktøy, læring og simulering">
-  <meta property="og:description" content="NEWS2, GCS, 4AT, TIMES og flere kliniske verktøy, interaktive læringsmoduler og pasientsimulering for studenter og helsepersonell.">
+  <meta property="og:description" content="Lær og øv på NEWS2, GCS, 4AT, TIMES og flere kliniske verktøy, med interaktive læringsmoduler og pasientsimulering for studenter og helsepersonell.">
   <meta property="og:image" content="https://kartlegg.com/assets/kartlegg-deling.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="assets/css/00-tokens.css?v=uu1">
   <link rel="stylesheet" href="assets/css/01-base.css?v=uu1">
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
-  <link rel="stylesheet" href="assets/css/03-components.css?v=uu1">
+  <link rel="stylesheet" href="assets/css/03-components.css?v=jur1">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
   <link rel="stylesheet" href="assets/css/05-assessment.css?v=sma1">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=sma1">
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="assets/css/10-themes.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=uu1">
   <link rel="stylesheet" href="assets/css/12-account.css?v=sma1">
-  <link rel="stylesheet" href="assets/css/13-public.css?v=apne1">
+  <link rel="stylesheet" href="assets/css/13-public.css?v=jur1">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -50,7 +50,7 @@
     </header>
     <div class="sidebar-backdrop" id="backdrop"></div>
     <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
-      <button class="nav active" data-page="vurdering" aria-current="page"><span class="ico">✚</span> Ny vurdering</button>
+      <button class="nav active" data-page="vurdering" aria-current="page"><span class="ico">✚</span> NEWS2 og qSOFA</button>
       <button class="nav" data-page="historikk"><span class="ico">◷</span> Målinger over tid</button>
       <button class="nav" data-page="verktoy"><span class="ico">▤</span> Kliniske verktøy</button>
       <button class="nav" data-page="laer"><span class="ico">✦</span> Lær</button>
@@ -68,7 +68,7 @@
         <a class="home-entry" href="#laer"><span class="home-entry-icon" aria-hidden="true"><svg class="ui-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22Z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22Z"/></svg></span><span class="home-entry-text"><strong>Lær og øv</strong><small>GCS, 4AT, NEWS2, TIMES og legemidler</small></span><svg class="home-entry-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></a>
       </nav>
       <section class="section surface-action" id="vurdering" aria-labelledby="input-heading">
-        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Ny vurdering</h2><p>Felt med * trengs for NEWS2. GCS trengs bare for qSOFA.</p></div></div>
+        <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Regn ut NEWS2 og qSOFA</h2><p>Felt med * trengs for NEWS2. GCS trengs bare for qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
           <div class="form-inner">
             <div class="meta-line">
@@ -100,10 +100,10 @@
           <article class="score neutral" id="qCard"><div class="score-top"><span class="score-icon">◉</span><div><strong>qSOFA</strong><small>Quick Sequential Organ Failure Assessment</small></div></div><div class="score-number muted" id="qNumber">–</div><span class="score-status" id="qStatus">Ikke beregnet</span><p id="qDesc">Fyll inn målingene ovenfor for å se qSOFA-skåren.</p><div class="score-meter-block is-waiting" id="qMeterBlock"><div class="score-meter-heading"><span>Antall kriterier</span><strong id="qMeterLabel">Venter på GCS</strong></div><div class="score-meter qsofa-meter" id="qMeter" role="img" aria-label="qSOFA: venter på komplett skår"><span class="score-meter-segment band-q0"></span><span class="score-meter-segment band-q1"></span><span class="score-meter-segment band-q2"></span><span class="score-meter-segment band-q3"></span><span class="score-meter-marker" id="qMeterMarker" aria-hidden="true"></span></div><div class="score-meter-scale qsofa-meter-scale" aria-hidden="true"><span><b>0</b></span><span><b>1</b></span><span><b>2</b></span><span><b>3</b></span></div><small class="score-meter-note">Ved ≥2: undersøk organdysfunksjon og vurder tettere oppfølging. qSOFA har ikke egne NEWS2-lignende eskaleringsfarger.</small></div><div class="score-bottom" id="qBreakdown">Kriteriene vises her.</div></article>
         </div>
         <div class="result-actions" aria-label="Neste steg etter beregning">
-          <button class="btn btn-primary" type="button" id="reviewResponse" data-icon="arrowRight" disabled>Se tiltak</button>
+          <button class="btn btn-primary" type="button" id="reviewResponse" data-icon="arrowRight" disabled>Se tolkning</button>
         </div>
       </section>
-      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Tiltak, tolkning og forbehold</h2><p>Bruk responsnivået i NEWS2-kortet sammen med klinisk vurdering og lokal prosedyre.</p></div></div><details class="read-more" id="responseDetails"><summary>Les mer om tiltak og tolkning</summary><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div></details><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
+      <section class="section surface-info" id="forklaring" aria-labelledby="info-heading"><div class="section-header"><div class="section-symbol teal" aria-hidden="true">i</div><div><h2 id="info-heading">Slik tolkes skåren</h2><p>Responsnivåene er hentet fra RCP og viser hvordan NEWS2 er ment brukt. I praksis gjelder alltid virksomhetens egne prosedyrer.</p></div></div><details class="read-more" id="responseDetails"><summary>Les mer om tolkning og responsnivå</summary><div class="next-step-grid"><div class="next-step-card"><span aria-hidden="true">1</span><div><strong>Les responsnivået</strong><p>NEWS2-kortet viser RCPs minimumsfrekvens for observasjon og anbefalt respons. En enkeltparameter med 3 poeng vises særskilt.</p></div></div><div class="next-step-card"><span aria-hidden="true">2</span><div><strong>Vurder hele situasjonen</strong><p>Klinisk bekymring, rask forverring eller andre alvorlige funn kan kreve raskere respons enn totalskåren alene tilsier.</p></div></div><div class="next-step-card"><span aria-hidden="true">3</span><div><strong>Følg lokal prosedyre</strong><p>Dokumenter funn og formidle situasjonen strukturert, for eksempel med ISBAR. qSOFA er et prognostisk hjelpemiddel ved mistenkt infeksjon, ikke en sepsisdiagnose.</p></div></div></div></details><div class="info-layout"><div class="info-panel safety"><strong>Ikke for reell pasientbehandling</strong><p>Kartlegg er en demoversjon. Beregningene er ikke uavhengig klinisk validert, så bruk bare tenkte pasienteksempler. NEWS2 og qSOFA er hjelpemidler, ikke diagnoser, og erstatter ikke klinisk skjønn eller lokale prosedyrer.</p></div></div></section>
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
@@ -112,7 +112,7 @@
           <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Følg utviklingen mellom flere tidspunkter. Bruk bare fiktive eller reelt anonymiserte verdier, og bland ikke målinger fra ulike personer.</p></div></div>
           <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
           <div class="history-undo" id="historyUndo" role="status" hidden><span id="historyUndoText"></span><button class="btn-inline" id="historyUndoButton" type="button">Angre</button></div>
-          <div class="empty-state" id="emptyHistory">Ingen målinger lagret ennå. Gå til «Ny vurdering», fyll ut målingene og trykk «Lagre måling».</div>
+          <div class="empty-state" id="emptyHistory">Ingen målinger lagret ennå. Gå til «NEWS2 og qSOFA», fyll ut målingene og trykk «Lagre måling».</div>
           <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Lagrede målinger"><thead><tr><th>Dato og tid</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
         </section>
         <section class="section" id="trendSection" hidden>
@@ -260,7 +260,7 @@
         <section class="public-hero" aria-labelledby="publicTitle">
           <div class="public-hero-copy">
             <h1 id="publicTitle">Kliniske verktøy, læring og simulering samlet på ett sted</h1>
-            <p class="public-lede">Kartlegg hjelper sykepleiere, studenter og annet helsepersonell med å regne ut skårer, finne riktig kartleggingsverktøy og øve på tenkte pasienter.</p>
+            <p class="public-lede">Kartlegg hjelper sykepleiere, studenter og annet helsepersonell med å lære kliniske kartleggingsverktøy: regne ut skårer, forstå hvor grensene kommer fra og øve på tenkte pasienter.</p>
             <div class="public-actions">
               <a class="btn btn-primary public-cta" href="#vurdering">Regn ut NEWS2</a>
               <a class="btn btn-secondary public-cta" href="#verktoy">Se alle verktøy</a>
@@ -315,7 +315,7 @@
           </div>
           <aside class="public-disclaimer" aria-labelledby="publicDisclaimerTitle">
             <h2 id="publicDisclaimerTitle">Viktig å vite</h2>
-            <p>Kartlegg er et støtteverktøy og en demoversjon. Beregningene er ikke uavhengig klinisk validert. Kartlegg erstatter ikke klinisk vurdering, faglige retningslinjer, virksomhetens rutiner eller ditt faglige ansvar.</p>
+            <p>Kartlegg er et opplærings- og øvingsverktøy og en demoversjon. Det er ikke medisinsk utstyr og skal ikke brukes til å vurdere eller behandle virkelige pasienter. Beregningene er ikke uavhengig klinisk validert. Kartlegg erstatter ikke klinisk vurdering, faglige retningslinjer, virksomhetens rutiner eller ditt faglige ansvar.</p>
             <p><strong>Bruk aldri ekte pasientopplysninger.</strong></p>
           </aside>
         </section>
@@ -330,11 +330,12 @@
       <div class="page legal-page" id="page-vilkar" hidden>
         <article class="legal-doc" aria-labelledby="termsTitle">
           <h1 id="termsTitle">Bruksvilkår for Kartlegg</h1>
-          <p class="legal-meta">Versjon 2026-10-20 · sist endret 21. oktober 2026</p>
-          <h2>1. Om tjenesten</h2>
-          <p>Kartlegg er et gratis, ikke-kommersielt lærings- og støtteverktøy for helsefag. Tjenesten er laget og drives av Philip Aasen som et eget prosjekt, og representerer ikke noen høgskole eller helsetjeneste. Kartlegg er en demoversjon.</p>
+          <p class="legal-meta">Versjon 2026-10-21</p>
+          <h2>1. Om tjenesten og tiltenkt formål</h2>
+          <p class="purpose-statement"><strong>Tiltenkt formål:</strong> Kartlegg er et gratis verktøy for opplæring og øving. Det er laget for å lære hvordan kliniske kartleggingsverktøy og skårer brukes, beregnes og tolkes, med tenkte pasienteksempler. Kartlegg er ikke medisinsk utstyr og skal ikke brukes til å vurdere, overvåke, diagnostisere eller behandle virkelige pasienter, eller som grunnlag for kliniske beslutninger.</p>
+          <p>Kartlegg er gratis og ikke-kommersielt. Tjenesten er laget og drives av Philip Aasen som et eget prosjekt, og representerer ikke noen høgskole eller helsetjeneste. Kartlegg er en demoversjon.</p>
           <h2>2. Hvem tjenesten er for</h2>
-          <p>Kartlegg er laget for studenter, helsepersonell og undervisere. Ny vurdering (NEWS2, qSOFA og ISBAR) og Kliniske verktøy er åpne for alle, uten konto. Du trenger en gratis konto for læringsmodulene, simuleringen, «Målinger over tid» og for å lagre profil og favoritter på tvers av enheter.</p>
+          <p>Kartlegg er laget for studenter, helsepersonell og undervisere. NEWS2 og qSOFA (med ISBAR) og Kliniske verktøy er åpne for alle, uten konto. Du trenger en gratis konto for læringsmodulene, simuleringen, «Målinger over tid» og for å lagre profil og favoritter på tvers av enheter.</p>
           <p>Punktene om pasientopplysninger, faglig ansvar, akseptabel bruk og ansvarsbegrensning gjelder all bruk av Kartlegg, også uten konto.</p>
           <h2>3. Kontoen din</h2>
           <ul>
@@ -351,7 +352,7 @@
           </ul>
           <p>Reelt anonymisert betyr at verken du eller andre med rimelige midler kan finne tilbake til hvem opplysningene gjelder. Å fjerne navnet er ofte ikke nok.</p>
           <h2>5. Faglig ansvar</h2>
-          <p>Kartlegg er et støtteverktøy. Beregninger, veiledere og læringsinnhold erstatter ikke selvstendig klinisk vurdering, faglige retningslinjer, virksomhetens rutiner, ordinasjon eller ansvaret du har som helsepersonell. Du er selv ansvarlig for hvordan du bruker informasjonen. Kartlegg er ikke uavhengig klinisk validert og skal ikke brukes som grunnlag for reell pasientbehandling i demoversjonen.</p>
+          <p>Kartlegg er et opplærings- og øvingsverktøy, ikke et klinisk verktøy. Beregninger, veiledere og læringsinnhold erstatter ikke selvstendig klinisk vurdering, faglige retningslinjer, virksomhetens rutiner, ordinasjon eller ansvaret du har som helsepersonell. Kartlegg er ikke medisinsk utstyr, er ikke uavhengig klinisk validert, og skal ikke brukes som grunnlag for vurdering eller behandling av virkelige pasienter. Bruker du Kartlegg i strid med dette, skjer det på eget ansvar.</p>
           <h2>6. Kilder og innhold</h2>
           <p>Kildene står ved hvert verktøy. NEWS2 er gjengitt med kildehenvisning til Royal College of Physicians. 4AT er tilpasset etter CC BY 4.0. Øvrige tekster og illustrasjoner er laget for Kartlegg. Feil kan forekomme. Si gjerne fra hvis du finner noe.</p>
           <h2>7. Akseptabel bruk</h2>
@@ -418,6 +419,168 @@
           <p>Ved endringer oppdateres versjonsdatoen øverst. Vesentlige endringer varsles når du logger inn.</p>
         </article>
       </div><!-- /page-personvern -->
+      <div class="page legal-page" id="page-lisenser" hidden>
+        <article class="legal-doc license-doc" aria-labelledby="licenseTitle">
+          <h1 id="licenseTitle">Kilder og lisenser</h1>
+          <p class="legal-meta">Sist gjennomgått 21. oktober 2026</p>
+          <p>Mange kartleggingsverktøy er utviklet av andre. Her står hvem som eier hvert verktøy, hvilke vilkår som gjelder, og hvordan Kartlegg følger dem. Der vilkårene er uklare, har Kartlegg bedt om tillatelse. Et verktøy fjernes hvis rettighetshaveren ikke ønsker at det brukes.</p>
+          <p>Er du rettighetshaver og mener noe her er feil? Send en e-post til <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a>, så rettes det.</p>
+          <div class="license-list">
+            <article class="license-item" id="lisens-news2" data-license-status="ok">
+              <div class="license-head"><h3>NEWS2</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Royal College of Physicians (RCP), 2017. <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">RCP: NEWS2</a></dd>
+                <dt>Vilkår</dt><dd>Fri gjenbruk uten opphavsrettslige begrensninger, på vilkår om kildehenvisning, uendret innhold og en merknad om at den norske ordlyden ikke er godkjent av RCP.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Vilkårene er fulgt. Kildehenvisning og merknad står nederst på hver side.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-qsofa" data-license-status="ok">
+              <div class="license-head"><h3>qSOFA</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Singer mfl., JAMA 2016 (Sepsis-3). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 (JAMA 2016)</a></dd>
+                <dt>Vilkår</dt><dd>Publiserte kliniske kriterier. Kriteriene er ikke vernet; artikkelen oppgis som kilde.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-gcs" data-license-status="ask">
+              <div class="license-head"><h3>GCS</h3><span class="license-status license-status-ask">Tillatelse etterspurt</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>University of Glasgow (GCS) og Sir Graham Teasdale (GCS Aid). <a href="https://www.glasgowcomascale.org/permissions/" target="_blank" rel="noopener noreferrer">glasgowcomascale.org: Permissions</a></dd>
+                <dt>Vilkår</dt><dd>Fri bruk i klinisk praksis og forskning uten lisens, med kildehenvisning. Bruk i undervisning er ikke nevnt uttrykkelig.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning er lagt inn. Bekreftelse på bruk i undervisning er etterspurt.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-4at" data-license-status="ok">
+              <div class="license-head"><h3>4AT</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>MacLullich mfl., the4AT.com. <a href="https://www.the4at.com/4at-faq" target="_blank" rel="noopener noreferrer">the4AT.com: FAQ</a></dd>
+                <dt>Vilkår</dt><dd>Testen er fri å bruke uten tillatelse eller registrering. Manualen er lisensiert CC BY 4.0. Logo og antydning om godkjenning er ikke tillatt.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Vilkårene er fulgt. Kartlegg bruker ikke 4AT-logoen.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-nrs" data-license-status="ok">
+              <div class="license-head"><h3>NRS</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Allment brukt numerisk smerteskala (0–10).</dd>
+                <dt>Vilkår</dt><dd>Ingen rettighetshaver. Kartlegg bruker egen tekst.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Ingen tillatelse nødvendig.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-mst" data-license-status="ask">
+              <div class="license-head"><h3>MST</h3><span class="license-status license-status-ask">Tillatelse etterspurt</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Ferguson mfl., Nutrition 1999 (Elsevier). Anbefalt av Helsedirektoratet.. <a href="https://www.helsedirektoratet.no/retningslinjer/forebygging-og-behandling-av-underernaering/vurdering-av-risiko-for-underernaering" target="_blank" rel="noopener noreferrer">Helsedirektoratet: risiko for underernæring</a></dd>
+                <dt>Vilkår</dt><dd>Skjemaet er opphavsrettslig vernet. Gjengivelse krever tillatelse fra utgiveren.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Tillatelse er etterspurt. Verktøyet kan bli fjernet hvis tillatelse ikke gis.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-tug" data-license-status="ok">
+              <div class="license-head"><h3>TUG</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Podsiadlo og Richardson, 1991. <a href="https://www.helsedirektoratet.no/faglige-rad/fallforebygging-hos-eldre/identifisering-av-risiko-for-fall-hjemmeboende-eldre" target="_blank" rel="noopener noreferrer">Helsedirektoratet: fallforebygging</a></dd>
+                <dt>Vilkår</dt><dd>Testmetode beskrevet i en vitenskapelig artikkel. Kartlegg bruker egen tekst.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-esas-r" data-license-status="ask">
+              <div class="license-head"><h3>ESAS-r</h3><span class="license-status license-status-ask">Tillatelse etterspurt</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Watanabe mfl. 2011, Alberta Health Services og Covenant Health. Norsk oversettelse: European Palliative Care Research Centre (NTNU).. <a href="https://www.kvalitetsregistre.no/registerdrift/pasientrapporterte-data/skjema/" target="_blank" rel="noopener noreferrer">Kvalitetsregistre: skjema</a></dd>
+                <dt>Vilkår</dt><dd>Fri bruk med kildehenvisning. Skjemaet må ikke endres uten forfatternes samtykke.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kartlegg viser skalaene i eget oppsett. Samtykke til dette er etterspurt.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-bmi-bsa" data-license-status="ok">
+              <div class="license-head"><h3>BMI og BSA</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>WHO (BMI) og Mosteller (BSA).</dd>
+                <dt>Vilkår</dt><dd>Standard formler. Ingen rettighetshaver.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Ingen tillatelse nødvendig.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-ortho-bt" data-license-status="ok">
+              <div class="license-head"><h3>Ortostatisk BT</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Konsensuskriterier for ortostatisk hypotensjon, og Helsedirektoratets råd om fallforebygging. <a href="https://www.helsedirektoratet.no/faglige-rad/fallforebygging-hos-eldre/multifaktoriell-kartlegging-hjemmeboende-eldre/multifaktoriell-kartlegging-av-risikofaktorer-for-fall-tabell" target="_blank" rel="noopener noreferrer">Helsedirektoratet: kartlegging av fallrisiko</a></dd>
+                <dt>Vilkår</dt><dd>Publiserte kriterier og offentlig veiledning (NLOD).</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-abi" data-license-status="ok">
+              <div class="license-head"><h3>Ankel–arm-indeks</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>American Heart Association (2024) og Helsedirektoratet. <a href="https://www.ahajournals.org/doi/full/10.1161/CIR.0000000000001251" target="_blank" rel="noopener noreferrer">AHA 2024</a></dd>
+                <dt>Vilkår</dt><dd>Måle- og beregningsmetode fra publiserte retningslinjer. Kartlegg bruker egen tekst.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-resp-timer" data-license-status="ok">
+              <div class="license-head"><h3>Respirasjonstimer</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Laget for Kartlegg.</dd>
+                <dt>Vilkår</dt><dd>Egen funksjon.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Ingen tillatelse nødvendig.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-abcde" data-license-status="ok">
+              <div class="license-head"><h3>ABCDE</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Resuscitation Council UK. <a href="https://www.resus.org.uk/library/abcde-approach" target="_blank" rel="noopener noreferrer">Resuscitation Council UK</a></dd>
+                <dt>Vilkår</dt><dd>Arbeidsmetode. Kartlegg bruker egen tekst, ikke Resuscitation Councils materiell.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-palliasjon" data-license-status="ok">
+              <div class="license-head"><h3>Lindring ved livets slutt</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Helsedirektoratet og Kompetansesenter i lindrande behandling, Helse Bergen. <a href="https://www.helsedirektoratet.no/faglige-rad/lindrende-behandling-i-livets-sluttfase" target="_blank" rel="noopener noreferrer">Helsedirektoratet: lindrende behandling</a></dd>
+                <dt>Vilkår</dt><dd>Helsedirektoratets innhold kan gjenbrukes etter NLOD med kildehenvisning, uten å endre faglig mening og uten å fremstå som Helsedirektoratet. Kartlegg bruker egen sammenfatning med lenker.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-times" data-license-status="ok">
+              <div class="license-head"><h3>TIMES</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>TIME (Schultz mfl. 2003), IWII 2022 og TIMES omtalt i Sykepleien. <a href="https://sykepleien.no/forskning/2019/02/bruk-verktoyet-times-til-vurdere-sar-strukturert" target="_blank" rel="noopener noreferrer">Sykepleien: TIMES</a></dd>
+                <dt>Vilkår</dt><dd>Vurderingsmetode. Tekst og illustrasjoner er laget for Kartlegg.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-fast" data-license-status="ok">
+              <div class="license-head"><h3>FAST</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Prate – Smile – Løfte (Helsenorge). <a href="https://www.helsenorge.no/sykdom/hjerneslag/" target="_blank" rel="noopener noreferrer">Helsenorge: hjerneslag</a></dd>
+                <dt>Vilkår</dt><dd>Allment kjent huskeregel. Kartlegg bruker egen tekst.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning ved verktøyet.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-skuv" data-license-status="ask">
+              <div class="license-head"><h3>SKUV</h3><span class="license-status license-status-ask">Tillatelse etterspurt</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Systematisk klinisk undersøkelse og vurdering, kurs ved NTNU. <a href="https://www.ntnu.no/ism/kurs/skuv" target="_blank" rel="noopener noreferrer">NTNU: SKUV</a></dd>
+                <dt>Vilkår</dt><dd>Kartlegg bruker egen faglig tekst. Bruken av navnet og oppbyggingen er ikke avklart med NTNU.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Avklaring er etterspurt hos NTNU.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-medication-lab" data-license-status="ok">
+              <div class="license-head"><h3>Legemiddelregning</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Laget for Kartlegg, med WHO Medication Without Harm som bakgrunn. <a href="https://www.who.int/initiatives/medication-without-harm" target="_blank" rel="noopener noreferrer">WHO: Medication Without Harm</a></dd>
+                <dt>Vilkår</dt><dd>Egne fiktive oppgaver.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Ingen tillatelse nødvendig.</dd>
+              </dl>
+            </article>
+            <article class="license-item" id="lisens-isbar" data-license-status="ok">
+              <div class="license-head"><h3>ISBAR</h3><span class="license-status license-status-ok">Avklart</span></div>
+              <dl>
+                <dt>Kilde og rettighetshaver</dt><dd>Helsebiblioteket og Helsedirektoratet. <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket</a></dd>
+                <dt>Vilkår</dt><dd>Kommunikasjonsstruktur fra offentlig veiledning. Manuset er Kartleggs egen tekst.</dd>
+                <dt>Slik følger Kartlegg vilkårene</dt><dd>Kildehenvisning nederst på siden.</dd>
+              </dl>
+            </article>
+          </div>
+        </article>
+      </div><!-- /page-lisenser -->
       <div class="page" id="page-om" hidden>
         <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som står bak, hvorfor, og hva som skjer med opplysningene du skriver inn.</p></div></div>
         <section class="section about-v0993-hero" aria-labelledby="about-purpose-title">
@@ -486,6 +649,7 @@
         </section>
         <section class="section about-v0993-notice" aria-labelledby="about-limits-title">
           <h2 id="about-limits-title">Faglig ansvar og begrensninger</h2>
+          <p class="purpose-statement"><strong>Tiltenkt formål:</strong> Kartlegg er et gratis verktøy for opplæring og øving. Det er laget for å lære hvordan kliniske kartleggingsverktøy og skårer brukes, beregnes og tolkes, med tenkte pasienteksempler. Kartlegg er ikke medisinsk utstyr og skal ikke brukes til å vurdere, overvåke, diagnostisere eller behandle virkelige pasienter, eller som grunnlag for kliniske beslutninger.</p>
           <p>Kartlegg er en demoversjon. Beregningene har automatiske tester, men verktøyet er ikke uavhengig klinisk validert eller regulatorisk avklart for bruk i pasientbehandling.</p>
           <p>Veiledere og beregninger erstatter ikke klinisk skjønn, lokale prosedyrer, ordinasjon eller ansvarlig helsepersonell. Kildene står i hvert verktøy og nederst på siden. Endringer finner du i <a href="https://github.com/aasen700/Kartlegg/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">versjonshistorikken</a>.</p>
         </section>
@@ -494,13 +658,13 @@
         Faglig grunnlag for utprøving: <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noopener noreferrer">Royal College of Physicians – NEWS2</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4968574/" target="_blank" rel="noopener noreferrer">Sepsis-3 – qSOFA</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/12654015/" target="_blank" rel="noopener noreferrer">Schultz mfl. – TIME</a> · <a href="https://woundsinternational.com/wp-content/uploads/2023/05/IWII-CD-2022-web.pdf" target="_blank" rel="noopener noreferrer">IWII 2022</a>.<br>
         ISBAR-struktur: <a href="https://www.helsebiblioteket.no/innhold/nasjonal-faglig-retningslinje/somatiske-akuttmottak-nasjonal-faglig-retningslinje" target="_blank" rel="noopener noreferrer">Helsebiblioteket / Helsedirektoratet</a>.<br>
         NEWS2: Reproduced from: Royal College of Physicians. <em>National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS.</em> London: RCP, 2017. The wording of this translation has not been specifically approved by the Royal College of Physicians – please refer to the English language version before making any clinical use of this information.<br>
-        Kartlegg v1.1 · Demo. Ingen sporing eller analyseverktøy.<br>
+        Kartlegg v1.1 · Demo. Kun til opplæring og øving – ikke medisinsk utstyr og ikke for pasientbehandling. Ingen sporing eller analyseverktøy.<br>
         <span class="credit">Laget av Philip Aasen · <a href="mailto:aasen700@gmail.com">aasen700@gmail.com</a></span><br>
-        <span class="footer-links"><a href="#om">Om Kartlegg</a> · <a href="#vilkar">Bruksvilkår</a> · <a href="#personvern">Personvernerklæring</a></span>
+        <span class="footer-links"><a href="#om">Om Kartlegg</a> · <a href="#vilkar">Bruksvilkår</a> · <a href="#personvern">Personvernerklæring</a> · <a href="#lisenser">Kilder og lisenser</a></span>
       </footer>
     </main>
     <nav class="mobile-primary-nav" aria-label="Hovedmeny på mobil">
-      <button type="button" class="mobile-primary-link" data-page="vurdering"><span class="ico" aria-hidden="true">✚</span><span>Vurdering</span></button>
+      <button type="button" class="mobile-primary-link" data-page="vurdering"><span class="ico" aria-hidden="true">✚</span><span>NEWS2</span></button>
       <button type="button" class="mobile-primary-link" data-page="verktoy"><span class="ico" aria-hidden="true">▤</span><span>Verktøy</span></button>
       <button type="button" class="mobile-primary-link" data-page="laer"><span class="ico" aria-hidden="true">✦</span><span>Lær</span></button>
       <button type="button" class="mobile-primary-link" data-page="profil"><span class="ico" aria-hidden="true">♙</span><span>Profil</span></button>
@@ -531,9 +695,9 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/auth-gate.js?v=apne1"></script>
+  <script src="assets/auth-gate.js?v=jur1"></script>
   <script src="assets/measurement-store.js?v=1"></script>
-  <script src="assets/app.js?v=sma1"></script>
+  <script src="assets/app.js?v=jur1"></script>
   <script src="assets/welcome.js?v=1"></script>
   <script src="assets/enhancements.js?v=home1"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
@@ -576,6 +740,7 @@
   <script src="assets/tool-cards.js?v=profile3"></script>
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
-  <script type="module" src="assets/account/entry.mjs?v=sma1"></script>
+  <script src="assets/formal.js?v=1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=jur1"></script>
 </body>
 </html>

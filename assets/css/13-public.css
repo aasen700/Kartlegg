@@ -445,3 +445,81 @@
 :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) :is(#saveMeasurement,#page-vurdering .meta-line small) {
   display: none !important;
 }
+
+/* Kilder og lisenser. */
+.license-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.license-item {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  scroll-margin-top: 92px;
+}
+.license-item.is-target {
+  border-color: var(--ui-action);
+  box-shadow: 0 0 0 3px rgba(23,111,166,.18);
+}
+.license-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.license-head h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.license-status {
+  flex: none;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+}
+.license-status-ok {
+  background: #daf4e9;
+  color: #075e4d;
+}
+.license-status-ask {
+  background: #fff1d6;
+  color: #7a4d00;
+}
+:root[data-theme=dark] .license-status-ok {
+  background: #1d4a3f;
+  color: #c9f3e4;
+}
+:root[data-theme=dark] .license-status-ask {
+  background: #4f3d1c;
+  color: #ffe2a8;
+}
+.license-item dl {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0 0;
+}
+.license-item dt {
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--muted);
+}
+.license-item dd {
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+.tool-card-license {
+  justify-self: start;
+  margin: 0 0 6px;
+  padding: 0;
+  min-height: 32px;
+  border: 0;
+  background: none;
+  color: var(--ui-action);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

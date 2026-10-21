@@ -11,7 +11,7 @@ test('v1.1 exposes a direct accessible assessment path and release identity',()=
  assert.match(html,/class="skip-link" href="#top"/);
  assert.doesNotMatch(html,/class="assessment-flow"|data-assessment-step|assessmentFlowStatus/);
  assert.match(html,/id="reviewResponse"[^>]*disabled/);
- assert.match(html,/Tiltak, tolkning og forbehold/);
+ assert.match(html,/Slik tolkes skåren/);
 });
 
 test('assessment result navigation owns focus, never scoring or storage',()=>{

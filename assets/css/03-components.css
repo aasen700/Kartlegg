@@ -1386,3 +1386,29 @@
 :is(.v10-now-button,.v099-category-button[aria-pressed=true],.mobile-primary-link.active) {
   color: color-mix(in srgb,var(--accent) 55%,var(--ink)) !important;
 }
+
+/* Tiltenkt formål: kort påminnelse ved resultater og i verktøy (formal.js). */
+.purpose-note {
+  margin: 14px 0 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--ui-attention);
+  border-radius: 6px;
+  background: var(--accent-bg,var(--paper));
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.45;
+}
+#resultater>.purpose-note {
+  margin: 0 25px 16px;
+}
+@media(max-width:770px){
+  #resultater>.purpose-note {
+    margin: 0 14px 14px;
+  }
+}
+.purpose-statement {
+  padding: 12px 14px;
+  border: 1px solid var(--accent-border,var(--line));
+  border-radius: 12px;
+  background: var(--accent-bg,var(--paper));
+}

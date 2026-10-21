@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Tiltenkt formål og lisenser – 21. oktober 2026
+
+- Ny side «Kilder og lisenser» (#lisenser) med kilde, rettighetshaver, vilkår og status for hvert verktøy. Hvert verktøykort har en lenke dit. MST, ESAS-r, GCS (undervisning) og SKUV er merket «Tillatelse etterspurt».
+- Én formålserklæring brukes overalt: Kartlegg er for opplæring og øving, er ikke medisinsk utstyr og skal ikke brukes til å vurdere eller behandle virkelige pasienter. Den står i bruksvilkårene (punkt 1), på Om-siden og nederst på hver side.
+- Kort påminnelse om formålet under skårene og nederst i hvert verktøy.
+- Tekst som lovet klinisk bruk er endret: «Ny vurdering» heter nå «NEWS2 og qSOFA», «Tiltak, tolkning og forbehold» heter «Slik tolkes skåren», og «Se tiltak» heter «Se tolkning». «Støtteverktøy» er byttet ut med «opplærings- og øvingsverktøy».
+- Bruksvilkårene har ny versjon (2026-10-21). Bekreftelsen om klinisk ansvar sier nå at Kartlegg ikke er medisinsk utstyr. Innloggede brukere må bekrefte på nytt ved neste innlogging.
+
 ## Små forbedringer i alle deler – 21. oktober 2026
 
 - Ny vurdering: dato og klokkeslett vises som én linje («Målt i dag kl. 10:46») med «Endre tidspunkt». Feltene åpnes av seg selv hvis tidspunktet mangler eller er feil.

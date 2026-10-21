@@ -7,7 +7,7 @@
  const targets={input:['vurdering','input-heading'],result:['resultater','result-heading'],action:['forklaring','info-heading']};
  const focusStep=name=>{
   const [sectionId,headingId]=targets[name]||targets.input;
-  // Tiltakene ligger bak «Les mer»; «Se tiltak» åpner dem.
+  // Tolkningen ligger bak «Les mer»; «Se tolkning» åpner den.
   if(name==='action'){const more=document.getElementById('responseDetails');if(more)more.open=true}
   const section=document.getElementById(sectionId),heading=document.getElementById(headingId);
   section?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});

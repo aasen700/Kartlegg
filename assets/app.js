@@ -127,7 +127,7 @@ function updateScores() {
   return true;
 }
 function showPage(page, setHash=true) {
-  if(!['start','vurdering','historikk','verktoy','laer','simulering','profil','om','konto','vilkar','personvern'].includes(page)) page='start';
+  if(!['start','vurdering','historikk','verktoy','laer','simulering','profil','om','konto','vilkar','personvern','lisenser'].includes(page)) page='start';
   // The gate decides what a visitor may see (UX only; data is protected by Firestore rules).
   if(Gate) page=Gate.resolve(page);
   currentPage=page;
