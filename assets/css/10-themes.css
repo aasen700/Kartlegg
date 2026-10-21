@@ -1176,7 +1176,7 @@
  --g-shapes:radial-gradient(38% 30% at 14% 18%,#26303d 0,transparent 70%),radial-gradient(34% 28% at 86% 12%,#1f2833 0,transparent 70%),radial-gradient(40% 34% at 72% 62%,#2a3442 0,transparent 72%),radial-gradient(36% 30% at 22% 86%,#1d2530 0,transparent 70%);
  --g-fill:rgba(255,255,255,.05);--g-fill-pill:rgba(255,255,255,.08);--g-fill-bar:rgba(20,25,32,.42);--g-solid:rgba(24,30,38,.86);
  --g-edge:rgba(255,255,255,.22);--g-edge-soft:rgba(255,255,255,.08);--g-in-top:rgba(255,255,255,.22);--g-in-bot:rgba(0,0,0,.4);--g-drop:rgba(0,0,0,.45)}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"]:not([data-personal-mode]) body{background:var(--g-shapes),var(--g-base)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-season-theme="none"]:not([data-personal-mode]) body{background:var(--g-shapes),var(--g-base)!important;background-attachment:fixed!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.forlop-item,.hc-tool-card,.learn12-course-card,.home-entry,.next-step-card){
  background:var(--g-fill)!important;border:1px solid var(--g-edge-soft)!important;border-top-color:var(--g-edge)!important;border-left-color:var(--g-edge)!important;border-radius:26px!important;
  -webkit-backdrop-filter:blur(10px) saturate(160%)!important;backdrop-filter:blur(10px) saturate(160%)!important;
@@ -1201,8 +1201,8 @@
 :root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.control-wrap,.v081-search-field){border-radius:14px!important}
 
 
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(150,190,235,.55),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(120,150,190,.35),transparent 70%),linear-gradient(160deg,#f7f9fc 0%,#e6edf6 45%,#cfd9e6 100%)!important;background-attachment:fixed!important}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-theme="dark"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(60,100,160,.35),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(40,70,120,.28),transparent 70%),linear-gradient(160deg,#1a2230 0%,#121820 50%,#0a0d12 100%)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-season-theme="none"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(150,190,235,.55),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(120,150,190,.35),transparent 70%),linear-gradient(160deg,#f7f9fc 0%,#e6edf6 45%,#cfd9e6 100%)!important;background-attachment:fixed!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-season-theme="none"][data-theme="dark"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(60,100,160,.35),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(40,70,120,.28),transparent 70%),linear-gradient(160deg,#1a2230 0%,#121820 50%,#0a0d12 100%)!important;background-attachment:fixed!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.30)!important;-webkit-backdrop-filter:blur(5px) saturate(150%)!important;backdrop-filter:blur(5px) saturate(150%)!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.045)!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.header,.sidebar){background:rgba(255,255,255,.28)!important;-webkit-backdrop-filter:blur(8px) saturate(180%)!important;backdrop-filter:blur(8px) saturate(180%)!important}
@@ -1220,4 +1220,34 @@
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
+}
+
+/* Glass sammen med andre temaer:
+ * – Sesongtemaene beholder sin egen bakgrunn (gradienten over gjelder bare uten sesongtema).
+ * – På jul, Halloween og 17. mai ligger glasset over en sterk farge; der blir glasset tettere, så tekst og knapper
+ *   beholder sine vanlige farger og kontrast.
+ * – Tjenestetemaene får rolige, nøytrale glassknapper i stedet for temaets egne knappefarger under glasset. */
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card,.forlop-item,.learn12-course-card,.hc-tool-card,.tool-favorites) {
+  background: rgba(255,255,255,.84) !important;
+}
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"])[data-theme="dark"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card,.forlop-item,.learn12-course-card,.hc-tool-card,.tool-favorites) {
+  background: rgba(18,24,32,.80) !important;
+}
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.header,.sidebar,.mobile-primary-nav) {
+  background: rgba(255,255,255,.80) !important;
+}
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"])[data-theme="dark"] :is(.header,.sidebar,.mobile-primary-nav) {
+  background: rgba(16,20,26,.78) !important;
+}
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-service-theme="hospital"],[data-service-theme="homecare"]) :is(.btn-secondary,.v099-category-button,.tool-card-favorite,.tool-card-copy,.v08-timer-launch,.detail-button) {
+  background: rgba(255,255,255,.72) !important;
+}
+:root[data-surface-style="glass"][data-surface-style="glass"][data-surface-style="glass"]:not([data-base-theme="philip"]):is([data-service-theme="ambulance"],[data-service-theme="urgent"]) :is(.btn-secondary,.v099-category-button,.tool-card-favorite,.tool-card-copy,.v08-timer-launch,.detail-button) {
+  background: rgba(255,255,255,.08) !important;
+}
+/* «Kilde og lisens» er en tekstlenke, ikke en knapp, i alle moduser. */
+:root .tool-card-license.btn-inline {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }

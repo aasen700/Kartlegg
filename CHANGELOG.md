@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Rettet: Liquid Glass sammen med andre temaer – 21. oktober 2026
+
+- Sesongtemaene (jul, Halloween, 17. mai og de rolige) beholder sin egen bakgrunn når Liquid Glass er på. Glassets egen gradient brukes bare når det ikke er noe sesongtema.
+- På jul, Halloween og 17. mai blir glasset tettere, så tekst og kort er lette å lese over den sterke bakgrunnsfargen. Kontrasten er sjekket på alle sider.
+- Knappene i tjenestetemaene (sykehus, ambulanse, legevakt, hjemmesykepleie) får rolige, nøytrale glassknapper.
+- «Kilde og lisens» vises som tekstlenke, ikke som mørk boks, i mørk modus.
+- Teksten «Jul · dekorativt tema» er lesbar igjen på de store sesongtemaene.
+
 ## Nytt Liquid Glass – 21. oktober 2026
 
 - Glassmodus (Profil → Utseende → Liquid glass) er laget på nytt: kortene, toppen, menyen og bunnmenyen er tynt, gjennomsiktig glass med lys kant og myk skygge, så innholdet bak synes uskarpt gjennom.

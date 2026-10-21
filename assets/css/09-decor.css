@@ -543,7 +543,7 @@
   background-color: var(--season-page-color) !important;
   background-attachment: fixed !important;
 }
-:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.main>.page>.intro,.main>.page>.intro :is(h1,h2,p,small,.season-notice),.footer,.footer a,.footer .credit) {
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) :is(.main>.page>.intro,.main>.page>.intro :is(h1,h2,p,small),.footer,.footer a,.footer .credit) {
   color: #fff !important;
 }
 :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .main>.page>.intro p {
