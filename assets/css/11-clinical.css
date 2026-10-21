@@ -99,7 +99,7 @@
 /* Regel fra «assessment» som må komme etter reglene over for å vinne */
 .score.neutral .score-status {
   background: #e8eef4;
-  color: #64788e;
+  color: #56697f;
 }
 .score.red-trigger .score-status {
   background: #ffebc6;
@@ -359,4 +359,25 @@
   background: #5a2436;
   color: #ffd6de;
   border-color: #ff8ca5;
+}
+/* Kontrast i mørk modus (WCAG AA, 4,5:1 for vanlig tekst). Etter alle andre regler så de vinner. */
+:root[data-theme=dark] :is(.hint,.score-bottom,.meta-line label,.meta-line small,.script-size,.isbar-preamble,.isbar-smallprint,.empty-state) {
+  color: var(--muted);
+}
+:root[data-theme=dark] .empty-state {
+  background: transparent;
+  border-color: var(--line);
+}
+:root[data-theme=dark] .isbar-details summary {
+  color: var(--ink);
+}
+:root[data-theme=dark] .field .required {
+  color: #ff98a0;
+}
+:root[data-theme=dark] .score.neutral .score-status {
+  background: #36536a;
+  color: #ecf5ff;
+}
+:root[data-theme=dark] :is(.gcs-learn-primary,.learn12-primary):not(:disabled) {
+  color: #0b2238;
 }

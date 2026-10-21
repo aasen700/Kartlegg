@@ -126,6 +126,12 @@ body {
   box-shadow: var(--ui-focus);
   outline-offset: 2px;
 }
+/* Dato og klokkeslett: Chrome flytter fokus til delfeltene, så :focus-visible treffer ikke selve feltet. */
+:is(input[type="date"],input[type="time"]):focus {
+  outline: 3px solid rgba(39,134,197,.4);
+  outline-offset: 2px;
+  box-shadow: var(--ui-focus);
+}
 :is(h1,h2,h3,p,li,label,button,a,small,strong) {
   overflow-wrap: anywhere;
 }

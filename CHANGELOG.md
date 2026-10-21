@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Bedre tilgjengelighet – 21. oktober 2026
+
+- All tekst har nå god nok kontrast (WCAG AA, minst 4,5:1) i både lys og mørk modus. Hjelpetekster, merkelapper, «Ikke beregnet» og grå småtekst er gjort mørkere i lys modus. I mørk modus er etiketter, «Start læringen»-knapper og den tomme tidslinjen rettet.
+- Dato- og klokkeslettfeltet viser fokusring når du bruker tastaturet.
+- Hjelpeteksten under hvert målefelt leses opp av skjermleseren sammen med feltet.
+- Kontrollert med bare tastatur i alle sider og verktøy: alt kan nås med Tab, alle dialoger lukkes med Escape og fokus går tilbake dit du var.
+
 ## Velkomst og tydeligere feilmeldinger – 20. oktober 2026
 
 - Første gang du er innlogget, viser forsiden en kort velkomst med hvor du finner verktøyene. Den forsvinner når du trykker «Skjønner».
