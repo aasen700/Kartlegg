@@ -26,7 +26,7 @@
   ['palliasjon','Lindring ved livets slutt','Observasjonstegn, pleietiltak og legemiddelkunnskap','palliasjon terminalpleie medikamentskrin morfin midazolam haloperidol glykopyrronium symptomveileder','#launchPalliation','assets/palliation-v091.js','guide'],
   ['abcde','ABCDE','Interaktiv primærvurdering – A, B, C, D og E','akutt luftvei airway respirasjon breathing sirkulasjon circulation nevrologi disability exposure undersøkelse primærvurdering','#launchABCDE','assets/abcde-v099.js','guide'],
   ['abi','Ankel–arm-indeks','Dopplermålte arm- og ankeltrykk for hvert bein','aai abi ankel arm indeks doppler perifer arteriesykdom sirkulasjon sår','#launchAbi','assets/abi-v12-scoring.js','calc'],
-  ['medication-lab','Legemiddelverkstedet','Fiktiv ferdighetstrening i regning, sprøytevalg og opptrekk','legemiddelregning dose styrke volum sprøyte opptrekk ampulle trening','#launchMedicationLab','assets/medication-learning-data-v12.js','learn']
+  ['medication-lab','Legemiddelregning','Fiktiv ferdighetstrening i regning, sprøytevalg og opptrekk','legemiddelregning dose styrke volum sprøyte opptrekk ampulle trening','#launchMedicationLab','assets/medication-learning-data-v12.js','learn']
  ];
  const ALL=Object.freeze(items.map(([id,name,detail,terms,launchSelector,owner,category])=>Object.freeze({id,name,detail,terms,launchSelector,owner,category})));
  const BY_ID=new Map(ALL.map(item=>[item.id,item]));

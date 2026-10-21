@@ -83,7 +83,6 @@
 .score-top strong {
   font-size: 14px;
   letter-spacing: .035em;
-  text-transform: uppercase;
 }
 .score-top small {
   line-height: 1.35;
@@ -1368,7 +1367,7 @@
   display: none;
 }
 
-/* Forsiden: tre innganger øverst. Mobil: rader med ikon og pil. PC: tre like kort. */
+/* Forsiden: to innganger (verktøy og Lær) øverst på PC. På mobil dekker bunnmenyen det samme. */
 .home-entries {
   display: grid;
   gap: 10px;
@@ -1376,7 +1375,7 @@
 }
 @media(min-width:771px){
   .home-entries {
-    grid-template-columns: repeat(3,minmax(0,1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
     gap: 14px;
     margin-bottom: 22px;
   }
@@ -1575,5 +1574,35 @@
   .welcome-note {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/* Mobil: skjemaet skal komme raskt. Overskriften beholdes for skjermlesere, snarveiene finnes i bunnmenyen,
+ * og klokkeslett og «Nå» deler rad. */
+@media(max-width:770px){
+  #page-vurdering>.home-intro {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+  #page-vurdering>.home-entries {
+    display: none;
+  }
+}
+@media(max-width:480px){
+  #page-vurdering .meta-line {
+    grid-template-columns: minmax(0,1fr) auto;
+  }
+  #page-vurdering .meta-line label:first-of-type,
+  #page-vurdering .meta-line small {
+    grid-column: 1/-1;
+  }
+  #page-vurdering .meta-line .v10-now-button {
+    grid-column: 2;
+    align-self: end;
   }
 }

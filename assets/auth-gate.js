@@ -6,6 +6,9 @@
 'use strict';
 (root=>{
  const PUBLIC=Object.freeze(['start','om','konto','vilkar','personvern']);
+ // Verktøyene regner lokalt og lagrer ingenting, så de er åpne for alle. Konto gir Lær, simulering,
+ // målinger over tid og profil med synkronisering.
+ const OPEN=Object.freeze(['vurdering','verktoy']);
  const NAMES=Object.freeze({vurdering:'Ny vurdering',historikk:'Målinger over tid',verktoy:'Kliniske verktøy',laer:'Lær',simulering:'Simulering',profil:'Profil'});
  const RETURN_KEY='kartlegg.returnTo';
  // checking: Firebase sjekker en lagret innlogging. guest: ikke innlogget.
@@ -26,7 +29,7 @@
     if(page==='konto'){const back=read();write('');return back&&!PUBLIC.includes(back)&&back!=='profil'?back:'vurdering'}
     return page;
    }
-   if(PUBLIC.includes(page)){if(page==='konto'&&state==='guest')reason='';return page}
+   if(PUBLIC.includes(page)||OPEN.includes(page)){if(page==='konto'&&state==='guest')reason='';return page}
    write(page);reason=NAMES[page]||'';
    return 'konto';
   }
@@ -38,14 +41,15 @@
    if(changed)listeners.forEach(fn=>{try{fn(state,owner)}catch(_){}});
   }
   function onChange(fn){listeners.add(fn);return()=>listeners.delete(fn)}
+  function whenReady(){return state!=='checking'?Promise.resolve(state):new Promise(r=>{const off=onChange(s=>{off();r(s)})})}
   function whenMember(){return full()?Promise.resolve(owner):new Promise(r=>{const off=onChange(s=>{if(s==='member'||s==='open'){off();r(owner)}})})}
   if(doc)doc.documentElement.dataset.auth=state;
-  return Object.freeze({resolve,setState,onChange,whenMember,
+  return Object.freeze({resolve,setState,onChange,whenMember,whenReady,
    get state(){return state},get owner(){return owner},get reason(){return reason},
-   get returnTo(){return read()},isPublic:page=>PUBLIC.includes(page),names:NAMES});
+   get returnTo(){return read()},isPublic:page=>PUBLIC.includes(page),isOpen:page=>PUBLIC.includes(page)||OPEN.includes(page),names:NAMES});
  }
 
- if(typeof module==='object'&&module.exports){module.exports={createGate,PUBLIC,NAMES};return}
+ if(typeof module==='object'&&module.exports){module.exports={createGate,PUBLIC,OPEN,NAMES};return}
  let storage;try{storage=root.sessionStorage}catch(_){}
  // Testoppsett kan sette window.__KARTLEGG_TEST_AUTH__ før denne filen lastes. Det gir ingen tilgang til data.
  const gate=createGate({doc:root.document,storage,test:root.__KARTLEGG_TEST_AUTH__});

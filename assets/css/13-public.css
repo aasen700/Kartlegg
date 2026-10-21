@@ -56,8 +56,8 @@
   display: none !important;
 }
 
-/* Låste menyvalg: hengelås ved siden av navnet. Et klikk åpner innloggingen med forklaring. */
-:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) :is(.sidebar .nav,.mobile-primary-link):is([data-page="vurdering"],[data-page="historikk"],[data-page="verktoy"],[data-page="laer"],[data-page="simulering"],[data-page="profil"])::after {
+/* Låste menyvalg (Ny vurdering og Kliniske verktøy er åpne for alle): hengelås ved siden av navnet. Et klikk åpner innloggingen med forklaring. */
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) :is(.sidebar .nav,.mobile-primary-link):is([data-page="historikk"],[data-page="laer"],[data-page="simulering"],[data-page="profil"])::after {
   content: "";
   flex: none;
   width: 13px;
@@ -68,7 +68,7 @@
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center/contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center/contain no-repeat;
 }
-:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-primary-link::after {
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-primary-nav:not(.mobile-guest-nav) .mobile-primary-link::after {
   position: absolute;
   top: 7px;
   right: calc(50% - 20px);
@@ -149,7 +149,23 @@
 .public-note {
   margin: 12px 0 0;
   font-size: 14px;
+  line-height: 1.55;
   color: var(--muted);
+}
+.public-note a {
+  color: var(--ui-action);
+  font-weight: 700;
+}
+.public-feature-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  vertical-align: middle;
 }
 /* Forhåndsvisninger: illustrasjoner av funksjonene, ikke de faktiske verktøyene. */
 .preview-card {
@@ -407,7 +423,7 @@
   }
 }
 
-/* Bunnmeny på mobil: gjester får Start, Om og Logg inn i stedet for fire låste valg. */
+/* Bunnmeny på mobil: gjester får Start, NEWS2, Verktøy og Logg inn. */
 .mobile-guest-nav {
   display: none !important;
 }
@@ -417,9 +433,15 @@
   }
   :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) .mobile-guest-nav {
     display: grid !important;
-    grid-template-columns: repeat(3,minmax(0,1fr));
+    grid-template-columns: repeat(4,minmax(0,1fr));
   }
   .mobile-guest-nav .mobile-primary-link {
     text-decoration: none;
   }
+}
+
+
+/* Gjester kan regne ut skårer, men ikke lagre målinger over tid. */
+:root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) :is(#saveMeasurement,#page-vurdering .meta-line small) {
+  display: none !important;
 }

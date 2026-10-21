@@ -26,8 +26,10 @@ try{
  await go('#om');assert(page()==='page-om','About is public');
  await go('#vilkar');assert(page()==='page-vilkar','terms are public');
  await go('#personvern');assert(page()==='page-personvern','privacy notice is public');
- await go('#verktoy');assert(page()==='page-konto','a protected page leads to login');
- assert($('kontoReason').textContent.includes('Kliniske verktøy'),'login explains why sign-in is needed');
+ await go('#vurdering');assert(page()==='page-vurdering','NEWS2 is open without an account');
+ await go('#verktoy');assert(page()==='page-verktoy','clinical tools are open without an account');
+ await go('#laer');assert(page()==='page-konto','a protected page leads to login');
+ assert($('kontoReason').textContent.includes('Lær'),'login explains why sign-in is needed');
  assert(!$('accountGuest').closest('.page')||$('page-profil').hidden,'profile is not shown to guests');
  // Signup validation: three separate, unchecked confirmations are required; passwords must match.
  $('accountToSignup').click();await pause(2600);

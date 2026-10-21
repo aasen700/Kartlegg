@@ -11,14 +11,16 @@
  const button=(text,cls,fn)=>{const el=h('button',cls,text);el.type='button';el.addEventListener('click',fn);return el};
  const card=h('article','toolbox hc-tool-card medication12-card');card.dataset.homecareCard='medication-lab';
  const icon=h('div','hc-card-icon','◇');icon.setAttribute('aria-hidden','true');
- const title=h('h3','','Legemiddelverkstedet'),tag=h('span','tool-tag','Ferdighetstrening');
+ const title=h('h3','','Legemiddelregning'),tag=h('span','tool-tag','Ferdighetstrening');
  const copy=h('p','','Regn ut volum, velg treningssprøyte og dra stempelet til riktig mengde i fiktive oppgaver.');
- const launch=button('Åpne Legemiddelverkstedet →','btn btn-primary hc-launch',()=>open('home'));launch.id='launchMedicationLab';
+ const launch=button('Åpne Legemiddelregning →','btn btn-primary hc-launch',()=>open('home'));launch.id='launchMedicationLab';
  card.append(icon,title,tag,copy,launch);library.append(card);
 
  const course=button('','learn12-course-card medication12-course',()=>open('home'));course.dataset.learnTool='medication';course.setAttribute('aria-pressed','false');
  course.append(h('span','learn12-course-symbol','◇'));
  const courseCopy=h('span','learn12-course-copy');courseCopy.append(h('strong','','Legemiddelregning'),h('small','','Regn ut, velg sprøyte og trekk opp'));course.append(courseCopy);chooser.append(course);
+ // Legemiddelregning nevnes sist i introteksten, så kortet flyttes sist når de andre kursene er lagt til.
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>chooser.append(course),{once:true});
 
  let mode='home',lesson=0,caseIndex=0,answers={},results={},finished=false;
  const cases=()=>D.cases.filter(item=>item.level===(mode==='practice'?'practice':'test'));
@@ -38,7 +40,7 @@
   if(mode!=='home')head.append(button('← Til oversikten','learn12-secondary',()=>reset('home')));root.append(head);
  };
  function home(){
-  heading('','Legemiddelverkstedet');
+  heading('','Legemiddelregning');
   const hero=h('section','medication12-hero'),heroCopy=h('div','medication12-hero-copy');
   heroCopy.append(h('h4','','Regn ut volum og trekk opp riktig mengde'),h('p','','Øv på å kontrollere dose og styrke, regne om enheter, velge den minste treningssprøyten som rommer volumet og dra stempelet til riktig skalastrek.'));
   const mini=h('div','medication12-mini-ampoule');mini.append(h('span','','ØVING'),h('strong','','1 mg/ml'),h('small','','2 ml'));hero.append(heroCopy,mini);root.append(hero);

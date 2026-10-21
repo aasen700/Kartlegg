@@ -11,7 +11,7 @@
 | Innloggingsvakt: offentlige og beskyttede sider, retur til ønsket side, hengelås i menyen, lasteskjerm mens innloggingen sjekkes | `assets/auth-gate.js`, `assets/app.js` | Ferdig |
 | Egen kontoside: innlogging, registrering, e-postbekreftelse, bekreftelse av vilkår | `assets/account/ui.mjs` (`#page-konto`) | Ferdig |
 | Tre separate, ikke forhåndsavkryssede bekreftelser (vilkår, pasientopplysninger, klinisk ansvar) ved registrering og for eksisterende kontoer | `assets/account/ui.mjs`, `firestore.rules`, `assets/account/firebase.mjs` | Ferdig i kode. Krever at reglene publiseres (se under) for å lagres på serveren |
-| Utkast til bruksvilkår og personvernerklæring, åpne før og etter innlogging | `index.html` (`#page-vilkar`, `#page-personvern`) | Utkast – ikke juridisk kvalitetssikret |
+| Bruksvilkår og personvernerklæring, åpne før og etter innlogging | `index.html` (`#page-vilkar`, `#page-personvern`) | Ferdigstilt 21. oktober 2026 (ikke gjennomgått av jurist) |
 | «Målinger over tid» lagret lokalt i høyst 24 timer, bare tall og faste valg, knyttet til bruker, slettet ved utlogging | `assets/measurement-store.js`, `assets/app.js` | Ferdig |
 | Tiltak mot automatisk registrering: e-postbekreftelse før tilgang, skjult felt og minstetid i skjemaet | `assets/account/ui.mjs` | Ferdig |
 | Firebase App Check (reCAPTCHA v3) | `assets/account/config.mjs`, `assets/account/firebase.mjs` | Klar i kode, men **av**. Satt på vent 21. oktober 2026 (se under) |
@@ -19,7 +19,8 @@
 ### Sider
 
 - **Offentlige:** forsiden (`#start`), Om Kartlegg (`#om`), innlogging (`#konto`), bruksvilkår (`#vilkar`), personvernerklæring (`#personvern`).
-- **Krever innlogget konto med bekreftet e-post og godtatte vilkår:** Ny vurdering, Målinger over tid, Kliniske verktøy, Lær, Simulering, Profil. Direktelenker som `?tool=gcs#verktoy` åpnes etter innlogging.
+- **Åpne for alle uten konto (fra 21. oktober 2026):** Ny vurdering (NEWS2, qSOFA, ISBAR) og Kliniske verktøy. De regner lokalt og lagrer ingenting, så konto ga ingen sikkerhetsgevinst. Direktelenker som `?tool=gcs` åpnes rett i verktøyet. Gjester ser ikke «Lagre måling».
+- **Krever innlogget konto med bekreftet e-post og godtatte vilkår:** Målinger over tid, Lær (inkludert Legemiddelregning), Simulering, Profil.
 
 ## Hva som faktisk beskytter hva
 

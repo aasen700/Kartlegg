@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Verktøyene åpne for alle – 21. oktober 2026
+
+- Ny vurdering (NEWS2, qSOFA og ISBAR) og Kliniske verktøy kan brukes uten konto. Beregningene skjer i nettleseren og lagres ikke, så kontoen ga ingen sikkerhet her. Delte lenker som `?tool=gcs` åpner verktøyet direkte.
+- Konto trengs fortsatt for Lær, simulering, målinger over tid og profil. Uten konto vises ikke «Lagre måling».
+- Forsiden for gjester har knappene «Regn ut NEWS2» og «Se alle verktøy», og bunnmenyen på mobil har Start, NEWS2, Verktøy og Logg inn.
+- På mobil kommer skjemaet først: overskriften er skjult (men leses av skjermleser), snarveiene er fjernet fordi bunnmenyen har de samme, og klokkeslett og «Nå» står på samme rad. Første målefelt ligger nå rundt 550 px ned i stedet for rundt 1190 px.
+- Snarveien «Start vurdering» er fjernet, siden den pekte til siden du allerede står på.
+- Like navn: «Kliniske verktøy» både i menyen og som overskrift, «Legemiddelregning» overalt, «qSOFA» med riktig skrivemåte på skårkortet, og Legemiddelregning står sist under Lær, slik teksten over sier.
+- Bruksvilkår og personvernerklæring er ferdigstilt. «Utkast» er fjernet. Personvernerklæringen sier nå at Firestore ligger i EU (Stockholm), at GitHub og Google får IP-adresse ved sidevisning, hvordan overføring utenfor EØS er sikret, og at en DPIA er vurdert som ikke påkrevd.
+
 ## Bedre tilgjengelighet – 21. oktober 2026
 
 - All tekst har nå god nok kontrast (WCAG AA, minst 4,5:1) i både lys og mørk modus. Hjelpetekster, merkelapper, «Ikke beregnet» og grå småtekst er gjort mørkere i lys modus. I mørk modus er etiketter, «Start læringen»-knapper og den tomme tidslinjen rettet.
