@@ -6,6 +6,8 @@
 - Bannerne glir bedre inn: motivene er løftet og tones ut nederst, så de ikke kuttes av kortene.
 - Effekter på kortene: snø oppå kortene på jul (og litt rim om vinteren), spindelvev med edderkopp i hjørnet på Halloween, flaggvimpler over kortene 17. mai og høstblader om høsten.
 - Effektene ligger bak teksten og knappene, kan ikke klikkes, vises aldri på skårene og skrives ikke ut.
+- Lysslyngen (jul), vimplene (17. mai) og stjernehimmelen (Halloween) går over hele bredden. På jul står en skog langs hele kanten i stedet for en «øy» med trær.
+- Effektene varierer: tre ulike spindelvev i ulike hjørner og størrelser (ikke alle med edderkopp), tre snøvarianter (én med istapper), vimpler i ulike posisjoner og tre ulike blader.
 
 ## Nye sesongtemaer i to nivåer – 21. oktober 2026
 

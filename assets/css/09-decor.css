@@ -562,6 +562,62 @@
 :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) #page-start :is(.public-lede,.public-note) {
   color: rgba(255,255,255,.9) !important;
 }
+/* Store temaer: lysslynge, stjernehimmel og vimpler går i full bredde over toppen (gjentas sømløst),
+ * og på jul står en skog langs hele kanten i stedet for en «øy» med trær. */
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .main::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  -webkit-mask: linear-gradient(#000 70%,transparent);
+  mask: linear-gradient(#000 70%,transparent);
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="may17"]) .main {
+  padding-top: 64px;
+}
+:root[data-season-theme="christmas"] .main::after {
+  height: 210px;
+  background-image: url("../season/garland-christmas.svg"),url("../season/forest-christmas.svg");
+  background-size: auto 46px,auto 96px;
+  background-position: -60px 0,-200px 116px;
+  -webkit-mask: linear-gradient(to right,rgba(0,0,0,.55),#000 45%);
+  mask: linear-gradient(to right,rgba(0,0,0,.55),#000 45%);
+}
+:root[data-season-theme="halloween"] .main::after {
+  background-image: url("../season/sky-halloween.svg");
+  background-size: auto 170px;
+}
+:root[data-season-theme="may17"] .main::after {
+  background-image: url("../season/garland-may17.svg");
+  background-size: auto 52px;
+  background-position: -40px 0;
+}
+@media(max-width:770px){
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .main::after {
+    height: 86px;
+  }
+  :root[data-season-theme="christmas"] .main::after {
+    height: 86px;
+    background-size: auto 34px,auto 52px;
+    background-position: -30px 0,-90px 32px;
+  }
+  :root[data-season-theme="halloween"] .main::after {
+    background-size: auto 86px;
+  }
+  :root[data-season-theme="may17"] .main::after {
+    background-size: auto 34px;
+  }
+}
+@media print{
+  :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) .main::after {
+    display: none;
+  }
+}
 /* Rolige temaer: en myk gradient i temafargen over hele siden, ikke bare bak banneret. */
 :root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"])[data-season-theme][data-season-theme][data-season-theme][data-season-theme] body {
   background: radial-gradient(1100px 520px at 100% -4%,var(--season-wash),transparent 70%),radial-gradient(900px 620px at -6% 104%,color-mix(in srgb,var(--season-wash) 70%,transparent),transparent 70%),var(--bg) !important;
@@ -590,6 +646,15 @@
   background-size: 100% 100%;
   filter: drop-shadow(0 2px 2px rgba(20,60,90,.12));
 }
+:root[data-season-theme="christmas"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item):nth-child(3n+2)::before {
+  background-image: url("../season/fx-snow-2.svg");
+  height: 30px;
+}
+:root[data-season-theme="christmas"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item):nth-child(3n)::before {
+  background-image: url("../season/fx-snow-3.svg");
+  left: 18%;
+  right: 4px;
+}
 :root[data-season-theme="winter"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
   height: 16px;
   top: -8px;
@@ -609,6 +674,24 @@
 :root[data-season-theme="halloween"] .toolbox::before {
   width: 46px;
 }
+/* Variasjon: ulike vev, størrelser og hjørner, og ikke vev på alle kort. */
+:root[data-season-theme="halloween"] :where(.section:not(#resultater),.toolbox):nth-child(3n+2)::before {
+  background-image: url("../season/fx-web-2.svg");
+  right: auto;
+  left: 0;
+  transform: scaleX(-1);
+  border-top-right-radius: 0;
+  border-top-left-radius: inherit;
+  width: clamp(44px,7%,64px);
+}
+:root[data-season-theme="halloween"] :where(.section:not(#resultater),.toolbox):nth-child(3n)::before {
+  background-image: url("../season/fx-web-3.svg");
+  aspect-ratio: 120 / 174;
+  width: clamp(52px,8%,76px);
+}
+:root[data-season-theme="halloween"] .toolbox:nth-child(4n+3)::before {
+  content: none;
+}
 :root[data-season-theme="halloween"] :is(.home-entry,.forlop-item,.v081-tool-search,.settings-card,.account-card)::before {
   content: none;
 }
@@ -621,9 +704,20 @@
   background-image: url("../season/fx-bunting.svg");
   background-size: 100% 100%;
 }
-:root[data-season-theme="may17"] :is(.toolbox,.home-entry,.forlop-item,.v081-tool-search)::before {
+:root[data-season-theme="may17"] :where(.toolbox,.home-entry,.forlop-item,.v081-tool-search)::before {
   width: min(180px,56%);
   height: 22px;
+}
+:root[data-season-theme="may17"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item):nth-child(3n+2)::before {
+  left: 8px;
+  transform: none;
+  width: min(220px,48%);
+}
+:root[data-season-theme="may17"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item):nth-child(3n)::before {
+  left: auto;
+  right: 8px;
+  transform: scaleX(-1);
+  width: min(160px,40%);
 }
 :root[data-season-theme="autumn"] :where(.section:not(#resultater),.toolbox,.home-entry)::before {
   top: -12px;
@@ -633,10 +727,20 @@
   background-image: url("../season/fx-leaf.svg");
   background-size: contain;
 }
-:root[data-season-theme="autumn"] :is(.toolbox,.home-entry):nth-child(even)::before {
+:root[data-season-theme="autumn"] :where(.toolbox,.home-entry):nth-child(3n+2)::before {
   left: auto;
   right: -8px;
-  transform: scaleX(-1) rotate(12deg);
+  width: 28px;
+  height: 28px;
+  background-image: url("../season/fx-leaf-2.svg");
+}
+:root[data-season-theme="autumn"] :where(.section:not(#resultater),.toolbox,.home-entry):nth-child(3n)::before {
+  top: auto;
+  bottom: -10px;
+  left: 30%;
+  width: 26px;
+  height: 26px;
+  background-image: url("../season/fx-leaf-3.svg");
 }
 :root[data-season-theme="autumn"] :is(.v081-tool-search,.settings-card,.account-card,.forlop-item)::before {
   content: none;
