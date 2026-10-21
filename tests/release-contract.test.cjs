@@ -50,7 +50,7 @@ test('custom themes and service-theme choices are not replaced',()=>{
  assert.match(cssThemes,/--accent:#ffff00/);
  assert.match(cssThemes,/--accent:#ffcc00/);
 });
-// Oktober 2026: «Målinger over tid» lagres på enheten i høyst 24 timer (measurement-store.js). Verktøyene lagrer fortsatt ingenting.
+// Oktober 2026: «Øvingsforløp» lagres på enheten i høyst 24 timer (measurement-store.js), uten dato og klokkeslett. Verktøyene lagrer fortsatt ingenting.
 test('measurements persist only through the 24-hour device store, never in tool modules',()=>{
  const src=['assets/ux-v071.js','assets/homecare-v09-ui.js','assets/times-v091.js','assets/palliation-v091.js'];
  for(const p of src)assert.doesNotMatch(read(p),/\blocalStorage\.|\bsessionStorage\.|\bindexedDB\b|\bdocument\.cookie\b/,p);

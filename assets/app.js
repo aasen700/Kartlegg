@@ -9,21 +9,41 @@ const Store=window.KartleggMeasurementStore, Gate=window.KartleggGate;
 let currentPage = 'vurdering';
 const formatNumber = (value, digits = 0) => Number(value).toLocaleString('nb-NO', {minimumFractionDigits:digits, maximumFractionDigits:digits});
 const pad = value => String(value).padStart(2, '0');
-function defaultTimestamp() {
-  const now = new Date();
-  return { date: `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`, time:`${pad(now.getHours())}:${pad(now.getMinutes())}` };
-}
-function setTimeNow(){ const t=defaultTimestamp(); $('measureDate').value=t.date; $('measureTime').value=t.time; }
 function prettyDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
   const [y,m,d]=value.split('-'); return `${d}.${m}.${y}`;
 }
-function getTimeData() {
-  const date=$('measureDate').value, time=$('measureTime').value;
-  if (!date || !time || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) return null;
-  const check=new Date(`${date}T${time}:00`);
-  if (!Number.isFinite(check.getTime()) || check.getFullYear() !== Number(date.slice(0,4)) || (check.getMonth()+1) !== Number(date.slice(5,7)) || check.getDate() !== Number(date.slice(8,10))) return null;
-  return { date, time, iso:`${date}T${time}` };
+// Øvingsforløp: tid angis som minutter siden forrige måling, aldri som ekte dato eller klokkeslett.
+function formatDuration(minutes){
+  if(minutes<60) return `${minutes} min`;
+  const h=Math.floor(minutes/60),m=minutes%60;
+  return m?`${h} t ${m} min`:`${h} t`;
+}
+function elapsedMinutes(index){let total=0;for(let i=1;i<=index&&i<measurements.length;i++)total+=measurements[i].after||0;return total;}
+function measurementLabel(index){return index===0?'Måling 1 (start)':`Måling ${index+1} (etter ${formatDuration(elapsedMinutes(index))})`;}
+// Ferdig eksempel: tenkt kvinne, 78 år, med lungebetennelse som forverres over fem timer (NEWS2 1 → 5 → 6 → 9).
+const EXAMPLE_FORLOP=Object.freeze([
+  [0,{rr:18,spo2:95,sbp:128,hr:88,temp:37.8}],
+  [120,{rr:22,spo2:94,sbp:118,hr:98,temp:38.4}],
+  [120,{rr:24,spo2:93,sbp:112,hr:106,temp:38.7}],
+  [60,{rr:25,spo2:93,sbp:108,hr:112,temp:38.9}]
+]);
+function loadExampleForlop(){
+  if(measurements.length)return;
+  dropUndo();
+  const now=Date.now();
+  for(const [after,vals] of EXAMPLE_FORLOP){const v={...vals,gcs:null,conscious:'A',oxygen:false,scale:1,confusion:false};measurements.push({v,after,savedAt:now,news:calculateNEWS2(v),q:calculateQSOFA(v)});}
+  persistMeasurements();
+  $('forlopCaption').textContent='Eksempel: tenkt kvinne, 78 år, innlagt med lungebetennelse. Se hvordan NEWS2 endrer seg, og sammenlign målingene under.';
+  $('forlopCaption').hidden=false;
+  renderHistory();
+  $('historyTableContainer').focus?.({preventScroll:true});
+}
+function readInterval(){const n=Number($('measureInterval')?.value);return Number.isInteger(n)&&n>0?n:60;}
+function renderForlopLine(){
+  const first=measurements.length===0;
+  $('forlopFirst').hidden=!first;$('forlopIntervalLabel').hidden=first;
+  $('forlopNext').textContent=`Neste lagring blir måling ${measurements.length+1}.`;
 }
 function calculateNEWS2(v){ return Scoring.news2(v); }
 function calculateQSOFA(v){ return Scoring.qsofa(v); }
@@ -144,20 +164,19 @@ function showPage(page, setHash=true) {
   window.dispatchEvent(new CustomEvent('kartlegg:page',{detail:{page}}));
 }
 function getSnapshot() {
-  const v=readVitals(), stamp=getTimeData();
+  const v=readVitals();
   if(!v) {showNotice('Fyll ut de obligatoriske målingene med gyldige verdier før du fortsetter. GCS er valgfritt, men må være 3–15 dersom du fyller den inn.');showPage('vurdering');return null;}
-  if(!stamp){showNotice('Velg en gyldig dato og et klokkeslett for målingen.');showPage('vurdering');return null;}
-  return {...stamp,v,news:calculateNEWS2(v),q:calculateQSOFA(v)};
+  return {v,news:calculateNEWS2(v),q:calculateQSOFA(v)};
 }
 function saveSnapshot() {
   const snapshot=getSnapshot();if(!snapshot)return;
-  const existing=measurements.findIndex(m=>m.iso===snapshot.iso);
-  if(existing<0&&measurements.length>=48){showNotice('Maksimalt 48 målinger i én midlertidig økt. Slett noen målinger før du legger til flere.');return;}
-  if(existing>=0)measurements.splice(existing,1,{...snapshot,savedAt:measurements[existing].savedAt});else measurements.push({...snapshot,savedAt:Date.now()});
-  measurements.sort((a,b)=>a.iso.localeCompare(b.iso));
+  if(measurements.length>=48){showNotice('Maksimalt 48 målinger i ett øvingsforløp. Slett noen målinger før du legger til flere.');return;}
+  const after=measurements.length?readInterval():0;
+  dropUndo();
+  measurements.push({...snapshot,after,savedAt:Date.now()});
   persistMeasurements();
-  showNotice('Målingen er '+(existing>=0?'oppdatert':'lagret')+' på denne enheten i inntil 24 timer. Den sendes ikke til noen server.');
-  updateScores();
+  showNotice(`${measurementLabel(measurements.length-1)} er lagt til i øvingsforløpet på denne enheten i inntil 24 timer. Den sendes ikke til noen server.`);
+  updateScores();renderForlopLine();
   showPage('historikk');
 }
 function applySnapshot(m) {
@@ -168,8 +187,7 @@ function applySnapshot(m) {
   $('scale').value=String(m.v.scale);
   const radio=form.querySelector(`input[name="confusion"][value="${m.v.confusion?'yes':'no'}"]`);
   if(radio)radio.checked=true;
-  $('measureDate').value=m.date; $('measureTime').value=m.time;
-  showPage('vurdering');showNotice(`Måling fra ${prettyDate(m.date)} kl. ${m.time} er hentet inn i skjemaet. Endringer lagres ikke automatisk.`);
+  showPage('vurdering');showNotice(`${measurementLabel(measurements.indexOf(m))} er hentet inn i skjemaet. Endringer lagres ikke automatisk.`);
   updateScores();
 }
 function makeElement(tag,textValue,cls){const el=document.createElement(tag);if(textValue!==undefined)el.textContent=textValue;if(cls)el.className=cls;return el;}
@@ -179,12 +197,14 @@ function removeMeasurements(items){
   const removed=items.map(m=>({m,index:measurements.indexOf(m)})).filter(x=>x.index>=0).sort((a,b)=>a.index-b.index);
   if(!removed.length)return;
   for(const {m} of removed)measurements.splice(measurements.indexOf(m),1);
-  persistMeasurements();undoItems=removed;renderHistory();
+  persistMeasurements();undoItems=removed;if(!measurements.length)$('forlopCaption').hidden=true;renderHistory();
   const box=$('historyUndo'),n=removed.length;
   $('historyUndoText').textContent=n===1?'Målingen er slettet.':`${n} målinger er slettet.`;
   box.hidden=false;$('historyUndoButton').focus();
   clearTimeout(undoTimer);undoTimer=setTimeout(()=>{box.hidden=true;undoItems=null;},15000);
 }
+// Når forløpet får nye målinger, kan gamle slettede målinger ikke lenger legges tilbake.
+function dropUndo(){undoItems=null;clearTimeout(undoTimer);const box=$('historyUndo');if(box)box.hidden=true;}
 function undoRemove(){
   if(!undoItems)return;
   for(const {m,index} of undoItems)measurements.splice(Math.min(index,measurements.length),0,m);
@@ -193,28 +213,30 @@ function undoRemove(){
 }
 function expiryText(){
   const at=Store?.expiresAt?.(measurements);
-  if(!at)return 'Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.';
+  if(!at)return 'Øvingsforløpet lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Bruk bare tenkte pasienter.';
   const d=new Date(at),today=new Date(),tomorrow=new Date();tomorrow.setDate(today.getDate()+1);
   const day=d.toDateString()===today.toDateString()?'i dag':d.toDateString()===tomorrow.toDateString()?'i morgen':prettyDate(`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`);
-  return `Den eldste målingen slettes automatisk ${day} kl. ${pad(d.getHours())}:${pad(d.getMinutes())}. Målingene lagres bare på denne enheten i høyst 24 timer og slettes når du logger ut. Dette er ikke en pasientjournal.`;
+  return `Øvingsforløpet slettes automatisk ${day} kl. ${pad(d.getHours())}:${pad(d.getMinutes())}, når du logger ut, eller når du sletter det selv. Det lagres bare på denne enheten. Bruk bare tenkte pasienter.`;
 }
 function renderHistory(){
-  $('historyCounter').textContent=`${measurements.length} registrerte`;
+  $('historyCounter').textContent=measurements.length===1?'1 måling':`${measurements.length} målinger`;
+  if(!measurements.length)$('forlopCaption').hidden=true;
+  renderForlopLine();
   $('historyStorageNote').textContent=expiryText();
   $('emptyHistory').hidden=measurements.length>0;
   $('historyTableContainer').hidden=measurements.length===0;
   $('trendSection').hidden=measurements.length<2;
   $('historyRows').replaceChildren();
-  for(const m of measurements) {
-    const row=makeElement('tr');
-    for(const value of [`${prettyDate(m.date)} kl. ${m.time}`,String(m.news.total),m.q?String(m.q.total):'—',String(m.v.rr),`${m.v.spo2} %`,`${m.v.sbp}`,`${m.v.hr}`,`${formatNumber(m.v.temp,1)} °C`]){
+  measurements.forEach((m,index)=>{
+    const row=makeElement('tr'),label=measurementLabel(index);
+    for(const value of [label,String(m.news.total),m.q?String(m.q.total):'—',String(m.v.rr),`${m.v.spo2} %`,`${m.v.sbp}`,`${m.v.hr}`,`${formatNumber(m.v.temp,1)} °C`]){
       row.append(makeElement('td',value));
     }
     const actions=makeElement('td');
-    const load=makeElement('button','Åpne','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne måling ${m.date} kl. ${m.time}`);load.addEventListener('click',()=>applySnapshot(m));
-    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett måling ${m.date} kl. ${m.time}`);remove.addEventListener('click',()=>removeMeasurements([m]));
+    const load=makeElement('button','Åpne','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne ${label}`);load.addEventListener('click',()=>applySnapshot(m));
+    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett ${label}`);remove.addEventListener('click',()=>removeMeasurements([m]));
     actions.append(load,remove);row.append(actions);$('historyRows').append(row);
-  }
+  });
   if(measurements.length>=2) renderTrend();
 }
 function renderTrend(){
@@ -222,30 +244,56 @@ function renderTrend(){
   const width=760,height=180,padX=34,padY=17;
   const chart=document.createElementNS('http://www.w3.org/2000/svg','svg');
   chart.setAttribute('viewBox',`0 0 ${width} ${height}`);
-  chart.setAttribute('role','img');chart.setAttribute('aria-label','NEWS2 tidsserie av lagrede målinger');
+  chart.setAttribute('role','img');chart.setAttribute('aria-label','NEWS2 i øvingsforløpet: '+measurements.map((m,i)=>measurementLabel(i)+' '+m.news.total+' poeng').join(', '));
   const svgEl=(tag,atts)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(atts).forEach(([k,v])=>e.setAttribute(k,String(v)));return e;};
   for(let i=0;i<=4;i++){
     const y=height-padY-(height-2*padY)*i/4;
     chart.append(svgEl('line',{x1:padX,y1:y,x2:width-padX,y2:y,stroke:'#e1eaf1','stroke-width':1}));
     const text=svgEl('text',{x:4,y:y+4,fill:'#73869a','font-size':11});text.textContent=String(Math.round(max*i/4));chart.append(text);
   }
+  const span=elapsedMinutes(measurements.length-1);
   const values=measurements.map((m,i)=>{
-    const x=padX+(width-2*padX)*i/(measurements.length-1);
+    const x=padX+(width-2*padX)*(span>0?elapsedMinutes(i)/span:i/(measurements.length-1));
     const y=height-padY-(height-2*padY)*m.news.total/max;
     return {x,y,total:m.news.total};
   });
   chart.append(svgEl('polyline',{points:values.map(p=>`${p.x},${p.y}`).join(' '),fill:'none',stroke:'#ed5865','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'}));
   for(const v of values){const dot=svgEl('circle',{cx:v.x,cy:v.y,r:4.5,fill:v.total>=7?'#dc4654':'#0c9c91',stroke:'#fff','stroke-width':2});chart.append(dot);}
   $('trendChart').replaceChildren(chart);
-  $('trendStart').textContent=`Første: ${prettyDate(measurements[0].date)} kl. ${measurements[0].time}`;
-  $('trendEnd').textContent=`Siste: ${prettyDate(measurements.at(-1).date)} kl. ${measurements.at(-1).time}`;
-  const first=measurements[0],last=measurements.at(-1);
-  const entries=[['NEWS2',last.news.total-first.news.total,'poeng'],['Respirasjonsfrekvens',last.v.rr-first.v.rr,'/min'],['SpO₂',last.v.spo2-first.v.spo2,'%'],['Systolisk BT',last.v.sbp-first.v.sbp,'mmHg'],['Puls',last.v.hr-first.v.hr,'/min'],['Temperatur',last.v.temp-first.v.temp,'°C']];
-  $('deltas').replaceChildren(...entries.map(([label,delta,unit])=>{
-    const box=makeElement('div',undefined,'diff-box');
-    box.append(makeElement('small',label),makeElement('strong',`${delta>0?'+':''}${formatNumber(delta,unit==='°C'?1:0)} ${unit}`),makeElement('em','Endring fra første til siste måling'));
-    return box;
-  }));
+  $('trendStart').textContent='Start';
+  $('trendEnd').textContent=`Etter ${formatDuration(span)}`;
+  renderComparison();
+}
+// Sammenligning av to valgte målinger, med forklaring på hva som endret skåren.
+const NEWS_PARTS=[['rr','Respirasjonsfrekvens','/min'],['spo','SpO₂','%','spo2'],['sbp','Systolisk blodtrykk','mmHg'],['hr','Puls','/min'],['temp','Temperatur','°C'],['consciousness','Bevissthet',''],['oxygen','Tilført oksygen','']];
+function partValue(key,m){
+  if(key==='consciousness')return m.v.confusion?'ny forvirring':m.v.conscious;
+  if(key==='oxygen')return m.v.oxygen?'ja':'nei';
+  if(key==='spo')return `${m.v.spo2}`;
+  return key==='temp'?formatNumber(m.v.temp,1):String(m.v[key]);
+}
+function fillCompareSelects(){
+  for(const [id,fallback] of [['compareFrom',0],['compareTo',measurements.length-1]]){
+    const sel=$(id),old=sel.value;
+    sel.replaceChildren(...measurements.map((m,i)=>{const o=makeElement('option',measurementLabel(i));o.value=String(i);return o;}));
+    sel.value=old!==''&&Number(old)<measurements.length?old:String(fallback);
+  }
+  if($('compareFrom').value===$('compareTo').value&&measurements.length>1){$('compareFrom').value='0';$('compareTo').value=String(measurements.length-1);}
+}
+function renderComparison(){
+  fillCompareSelects();
+  let a=Number($('compareFrom').value),b=Number($('compareTo').value);
+  if(a>b)[a,b]=[b,a];
+  const from=measurements[a],to=measurements[b];if(!from||!to)return;
+  const minutes=elapsedMinutes(b)-elapsedMinutes(a),diff=to.news.total-from.news.total;
+  $('compareSummary').textContent=a===b?'Velg to ulike målinger for å se endringen.':`Fra måling ${a+1} til måling ${b+1} (${formatDuration(minutes)}): NEWS2 ${diff>0?'økte':diff<0?'sank':'var uendret'} fra ${from.news.total} til ${to.news.total} poeng.`;
+  const rows=NEWS_PARTS.filter(([key])=>partValue(key,from)!==partValue(key,to)||from.news.parts[key]!==to.news.parts[key]).map(([key,label,unit])=>{
+    const li=makeElement('li');const p1=from.news.parts[key],p2=to.news.parts[key];
+    li.textContent=`${label}: ${partValue(key,from)} → ${partValue(key,to)}${unit?' '+unit:''} (${p1} → ${p2} poeng)`;
+    if(p1!==p2)li.className=p2>p1?'compare-up':'compare-down';
+    return li;
+  });
+  $('compareList').replaceChildren(...(rows.length?rows:[makeElement('li','Ingen av NEWS2-parameterne endret seg.')]));
 }
 // Profile has an explicit opt-in for persistence; vitals and the ISBAR text never persist.
 const PROFILE_KEY='kartlegg.sender.v03';
@@ -278,7 +326,7 @@ function clearProfile(){
   window.dispatchEvent(new Event('kartlegg:settings-changed'));
 }
 function buildIsbarText(){
-  const p=readProfile(),v=readVitals(),stamp=getTimeData();
+  const p=readProfile(),v=readVitals();
   const sender=p.name||'[ditt navn]';
   const role=p.role?p.role.toLowerCase():'[stilling]';
   const work=p.work||'[arbeidssted]';
@@ -288,10 +336,10 @@ function buildIsbarText(){
   const extra=$('isbarExtra').value.trim()||'[beskriv din kliniske vurdering og andre observasjoner]';
   const request=$('isbarRequest').value.trim()||'[si konkret hvilken hjelp eller vurdering du ønsker]';
   let vitals='Jeg har foreløpig ikke lagt inn alle nødvendige målingene i Kartlegg.';
-  if(v&&stamp){
+  if(v){
     const news=calculateNEWS2(v),q=calculateQSOFA(v);
     const consciousness={A:'er våken',V:'reagerer på tiltale',P:'reagerer på smerte',U:'reagerer ikke'}[v.conscious];
-    vitals=`Jeg målte vitale parametere ${prettyDate(stamp.date)} klokken ${stamp.time}. Respirasjonsfrekvensen er ${v.rr} per minutt, oksygenmetningen er ${v.spo2} prosent ${v.oxygen?'med tilført oksygen':'på romluft'}, systolisk blodtrykk er ${v.sbp} millimeter kvikksølv, pulsen er ${v.hr} per minutt og temperaturen er ${formatNumber(v.temp,1)} grader. Pasienten ${consciousness}${v.confusion?', og det foreligger nyoppstått forvirring':', uten registrert nyoppstått forvirring'}.`;
+    vitals=`Jeg målte vitale parametere klokken [klokkeslett]. Respirasjonsfrekvensen er ${v.rr} per minutt, oksygenmetningen er ${v.spo2} prosent ${v.oxygen?'med tilført oksygen':'på romluft'}, systolisk blodtrykk er ${v.sbp} millimeter kvikksølv, pulsen er ${v.hr} per minutt og temperaturen er ${formatNumber(v.temp,1)} grader. Pasienten ${consciousness}${v.confusion?', og det foreligger nyoppstått forvirring':', uten registrert nyoppstått forvirring'}.`;
     vitals+=` Den beregnede NEWS2-skåren er ${news.total}, med SpO₂-skala ${v.scale}.`;
     if(q) vitals+=` qSOFA er ${q.total} av 3, basert på oppgitt GCS på ${v.gcs} av 15.`;
     else vitals+=' qSOFA er ikke beregnet fordi separat GCS-måling mangler.';
@@ -358,14 +406,17 @@ window.addEventListener('resize',()=>{if(window.innerWidth>770&&menu.classList.c
 form.addEventListener('input',()=>{showNotice('');updateScores();});
 form.addEventListener('change',()=>{showNotice('');updateScores();});
 form.addEventListener('submit',e=>{e.preventDefault();if(!updateScores()){showNotice('Fyll ut alle obligatoriske målinger korrekt.');return;}showNotice('');$('resultater').scrollIntoView({behavior:'smooth',block:'start'});});
-form.addEventListener('reset',()=>{setTimeout(()=>{showNotice('');clearResults();setTimeNow();},0);});
+form.addEventListener('reset',()=>{setTimeout(()=>{showNotice('');clearResults();},0);});
 $('saveMeasurement').addEventListener('click',saveSnapshot);
-$('newMeasurement').addEventListener('click',()=>{form.reset();setTimeout(()=>{setTimeNow();clearResults();showNotice('');showPage('vurdering');},0);});
+$('newMeasurement').addEventListener('click',()=>{form.reset();setTimeout(()=>{clearResults();showNotice('');showPage('vurdering');},0);});
+for(const id of ['compareFrom','compareTo'])$(id).addEventListener('change',renderComparison);
 $('openIsbar').addEventListener('click',openIsbar);
 $('closeIsbar').addEventListener('click',closeIsbar);
 $('doneIsbar').addEventListener('click',closeIsbar);
 $('clearHistory').addEventListener('click',()=>removeMeasurements([...measurements]));
 $('historyUndoButton').addEventListener('click',undoRemove);
+$('loadExampleForlop').addEventListener('click',loadExampleForlop);
+$('startOwnForlop').addEventListener('click',()=>{form.reset();setTimeout(()=>{clearResults();showNotice('');showPage('vurdering');$('rr')?.focus({preventScroll:true});},0);});
 $('copyIsbar').addEventListener('click',copyIsbar);
 for(const id of ['isbarSituation','isbarBackground','isbarExtra','isbarRequest',...PROFILE_IDS])$(id).addEventListener('input',renderIsbar);
 $('profileRole').addEventListener('change',renderIsbar);
@@ -373,21 +424,22 @@ $('saveProfile').addEventListener('click',saveProfile);
 $('clearProfile').addEventListener('click',clearProfile);
 for(const [id,step] of [['smallerScript',-2],['largerScript',2]])$(id).addEventListener('click',()=>{scriptFontSize=Math.max(15,Math.min(29,scriptFontSize+step));$('isbarOutput').style.fontSize=scriptFontSize+'px';});
 window.addEventListener('hashchange',()=>showPage(location.hash.slice(1),false));
-// «Målinger over tid»: load the signed-in user's device copy, drop anything older than 24 hours,
+// «Øvingsforløp»: load the signed-in user's device copy, drop anything older than 24 hours,
 // and wipe the device copy when nobody is signed in (shared devices).
 function withScores(item){return {...item,news:calculateNEWS2(item.v),q:calculateQSOFA(item.v)};}
-function persistMeasurements(){if(Store&&Gate?.owner)Store.save(Gate.owner,measurements.map(({savedAt,date,time,v})=>({savedAt,date,time,v})));}
+function persistMeasurements(){if(Store&&Gate?.owner)Store.save(Gate.owner,measurements.map(({savedAt,after,v})=>({savedAt,after,v})));}
 function loadMeasurements(){
   const owner=Gate?.owner;
   measurements.splice(0,measurements.length,...(Store&&owner?Store.load(owner).map(withScores):[]));
-  measurements.sort((a,b)=>a.iso.localeCompare(b.iso));
+  if(measurements[0])measurements[0].after=0;
+  renderForlopLine();
   if(currentPage==='historikk')renderHistory();
 }
 Gate?.onChange(state=>{if(state==='guest')Store?.clearAll();loadMeasurements();});
 setInterval(loadMeasurements,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadMeasurements();});
 window.KartleggShowPage=showPage;
-loadProfile();setTimeNow();clearResults();loadMeasurements();showPage(location.hash.slice(1)||'start',false);
+loadProfile();clearResults();loadMeasurements();showPage(location.hash.slice(1)||'start',false);
 
 // Explicit account adapter: only the four sender fields; never ISBAR or observations.
 window.KartleggSenderProfile={read:readProfile,apply(info){for(const id of PROFILE_IDS){const key=id.replace('profile','').toLowerCase();$(id).value=typeof info?.[key]==='string'?info[key].slice(0,120):'';}saveProfile();renderIsbar();$('profileName').dispatchEvent(new Event('input',{bubbles:true}));}};

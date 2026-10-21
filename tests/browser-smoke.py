@@ -461,7 +461,8 @@ script=r"""
   const rootToken=k=>getComputedStyle(root).getPropertyValue(k).trim();
   const meta=document.querySelector('.meta-line');
   const unit=document.querySelector('#rr').closest('.field').querySelector('.unit');
-  const datainput=document.querySelector('#measureDate');
+  // The practice timeline has no date or clock inputs; the interval select is the themed control in that panel.
+  const datainput=document.querySelector('#measureInterval');
   const chip=document.querySelector('#page-vurdering .chip');
   const clinical=document.querySelector('.score.danger');
   // Danger score colors must not get converted into theme accents.
@@ -473,7 +474,7 @@ script=r"""
    assert(color(meta)!=='rgb(27, 52, 77)','legacy blue date/time panel still active for '+id);
    assert(color(meta)!=='rgb(27, 52, 77)','theme meta panel must not be legacy blue');
    assert(color(unit)!=='rgb(27, 52, 77)','legacy blue unit background persists in '+id);
-   assert(color(datainput)!=='rgb(23, 46, 69)','legacy dark blue date input remains in '+id);
+   assert(color(datainput)!=='rgb(23, 46, 69)','legacy dark blue interval select remains in '+id);
    if(chip)assert(color(chip)!=='rgb(27, 52, 77)','legacy blue version badge remains in '+id);
    assert(getComputedStyle(document.querySelector('#rr')).color!== 'rgb(22, 47, 75)','old navy input text remains in '+id);
    if(clinical)assert(color(clinical)===baselineClinical,'clinical danger colors must not change with '+id);
@@ -678,12 +679,11 @@ script=r"""
   const gcsDisclosure=document.querySelector('#optionalGCS');
   assert(gcsDisclosure&&gcsDisclosure.contains(document.querySelector('#gcs')),'GCS progressive disclosure missing');
   assert(gcsDisclosure.textContent.includes('valgfritt'),'GCS must be clearly optional');
-  const nowBtn=document.querySelector('#setMeasurementNow');
-  assert(!!nowBtn,'timestamp Now action missing');
-  put('measureDate','2000-01-01');put('measureTime','03:00');
-  nowBtn.click();
-  assert(document.querySelector('#measureDate').value!=='2000-01-01','Now action did not set local date');
-  assert(/^\d{2}:\d{2}$/.test(document.querySelector('#measureTime').value),'Now action did not set time');
+  // Øvingsforløp: no real date or clock time can be entered, only the time since the previous measurement.
+  assert(!document.querySelector('#measureDate,#measureTime,#setMeasurementNow,input[type=date],input[type=time]'),'real date/time inputs must be gone from the NEWS2 form');
+  const interval=document.querySelector('#measureInterval');
+  assert(!!interval&&[...interval.options].every(o=>/^\d+$/.test(o.value)),'interval select must offer minutes since previous measurement');
+  assert(document.querySelector('#saveMeasurement').textContent.includes('øvingsforløp'),'save button must say it adds to the practice timeline');
   const form=document.querySelector('#vitalsForm'),fieldIds=['rr','spo2','sbp','hr','temp'];
   fieldIds.forEach(id=>put(id,''));
   put('gcs','');put('conscious','');put('oxygen','');

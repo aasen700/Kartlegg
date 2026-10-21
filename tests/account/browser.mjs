@@ -90,10 +90,10 @@ try{
  assert(JSON.stringify(cloud)===before,'clinical ISBAR input never enters account payload');
  // Measurements: stored on this device for the signed-in user only, and wiped at logout.
  await go('#vurdering');assert(page()==='page-vurdering','member sees the assessment');
- window.KartleggMeasurementStore.save(gate.owner,[{savedAt:Date.now(),date:'2026-10-20',time:'08:00',v:{rr:22,spo2:95,sbp:110,hr:95,temp:37.2,gcs:null,conscious:'A',oxygen:false,scale:1,confusion:false}}]);
- assert(localStorage.getItem('kartlegg.vitals-24h.v1'),'measurement stored on device');
+ window.KartleggMeasurementStore.save(gate.owner,[{savedAt:Date.now(),after:0,v:{rr:22,spo2:95,sbp:110,hr:95,temp:37.2,gcs:null,conscious:'A',oxygen:false,scale:1,confusion:false}}]);
+ assert(localStorage.getItem('kartlegg.vitals-24h.v2'),'measurement stored on device');
  $('accountLogout').click();await pause(120);
- assert(!localStorage.getItem('kartlegg.vitals-24h.v1'),'measurements are wiped at logout');
+ assert(!localStorage.getItem('kartlegg.vitals-24h.v2'),'measurements are wiped at logout');
  assert(!$('accountGuest').hidden,'guest UI restored after logout');assert($('page-profil').dataset.account==='guest','«Husk profilen» returns after logout');assert($('profileName').value==='Guest Nurse','guest profile restored');assert(!$('rememberProfile').checked,'guest persistence opt-in restored');
  assert(!localStorage.getItem('kartlegg.account.owner.v1'),'account owner marker cleared');
  assert(page()==='page-start','logout returns to the public front page');

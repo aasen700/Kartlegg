@@ -12,7 +12,7 @@
 | Egen kontoside: innlogging, registrering, e-postbekreftelse, bekreftelse av vilkår | `assets/account/ui.mjs` (`#page-konto`) | Ferdig |
 | Tre separate, ikke forhåndsavkryssede bekreftelser (vilkår, pasientopplysninger, klinisk ansvar) ved registrering og for eksisterende kontoer | `assets/account/ui.mjs`, `firestore.rules`, `assets/account/firebase.mjs` | Ferdig i kode. Krever at reglene publiseres (se under) for å lagres på serveren |
 | Bruksvilkår og personvernerklæring, åpne før og etter innlogging | `index.html` (`#page-vilkar`, `#page-personvern`) | Ferdigstilt 21. oktober 2026 (ikke gjennomgått av jurist) |
-| «Målinger over tid» lagret lokalt i høyst 24 timer, bare tall og faste valg, knyttet til bruker, slettet ved utlogging | `assets/measurement-store.js`, `assets/app.js` | Ferdig |
+| «Øvingsforløp» (tidligere «Målinger over tid») lagret lokalt i høyst 24 timer, bare tall og faste valg og tid siden forrige måling – ingen dato eller klokkeslett –, knyttet til bruker, slettet ved utlogging | `assets/measurement-store.js`, `assets/app.js` | Ferdig |
 | Tiltak mot automatisk registrering: e-postbekreftelse før tilgang, skjult felt og minstetid i skjemaet | `assets/account/ui.mjs` | Ferdig |
 | Firebase App Check (reCAPTCHA v3) | `assets/account/config.mjs`, `assets/account/firebase.mjs` | Klar i kode, men **av**. Satt på vent 21. oktober 2026 (se under) |
 

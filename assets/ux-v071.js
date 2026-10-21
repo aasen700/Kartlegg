@@ -80,7 +80,7 @@
  const hPage=$('page-historikk'),section=document.createElement('section');
  section.id='standaloneHistory';section.className='section extra-history';section.hidden=true;
  const head=document.createElement('div');head.className='section-header';
- head.innerHTML='<div class="section-symbol teal" aria-hidden="true">◷</div><div><h2>GCS- og NRS-målinger</h2><p>Kun midlertidig i denne fanen. Ingen personopplysninger eller pasientidentifikasjon.</p></div>';
+ head.innerHTML='<div class="section-symbol teal" aria-hidden="true">◷</div><div><h2>GCS- og NRS-øvinger</h2><p>Kun midlertidig i denne fanen, uten dato og klokkeslett. Bruk bare tenkte pasienter.</p></div>';
  const toolbar=document.createElement('div');toolbar.className='extra-history-toolbar';
  const number=document.createElement('span');number.id='assessmentCount';number.textContent='0 målinger';
  const erase=document.createElement('button');erase.type='button';erase.className='btn-inline';erase.id='eraseAssessments';erase.textContent='Slett alle GCS/NRS';
@@ -88,8 +88,7 @@
  const list=document.createElement('div');list.id='assessmentList';list.className='assessment-list';
  section.append(head,toolbar,list);
  hPage.querySelector('.intro')?.after(section);
- const clearVitals=$('clearHistory');if(clearVitals)clearVitals.textContent='Slett vitale målinger';
- const emptyVitals=$('emptyHistory');if(emptyVitals)emptyVitals.textContent='Ingen vitale målinger lagret i denne fanen.';
+ // Knappeteksten og tomtilstanden for øvingsforløpet står i index.html.
  function renderSaved(){
   section.hidden=saved.length===0;number.textContent=saved.length+' målinger';
   list.replaceChildren();
@@ -100,7 +99,7 @@
    const detail=document.createElement('p');detail.textContent=record.detail;
    const time=document.createElement('small');time.textContent=record.date;
    const remove=document.createElement('button');remove.type='button';remove.className='btn-inline';remove.textContent='Slett';
-   remove.setAttribute('aria-label','Slett '+record.title+' fra '+record.date);
+   remove.setAttribute('aria-label','Slett '+record.title+' ('+record.date+')');
    remove.addEventListener('click',()=>{
     if(!window.confirm('Slette denne midlertidige '+record.kind+'-målingen?'))return;
     const i=saved.findIndex(item=>item.id===record.id);if(i>=0)saved.splice(i,1);renderSaved();
@@ -115,9 +114,9 @@
  let unique=0;
  function store(record){
   if(saved.length>=maxRecords){window.alert('Du kan lagre maksimalt 50 GCS/NRS-vurderinger i én økt. Slett noen før du fortsetter.');return}
-  const time=new Date();
-  const date=time.toLocaleString('nb-NO',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  saved.push({...record,date,id:++unique});renderSaved();
+  // Ingen ekte dato eller klokkeslett, bare rekkefølgen i økten (samme prinsipp som øvingsforløpet).
+  const n=++unique;
+  saved.push({...record,date:'Øvingsvurdering '+n,id:n});renderSaved();
   $('clinicalToolDialog')?.close();
   document.querySelector('[data-page=historikk]')?.click();
  }
@@ -138,7 +137,7 @@
    }
   }catch(_){return}
   if(!current)return;
-  const save=document.createElement('button');save.type='button';save.className='btn btn-secondary save-standalone';save.textContent='＋ Lagre '+current.kind+' i målehistorikk';
+  const save=document.createElement('button');save.type='button';save.className='btn btn-secondary save-standalone';save.textContent='＋ Legg '+current.kind+' i øvingsforløpet';
   save.addEventListener('click',()=>store(current));result.append(save);
  });
  form?.addEventListener('input',()=>{if(!result.hidden)result.hidden=true});

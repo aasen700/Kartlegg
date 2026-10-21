@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=jur1">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=sma1">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forlop1">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=sma1">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
@@ -51,7 +51,7 @@
     <div class="sidebar-backdrop" id="backdrop"></div>
     <nav class="sidebar" id="sidebar" aria-label="Hovedmeny">
       <button class="nav active" data-page="vurdering" aria-current="page"><span class="ico">✚</span> NEWS2 og qSOFA</button>
-      <button class="nav" data-page="historikk"><span class="ico">◷</span> Målinger over tid</button>
+      <button class="nav" data-page="historikk"><span class="ico">◷</span> Øvingsforløp</button>
       <button class="nav" data-page="verktoy"><span class="ico">▤</span> Kliniske verktøy</button>
       <button class="nav" data-page="laer"><span class="ico">✦</span> Lær</button>
       <button class="nav" data-page="simulering"><span class="ico">◇</span> Simulering</button>
@@ -71,10 +71,10 @@
         <div class="section-header"><div class="section-symbol coral" aria-hidden="true">▤</div><div><h2 id="input-heading">Regn ut NEWS2 og qSOFA</h2><p>Felt med * trengs for NEWS2. GCS trengs bare for qSOFA.</p></div></div>
         <form id="vitalsForm" novalidate autocomplete="off">
           <div class="form-inner">
-            <div class="meta-line">
-              <label>Dato for målingen<input id="measureDate" type="date" aria-label="Dato for målingen"></label>
-              <label>Klokkeslett<input id="measureTime" type="time" aria-label="Klokkeslett for målingen"></label>
-              <small>Trykk «Lagre måling» for å legge målingen i tidslinjen. Da kan du sammenligne flere tidspunkter.</small>
+            <div class="meta-line forlop-line">
+              <p class="forlop-first" id="forlopFirst">Lagres som måling 1 (start) i øvingsforløpet.</p>
+              <label id="forlopIntervalLabel" hidden>Tid siden forrige måling<select id="measureInterval"><option value="15">15 min</option><option value="30">30 min</option><option value="60" selected>1 t</option><option value="120">2 t</option><option value="180">3 t</option><option value="240">4 t</option><option value="360">6 t</option><option value="480">8 t</option><option value="720">12 t</option><option value="1440">24 t</option></select></label>
+              <small><span id="forlopNext">Neste lagring blir måling 1.</span> Øvingsforløpet viser bare tiden mellom målingene, ikke dato eller klokkeslett. Bruk bare tenkte pasienter.</small>
             </div>
             <div class="fields">
               <div class="field"><div class="field-head"><span class="field-icon" aria-hidden="true">◍</span><label for="rr">Respirasjons&shy;frekvens <span class="required">*</span></label></div><div class="control-wrap"><input id="rr" aria-describedby="rr-hint" name="rr" inputmode="numeric" type="number" min="1" max="150" step="1" required><span class="unit">/min</span></div><p class="hint" id="rr-hint">Antall åndedrag per minutt</p></div>
@@ -89,7 +89,7 @@
               <div class="field wide"><div class="field-head"><span class="field-icon" aria-hidden="true">?</span><span class="field-label" id="confusion-label">Nyoppstått forvirring / endret mental status <span class="required">*</span></span></div><div class="toggle-group" role="radiogroup" aria-labelledby="confusion-label"><label class="choice"><input name="confusion" type="radio" value="yes" required><span>Ja</span></label><label class="choice"><input name="confusion" type="radio" value="no" required><span>Nei</span></label></div><p class="hint">Gjelder nyoppstått forvirring, ikke kronisk kognitiv svikt alene</p></div>
             </div>
             <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
-            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-secondary" type="button" id="saveMeasurement" data-icon="plus">Lagre måling</button><button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
+            <div class="form-actions"><button class="btn btn-secondary" type="reset" data-icon="reset">Nullstill</button><div class="actions-right"><button class="btn btn-secondary" type="button" id="saveMeasurement" data-icon="plus">Legg til i øvingsforløp</button><button class="btn btn-secondary" type="button" id="openIsbar" data-icon="document">Lag ISBAR-manus</button><button class="btn btn-primary" type="submit" data-icon="calculator">Beregn skårer</button></div></div>
           </div>
         </form>
       </section>
@@ -107,18 +107,19 @@
 
       </div><!-- /page-vurdering -->
       <div class="page" id="page-historikk" hidden>
-        <div class="intro"><div><h1>Målinger over tid</h1><p>Registrer flere observasjonstidspunkter og sammenlign utviklingen i målinger og skårer.</p></div><span class="chip" id="historyCounter">0 registrerte</span></div>
+        <div class="intro"><div><h1>Øvingsforløp</h1><p>Øv på å se hvordan NEWS2 utvikler seg hos en tenkt pasient over flere målinger.</p></div><span class="chip" id="historyCounter">0 målinger</span></div>
         <section class="section">
-          <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målingstidslinje</h2><p>Følg utviklingen mellom flere tidspunkter. Bruk bare fiktive eller reelt anonymiserte verdier, og bland ikke målinger fra ulike personer.</p></div></div>
-          <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett alle målinger</button></span></div>
+          <div class="section-header"><div class="section-symbol coral">◷</div><div><h2>Målinger i forløpet</h2><p>Hver måling viser tiden siden starten, ikke dato eller klokkeslett. Bruk bare tenkte pasienter.</p></div></div>
+          <p class="forlop-caption" id="forlopCaption" hidden></p>
+          <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett øvingsforløpet</button></span></div>
           <div class="history-undo" id="historyUndo" role="status" hidden><span id="historyUndoText"></span><button class="btn-inline" id="historyUndoButton" type="button">Angre</button></div>
-          <div class="empty-state" id="emptyHistory">Ingen målinger lagret ennå. Gå til «NEWS2 og qSOFA», fyll ut målingene og trykk «Lagre måling».</div>
-          <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Lagrede målinger"><thead><tr><th>Dato og tid</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
+          <div class="empty-state forlop-empty" id="emptyHistory"><p><strong>Ingen målinger i øvingsforløpet ennå.</strong></p><p>Start med et ferdig eksempel, eller lag ditt eget forløp: fyll ut NEWS2 og trykk «Legg til i øvingsforløp». Ved neste måling velger du hvor lang tid som har gått.</p><div class="forlop-start"><button class="btn btn-primary" id="loadExampleForlop" type="button">Prøv eksempelet: lungebetennelse</button><button class="btn btn-secondary" id="startOwnForlop" type="button">Lag eget forløp</button></div></div>
+          <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Målinger i øvingsforløpet"><thead><tr><th>Måling</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
         </section>
         <section class="section" id="trendSection" hidden>
-          <div class="section-header"><div class="section-symbol cyan">↗</div><div><h2>Utvikling i NEWS2</h2><p>Viser de lagrede totalverdiene over tid. Oppmerksomhet må også rettes mot enkeltparametere.</p></div></div>
-          <div class="trend-wrap"><h3>NEWS2 – tidsserie</h3><div id="trendChart"></div><div class="trend-meta"><span id="trendStart"></span><span id="trendEnd"></span></div></div>
-          <div class="diff-grid" id="deltas"></div>
+          <div class="section-header"><div class="section-symbol cyan">↗</div><div><h2>Utvikling i NEWS2</h2><p>Grafen viser NEWS2 over tid i forløpet. Sammenlign to målinger for å se hvilke parametere som endret skåren.</p></div></div>
+          <div class="trend-wrap"><h3>NEWS2 gjennom forløpet</h3><div id="trendChart"></div><div class="trend-meta"><span id="trendStart"></span><span id="trendEnd"></span></div></div>
+          <div class="compare-box" id="compareBox"><h3>Sammenlign to målinger</h3><div class="compare-pickers"><label>Fra<select id="compareFrom"></select></label><label>Til<select id="compareTo"></select></label></div><p class="compare-summary" id="compareSummary" aria-live="polite"></p><ul class="compare-list" id="compareList"></ul></div>
         </section>
       </div><!-- /page-historikk -->
       <div class="page" id="page-verktoy" hidden>
@@ -298,8 +299,8 @@
             </article>
             <article class="public-feature">
               <div class="public-feature-preview preview-trend" aria-hidden="true"><svg viewBox="0 0 120 40" focusable="false"><polyline points="4,30 28,26 52,28 76,16 100,12 116,8"/></svg></div>
-              <h3>Målinger over tid <span class="public-feature-badge">Med konto</span></h3>
-              <p>Se hvordan NEWS2 utvikler seg mellom flere tidspunkter. Bare for fiktive verdier, og lagret på enheten din i høyst 24 timer.</p>
+              <h3>Øvingsforløp <span class="public-feature-badge">Med konto</span></h3>
+              <p>Øv på å se hvordan NEWS2 utvikler seg hos en tenkt pasient, med ferdig eksempel og sammenligning av to målinger. Lagret på enheten din i høyst 24 timer.</p>
             </article>
           </div>
         </section>
@@ -335,7 +336,7 @@
           <p class="purpose-statement"><strong>Tiltenkt formål:</strong> Kartlegg er et gratis verktøy for opplæring og øving. Det er laget for å lære hvordan kliniske kartleggingsverktøy og skårer brukes, beregnes og tolkes, med tenkte pasienteksempler. Kartlegg er ikke medisinsk utstyr og skal ikke brukes til å vurdere, overvåke, diagnostisere eller behandle virkelige pasienter, eller som grunnlag for kliniske beslutninger.</p>
           <p>Kartlegg er gratis og ikke-kommersielt. Tjenesten er laget og drives av Philip Aasen som et eget prosjekt, og representerer ikke noen høgskole eller helsetjeneste. Kartlegg er en demoversjon.</p>
           <h2>2. Hvem tjenesten er for</h2>
-          <p>Kartlegg er laget for studenter, helsepersonell og undervisere. NEWS2 og qSOFA (med ISBAR) og Kliniske verktøy er åpne for alle, uten konto. Du trenger en gratis konto for læringsmodulene, simuleringen, «Målinger over tid» og for å lagre profil og favoritter på tvers av enheter.</p>
+          <p>Kartlegg er laget for studenter, helsepersonell og undervisere. NEWS2 og qSOFA (med ISBAR) og Kliniske verktøy er åpne for alle, uten konto. Du trenger en gratis konto for læringsmodulene, simuleringen, «Øvingsforløp» og for å lagre profil og favoritter på tvers av enheter.</p>
           <p>Punktene om pasientopplysninger, faglig ansvar, akseptabel bruk og ansvarsbegrensning gjelder all bruk av Kartlegg, også uten konto.</p>
           <h2>3. Kontoen din</h2>
           <ul>
@@ -346,7 +347,7 @@
           <h2>4. Pasientopplysninger</h2>
           <p>Kartlegg er ikke en pasientjournal og er ikke laget for å behandle helseopplysninger om virkelige pasienter. Du forplikter deg til å:</p>
           <ul>
-            <li>bare bruke fiktive eller reelt anonymiserte verdier i beregninger, «Målinger over tid», ISBAR og øvinger,</li>
+            <li>bare bruke fiktive eller reelt anonymiserte verdier i beregninger, «Øvingsforløp», ISBAR og øvinger,</li>
             <li>aldri registrere navn, fødselsnummer, journalnummer, adresse, bilde eller andre opplysninger som direkte eller indirekte kan identifisere en pasient,</li>
             <li>bare skrive dine egne opplysninger i profilfeltene (navn, stilling, arbeidssted og avdeling).</li>
           </ul>
@@ -391,7 +392,7 @@
           </ul>
           <h2>Lagring på enheten din</h2>
           <ul>
-            <li><strong>Målinger over tid (med konto):</strong> lagres bare i nettleseren på denne enheten, knyttet til kontoen din, og slettes automatisk etter høyst 24 timer, når du logger ut, eller når du sletter dem selv. De er ikke kryptert, så bruk bare fiktive verdier.</li>
+            <li><strong>Øvingsforløp (med konto):</strong> målingene lagres uten dato og klokkeslett, bare med tiden mellom målingene. De lagres bare i nettleseren på denne enheten, knyttet til kontoen din, og slettes automatisk etter høyst 24 timer, når du logger ut, eller når du sletter dem selv. De er ikke kryptert, så bruk bare tenkte pasienter.</li>
             <li><strong>Innlogging:</strong> varer til du lukker nettleseren, eller til du logger ut hvis du har krysset av for «Husk meg på denne enheten».</li>
             <li><strong>Innstillinger:</strong> utseende, favoritter, at du har lukket velkomstmeldingen, og eventuelt avsenderprofilen hvis du har valgt «Husk profilen».</li>
           </ul>
@@ -605,7 +606,7 @@
                 <li>18 kliniske verktøy, blant annet NEWS2, qSOFA, GCS, 4AT, NRS, MST, TUG, ESAS-r, ankel–arm-indeks, TIMES og ABCDE. Åpne for alle.</li>
                 <li>Lær: GCS, 4AT, NEWS2, TIMES og legemiddelregning (med konto).</li>
                 <li>Én simulering fra hjemmesykepleien (med konto).</li>
-                <li>Målinger over tid i høyst 24 timer, og ISBAR-manus.</li>
+                <li>Øvingsforløp med eksempel og sammenligning av målinger, og ISBAR-manus.</li>
               </ul>
             </div>
             <div class="about-status-item">
@@ -620,7 +621,7 @@
             <div class="about-status-item">
               <h3>Under arbeid</h3>
               <ul>
-                <li>Sammenligning av to målinger i «Målinger over tid».</li>
+                <li>Spørsmål underveis i øvingsforløpet («Hva ville du observert nå?»).</li>
                 <li>Fremdrift og resultathistorikk i Lær.</li>
                 <li>Flere simuleringskasus med tilbakemelding på prioritering.</li>
               </ul>
@@ -638,7 +639,7 @@
           <div class="about-v0993-storage-grid">
             <div class="about-v0993-storage-item">
               <h3>Målinger</h3>
-              <p>Målinger du lagrer i tidslinjen, finnes bare i nettleseren på denne enheten. De sendes ikke noe sted, slettes automatisk etter høyst 24 timer og når du logger ut. Bruk bare fiktive verdier.</p>
+              <p>Målinger du legger i øvingsforløpet, finnes bare i nettleseren på denne enheten, uten dato og klokkeslett. De sendes ikke noe sted, slettes automatisk etter høyst 24 timer og når du logger ut. Bruk bare tenkte pasienter.</p>
             </div>
             <div class="about-v0993-storage-item">
               <h3>Avsenderprofil</h3>
@@ -695,16 +696,16 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/auth-gate.js?v=jur1"></script>
-  <script src="assets/measurement-store.js?v=1"></script>
-  <script src="assets/app.js?v=jur1"></script>
+  <script src="assets/auth-gate.js?v=forlop1"></script>
+  <script src="assets/measurement-store.js?v=2"></script>
+  <script src="assets/app.js?v=forlop3"></script>
   <script src="assets/welcome.js?v=1"></script>
-  <script src="assets/enhancements.js?v=home1"></script>
+  <script src="assets/enhancements.js?v=forlop2"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
-  <script src="assets/v06.js?v=sma1"></script>
+  <script src="assets/v06.js?v=forlop1"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>
   <script src="assets/clinical-ui.js?v=2010"></script>
-  <script src="assets/ux-v071.js?v=2013"></script>
+  <script src="assets/ux-v071.js?v=forlop1"></script>
   <script src="assets/modern-v08-scoring.js?v=0802"></script>
   <script src="assets/modern-v08-timer.js?v=0803"></script>
   <script src="assets/modern-v08-body.js?v=0992"></script>
@@ -722,8 +723,7 @@
   <script src="assets/medication-learning-v12.js?v=navn1"></script>
   <script src="assets/tool-categories-v099.js?v=profile2"></script>
   <script src="assets/theme-finalize-v0992.js?v=account1"></script>
-  <script src="assets/final-polish-v10.js?v=1011"></script>
-  <script src="assets/vurdering-tid.js?v=1"></script>
+  <script src="assets/final-polish-v10.js?v=forlop1"></script>
   <script src="assets/personal-modes.js?v=profile1"></script>
   <script src="assets/tool-navigation.js?v=sma1"></script>
   <script src="assets/simulation-engine.js?v=101"></script>

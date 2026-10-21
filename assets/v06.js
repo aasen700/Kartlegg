@@ -263,7 +263,7 @@ function validate(){
 form?.addEventListener('submit',e=>{if(!validate()){e.preventDefault();e.stopImmediatePropagation()}},true);
 $('saveMeasurement')?.addEventListener('click',e=>{if(!validate()){e.preventDefault();e.stopImmediatePropagation()}},true);
 form?.addEventListener('reset',()=>{form.querySelectorAll('.field-invalid').forEach(el=>el.classList.remove('field-invalid'))});
-$('historyRows')?.addEventListener('click',e=>{const b=e.target.closest('button[aria-label^="Slett måling"]');if(b&&!confirm('Slette denne målingen fra tidslinjen?')){e.preventDefault();e.stopImmediatePropagation()}},true);
+// Sletting i øvingsforløpet kan angres (app.js), så den spør ikke først.
 form?.querySelector('button[type=reset]')?.addEventListener('click',e=>{if(Object.keys(fieldnames).some(id=>$(id)?.value.trim())&&!confirm('Nullstille registreringsskjemaet?')){e.preventDefault();e.stopImmediatePropagation()}},true);
 
 })();

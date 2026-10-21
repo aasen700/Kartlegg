@@ -25,18 +25,8 @@ gcs.addEventListener('input',openGcsIfPopulated);
 gcs.addEventListener('focus',()=>{extra.open=true});
 extra.addEventListener('toggle',()=>{summary.textContent=extra.open?'GCS – valgfritt for qSOFA':'＋ GCS – valgfritt for qSOFA'});
 openGcsIfPopulated();
-// Additional lightweight time utility: no polling, uses device-local clock only on click.
-const now=document.createElement('button');now.type='button';now.id='setMeasurementNow';now.className='v10-now-button';now.textContent='◷ Nå';
-now.setAttribute('aria-label','Sett dagens dato og klokkeslett til nå');
+// Øvingsforløpet har ikke ekte dato eller klokkeslett, så det finnes ingen «Nå»-knapp.
 const meta=form.querySelector('.meta-line');
-meta.insertBefore(now,meta.querySelector('small'));
-function setNow(){
- const d=new Date(),pad=n=>String(n).padStart(2,'0');
- $('measureDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
- $('measureTime').value=pad(d.getHours())+':'+pad(d.getMinutes());
- for(const id of ['measureDate','measureTime'])$(id).dispatchEvent(new Event('change',{bubbles:true}));
-}
-now.addEventListener('click',setNow);
 // Highlight only failures after an attempted action, not during ordinary entry.
 const summaryBox=document.createElement('div');summaryBox.id='v10ValidationSummary';summaryBox.className='v10-validation-summary';summaryBox.hidden=true;
 summaryBox.setAttribute('role','alert');summaryBox.setAttribute('aria-live','assertive');summaryBox.tabIndex=-1;
@@ -53,7 +43,7 @@ function listErrors(includeDate=false){
   else if(!input.checkValidity())issues.push({id,name,reason:'ugyldig verdi'});
  }
  if(gcs.value.trim()&&!gcs.checkValidity())issues.push({id:'gcs',name:'GCS',reason:'angi heltall fra 3 til 15'});
- if(includeDate){
+ if(includeDate&&$('measureDate')){
   for(const [id,name] of [['measureDate','Dato'],['measureTime','Klokkeslett']]){
    if(!$(id).value)issues.push({id,name,reason:'mangler'});
    else if(!$(id).checkValidity())issues.push({id,name,reason:'ugyldig'});
@@ -144,5 +134,5 @@ function renderParts(event){
 // app.js provides the validated, already computed NEWS2 parts on each input/change.
 // One calculation now drives both the score card and the detailed visualization.
 window.addEventListener('kartlegg:news2-changed',renderParts);
-window.KartleggFinalPolish={report,clear,listErrors,setNow};
+window.KartleggFinalPolish={report,clear,listErrors};
 })();

@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Øvingsforløp i stedet for «Målinger over tid» – 21. oktober 2026
+
+- «Målinger over tid» heter nå «Øvingsforløp» og er laget for tenkte pasienter. Det lagres ingen ekte dato eller klokkeslett, bare hvor lang tid som har gått siden forrige måling. Da kan funksjonen ikke brukes som journal eller til å overvåke en virkelig pasient.
+- NEWS2-skjemaet har ikke lenger dato, klokkeslett og «Nå». Første lagring blir «Måling 1 (start)». Ved neste måling velger du tiden siden forrige (15 min til 24 t).
+- Målingene vises som «Måling 2 (etter 2 t)» og så videre, og grafen viser tid fra start.
+- Nytt: sammenlign to valgte målinger og se hvilke NEWS2-parametere som endret skåren, med poeng før og etter.
+- Tomtilstand med et ferdig eksempel (tenkt kvinne, 78 år, lungebetennelse, NEWS2 1 → 5 → 6 → 9) og en knapp for å lage eget forløp.
+- Gamle lagrede målinger med ekte tidspunkt slettes automatisk. GCS- og NRS-øvinger viser heller ikke klokkeslett lenger.
+- ISBAR-manuset bruker «[klokkeslett]» som du fyller inn muntlig.
+
 ## Egen kontaktadresse – 21. oktober 2026
 
 - All kontakt på nettsiden går nå til kontaktkartlegg@gmail.com: bunnteksten, «Meld feil», bruksvilkårene, personvernerklæringen og «Kilder og lisenser».

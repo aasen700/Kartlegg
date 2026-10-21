@@ -32,21 +32,21 @@ selectLabel.append(select);$('trendSection').querySelector('.section-header').ap
 function svgEl(tag,props,content){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,val] of Object.entries(props||{}))el.setAttribute(key,String(val));if(content!==undefined)el.textContent=content;return el}
 renderTrend=function(){
 const [label,unit,extract]=metrics[select.value]||metrics.news;
-const data=measurements.map(m=>({value:extract(m),date:m.date,time:m.time,t:new Date(m.iso).getTime()})).filter(x=>x.value!==null&&Number.isFinite(x.value)&&Number.isFinite(x.t));
-$('trendChart').replaceChildren();if(data.length<2){$('trendChart').textContent='Minst to målinger med denne parameteren kreves.';return}
+// Øvingsforløp: x-aksen er tid siden start (minutter), ikke dato og klokkeslett.
+const data=measurements.map((m,i)=>({value:extract(m),label:measurementLabel(i),t:elapsedMinutes(i)})).filter(x=>x.value!==null&&Number.isFinite(x.value)&&Number.isFinite(x.t));
+$('trendChart').replaceChildren();if(data.length<2){$('trendChart').textContent='Minst to målinger med denne parameteren kreves.';renderComparison();return}
 const W=760,H=215,L=60,R=28,T=23,B=43;
 const times=data.map(x=>x.t),values=data.map(x=>x.value),tmin=Math.min(...times),tmax=Math.max(...times),vmin=Math.min(...values),vmax=Math.max(...values);
 let lo=(select.value==='news'||select.value==='q')?0:Math.floor(vmin-Math.max(1,(vmax-vmin)*.3));let hi=Math.max(lo+1,Math.ceil(vmax+Math.max(1,(vmax-vmin)*.3)));
 if(select.value==='spo2'){lo=Math.max(0,lo);hi=Math.min(100,hi)}
 const X=t=>L+(t-tmin)/(tmax-tmin||1)*(W-L-R),Y=v=>H-B-(v-lo)/(hi-lo)*(H-T-B);
-const svg=svgEl('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':label+' over tid'});
+const svg=svgEl('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':label+' gjennom øvingsforløpet: '+data.map(d=>d.label+' '+d.value).join(', ')});
 for(let i=0;i<=4;i++){const val=lo+(hi-lo)*i/4,y=Y(val);svg.append(svgEl('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:'currentColor','stroke-opacity':'.17','stroke-dasharray':'4 5'}),svgEl('text',{x:3,y:y+3,fill:'currentColor','font-size':12},val.toLocaleString('nb-NO',{maximumFractionDigits:1})))}
 svg.append(svgEl('polyline',{points:data.map(d=>X(d.t)+','+Y(d.value)).join(' '),fill:'none',stroke:'#ed6470','stroke-width':3,'stroke-linejoin':'round'}));
-for(const d of data){const pt=svgEl('circle',{cx:X(d.t),cy:Y(d.value),r:5,fill:'#16a394',stroke:'var(--paper)','stroke-width':2});pt.append(svgEl('title',{},d.date+' '+d.time+': '+d.value+' '+unit));svg.append(pt)}
-for(const [d,anchor] of [[data[0],'start'],[data.at(-1),'end']])svg.append(svgEl('text',{x:X(d.t),y:H-12,'text-anchor':anchor,fill:'currentColor','font-size':12},d.date+' '+d.time));
+for(const d of data){const pt=svgEl('circle',{cx:X(d.t),cy:Y(d.value),r:5,fill:'#16a394',stroke:'var(--paper)','stroke-width':2});pt.append(svgEl('title',{},d.label+': '+d.value+' '+unit));svg.append(pt)}
+for(const [d,anchor] of [[data[0],'start'],[data.at(-1),'end']])svg.append(svgEl('text',{x:X(d.t),y:H-12,'text-anchor':anchor,fill:'currentColor','font-size':12},d.t===0?'Start':'Etter '+formatDuration(d.t)));
 $('trendChart').append(svg);$('trendStart').textContent=label+' ('+unit+')';$('trendEnd').textContent=data.length+' målinger';
-const a=measurements[0],b=measurements.at(-1);const vals=[['NEWS2',b.news.total-a.news.total,'poeng'],['RF',b.v.rr-a.v.rr,'/min'],['SpO₂',b.v.spo2-a.v.spo2,'prosentpoeng'],['Systolisk BT',b.v.sbp-a.v.sbp,'mmHg'],['Puls',b.v.hr-a.v.hr,'/min'],['Temperatur',b.v.temp-a.v.temp,'°C']];
-$('deltas').replaceChildren(...vals.map(([lab,diff,u])=>{const div=makeElement('div',undefined,'diff-box');div.append(makeElement('small',lab),makeElement('strong',(diff>0?'+':'')+formatNumber(diff,u==='°C'?1:0)+' '+u),makeElement('em','Fra første til siste måling'));return div}));
+renderComparison();
 };select.addEventListener('change',()=>{if(measurements.length>=2)renderTrend()});
 const observ=document.createElement('label');observ.textContent='Andre observasjoner';const textarea=document.createElement('textarea');textarea.id='isbarObservations';textarea.rows=2;textarea.maxLength=600;textarea.placeholder='Skriv observasjoner uten pasientidentitet';observ.append(textarea);document.querySelector('.isbar-inputs').append(observ);
 $('isbarModalTitle').textContent='ISBAR – samtalemanus';
@@ -60,7 +60,7 @@ return `Hei, det er ${name}${role} fra ${work}${dept} som ringer angående [pasi
 
 Jeg tar kontakt fordi ${phrase('isbarSituation','[årsak til kontakt]')}.
 
-Jeg har nettopp målt vitale parametere klokken ${$('measureTime').value||'[tidspunkt]'}. De er ${vital}.
+Jeg har nettopp målt vitale parametere klokken [klokkeslett]. De er ${vital}.
 
 Jeg har også observert ${phrase('isbarObservations','[andre observasjoner]')}.
 
