@@ -28,14 +28,15 @@ const selectLabel=document.createElement('label');selectLabel.className='metric-
 const select=document.createElement('select');select.id='chartMetric';
 const metrics={news:['NEWS2','poeng',m=>m.news.total],q:['qSOFA','poeng',m=>m.q?.total??null],rr:['Respirasjonsfrekvens','/min',m=>m.v.rr],spo2:['SpO₂','%',m=>m.v.spo2],sbp:['Systolisk BT','mmHg',m=>m.v.sbp],hr:['Puls','/min',m=>m.v.hr],temp:['Temperatur','°C',m=>m.v.temp]};
 for(const [key,v] of Object.entries(metrics)){const option=document.createElement('option');option.value=key;option.textContent=v[0];select.append(option)}
-selectLabel.append(select);$('trendSection').querySelector('.section-header').append(selectLabel);
+selectLabel.append(select);($('trendSection').querySelector('.trend-wrap')||$('trendSection').querySelector('.section-header')).prepend(selectLabel);
 function svgEl(tag,props,content){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,val] of Object.entries(props||{}))el.setAttribute(key,String(val));if(content!==undefined)el.textContent=content;return el}
 renderTrend=function(){
 const [label,unit,extract]=metrics[select.value]||metrics.news;
 // Øvingsforløp: x-aksen er tid siden start (minutter), ikke dato og klokkeslett.
 const data=measurements.map((m,i)=>({value:extract(m),label:measurementLabel(i),t:elapsedMinutes(i)})).filter(x=>x.value!==null&&Number.isFinite(x.value)&&Number.isFinite(x.t));
 $('trendChart').replaceChildren();if(data.length<2){$('trendChart').textContent='Minst to målinger med denne parameteren kreves.';renderComparison();return}
-const W=760,H=215,L=60,R=28,T=23,B=43;
+// Bredden følger beholderen, så tallene er lesbare også på mobil.
+const W=Math.round(Math.max(320,Math.min(760,$('trendChart').clientWidth||760))),H=W<500?230:215,L=W<500?40:60,R=W<500?18:28,T=23,B=43;
 const times=data.map(x=>x.t),values=data.map(x=>x.value),tmin=Math.min(...times),tmax=Math.max(...times),vmin=Math.min(...values),vmax=Math.max(...values);
 let lo=(select.value==='news'||select.value==='q')?0:Math.floor(vmin-Math.max(1,(vmax-vmin)*.3));let hi=Math.max(lo+1,Math.ceil(vmax+Math.max(1,(vmax-vmin)*.3)));
 if(select.value==='spo2'){lo=Math.max(0,lo);hi=Math.min(100,hi)}
@@ -48,6 +49,7 @@ for(const [d,anchor] of [[data[0],'start'],[data.at(-1),'end']])svg.append(svgEl
 $('trendChart').append(svg);$('trendStart').textContent=label+' ('+unit+')';$('trendEnd').textContent=data.length+' målinger';
 renderComparison();
 };select.addEventListener('change',()=>{if(measurements.length>=2)renderTrend()});
+let trendWidth=0;window.addEventListener('resize',()=>{const w=$('trendChart').clientWidth;if(!$('trendSection').hidden&&measurements.length>=2&&Math.abs(w-trendWidth)>40){trendWidth=w;renderTrend()}});
 const observ=document.createElement('label');observ.textContent='Andre observasjoner';const textarea=document.createElement('textarea');textarea.id='isbarObservations';textarea.rows=2;textarea.maxLength=600;textarea.placeholder='Skriv observasjoner uten pasientidentitet';observ.append(textarea);document.querySelector('.isbar-inputs').append(observ);
 $('isbarModalTitle').textContent='ISBAR – samtalemanus';
 document.querySelector('.isbar-preamble').textContent='Les manuset høyt. Fyll muntlig inn tekst i [klammer]. Ikke skriv inn pasientnavn eller fødselsdato i demoversjonen.';

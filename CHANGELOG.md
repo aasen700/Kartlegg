@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Øvingsforløp fungerer på mobil – 21. oktober 2026
+
+- Første måling ber ikke lenger om tid siden forrige måling. Tidsvalget vises først fra måling 2 (det var synlig hele tiden på grunn av en stilfeil).
+- Målingene vises som kort i stedet for en tabell, med NEWS2 i farge etter nivå (0–4, 5–6, ≥7). Kortene virker på mobil uten sidelengs rulling.
+- Grafen tilpasser seg skjermbredden, så tallene kan leses på mobil. Valget «Graf for» klemmer ikke lenger overskriften.
+- Fra- og til-valgene i sammenligningen går over hele bredden på mobil.
+
 ## Øvingsforløp i stedet for «Målinger over tid» – 21. oktober 2026
 
 - «Målinger over tid» heter nå «Øvingsforløp» og er laget for tenkte pasienter. Det lagres ingen ekte dato eller klokkeslett, bare hvor lang tid som har gått siden forrige måling. Da kan funksjonen ikke brukes som journal eller til å overvåke en virkelig pasient.

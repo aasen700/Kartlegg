@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=jur1">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forlop1">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forlop2">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=sma1">
   <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=profile3">
@@ -114,7 +114,7 @@
           <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett øvingsforløpet</button></span></div>
           <div class="history-undo" id="historyUndo" role="status" hidden><span id="historyUndoText"></span><button class="btn-inline" id="historyUndoButton" type="button">Angre</button></div>
           <div class="empty-state forlop-empty" id="emptyHistory"><p><strong>Ingen målinger i øvingsforløpet ennå.</strong></p><p>Start med et ferdig eksempel, eller lag ditt eget forløp: fyll ut NEWS2 og trykk «Legg til i øvingsforløp». Ved neste måling velger du hvor lang tid som har gått.</p><div class="forlop-start"><button class="btn btn-primary" id="loadExampleForlop" type="button">Prøv eksempelet: lungebetennelse</button><button class="btn btn-secondary" id="startOwnForlop" type="button">Lag eget forløp</button></div></div>
-          <div class="table-scroll" id="historyTableContainer" hidden><table class="history-table" aria-label="Målinger i øvingsforløpet"><thead><tr><th>Måling</th><th>NEWS2</th><th>qSOFA</th><th>RF</th><th>SpO₂</th><th>Syst. BT</th><th>Puls</th><th>Temperatur</th><th></th></tr></thead><tbody id="historyRows"></tbody></table></div>
+          <div class="forlop-list-wrap" id="historyTableContainer" tabindex="-1" hidden><ol class="forlop-list" id="historyRows" aria-label="Målinger i øvingsforløpet"></ol></div>
         </section>
         <section class="section" id="trendSection" hidden>
           <div class="section-header"><div class="section-symbol cyan">↗</div><div><h2>Utvikling i NEWS2</h2><p>Grafen viser NEWS2 over tid i forløpet. Sammenlign to målinger for å se hvilke parametere som endret skåren.</p></div></div>
@@ -698,9 +698,9 @@
   <script src="assets/scoring.js?v=061a"></script>
   <script src="assets/auth-gate.js?v=forlop1"></script>
   <script src="assets/measurement-store.js?v=2"></script>
-  <script src="assets/app.js?v=forlop3"></script>
+  <script src="assets/app.js?v=forlop5"></script>
   <script src="assets/welcome.js?v=1"></script>
-  <script src="assets/enhancements.js?v=forlop2"></script>
+  <script src="assets/enhancements.js?v=forlop4"></script>
   <script src="assets/theme-engine.js?v=2012"></script>
   <script src="assets/v06.js?v=forlop1"></script>
   <script src="assets/clinical-tools.js?v=0701"></script>

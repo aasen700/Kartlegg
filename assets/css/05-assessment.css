@@ -185,7 +185,7 @@
   display: block;
   width: 100%;
   height: auto;
-  max-height: 205px;
+  max-height: 240px;
 }
 .trend-wrap h3 {
   margin: 0 0 8px;
@@ -1680,29 +1680,44 @@
   }
 }
 
-/* Øvingsforløp: linjen i skjemaet, tomtilstand med eksempel, og sammenligning av to målinger. */
+/* Øvingsforløp: linjen i skjemaet. Første måling har ikke tidsvalg; fra måling 2 velges tid siden forrige. */
 #vitalsForm .forlop-line {
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
-  gap: 8px 16px;
+  align-items: center;
+  gap: 10px 16px;
+}
+#vitalsForm .forlop-line [hidden] {
+  display: none !important;
 }
 #vitalsForm .forlop-line .forlop-first {
   margin: 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 750;
   color: var(--ink);
 }
 #vitalsForm .forlop-line label {
-  display: grid;
-  gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 750;
+  color: var(--ink);
 }
 #vitalsForm .forlop-line select {
   min-height: 44px;
-  min-width: 140px;
+  width: auto;
+  min-width: 120px;
 }
 #vitalsForm .forlop-line small {
-  flex: 1 1 260px;
+  flex: 1 1 100%;
+  margin: 0;
+}
+@media(max-width:480px){
+  #vitalsForm .forlop-line label {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
 }
 :root:is([data-auth="guest"],[data-auth="verify"],[data-auth="consent"]) #vitalsForm .forlop-line {
   display: none !important;
@@ -1771,5 +1786,130 @@
   .compare-box {
     margin-left: 14px;
     margin-right: 14px;
+  }
+}
+
+/* Øvingsforløp: hver måling som et kort, også på mobil. Fargen på NEWS2 følger RCPs nivåer (0–4, 5–6, ≥7). */
+.forlop-list-wrap {
+  margin: 0 25px 25px;
+}
+.forlop-list-wrap:focus {
+  outline: none;
+}
+.forlop-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.forlop-item {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ui-success);
+  border-radius: 14px;
+  background: var(--paper);
+}
+.forlop-item[data-level="medium"] {
+  border-left-color: var(--ui-attention);
+}
+.forlop-item[data-level="high"] {
+  border-left-color: var(--ui-danger);
+}
+.forlop-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.forlop-item-title {
+  font-size: 16px;
+}
+.forlop-item-score {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #daf4e9;
+  color: #075e4d;
+  font-weight: 800;
+  font-size: 14px;
+}
+.forlop-item[data-level="medium"] .forlop-item-score {
+  background: #fff1d6;
+  color: #7a4d00;
+}
+.forlop-item[data-level="high"] .forlop-item-score {
+  background: #ffe3e6;
+  color: #9d1f33;
+}
+:root[data-theme=dark] .forlop-item-score {
+  background: #1d4a3f;
+  color: #c9f3e4;
+}
+:root[data-theme=dark] .forlop-item[data-level="medium"] .forlop-item-score {
+  background: #4f3d1c;
+  color: #ffe2a8;
+}
+:root[data-theme=dark] .forlop-item[data-level="high"] .forlop-item-score {
+  background: #5a2530;
+  color: #ffd2d8;
+}
+.forlop-item-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
+  gap: 6px 14px;
+  margin: 10px 0 0;
+}
+.forlop-item-facts div {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  min-width: 0;
+}
+.forlop-item-facts dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.forlop-item-facts dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 14px;
+}
+.forlop-item-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+.forlop-item-actions .btn-inline {
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ui-action);
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#trendSection .trend-wrap .metric-select {
+  margin: 0 0 10px;
+  justify-content: flex-start;
+}
+#trendSection .trend-wrap .metric-select select {
+  flex: 0 1 220px;
+  min-height: 44px;
+}
+@media(max-width:770px){
+  .forlop-list-wrap {
+    margin: 0 14px 16px;
+  }
+  .forlop-item-facts {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  .compare-pickers label {
+    flex: 1 1 100%;
+  }
+  .compare-pickers select {
+    width: 100%;
   }
 }

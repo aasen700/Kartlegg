@@ -43,7 +43,7 @@ function readInterval(){const n=Number($('measureInterval')?.value);return Numbe
 function renderForlopLine(){
   const first=measurements.length===0;
   $('forlopFirst').hidden=!first;$('forlopIntervalLabel').hidden=first;
-  $('forlopNext').textContent=`Neste lagring blir måling ${measurements.length+1}.`;
+  $('forlopNext').textContent=first?'':`Neste lagring blir måling ${measurements.length+1}.`;
 }
 function calculateNEWS2(v){ return Scoring.news2(v); }
 function calculateQSOFA(v){ return Scoring.qsofa(v); }
@@ -228,14 +228,22 @@ function renderHistory(){
   $('trendSection').hidden=measurements.length<2;
   $('historyRows').replaceChildren();
   measurements.forEach((m,index)=>{
-    const row=makeElement('tr'),label=measurementLabel(index);
-    for(const value of [label,String(m.news.total),m.q?String(m.q.total):'—',String(m.v.rr),`${m.v.spo2} %`,`${m.v.sbp}`,`${m.v.hr}`,`${formatNumber(m.v.temp,1)} °C`]){
-      row.append(makeElement('td',value));
+    const label=measurementLabel(index),level=m.news.total>=7?'high':m.news.total>=5?'medium':'low';
+    const item=makeElement('li',undefined,'forlop-item');item.dataset.level=level;
+    const head=makeElement('div',undefined,'forlop-item-head');
+    const title=makeElement('strong',label,'forlop-item-title');
+    const score=makeElement('span',`NEWS2 ${m.news.total}`,'forlop-item-score');
+    head.append(title,score);
+    const conscious=m.v.confusion?'ny forvirring':({A:'våken',V:'reagerer på tiltale',P:'reagerer på smerte',U:'reagerer ikke'}[m.v.conscious]||m.v.conscious);
+    const facts=makeElement('dl',undefined,'forlop-item-facts');
+    for(const [k,v] of [['RF',`${m.v.rr}/min`],['SpO₂',`${m.v.spo2} %${m.v.oxygen?' med O₂':''}`],['BT',`${m.v.sbp}`],['Puls',`${m.v.hr}`],['Temp',`${formatNumber(m.v.temp,1)} °C`],['Bevissthet',conscious],...(m.q?[['qSOFA',`${m.q.total}`]]:[])]){
+      const wrap=makeElement('div');wrap.append(makeElement('dt',k),makeElement('dd',v));facts.append(wrap);
     }
-    const actions=makeElement('td');
-    const load=makeElement('button','Åpne','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne ${label}`);load.addEventListener('click',()=>applySnapshot(m));
-    const remove=makeElement('button','Slett','btn-inline');remove.style.marginLeft='5px';remove.type='button';remove.setAttribute('aria-label',`Slett ${label}`);remove.addEventListener('click',()=>removeMeasurements([m]));
-    actions.append(load,remove);row.append(actions);$('historyRows').append(row);
+    const actions=makeElement('div',undefined,'forlop-item-actions');
+    const load=makeElement('button','Åpne i skjemaet','btn-inline');load.type='button';load.setAttribute('aria-label',`Åpne ${label} i skjemaet`);load.addEventListener('click',()=>applySnapshot(m));
+    const remove=makeElement('button','Slett','btn-inline');remove.type='button';remove.setAttribute('aria-label',`Slett ${label}`);remove.addEventListener('click',()=>removeMeasurements([m]));
+    actions.append(load,remove);
+    item.append(head,facts,actions);$('historyRows').append(item);
   });
   if(measurements.length>=2) renderTrend();
 }
