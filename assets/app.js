@@ -221,6 +221,7 @@ function expiryText(){
 function renderHistory(){
   $('historyCounter').textContent=measurements.length===1?'1 måling':`${measurements.length} målinger`;
   if(!measurements.length)$('forlopCaption').hidden=true;
+  $('page-historikk').dataset.forlopEmpty=String(!measurements.length);
   renderForlopLine();
   $('historyStorageNote').textContent=expiryText();
   $('emptyHistory').hidden=measurements.length>0;

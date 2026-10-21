@@ -2195,10 +2195,10 @@
   clip:rect(0 0 0 0);
   white-space:nowrap;
 }
-/* NEWS2 og qSOFA har parametertabeller og får hele bredden. */
+/* NEWS2 og qSOFA er vanlige kort: poenggrensene ligger nå i NEWS2 og qSOFA-siden, så kortene trenger ikke hele bredden. */
 #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="news2"],
 #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="qsofa"]{
-  grid-column:1/-1;
+  grid-column:auto;
 }
 #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="news2"] .tool-card-primary,
 #page-verktoy .toolgrid .toolbox.tool-card[data-tool-id="qsofa"] .tool-card-primary{

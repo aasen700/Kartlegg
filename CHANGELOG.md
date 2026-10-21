@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Gjennomgang for mobil og PC – 21. oktober 2026
+
+- Gått gjennom alle sider og alle 19 verktøy i ti kombinasjoner (320–1440 px, lys og mørk, gjest og innlogget, solide bokser og glass). Ingen JavaScript-feil, ingen ødelagte bilder og ingen sider bredere enn skjermen.
+- Kliniske verktøy: NEWS2- og qSOFA-kortene er like store som de andre i stedet for å strekke seg over hele bredden med mye tomrom.
+- Lær: de fem kursene står på én rad på PC i stedet for fire og én alene.
+- «Kilde og lisens» står til venstre i alle kort, ikke midtstilt i noen og venstrestilt i andre.
+- Øvingsforløp: «Ny måling» og «Slett øvingsforløpet» skjules når forløpet er tomt (tomtilstanden har egne knapper).
+- Mobil: lenkene nederst og lenkeknappene i kortene har større trykkflate (minst 44 px).
+
 ## Rettet: Liquid Glass sammen med andre temaer – 21. oktober 2026
 
 - Sesongtemaene (jul, Halloween, 17. mai og de rolige) beholder sin egen bakgrunn når Liquid Glass er på. Glassets egen gradient brukes bare når det ikke er noe sesongtema.

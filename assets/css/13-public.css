@@ -523,3 +523,35 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* «Kilde og lisens» står alltid til venstre i kortet, uansett kortets oppsett. */
+#page-verktoy .tool-card .tool-card-license {
+  align-self: flex-start;
+  justify-self: start;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+/* Bunnlenker: større trykkflate på mobil. */
+@media(max-width:770px){
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .footer-links {
+    gap: 0 18px;
+  }
+}
+/* Øvingsforløp: «Ny måling» og «Slett» vises først når det finnes målinger (tomtilstanden har egne knapper). */
+#page-historikk[data-forlop-empty="true"] .history-toolbar .actions-right {
+  display: none;
+}
+/* Mobil: lenkeknapper i kortene får minst 44 px trykkflate. */
+@media(max-width:770px){
+  :is(.tool-card-license,.criteria-link,.tool-card-learn-link,.gcs-learn-link,.sim-reference,.v081-view-all) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
