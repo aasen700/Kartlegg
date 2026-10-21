@@ -397,19 +397,19 @@
 :root[data-season-theme="christmas"] {
   --season-banner: url("../season/christmas.svg");
   --season-line: #c8283c;
-  --season-page: linear-gradient(180deg,#14402f 0,#0e3326 420px,#0c2c21 100%);
+  --season-page: radial-gradient(900px 420px at 88% -4%,rgba(255,214,140,.20),transparent 62%),radial-gradient(800px 620px at -6% 104%,rgba(196,36,58,.30),transparent 66%),linear-gradient(168deg,#1b4c39 0%,#10392b 38%,#0c2d2c 70%,#0a2030 100%);
   --season-page-color: #0e3326;
 }
 :root[data-season-theme="halloween"] {
   --season-banner: url("../season/halloween.svg");
   --season-line: #f07a1c;
-  --season-page: linear-gradient(180deg,#2e1745 0,#22103a 420px,#1a0c2c 100%);
+  --season-page: radial-gradient(800px 420px at 86% -6%,rgba(255,176,80,.26),transparent 60%),radial-gradient(900px 640px at -8% 108%,rgba(232,104,28,.26),transparent 66%),linear-gradient(168deg,#3b1d59 0%,#28123f 42%,#1c0d2f 74%,#24100f 100%);
   --season-page-color: #22103a;
 }
 :root[data-season-theme="may17"] {
   --season-banner: url("../season/may17.svg");
   --season-line: #e31b3d;
-  --season-page: linear-gradient(180deg,#0c2d6b 0,#06245f 420px,#041d4f 100%);
+  --season-page: radial-gradient(900px 420px at 88% -6%,rgba(255,255,255,.16),transparent 60%),radial-gradient(860px 620px at -6% 106%,rgba(227,27,61,.34),transparent 66%),linear-gradient(168deg,#14397f 0%,#0b2b6a 42%,#072257 76%,#061a45 100%);
   --season-page-color: #06245f;
 }
 :root[data-season-theme="breast-cancer"] {
@@ -524,9 +524,9 @@
   height: 170px;
   pointer-events: none;
   background: var(--season-banner) right top / auto 170px no-repeat;
-  -webkit-mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 78%,transparent);
+  -webkit-mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 60%,transparent);
   -webkit-mask-composite: source-in;
-  mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 78%,transparent);
+  mask: linear-gradient(to right,transparent 0,#000 40%),linear-gradient(#000 60%,transparent);
   mask-composite: intersect;
 }
 :root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) {
@@ -561,6 +561,90 @@
 }
 :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"]) #page-start :is(.public-lede,.public-note) {
   color: rgba(255,255,255,.9) !important;
+}
+/* Rolige temaer: en myk gradient i temafargen over hele siden, ikke bare bak banneret. */
+:root:is([data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"])[data-season-theme][data-season-theme][data-season-theme][data-season-theme] body {
+  background: radial-gradient(1100px 520px at 100% -4%,var(--season-wash),transparent 70%),radial-gradient(900px 620px at -6% 104%,color-mix(in srgb,var(--season-wash) 70%,transparent),transparent 70%),var(--bg) !important;
+  background-attachment: fixed !important;
+}
+/* Effekter på kortene: snø på jul, spindelvev på Halloween, vimpler 17. mai, rim om vinteren og løv om høsten.
+ * Bare pynt i kanten: aldri over skårer og resultater, aldri klikkbart, og skjult ved utskrift. */
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="winter"],[data-season-theme="autumn"]) :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item) {
+  position: relative;
+  isolation: isolate;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="winter"],[data-season-theme="autumn"]) :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+  content: "";
+  position: absolute;
+  /* Bak innholdet i kortet, men over kortets egen bakgrunn: tekst og knapper ligger alltid øverst. */
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+}
+:root:is([data-season-theme="christmas"],[data-season-theme="winter"]) :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+  top: -13px;
+  left: 6px;
+  right: 6px;
+  height: 26px;
+  background-image: url("../season/fx-snow.svg");
+  background-size: 100% 100%;
+  filter: drop-shadow(0 2px 2px rgba(20,60,90,.12));
+}
+:root[data-season-theme="winter"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+  height: 16px;
+  top: -8px;
+  opacity: .85;
+}
+:root[data-season-theme="halloween"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+  top: 0;
+  right: 0;
+  width: clamp(56px,9%,84px);
+  aspect-ratio: 120 / 140;
+  background-image: url("../season/fx-web.svg");
+  background-size: contain;
+  background-position: right top;
+  border-top-right-radius: inherit;
+  opacity: .9;
+}
+:root[data-season-theme="halloween"] .toolbox::before {
+  width: 46px;
+}
+:root[data-season-theme="halloween"] :is(.home-entry,.forlop-item,.v081-tool-search,.settings-card,.account-card)::before {
+  content: none;
+}
+:root[data-season-theme="may17"] :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+  top: -9px;
+  left: 50%;
+  width: min(300px,62%);
+  height: 30px;
+  transform: translateX(-50%);
+  background-image: url("../season/fx-bunting.svg");
+  background-size: 100% 100%;
+}
+:root[data-season-theme="may17"] :is(.toolbox,.home-entry,.forlop-item,.v081-tool-search)::before {
+  width: min(180px,56%);
+  height: 22px;
+}
+:root[data-season-theme="autumn"] :where(.section:not(#resultater),.toolbox,.home-entry)::before {
+  top: -12px;
+  left: -10px;
+  width: 34px;
+  height: 34px;
+  background-image: url("../season/fx-leaf.svg");
+  background-size: contain;
+}
+:root[data-season-theme="autumn"] :is(.toolbox,.home-entry):nth-child(even)::before {
+  left: auto;
+  right: -8px;
+  transform: scaleX(-1) rotate(12deg);
+}
+:root[data-season-theme="autumn"] :is(.v081-tool-search,.settings-card,.account-card,.forlop-item)::before {
+  content: none;
+}
+@media print{
+  :where(.section:not(#resultater),.toolbox,.v081-tool-search,.home-entry,.settings-card,.account-card,.forlop-item)::before {
+    display: none !important;
+  }
 }
 /* Jul: rolig snø som faller (av for redusert bevegelse). */
 :root:is([data-season-theme="christmas"],[data-season-theme="halloween"],[data-season-theme="may17"],[data-season-theme="breast-cancer"],[data-season-theme="mental-health"],[data-season-theme="pride"],[data-season-theme="nurses-day"],[data-season-theme="hand-hygiene"],[data-season-theme="patient-safety"],[data-season-theme="heart-day"],[data-season-theme="diabetes-day"],[data-season-theme="mens-health"],[data-season-theme="sami-day"],[data-season-theme="easter"],[data-season-theme="winter"],[data-season-theme="spring"],[data-season-theme="summer"],[data-season-theme="autumn"]) body::after {

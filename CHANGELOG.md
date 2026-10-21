@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Sesongtema med effekter på kortene – 21. oktober 2026
+
+- Bakgrunnen er gradienter i stedet for én farge: varmt lys øverst og en farget glød nederst (rødt på jul, oransje på Halloween, rødt på 17. mai). De rolige temaene har en myk tone over hele siden.
+- Bannerne glir bedre inn: motivene er løftet og tones ut nederst, så de ikke kuttes av kortene.
+- Effekter på kortene: snø oppå kortene på jul (og litt rim om vinteren), spindelvev med edderkopp i hjørnet på Halloween, flaggvimpler over kortene 17. mai og høstblader om høsten.
+- Effektene ligger bak teksten og knappene, kan ikke klikkes, vises aldri på skårene og skrives ikke ut.
+
 ## Nye sesongtemaer i to nivåer – 21. oktober 2026
 
 - Sesongpynten er tegnet på nytt: ett banner øverst på siden i stedet for et gjentatt mønster bak alt innhold. Kortene, skårene og resultatene får aldri pynt.
