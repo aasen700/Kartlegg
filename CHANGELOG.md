@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## NEWS2-skjema rett i simuleringen – 22. oktober 2026
+
+- I simuleringen skårer du NEWS2 direkte i det samme poengskjemaet som i Lær. Du trykker på riktig felt i hver rad, og summen regnes ut mens du skårer. Feltet der man skrev inn totalskåren, og lenken til NEWS2 i en ny fane, er fjernet. Det gjør det mye enklere på mobil, der skjemaet vises som kort.
+- Skjemaet dukker opp rett under hendelsen når du har målt vitale parametere, og blir stående der mens du skårer.
+- Når du gjentar observasjonene etter en forverring, får du et nytt skjema og ser hva du fikk første gang.
+- Oppsummeringen viser hvert skjema rad for rad: målt verdi, feltet du valgte og riktig felt. Den viser også hvordan riktig NEWS2 og din skåring endret seg mellom målingene.
+
 ## Mer innhold i Lær – 22. oktober 2026
 
 - Fremgang i Lær: hvert kurs viser hva du har fullført (✓ Lær, ✓ Øv, ✓ Test) og beste testresultat, og Lær viser hvor mange av de fem modulene som er fullført. Lær/Øv/Test-stegene i modulene får også ✓. Fremgangen lagres i nettleseren på denne enheten, knyttet til kontoen med et anonymt nummer. Den inneholder ingen svar og ingen tidspunkter, og kan nullstilles. Den slettes når kontoen slettes. Personvernerklæringen er oppdatert.

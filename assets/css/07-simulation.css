@@ -491,3 +491,59 @@
   gap: 10px;
   margin-top: 14px;
 }
+/* NEWS2-skjema i simuleringen (samme skjema som i Lær) */
+.sim-news .sim-news-chart {
+  margin: 10px 0 0;
+}
+.sim-news-round {
+  margin: 8px 0 4px;
+  padding: 8px 12px;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  font-size: 14px;
+  color: var(--ink);
+}
+.sim-news-sum {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 14px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--ink);
+}
+/* Skjemaet trenger hele bredden, så det står under kolonnene på PC. */
+.sim-news-wide {
+  margin-top: 15px;
+}
+.sim-chart-report {
+  margin: 12px 0 0;
+}
+.sim-chart-title {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+.sim-chart-rows {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.sim-chart-rows li {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+}
+.sim-chart-rows li.is-wrong {
+  border-left-style: dashed;
+}
+.sim-chart-rows .sim-hint {
+  margin: 4px 0 0;
+}

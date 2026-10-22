@@ -1,15 +1,21 @@
-/* Kartlegg Simulering v0.2 — four deterministic fictional cases, no AI or persistence.
+/* Kartlegg Simulering v0.3 — four deterministic fictional cases, no AI or persistence.
  * All observations are fictional, educational and scripted, NOT treatment guidance.
- * NEWS2 is delegated to the exact same scoring module as the rest of Kartlegg.
+ * NEWS2 is delegated to the exact same scoring module as the rest of Kartlegg. The NEWS2 chart
+ * (which field belongs to which interval) comes from the Lær module, learning-content-v12.js.
  */
 (function(root,factory){
- const scoring=typeof module==='object'&&module.exports?require('./scoring.js'):root.Scoring;
- const api=factory(scoring);
- if(typeof module==='object'&&module.exports)module.exports=api;
+ const node=typeof module==='object'&&module.exports;
+ const scoring=node?require('./scoring.js'):root.Scoring;
+ // Lær-innholdet lastes etter simuleringen i index.html, så det hentes først når skjemaet brukes.
+ const chart=node?(()=>{const c=require('./learning-content-v12.js');return()=>c})():()=>root.KartleggLearningContent;
+ const api=factory(scoring,chart);
+ if(node)module.exports=api;
  else root.KartleggSimulationEngine=api;
-})(typeof globalThis==='undefined'?this:globalThis,function(Scoring){
+})(typeof globalThis==='undefined'?this:globalThis,function(Scoring,Chart){
  'use strict';
  if(!Scoring?.news2)throw new Error('NEWS2 calculation unavailable');
+ const ROW_NAMES=Object.freeze({rr:'Respirasjonsfrekvens',spo:'SpO₂',sbp:'Systolisk BT',hr:'Puls',temp:'Temperatur',consciousness:'Bevissthet / ny forvirring',oxygen:'Tilført oksygen'});
+ const ROWS=Object.freeze(Object.keys(ROW_NAMES));
  const SOURCES=Object.freeze([
   Object.freeze({name:'RCP – NEWS2 (2017)',url:'https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/'}),
   Object.freeze({name:'Resuscitation Council UK – ABCDE',url:'https://www.resus.org.uk/library/abcde-approach'})
@@ -109,7 +115,7 @@
  function start(id){
   const c=byId.get(id)||caseData;
   return Object.freeze({caseId:c.id,minutes:0,worsened:false,finished:false,
-   done:Object.freeze([]),timeline:Object.freeze([]),lastVitals:null,enteredNews:null,isbar:null});
+   done:Object.freeze([]),timeline:Object.freeze([]),lastVitals:null,enteredNews:null,isbar:null,charts:Object.freeze([])});
  }
  function has(s,id){return s.done.includes(id)}
  function currentVitals(s){const c=caseOf(s);return {...(s.worsened?c.worse:c.vitals)}}
@@ -136,10 +142,43 @@
   const worsened=s.worsened||(!has(s,'contact')&&id!=='contact'&&minutes>=c.worsenAt);
   const now={...s,minutes,worsened,done:Object.freeze([...s.done,id]),
    lastVitals:(id==='vitals'||id==='reevaluate')?Object.freeze({...(worsened?c.worse:c.vitals)}):s.lastVitals};
+  // Hver nye måling får sitt eget NEWS2-skjema. Det forrige beholdes til oppsummeringen.
+  if(id==='vitals'||id==='reevaluate'){
+   now.charts=Object.freeze([...(s.charts||[]),Object.freeze({minute:minutes,vitals:now.lastVitals,cells:Object.freeze({})})]);
+   now.enteredNews=null;
+  }
   const update={...now,timeline:Object.freeze([...s.timeline,Object.freeze({
    minute:minutes,id,label:action.label,text:narrative(now,id)
   })])};
   return Object.freeze(update);
+ }
+ function chartApi(){const c=Chart();if(!c?.newsChartRow||!c?.newsChartColumns)throw new Error('NEWS2-skjemaet er ikke lastet');return c}
+ function chartRow(rowId,v){return chartApi().newsChartRow(rowId,v)}
+ // Brukeren trykker på ett felt per rad i skjemaet for siste måling. Summen regnes ut når alle rader er valgt.
+ function recordNewsCell(s,rowId,index){
+  if(s.finished)throw new RangeError('Øvingen er avsluttet');
+  const charts=s.charts||[],current=charts.at(-1);
+  if(!current)throw new RangeError('Mål vitale parametere før NEWS2 registreres');
+  if(!ROWS.includes(rowId))throw new RangeError('Ukjent NEWS2-rad');
+  const columns=chartApi().newsChartColumns,row=chartRow(rowId,current.vitals);
+  if(!Number.isInteger(index)||index<0||index>=columns.length||!row.labels[index])throw new RangeError('Ugyldig NEWS2-felt');
+  const cells=Object.freeze({...current.cells,[rowId]:index});
+  const complete=ROWS.every(r=>Number.isInteger(cells[r]));
+  const updated=Object.freeze({...current,cells});
+  return Object.freeze({...s,charts:Object.freeze([...charts.slice(0,-1),updated]),
+   enteredNews:complete?ROWS.reduce((sum,r)=>sum+columns[cells[r]],0):null});
+ }
+ function chartSum(chart){const columns=chartApi().newsChartColumns;return ROWS.reduce((sum,r)=>sum+(Number.isInteger(chart.cells[r])?columns[chart.cells[r]]:0),0)}
+ function gradeChart(chart){
+  const truth=Scoring.news2(chart.vitals);
+  const rows=ROWS.map(id=>{
+   const row=chartRow(id,chart.vitals),chosen=chart.cells[id];
+   return Object.freeze({id,name:ROW_NAMES[id],chosen:Number.isInteger(chosen)?row.labels[chosen]:null,
+    correct:row.labels[row.answerIndex],points:truth.parts[id],ok:chosen===row.answerIndex});
+  });
+  const answered=rows.filter(r=>r.chosen!==null).length;
+  return Object.freeze({minute:chart.minute,vitals:chart.vitals,total:truth.total,entered:chartSum(chart),answered,
+   complete:answered===ROWS.length,correctRows:rows.filter(r=>r.ok).length,rows:Object.freeze(rows)});
  }
  function recordNews(s,value){
   if(s.finished||!has(s,'vitals'))throw new RangeError('Mål vitale parametere før NEWS2 registreres');
@@ -156,19 +195,26 @@
  function debrief(s){
   const c=caseOf(s),objective=Scoring.news2(s.lastVitals||c.vitals),v=s.lastVitals||c.vitals;
   const observed=has(s,'vitals'),contacted=has(s,'contact');
+  const charts=(s.charts||[]).filter(ch=>Object.keys(ch.cells).length).map(gradeChart);
+  const lastChart=(s.charts||[]).length?gradeChart(s.charts.at(-1)):null;
+  const newsDone=lastChart&&lastChart.answered?lastChart.complete&&lastChart.correctRows===ROWS.length:
+   s.enteredNews!==null&&s.enteredNews===objective.total;
+  const newsReason=lastChart&&lastChart.answered?
+   'Du valgte riktig felt i '+lastChart.correctRows+' av '+ROWS.length+' rader i siste skjema. Riktig totalskår er '+objective.total+' med SpO₂-skala '+v.scale+(v.oxygen?' og oksygentilførsel':' og uten oksygentilførsel')+'.':
+   'Korrekt totalskår er '+objective.total+' med SpO₂-skala '+v.scale+(v.oxygen?' og oksygentilførsel':' og uten oksygentilførsel')+'. Vurder også enkeltparametere.';
   const items=[
    {id:'vitals',label:'Observerte vitale parametere',done:observed,reason:'Vitale målinger og klinisk observasjon gir grunnlag for en strukturert vurdering.'},
    {id:'abcde',label:'Gjennomførte ABCDE-orientert observasjon',done:has(s,'abcde'),reason:'Vurder truede vitale funksjoner systematisk. Håndter alvorlige funn og søk hjelp tidlig.'},
    {id:'mental',label:'Vurderte bevissthetsnivå/ny forvirring',done:has(s,'mental'),reason:'Mentale endringer må vurderes eksplisitt, ikke antas ut fra de øvrige målingene.'},
-   {id:'news',label:'Beregnet NEWS2',done:s.enteredNews!==null&&s.enteredNews===objective.total,reason:'Korrekt totalskår er '+objective.total+' med SpO₂-skala '+v.scale+(v.oxygen?' og oksygentilførsel':' og uten oksygentilførsel')+'. Vurder også enkeltparametere.'},
+   {id:'news',label:'Skåret NEWS2 riktig',done:Boolean(newsDone),reason:newsReason},
    {id:'contact',label:'Tilkalt helsehjelp ved alvorlig forverring',done:contacted,reason:'I dette fiktive scenarioet tilsier funnene akutt klinisk oppfølging etter lokale rutiner.'},
    {id:'isbar',label:'Strukturerte overleveringen med ISBAR',done:Boolean(s.isbar),reason:'Sjekk selv at du beskriver situasjon, bakgrunn, observasjoner og hva du ber om. Friteksten er ikke maskinvurdert.'}
   ];
-  return Object.freeze({caseId:c.id,lesson:c.lesson,score:objective.total,parts:objective.parts,entered:s.enteredNews,
+  return Object.freeze({caseId:c.id,lesson:c.lesson,charts:Object.freeze(charts),score:objective.total,parts:objective.parts,entered:s.enteredNews,
    deteriorated:s.worsened,minutes:s.minutes,items:Object.freeze(items.map(x=>Object.freeze(x))),
    note:'Dette er refleksjonsstøtte, ikke vurdering av klinisk kompetanse. Hendelsesforløpet er manusstyrt, og hvert trinn representerer ikke fysiologiske prognoser.'});
  }
  function finish(s){if(s.finished)return s;return Object.freeze({...s,finished:true})}
- return Object.freeze({caseData,cases,getCase:id=>byId.get(id)||null,actions,start,has,can,step,recordNews,recordIsbar,finish,debrief,currentVitals,
+ return Object.freeze({caseData,cases,getCase:id=>byId.get(id)||null,actions,start,has,can,step,recordNews,recordNewsCell,chartRow,chartSum,gradeChart,rowNames:ROW_NAMES,rows:ROWS,recordIsbar,finish,debrief,currentVitals,
   referenceNews:s=>Scoring.news2(s.lastVitals||caseOf(s).vitals)});
 });

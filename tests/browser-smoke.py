@@ -834,11 +834,15 @@ script=r"""
   sim.choose('vitals');
   assert(sim.state.lastVitals.spo2===91,'synthetic first SpO2 reading incorrect');
   assert(document.querySelector('#simulationRoot').textContent.includes('91 %'),'measured vitals not shown');
-  const scoreForm=document.querySelector('#simulationRoot .sim-inline-form');
-  assert(!!scoreForm,'simulation NEWS2 exercise missing');
-  scoreForm.querySelector('input').value='11';
-  scoreForm.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+  // NEWS2 skåres direkte i skjemaet (samme som i Lær), ikke i en ny fane.
+  assert(!!document.querySelector('#simulationRoot .sim-news-chart .learn12-news-chart'),'simulation NEWS2 chart missing');
+  assert(!document.querySelector('#simulationRoot a[href*="tool=news2"]'),'simulation should not send users to a new tab for NEWS2');
+  for(const row of engine.rows){
+   const cell=document.querySelector('#simulationRoot .sim-news-chart [data-part="'+row+'"][data-column="'+engine.chartRow(row,sim.state.lastVitals).answerIndex+'"]');
+   assert(!!cell,'NEWS2 cell missing for '+row);cell.click();
+  }
   assert(sim.state.enteredNews===11,'simulation NEWS2 answer not captured');
+  assert(document.querySelector('#simulationRoot .sim-news-sum').textContent.includes('11'),'running NEWS2 sum missing');
   const formIsbar=document.querySelector('#simulationRoot .sim-isbar-form');
   assert(!!formIsbar,'ISBAR practice missing');
   for(const textarea of formIsbar.querySelectorAll('textarea'))textarea.value='Fiktiv øvingsinformasjon '+textarea.name;

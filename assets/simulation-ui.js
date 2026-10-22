@@ -1,4 +1,4 @@
-/* Kartlegg Simulering v0.2 — purely client-side fictional scenario interface.
+/* Kartlegg Simulering v0.3 — purely client-side fictional scenario interface.
  * No network, no clinical chart writes, no patient identifiers. Only which cases are finished
  * is remembered, through KartleggLearningProgress; the case itself stays in memory.
  */
@@ -81,28 +81,83 @@
   addParagraph(panel,'Dette er siste målte sett med syntetiske data. Ved forverring må du selv velge nye observasjoner for å oppdatere verdiene.','sim-hint');
   return panel;
  }
+ // Verdien som står i hver rad i NEWS2-skjemaet.
+ function rowValue(id,v){
+  return {rr:v.rr+' /min',spo:v.spo2+' % · skala '+(v.scale||1),sbp:v.sbp+' mmHg',hr:v.hr+' /min',
+   temp:v.temp.toFixed(1).replace('.',',')+' °C',consciousness:v.conscious+(v.confusion?' · ny forvirring':' · ingen ny forvirring'),
+   oxygen:v.oxygen?'Tilført O₂':'Romluft'}[id];
+ }
+ function pickCell(rowId,index,score){
+  try{
+   const sel='.sim-news-chart [data-part="'+rowId+'"][data-column="'+index+'"]';
+   const top=root.querySelector(sel)?.getBoundingClientRect().top;
+   state=Engine.recordNewsCell(state,rowId,index);render();
+   // Skjemaet tegnes på nytt. Hold feltet du trykket på på samme sted på skjermen.
+   const cell=root.querySelector(sel);
+   if(cell&&top!==undefined)window.scrollBy(0,cell.getBoundingClientRect().top-top);
+   cell?.focus({preventScroll:true});
+   announce(Engine.rowNames[rowId]+': '+score+' poeng valgt'+(state.enteredNews!==null?'. Alle rader er skåret. Din sum er '+state.enteredNews+'.':''));
+  }catch(e){announce(e.message)}
+ }
+ function newsChart(chart){
+  const C=window.KartleggLearningContent;
+  const scroll=elt('div','learn12-news-scroll sim-news-chart');
+  const table=elt('div','learn12-score-grid learn12-news-chart');
+  table.setAttribute('role','group');table.setAttribute('aria-label','NEWS2-skjema: velg ett poengfelt i hver rad');
+  const head=elt('div','learn12-score-head');head.append(elt('span','','Observasjon'));
+  for(const p of C.newsChartColumns)head.append(elt('span','',p+' poeng'));
+  table.append(head);
+  for(const id of Engine.rows){
+   const item=elt('div','learn12-score-row'),desc=elt('div','learn12-row-name');
+   desc.append(elt('strong','',Engine.rowNames[id]),elt('small','',rowValue(id,chart.vitals)));item.append(desc);
+   const row=Engine.chartRow(id,chart.vitals);
+   C.newsChartColumns.forEach((score,i)=>{
+    const label=row.labels[i];
+    if(!label){const none=elt('span','learn12-score-void','—');none.setAttribute('aria-hidden','true');item.append(none);return}
+    const chosen=chart.cells[id]===i;
+    const b=button('','learn12-score-option learn12-news-cell'+(chosen?' is-selected is-score-'+score:''),()=>pickCell(id,i,score));
+    b.dataset.part=id;b.dataset.column=String(i);b.dataset.score=String(score);
+    b.setAttribute('aria-pressed',String(chosen));
+    b.setAttribute('aria-label',Engine.rowNames[id]+': '+score+' poeng – '+label);
+    b.append(elt('span','learn12-news-range',label));item.append(b);
+   });
+   table.append(item);
+  }
+  scroll.append(table);
+  return scroll;
+ }
  function newsPanel(){
   const panel=section('Din NEWS2-vurdering','sim-news');
-  addParagraph(panel,'Beregn NEWS2 ut fra de målte, fiktive parameterne. Oppgi din totalskår. Fasit og delpoeng kommer i oppsummeringen.');
-  const link=sameTabLink('Åpne Kartleggs NEWS2 i ny fane ↗','?tool=news2#vurdering');
-  panel.append(link);
-  if(!state.lastVitals){addParagraph(panel,'Ta først et sett vitale målinger for å få grunnlag for skåring.');return panel}
-  const f=elt('form','sim-inline-form');
-  const lab=elt('label','sim-form-label','Din beregnede NEWS2');
-  const input=elt('input','sim-number');input.type='number';input.min='0';input.max='30';input.step='1';input.required=true;
-  input.inputMode='numeric';input.autocomplete='off';input.setAttribute('aria-label','Din beregnede NEWS2-totalskår');
-  if(state.enteredNews!==null)input.value=String(state.enteredNews);
-  const save=elt('button','btn btn-primary','Lagre skår');save.type='submit';
-  lab.append(input);f.append(lab,save);
-  const msg=elt('p','sim-form-status');msg.setAttribute('role','status');
-  f.addEventListener('submit',e=>{
-   e.preventDefault();
-   try{state=Engine.recordNews(state,Number(input.value));render();announce('NEWS2-svaret ditt er lagret kun i denne økten. Fasit vises når du avslutter.')}
-   catch(err){msg.textContent=err.message}
-  });
-  panel.append(f,msg);
-  if(state.enteredNews!==null)addParagraph(panel,'Registrert totalskår: '+state.enteredNews+'. Du kan endre svaret før avslutning.');
+  const charts=state.charts||[];
+  if(!charts.length){addParagraph(panel,'Ta først et sett vitale målinger. Da får du NEWS2-skjemaet her.');return panel}
+  if(!window.KartleggLearningContent?.newsChartRow){addParagraph(panel,'NEWS2-skjemaet kunne ikke lastes. Last inn siden på nytt.');return panel}
+  const chart=charts.at(-1);
+  addParagraph(panel,'Trykk på riktig poengfelt i hver rad. Summen regnes ut mens du skårer. Fasit og forklaring kommer i oppsummeringen.');
+  if(charts.length>1){
+   const first=charts[0],answered=Object.keys(first.cells).length;
+   addParagraph(panel,'Nye målinger etter '+chart.minute+' min. Skår på nytt. '+(answered===Engine.rows.length?'Din første skåring var '+Engine.chartSum(first)+' poeng.':'Den første skåringen ble ikke fullført.'),'sim-news-round');
+  }
+  panel.append(newsChart(chart));
+  const answered=Engine.rows.filter(r=>Number.isInteger(chart.cells[r])).length;
+  const sum=elt('div','sim-news-sum');sum.setAttribute('aria-live','polite');
+  sum.append(elt('strong','',answered+' av '+Engine.rows.length+' rader skåret'),elt('span','','Din sum: '+Engine.chartSum(chart)+' poeng'+(answered===Engine.rows.length?'':' så langt')));
+  panel.append(sum);
   return panel;
+ }
+ function chartReport(c,index,total){
+  const box=elt('div','sim-chart-report');
+  const title=total>1?(index===0?'Første måling':'Ny måling')+' (etter '+c.minute+' min)':'Din NEWS2-skåring';
+  box.append(elt('strong','sim-chart-title',title));
+  addParagraph(box,(c.complete?'Din sum: '+c.entered+' poeng. ':'Skjemaet ble ikke fullført ('+c.answered+' av 7 rader). ')+'Riktig NEWS2: '+c.total+' poeng. Du valgte riktig felt i '+c.correctRows+' av 7 rader.','sim-copy');
+  const ul=elt('ul','sim-chart-rows');
+  for(const r of c.rows){
+   const li=elt('li',r.ok?'is-ok':'is-wrong');
+   li.append(elt('strong','',(r.ok?'✓ ':'○ ')+r.name+': '+r.points+' poeng'));
+   addParagraph(li,'Målt: '+rowValue(r.id,c.vitals)+'. '+(r.ok?'Riktig felt: '+r.correct+'.':'Ditt felt: '+(r.chosen||'ikke valgt')+'. Riktig felt: '+r.correct+'.'),'sim-hint');
+   ul.append(li);
+  }
+  box.append(ul);
+  return box;
  }
  function isbarPanel(){
   const panel=section('ISBAR – øv på strukturert kommunikasjon','sim-isbar');
@@ -166,9 +221,15 @@
   const summary=elt('div','sim-report-summary');
   summary.append(elt('p','', 'Simulert tid: '+report.minutes+' minutter'));
   summary.append(elt('p','', 'NEWS2 fra sist målte sett: '+report.score));
-  if(report.entered!==null)summary.append(elt('p','', 'Din registrering: '+report.entered+(report.entered===report.score?' – samsvarer med beregningen.':' – avviker fra den beregnede skåren.')));
-  else summary.append(elt('p','','Du registrerte ingen NEWS2-totalskår.'));
+  if(!report.charts.length)summary.append(elt('p','','Du skåret ikke NEWS2 i skjemaet.'));
+  else if(report.charts.length>1)summary.append(elt('p','','Riktig NEWS2 endret seg fra '+report.charts[0].total+' til '+report.charts.at(-1).total+' poeng. Din skåring: '+report.charts.map(c=>c.complete?c.entered:'ikke fullført').join(' → ')+'.'));
   panel.append(summary);
+  if(report.charts.length){
+   const details=elt('details','sim-details sim-chart-details');details.open=true;
+   details.append(elt('summary','','Se NEWS2-skjemaet ditt rad for rad'));
+   report.charts.forEach((c,i)=>details.append(chartReport(c,i,report.charts.length)));
+   panel.append(details);
+  }
   const ul=elt('ul','sim-feedback');
   for(const item of report.items){
    const li=elt('li');
@@ -239,9 +300,14 @@
    const latestWrap=elt('div');latest(latestWrap);root.append(latestWrap);
    const columns=elt('div','sim-columns');
    const left=elt('div','sim-column'),right=elt('div','sim-column');
-   left.append(actionPanel(),vitalPanel(),newsPanel());
+   left.append(actionPanel(),vitalPanel());
    right.append(isbarPanel(),notesPanel());
    columns.append(left,right);root.append(columns);
+   const news=newsPanel();news.classList.add('sim-news-wide');
+   // Rett etter en måling står skjemaet før kolonnene, så det er lett å finne på mobil. Det blir stående
+   // der mens du skårer, og flyttes ned under kolonnene når du velger en ny handling.
+   if(state.charts?.length&&['vitals','reevaluate'].includes(state.timeline.at(-1)?.id))columns.before(news);
+   else columns.after(news);
    const end=elt('div','sim-finish');
    addParagraph(end,'Du kan avslutte når som helst. Oppsummeringen viser både det du gjorde og hva som eventuelt mangler.');
    end.append(button('Avslutt og se refleksjon →','btn btn-primary',finishCase));

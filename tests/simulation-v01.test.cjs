@@ -87,8 +87,34 @@ test('ISBAR text is mandatory but not machine-graded; case can finish early',()=
 });
 test('a simulation route, source and front-end assets are integrated',()=>{
  const html=read('index.html'),app=read('assets/app.js');
- for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=laer1','assets/simulation-ui.js?v=laer1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
+ for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=skjema1','assets/simulation-ui.js?v=skjema1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
   assert.ok(html.includes(element),element);
  assert.ok(app.includes("'simulering'"));
  assert.doesNotMatch(read('assets/simulation-engine.js'),/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);
+});
+test('NEWS2 is scored in the chart, one field per row, with a fresh chart after re-measuring',()=>{
+ let s=S.step(S.start(),'vitals');
+ assert.equal(s.charts.length,1);
+ assert.throws(()=>S.recordNewsCell(s,'rr',99));
+ assert.throws(()=>S.recordNewsCell(s,'nope',3));
+ assert.throws(()=>S.recordNewsCell(S.start(),'rr',3),/Mål vitale/);
+ for(const r of S.rows){
+  s=S.recordNewsCell(s,r,S.chartRow(r,s.lastVitals).answerIndex);
+  if(r!=='oxygen')assert.equal(s.enteredNews,null,'no sum before every row is scored');
+ }
+ assert.equal(s.enteredNews,11);
+ assert.equal(S.debrief(s).items.find(x=>x.id==='news').done,true);
+ const wrong=S.recordNewsCell(s,'hr',4);
+ const d=S.debrief(wrong);
+ assert.equal(d.items.find(x=>x.id==='news').done,false);
+ assert.equal(d.charts[0].correctRows,6);
+ assert.equal(d.charts[0].rows.find(r=>r.id==='hr').ok,false);
+ for(const a of ['symptoms','history','abcde'])s=S.step(s,a);
+ s=S.step(s,'reevaluate');
+ assert.equal(s.charts.length,2,'re-measuring gives a new chart');
+ assert.equal(s.enteredNews,null);
+ for(const r of S.rows)s=S.recordNewsCell(s,r,S.chartRow(r,s.lastVitals).answerIndex);
+ const both=S.debrief(S.finish(s));
+ assert.deepEqual(both.charts.map(c=>[c.total,c.entered]),[[11,11],[17,17]]);
+ assert.ok(!read('assets/simulation-ui.js').includes('tool=news2'),'no detour to a new tab');
 });
