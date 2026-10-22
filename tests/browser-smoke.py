@@ -991,7 +991,9 @@ script=r"""
     assert(!!action&&!action.disabled,'cannot move to next '+tool+' case');action.click();
    }
    assert(hub.finished,'test '+tool+' must finish');
-   assert(document.querySelectorAll('#learnToolExerciseRoot .learn12-report').length===3,'three graded test cases expected');
+   const testCount=materials[definition].filter(x=>x.level==='Test').length;
+   assert(document.querySelectorAll('#learnToolExerciseRoot .learn12-report').length===testCount,testCount+' graded test cases expected');
+   assert(!document.querySelector('#learnToolExerciseRoot .learn12-retry'),'no retry button when every test case is correct');
    assert(document.querySelector('#rr').value===simulatedBaseline,tool+' training must not affect live vitals');
   }
   // Switching back to GCS must restore its existing tutorial, also via library shortcut.

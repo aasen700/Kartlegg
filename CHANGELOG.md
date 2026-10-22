@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## Flere caser i Lær og «Øv på feilene dine» – 22. oktober 2026
+
+- NEWS2: fem nye caser, fra 6 til 11. Fire nye i Øv: lave verdier (lav puls, lav temperatur og lav RF), en pasient som bare reagerer på tiltale (V gir 3), oksygen på skala 1, og én rød verdi alene (systolisk BT ≥220). Én ny i Test: høy SpO₂ på oksygen med skala 2.
+- 4AT: fem nye caser, fra 6 til 11. Fire nye i Øv: urolig og agitert pasient, kortvarig søvnig rett etter oppvåkning (gir 0), pasient som ikke vil prøve (gir 1), og forvirring som er verre om natten. Én ny i Test: bare én feil på AMT4.
+- «Øv på feilene dine»: etter en øving eller test i NEWS2 og 4AT kan du øve på nytt på bare de casene du hadde feil på, med forklaring etter hvert svar. Når alt er riktig, får du beskjed om det.
+- De opprinnelige casene er uendret, og alle fasiter regnes fortsatt ut av de samme skåringsmodulene som i verktøyene.
+
 ## Bilder og mer innhold i simuleringen – 22. oktober 2026
 
 - Hver pasientcase har fått en illustrasjon i samme stil som GCS-bildene i Lær. Bildet bytter til en forverret versjon når pasienten blir dårligere i forløpet: blekere, svett og med raskere pust. Casevelgeren viser et lite bilde av hver case.

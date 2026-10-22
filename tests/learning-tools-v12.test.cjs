@@ -13,8 +13,8 @@ test('4AT has exact four parts and legitimate item-specific point values',()=>{
  assert.deepEqual(D.fourParts.map(x=>x.id),['alertness','orientation','attention','acute']);
  assert.deepEqual(D.fourParts.map(x=>x.options.map(o=>o.score)),[[0,4],[0,1,2],[0,1,2],[0,4]]);
  assert.equal(D.fourLessons.length,6);
- assert.equal(D.fourCases.length,6);
- assert.deepEqual(D.fourCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test']);
+ assert.equal(D.fourCases.length,11,'seks opprinnelige og fem nye 4AT-caser');
+ assert.deepEqual(D.fourCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test','Øv','Øv','Øv','Øv','Test']);
 });
 test('all 4AT reference case totals come from clinical scorer',()=>{
  for(const q of D.fourCases){
@@ -25,7 +25,7 @@ test('all 4AT reference case totals come from clinical scorer',()=>{
    Object.fromEntries(Object.keys(q.parts).map(k=>[k,true])));
   assert.equal(D.grade('4at',q.id,{...q.parts}).score,4);
  }
- assert.deepEqual(D.fourCases.map(x=>D.expected('4at',x.id).total),[0,2,12,7,4,4]);
+ assert.deepEqual(D.fourCases.map(x=>D.expected('4at',x.id).total),[0,2,12,7,4,4,10,0,2,6,1]);
 });
 test('4AT distinguishes unable to attempt (2) from refusing the attention test (1)',()=>{
  const inability=D.fourCases.find(x=>x.id==='four-c');
@@ -50,13 +50,13 @@ test('4AT rejects incomplete, out-of-range and incorrect item options',()=>{
 test('NEWS2 has seven rows with independent oxygen field and score column options',()=>{
  assert.deepEqual(D.newsRows.map(x=>x.id),['rr','spo','sbp','hr','temp','consciousness','oxygen']);
  assert.equal(D.newsLessons.length,5);
- assert.equal(D.newsCases.length,6);
- assert.deepEqual(D.newsCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test']);
+ assert.equal(D.newsCases.length,11,'seks opprinnelige og fem nye NEWS2-caser');
+ assert.deepEqual(D.newsCases.map(x=>x.level),['Øv','Øv','Øv','Test','Test','Test','Øv','Øv','Øv','Øv','Test']);
  assert.deepEqual(Object.keys(D.newsRows.find(x=>x.id==='oxygen').bands),['0','2']);
  assert.deepEqual(Object.keys(D.newsRows.find(x=>x.id==='consciousness').bands),['0','3']);
 });
 test('NEWS2 answer key delegates unaltered to Scoring.news2 for each case',()=>{
- const expectedTotals=[4,3,5,18,0,12];
+ const expectedTotals=[4,3,5,18,0,12,3,6,7,3,6];
  for(let i=0;i<D.newsCases.length;i++){
   const q=D.newsCases[i],r=N.news2(q.v),l=D.expected('news2',q.id);
   assert.equal(r.total,expectedTotals[i],q.id);
@@ -94,7 +94,7 @@ test('learning modules have exact asset references, clinician-origin sources and
   assert.ok(fs.existsSync(path.join(__dirname,'..',file)),file);
  for(const s of ['id="learningHubChooser"','id="learn4atModule"','id="learnNews2Module"','id="learnToolExerciseRoot"'])
   assert.ok(html.includes(s),s);
- assert.ok(html.includes('learning-content-v12.js?v=1203')&&html.includes('learning-tools-v12.js?v=2010'));
+ assert.ok(html.includes('learning-content-v12.js?v=caser1')&&html.includes('learning-tools-v12.js?v=caser1'));
  assert.ok(html.includes('assets/css/08-learning.css'));
  assert.match(js,/data-part/);
  assert.match(js,/aria-pressed/);
@@ -159,4 +159,16 @@ test('4AT and NEWS2 both provide GCS-level learning home screens without changin
  assert.doesNotMatch(ui,/localStorage|sessionStorage|\bfetch\(/);
  const gcs=read('assets/gcs-learning-ui.js');
  assert.doesNotMatch(gcs,/4AT og NEWS2 er aktuelle neste steg/);
+});
+test('new practice cases teach distinct points and «Øv på feilene dine» reuses only the missed cases',()=>{
+ const four=Object.fromEntries(D.fourCases.map(q=>[q.id,D.expected('4at',q.id).total]));
+ assert.deepEqual([four['four-g'],four['four-h'],four['four-i'],four['four-j'],four['four-k']],[10,0,2,6,1]);
+ const v=D.newsCases.find(x=>x.id==='news-h').v;assert.equal(v.conscious,'V','V alone gives 3 points');
+ assert.equal(N.news2(D.newsCases.find(x=>x.id==='news-j').v).parts.sbp,3,'a single red parameter');
+ assert.equal(N.news2(D.newsCases.find(x=>x.id==='news-k').v).parts.spo,3,'scale 2 high SpO₂ on oxygen');
+ for(const q of D.newsCases)for(const row of D.newsRows)D.newsChartRow(row.id,q.v);
+ const ui=fs.readFileSync(path.join(__dirname,'..','assets','learning-tools-v12.js'),'utf8');
+ assert.match(ui,/state\.retry\?state\.retry\.includes\(x\.id\)/);
+ assert.match(ui,/Øv på feilene dine \('\+wrong\.length\+'\)/);
+ assert.match(ui,/state\.retry=null;\n  gcs\.hidden/,'changing tool clears the retry round');
 });

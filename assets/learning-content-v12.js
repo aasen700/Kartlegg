@@ -59,7 +59,22 @@
    parts:{alertness:0,orientation:2,attention:2,acute:0}},
   {id:'four-f',name:'Case 6 · Ny desorientering',level:'Test',summary:'Fiktiv pasient, 68 år. Våken og rolig. Korrekt på AMT4 og minst sju måneder korrekt baklengs. Personalet dokumenterte likevel tydelig akutt forvirring i går kveld og igjen i natt.',
    observations:{alertness:'Normal under nåværende observasjon.',orientation:'Null feil på AMT4.',attention:'Sju måneder korrekt baklengs.',acute:'Ny og varierende forvirring i siste døgn.'},
-   parts:{alertness:0,orientation:0,attention:0,acute:4}}
+   parts:{alertness:0,orientation:0,attention:0,acute:4}},
+  {id:'four-g',name:'Case 7 · Urolig og agitert',level:'Øv',summary:'Fiktiv pasient, 81 år. Prøver å reise seg, drar i dyna og roper. Svarer riktig på alder, fødselsdato og årstall, men tror hun er hjemme. Sier fire måneder baklengs før hun gir opp. Datteren sier at hun var som vanlig for tre dager siden.',
+   observations:{alertness:'Tydelig agitert, ikke rolig våken.',orientation:'Ett feil svar (sted) på AMT4.',attention:'Fire måneder korrekt, så stopper hun.',acute:'Ny endring de siste tre dagene, ifølge datteren.'},
+   parts:{alertness:4,orientation:1,attention:1,acute:4}},
+  {id:'four-h',name:'Case 8 · Kortvarig søvnig',level:'Øv',summary:'Fiktiv pasient, 72 år. Sover når du kommer inn, men er våken og klar etter fem sekunder. Svarer riktig på alle fire AMT4-spørsmålene og sier åtte måneder korrekt baklengs. Ingen akutt endring er kjent.',
+   observations:{alertness:'Søvnig i noen få sekunder etter oppvåkning, deretter normalt våken.',orientation:'Alle fire AMT4-svar er korrekte.',attention:'Åtte måneder korrekt baklengs.',acute:'Ingen kjent akutt endring.'},
+   parts:{alertness:0,orientation:0,attention:0,acute:0}},
+  {id:'four-i',name:'Case 9 · Vil ikke prøve',level:'Øv',summary:'Fiktiv pasient, 77 år. Våken og vennlig. Svarer feil på årstall, men riktig på resten av AMT4. Sier «det gidder jeg ikke» når du ber om månedene baklengs. Ektefellen beskriver at hukommelsen har vært dårlig i lang tid, men at ingenting har endret seg nylig.',
+   observations:{alertness:'Normalt våken.',orientation:'Ett feil svar (årstall) på AMT4.',attention:'Vil ikke forsøke oppgaven.',acute:'Ingen ny endring. Hukommelsessvikten er gammel.'},
+   parts:{alertness:0,orientation:1,attention:1,acute:0}},
+  {id:'four-j',name:'Case 10 · Verre om natten',level:'Øv',summary:'Fiktiv pasient, 84 år. Våken og rolig på formiddagen. Vet ikke hvor han er og svarer feil på årstall. Sier sju måneder korrekt baklengs. Nattevakten har skrevet at han var forvirret og urolig de to siste nettene, noe som er nytt.',
+   observations:{alertness:'Normalt våken nå.',orientation:'To feil svar (sted og årstall) på AMT4.',attention:'Sju måneder korrekt baklengs.',acute:'Ny forvirring som varierer, dokumentert de to siste nettene.'},
+   parts:{alertness:0,orientation:2,attention:0,acute:4}},
+  {id:'four-k',name:'Case 11 · Bare én feil',level:'Test',summary:'Fiktiv pasient, 69 år. Fullt våken. Svarer riktig på alder, sted og årstall, men husker ikke fødselsdatoen sin. Sier ti måneder korrekt baklengs. Hverken pasienten eller pårørende merker noen endring.',
+   observations:{alertness:'Fullt våken.',orientation:'Ett feil svar (fødselsdato) på AMT4.',attention:'Ti måneder korrekt baklengs.',acute:'Ingen kjent akutt endring.'},
+   parts:{alertness:0,orientation:1,attention:0,acute:0}}
  ].map(x=>Object.freeze({...x,observations:Object.freeze(x.observations),parts:Object.freeze(x.parts)})));
  const newsRows=Object.freeze([
   {id:'rr',name:'Respirasjonsfrekvens',unit:'/min',bands:{0:'12–20',1:'9–11',2:'21–24',3:'≤8 / ≥25'}},
@@ -90,7 +105,17 @@
   {id:'news-e',name:'Case 5 · Skala 2 uten O₂',level:'Test',story:'Fiktiv pasient med dokumentert hyperkapnisk respirasjonssvikt og klinikerbestemt NEWS2 SpO₂-skala 2. Puster romluft. Våken og uten ny forvirring.',
    v:n(12,95,123,80,36.8,'A',false,false,2)},
   {id:'news-f',name:'Case 6 · Grenseverdi',level:'Test',story:'Fiktiv pasient, SpO₂-skala 1. Våken uten ny forvirring. Romluft. Se nøye på alle grenseverdier.',
-   v:n(25,93,100,111,35.0,'A',false,false,1)}
+   v:n(25,93,100,111,35.0,'A',false,false,1)},
+  {id:'news-g',name:'Case 7 · Lave verdier',level:'Øv',story:'Fiktiv pasient som har ligget på gulvet hjemme i natt. Våken, uten ny forvirring, på romluft. SpO₂-skala 1. Se etter verdier som er for lave, ikke bare for høye.',
+   v:n(10,97,132,48,35.6,'A',false,false,1)},
+  {id:'news-h',name:'Case 8 · Reagerer på tiltale',level:'Øv',story:'Fiktiv pasient som ligger med lukkede øyne og bare åpner dem når du snakker til henne. Romluft, SpO₂-skala 1.',
+   v:n(20,94,108,96,37.9,'V',false,false,1)},
+  {id:'news-i',name:'Case 9 · Oksygen på skala 1',level:'Øv',story:'Fiktiv pasient med lungebetennelse som får oksygen på nesekateter. Ingen kjent hyperkapnisk respirasjonssvikt, så SpO₂-skala 1 brukes. Våken uten ny forvirring.',
+   v:n(22,95,126,104,38.2,'A',false,true,1)},
+  {id:'news-j',name:'Case 10 · Én rød verdi',level:'Øv',story:'Fiktiv pasient som ellers føler seg bra. Våken, uten ny forvirring, på romluft. SpO₂-skala 1. Se på hver parameter for seg.',
+   v:n(16,98,224,88,36.7,'A',false,false,1)},
+  {id:'news-k',name:'Case 11 · Høy SpO₂ på skala 2',level:'Test',story:'Fiktiv pasient med dokumentert hyperkapnisk respirasjonssvikt og klinikerbestemt SpO₂-skala 2. Får oksygen. Våken uten ny forvirring.',
+   v:n(18,97,112,92,37.1,'A',false,true,2)}
  ].map(x=>Object.freeze(x)));
  function expected(tool,caseId){
   if(tool==='4at'){

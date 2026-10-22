@@ -10,7 +10,7 @@
  const module4=document.getElementById('learn4atModule'),moduleN=document.getElementById('learnNews2Module');
  const titles={gcs:'GCS',four:'4AT',news:'NEWS2'};
  let initialized=false;
- const state={tool:'gcs',mode:'home',lesson:0,caseIndex:0,answers:{},cells:{},results:{},finished:false};
+ const state={tool:'gcs',mode:'home',lesson:0,caseIndex:0,answers:{},cells:{},results:{},finished:false,retry:null};
  const h=(tag,cls,txt)=>{
   const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=String(txt);return n;
  };
@@ -19,12 +19,13 @@
  const collections=()=>state.tool==='four'?{
   lessons:D.fourLessons,cases:D.fourCases,parts:D.fourParts,type:'4at'}:{
   lessons:D.newsLessons,cases:D.newsCases,parts:D.newsRows,type:'news2'};
- const subset=()=>collections().cases.filter(x=>x.level===(state.mode==='practice'?'Øv':'Test'));
+ // «Øv på feilene dine»: en øvingsrunde med bare casene du hadde feil på i forrige runde.
+ const subset=()=>collections().cases.filter(x=>state.retry?state.retry.includes(x.id):x.level===(state.mode==='practice'?'Øv':'Test'));
  const url=(href,label)=>{const a=h('a','learn12-source-link',label);a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a};
  const announce=h('span','learn12-sr');announce.setAttribute('role','status');announce.setAttribute('aria-live','polite');
  function setTool(id,mode='home'){
   if(!['gcs','four','news'].includes(id))return false;
-  state.tool=id;state.mode=['learn','practice','test'].includes(mode)?mode:'home';state.lesson=0;state.caseIndex=0;state.answers={};state.cells={};state.results={};state.finished=false;
+  state.tool=id;state.mode=['learn','practice','test'].includes(mode)?mode:'home';state.lesson=0;state.caseIndex=0;state.answers={};state.cells={};state.results={};state.finished=false;state.retry=null;
   gcs.hidden=id!=='gcs';module4.hidden=id!=='four';moduleN.hidden=id!=='news';
   if(id==='four')module4.append(root);
   if(id==='news')moduleN.append(root);
@@ -68,7 +69,8 @@
   if(state.mode!=='home')section.append(button('← Til oversikten','learn12-back',()=>setMode('home')));
   root.append(section);
  }
- function setMode(mode){state.mode=mode;state.caseIndex=0;state.lesson=0;state.answers={};state.cells={};state.results={};state.finished=false;render()}
+ function setMode(mode,retry=null){state.mode=mode;state.caseIndex=0;state.lesson=0;state.answers={};state.cells={};state.results={};state.finished=false;state.retry=retry;render()}
+ function retryMistakes(ids){if(ids.length)setMode('practice',ids)}
  function progress(cur,max){
   const bar=h('div','learn12-progress');bar.append(h('span','',cur+' / '+max));
   const p=h('progress');p.max=max;p.value=cur;bar.append(p);root.append(bar);
@@ -295,7 +297,7 @@
  }
  function caseView(){
   const list=subset(),q=currentCase();
-  heading((state.mode==='practice'?'Øv':'Test deg selv')+' · '+(state.caseIndex+1)+' / '+list.length,
+  heading((state.retry?'Øv på feilene':state.mode==='practice'?'Øv':'Test deg selv')+' · '+(state.caseIndex+1)+' / '+list.length,
    state.tool==='news'?'Trykk på riktig poengfelt':'Skår alle fire 4AT-delene');
   progress(state.caseIndex+1,list.length);root.append(narrative());
   text(root,state.mode==='test'?'Fasit vises når hele testen er levert.':'Skår alle delområder og trykk «Sjekk resultat» for forklaring.','learn12-note');
@@ -377,9 +379,15 @@
    }
    card.append(ul);text(card,interpretation(r),'learn12-explanation');root.append(card);
   }
+  const wrong=cases.filter((q,i)=>results[i].score<results[i].max).map(q=>q.id);
   const bar=h('div','learn12-actions');
-  bar.append(button('Prøv igjen','learn12-secondary',()=>setMode(state.mode)),
-   button(state.mode==='practice'?'Fortsett til test →':'Til oversikten','learn12-primary',()=>setMode(state.mode==='practice'?'test':'home')));root.append(bar);
+  if(wrong.length){
+   const retry=button('Øv på feilene dine ('+wrong.length+')','learn12-primary learn12-retry',()=>retryMistakes(wrong));
+   retry.setAttribute('aria-label','Øv på nytt på de '+wrong.length+' casene du hadde feil på');
+   bar.append(retry);
+  }else if(state.retry)text(root,'Alle riktige nå. Bra jobbet!','learn12-retry-done');
+  bar.append(button(state.retry?'Hele øvingen på nytt':'Prøv igjen','learn12-secondary',()=>setMode(state.retry?'practice':state.mode)),
+   button(state.mode==='practice'?'Fortsett til test →':'Til oversikten',wrong.length?'learn12-secondary':'learn12-primary',()=>setMode(state.mode==='practice'?'test':'home')));root.append(bar);
  }
  function render(){
   root.replaceChildren();
@@ -397,6 +405,7 @@
   get mode(){return state.tool==='gcs'?window.KartleggLearnPilot?.mode:state.mode},
   get current(){return state.caseIndex},
   get finished(){return state.finished},
+  get retry(){return state.retry?[...state.retry]:null},
   get answers(){return JSON.parse(JSON.stringify(state.answers))},
   get cells(){return JSON.parse(JSON.stringify(state.cells))}
  });

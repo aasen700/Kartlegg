@@ -2890,3 +2890,12 @@
 .learn-progress-summary p {
   margin: 0;
 }
+/* Øv på feilene dine */
+.learn12-retry-done {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  color: var(--ink);
+  font-weight: 750;
+}
