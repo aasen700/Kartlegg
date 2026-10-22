@@ -1,5 +1,10 @@
 # Versjonshistorikk – Kartlegg
 
+## Rettet: siden ruller ikke lenger når du trykker i et felt – 22. oktober 2026
+
+- Kartlegg ruller ikke lenger selv når du trykker i et felt på telefonen. Telefonen flytter allerede feltet inn i synsfeltet. Da Kartlegg også rullet, kjempet de to mot hverandre, og feltet kunne havne over skjermkanten, særlig AVPU og puls.
+- Når telefonen flytter et felt inn i synsfeltet, er det nå plass til ledeteksten over feltet under det faste toppfeltet.
+
 ## Rettet: blaing av seg selv, kontrast i Liquid Glass og kutt på telefon – 22. oktober 2026
 
 - Telefon: siden kunne blafre eller rulle nedover av seg selv når man trykket i et felt, for eksempel målingene i NEWS2. Feltet flyttes nå inn i synsfeltet bare én gang når tastaturet åpnes, i stedet for hver gang skjermen beveget seg.

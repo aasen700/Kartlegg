@@ -5,12 +5,14 @@ const fs=require('node:fs');
 const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 
-test('keyboard adjustment scrolls at most once per focused field (no scroll loop on iPhone)',()=>{
+test('the page never scrolls by itself when a field gets focus (the browser already does it)',()=>{
  const js=read('assets/mobile-ux.js');
- assert.match(js,/adjusted!==document\.activeElement/);
- assert.match(js,/adjusted=field/);
- assert.match(js,/addEventListener\('focusout',\(\)=>\{adjusted=null\}\)/);
- assert.doesNotMatch(js,/scrollIntoView/,'scrollIntoView centred in the layout viewport and could re-trigger itself');
+ const code=js.replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'');
+ assert.doesNotMatch(code,/scrollIntoView|scrollBy|scrollTo/,'our own scrolling fought the browser on iPhone (AVPU, puls)');
+ assert.match(code,/classList\.toggle\('keyboard-open'/,'the keyboard class for fixed controls is kept');
+ const css=read('assets/css/01-base.css');
+ assert.match(css,/scroll-padding-top: 76px/,'room below the sticky header');
+ assert.match(css,/scroll-margin-top: 44px/,'the label above a field stays visible');
 });
 test('glass header and bottom menu are dense enough to read over scrolling content',()=>{
  const css=read('assets/css/10-themes.css');

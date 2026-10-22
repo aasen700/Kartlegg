@@ -140,3 +140,15 @@ body {
     stroke: currentColor;
   }
 }
+/* Når telefonen flytter et felt inn i synsfeltet, skal feltet og ledeteksten over havne under det
+   faste toppfeltet, ikke bak det. */
+@media(max-width:770px){
+  html {
+    scroll-padding-top: 76px;
+    scroll-padding-bottom: 16px;
+  }
+  :is(input,select,textarea):not([type=checkbox]):not([type=radio]) {
+    scroll-margin-top: 44px;
+    scroll-margin-bottom: 24px;
+  }
+}
