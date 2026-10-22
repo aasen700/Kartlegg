@@ -1200,9 +1200,8 @@
     bottom: auto;
     margin-block: 8px;
   }
-  .keyboard-open .main {
-    padding-bottom: 35px;
-  }
+  /* Siden beholder samme høyde når tastaturet åpnes. Før ble luften nederst mindre, og da måtte siden hoppe
+     hvis du var langt nede. */
 }
 .wound-image-unavailable {
   padding: 24px;

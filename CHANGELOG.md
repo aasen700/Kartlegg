@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Rettet: mindre hopping når du skriver inn målinger på telefon – 22. oktober 2026
+
+- Myk rulling er slått av på telefon. Når iPhone flytter et felt over tastaturet, skjer det nå med én gang, ikke som en animasjon som kunne havne et annet sted.
+- Siden har samme høyde når tastaturet er åpent. Før ble luften nederst mindre, og da måtte siden hoppe hvis du var langt nede.
+- Den ekstra luften over feltene fra forrige rettelse er fjernet igjen, fordi den kunne få iPhone til å skyve feltet helt opp.
+
 ## Rettet: siden ruller ikke lenger når du trykker i et felt – 22. oktober 2026
 
 - Kartlegg ruller ikke lenger selv når du trykker i et felt på telefonen. Telefonen flytter allerede feltet inn i synsfeltet. Da Kartlegg også rullet, kjempet de to mot hverandre, og feltet kunne havne over skjermkanten, særlig AVPU og puls.

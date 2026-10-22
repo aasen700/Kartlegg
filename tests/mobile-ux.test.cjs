@@ -10,9 +10,10 @@ test('the page never scrolls by itself when a field gets focus (the browser alre
  const code=js.replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'');
  assert.doesNotMatch(code,/scrollIntoView|scrollBy|scrollTo/,'our own scrolling fought the browser on iPhone (AVPU, puls)');
  assert.match(code,/classList\.toggle\('keyboard-open'/,'the keyboard class for fixed controls is kept');
- const css=read('assets/css/01-base.css');
- assert.match(css,/scroll-padding-top: 76px/,'room below the sticky header');
- assert.match(css,/scroll-margin-top: 44px/,'the label above a field stays visible');
+ const css=read('assets/css/01-base.css'),components=read('assets/css/03-components.css');
+ assert.match(css,/@media\(max-width:770px\)\{\n  html \{\n    scroll-behavior: auto;/,'no smooth scrolling on phones');
+ assert.doesNotMatch(css,/scroll-margin-top|scroll-padding-top: 76px/,'extra offsets made iPhone push fields to the top');
+ assert.doesNotMatch(components,/\.keyboard-open \.main \{/,'page height must not change when the keyboard opens');
 });
 test('glass header and bottom menu are dense enough to read over scrolling content',()=>{
  const css=read('assets/css/10-themes.css');
