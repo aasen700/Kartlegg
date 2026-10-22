@@ -2851,3 +2851,42 @@
   width: 22px;
   height: 22px;
 }
+/* Fremgang i Lær */
+.learning-flow-done {
+  margin-left: 4px;
+  color: var(--accent);
+  font-weight: 800;
+}
+.learn-progress-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.learn-progress-chip {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.learn-progress-chip.is-done {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--ink);
+}
+.learn-progress-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 14px;
+  margin: 10px 0 16px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.learn-progress-summary p {
+  margin: 0;
+}

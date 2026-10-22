@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Mer innhold i Lær – 22. oktober 2026
+
+- Fremgang i Lær: hvert kurs viser hva du har fullført (✓ Lær, ✓ Øv, ✓ Test) og beste testresultat, og Lær viser hvor mange av de fem modulene som er fullført. Lær/Øv/Test-stegene i modulene får også ✓. Fremgangen lagres i nettleseren på denne enheten, knyttet til kontoen med et anonymt nummer. Den inneholder ingen svar og ingen tidspunkter, og kan nullstilles. Den slettes når kontoen slettes. Personvernerklæringen er oppdatert.
+- Simulering: tre nye pasientcaser, så det er fire til sammen. «Ny forvirring på sykehjemmet» (ny forvirring gir 3 poeng), «Svimmel dagen etter operasjon» (lav NEWS2, men en puls som stiger) og «Tungpust hos pasient med SpO₂-skala 2» (skala 2 og oksygentilførsel). Du velger case fra en liste, og hver oppsummering har et eget læringspoeng. Fullførte caser får ✓. Den opprinnelige casen er uendret.
+- Øvingsforløp: ny knapp «Øv med spørsmål underveis». Eksempelet vises én måling om gangen. Før neste måling svarer du på NEWS2, om skåren har gått opp eller ned, og hvilken måling som ga flest nye poeng. Skåren og grafen for målingen det spørres om skjules til du har svart. Svarene lagres ikke.
+
 ## Tydeligere melding ved glemt passord og bekreftelse – 22. oktober 2026
 
 - Etter «Glemt passord?» og «Send ny lenke» vises en tydelig grønn boks som rulles inn i synsfeltet, med adressen e-posten sendes til og avsenderen (noreply@kartlegg.firebaseapp.com). Før kunne meldingen havne nedenfor skjermen på mobil, så det så ut som ingenting skjedde.

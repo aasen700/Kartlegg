@@ -27,10 +27,10 @@
   <link rel="stylesheet" href="assets/css/02-layout.css?v=profil2026">
   <link rel="stylesheet" href="assets/css/03-components.css?v=jur1">
   <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
-  <link rel="stylesheet" href="assets/css/05-assessment.css?v=forlop2">
+  <link rel="stylesheet" href="assets/css/05-assessment.css?v=laer1">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=opt1">
-  <link rel="stylesheet" href="assets/css/07-simulation.css?v=2010">
-  <link rel="stylesheet" href="assets/css/08-learning.css?v=opt1">
+  <link rel="stylesheet" href="assets/css/07-simulation.css?v=laer1">
+  <link rel="stylesheet" href="assets/css/08-learning.css?v=laer1">
   <link rel="stylesheet" href="assets/css/09-decor.css?v=sesong4">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=glass3">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=uu1">
@@ -113,8 +113,9 @@
           <p class="forlop-caption" id="forlopCaption" hidden></p>
           <div class="history-toolbar"><span class="helper" id="historyStorageNote">Lagres bare på denne enheten i høyst 24 timer, og slettes når du logger ut. Dette er ikke en pasientjournal.</span><span class="actions-right"><button class="btn-inline" id="newMeasurement" type="button">＋ Ny måling</button><button class="btn-inline" id="clearHistory" type="button">Slett øvingsforløpet</button></span></div>
           <div class="history-undo" id="historyUndo" role="status" hidden><span id="historyUndoText"></span><button class="btn-inline" id="historyUndoButton" type="button">Angre</button></div>
-          <div class="empty-state forlop-empty" id="emptyHistory"><p><strong>Ingen målinger i øvingsforløpet ennå.</strong></p><p>Start med et ferdig eksempel, eller lag ditt eget forløp: fyll ut NEWS2 og trykk «Legg til i øvingsforløp». Ved neste måling velger du hvor lang tid som har gått.</p><div class="forlop-start"><button class="btn btn-primary" id="loadExampleForlop" type="button">Prøv eksempelet: lungebetennelse</button><button class="btn btn-secondary" id="startOwnForlop" type="button">Lag eget forløp</button></div></div>
+          <div class="empty-state forlop-empty" id="emptyHistory"><p><strong>Ingen målinger i øvingsforløpet ennå.</strong></p><p>Øv med et ferdig eksempel der du får spørsmål mellom målingene, se hele eksempelet med en gang, eller lag ditt eget forløp: fyll ut NEWS2 og trykk «Legg til i øvingsforløp». Ved neste måling velger du hvor lang tid som har gått.</p><div class="forlop-start"><button class="btn btn-primary" id="quizExampleForlop" type="button">Øv med spørsmål underveis</button><button class="btn btn-secondary" id="loadExampleForlop" type="button">Prøv eksempelet: lungebetennelse</button><button class="btn btn-secondary" id="startOwnForlop" type="button">Lag eget forløp</button></div></div>
           <div class="forlop-list-wrap" id="historyTableContainer" tabindex="-1" hidden><ol class="forlop-list" id="historyRows" aria-label="Målinger i øvingsforløpet"></ol></div>
+          <section class="forlop-quiz" id="forlopQuiz" aria-label="Spørsmål underveis i øvingsforløpet" hidden></section>
         </section>
         <section class="section" id="trendSection" hidden>
           <div class="section-header"><div class="section-symbol cyan">↗</div><div><h2>Utvikling i NEWS2</h2><p>Grafen viser NEWS2 over tid i forløpet. Sammenlign to målinger for å se hvilke parametere som endret skåren.</p></div></div>
@@ -188,10 +189,10 @@
       </div><!-- /page-laer -->
       <div class="page" id="page-simulering" hidden>
         <div class="intro"><div><h1>Pasientsimulering</h1>
-          <p>Øv på observasjon, NEWS2 og ISBAR i en tenkt situasjon fra hjemmesykepleien.</p></div></div>
+          <p>Øv på observasjon, NEWS2 og ISBAR i fire tenkte situasjoner: hjemmesykepleie, sykehjem, sengepost og lungeavdeling.</p></div></div>
         <section class="section" aria-labelledby="simHeading">
           <div class="section-header"><div class="section-symbol teal" aria-hidden="true">✧</div>
-            <div><h2 id="simHeading">Akutt forverring hjemme</h2>
+            <div><h2 id="simHeading">Velg en pasientcase</h2>
             <p>Spør pasienten, velg hva du vil undersøke, og bestem når du ringer etter hjelp.</p></div>
           </div>
           <div id="simulationRoot" aria-label="Interaktiv pasientsimulering">
@@ -295,12 +296,12 @@
             <article class="public-feature">
               <div class="public-feature-preview preview-quote" aria-hidden="true"><p>«Det er blitt så tungt å puste i dag.»</p></div>
               <h3>Simulering <span class="public-feature-badge">Med konto</span></h3>
-              <p>Øv på observasjon, prioritering og ISBAR i en tenkt situasjon fra hjemmesykepleien. Du bestemmer selv hva du undersøker.</p>
+              <p>Øv på observasjon, prioritering og ISBAR i fire tenkte pasientcaser, fra hjemmesykepleie til sengepost. Du bestemmer selv hva du undersøker.</p>
             </article>
             <article class="public-feature">
               <div class="public-feature-preview preview-trend" aria-hidden="true"><svg viewBox="0 0 120 40" focusable="false"><polyline points="4,30 28,26 52,28 76,16 100,12 116,8"/></svg></div>
               <h3>Øvingsforløp <span class="public-feature-badge">Med konto</span></h3>
-              <p>Øv på å se hvordan NEWS2 utvikler seg hos en tenkt pasient, med ferdig eksempel og sammenligning av to målinger. Lagret på enheten din i høyst 24 timer.</p>
+              <p>Øv på å se hvordan NEWS2 utvikler seg hos en tenkt pasient, med spørsmål mellom målingene og sammenligning av to målinger. Lagret på enheten din i høyst 24 timer.</p>
             </article>
           </div>
         </section>
@@ -393,6 +394,7 @@
           <h2>Lagring på enheten din</h2>
           <ul>
             <li><strong>Øvingsforløp (med konto):</strong> målingene lagres uten dato og klokkeslett, bare med tiden mellom målingene. De lagres bare i nettleseren på denne enheten, knyttet til kontoen din, og slettes automatisk etter høyst 24 timer, når du logger ut, eller når du sletter dem selv. De er ikke kryptert, så bruk bare tenkte pasienter.</li>
+            <li><strong>Fremgang i Lær og simuleringen (med konto):</strong> hvilke deler av modulene og casene du har fullført, og siste og beste testresultat. Ingen svar, ingen tidspunkter og ingen pasientopplysninger. Lagres bare i nettleseren på denne enheten, knyttet til kontoen din med et anonymt nummer, til du trykker «Nullstill fremgang» i Lær.</li>
             <li><strong>Innlogging:</strong> varer til du lukker nettleseren, eller til du logger ut hvis du har krysset av for «Husk meg på denne enheten».</li>
             <li><strong>Innstillinger:</strong> utseende, favoritter, at du har lukket velkomstmeldingen, og eventuelt avsenderprofilen hvis du har valgt «Husk profilen».</li>
           </ul>
@@ -698,7 +700,7 @@
   <script src="assets/scoring.js?v=061a"></script>
   <script src="assets/auth-gate.js?v=forlop1"></script>
   <script src="assets/measurement-store.js?v=2"></script>
-  <script src="assets/app.js?v=opt1"></script>
+  <script src="assets/app.js?v=laer1"></script>
   <script src="assets/welcome.js?v=1"></script>
   <script src="assets/enhancements.js?v=forlop4"></script>
   <script src="assets/theme-engine.js?v=sesong1"></script>
@@ -726,10 +728,11 @@
   <script src="assets/final-polish-v10.js?v=forlop1"></script>
   <script src="assets/personal-modes.js?v=profile1"></script>
   <script src="assets/tool-navigation.js?v=sma1"></script>
-  <script src="assets/simulation-engine.js?v=101"></script>
-  <script src="assets/simulation-ui.js?v=profile2"></script>
+  <script src="assets/learning-progress.js?v=laer1"></script>
+  <script src="assets/simulation-engine.js?v=laer1"></script>
+  <script src="assets/simulation-ui.js?v=laer1"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
-  <script src="assets/learning-flow.js?v=1401"></script>
+  <script src="assets/learning-flow.js?v=laer1"></script>
   <script src="assets/gcs-learning-ui.js?v=2010"></script>
   <script src="assets/learning-content-v12.js?v=1203"></script>
   <script src="assets/learning-tools-v12.js?v=2010"></script>
@@ -741,6 +744,6 @@
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
   <script src="assets/formal.js?v=1"></script>
-  <script type="module" src="assets/account/entry.mjs?v=epost1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=laer1"></script>
 </body>
 </html>

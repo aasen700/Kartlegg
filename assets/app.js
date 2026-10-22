@@ -39,6 +39,118 @@ function loadExampleForlop(){
   renderHistory();
   $('historyTableContainer').focus?.({preventScroll:true});
 }
+// Eksempelet med spørsmål underveis: målingene vises én og én. Før neste måling svarer du på NEWS2,
+// retningen i forløpet og hvilken måling som ga flest nye poeng. Svarene lagres ikke, bare at øvingen er fullført.
+const NEWS_PART_NAMES=Object.freeze({rr:'Respirasjonsfrekvens',spo:'SpO₂',sbp:'Systolisk blodtrykk',hr:'Puls',temp:'Temperatur',consciousness:'Bevissthet',oxygen:'Oksygentilførsel'});
+let quiz=null;
+function exampleMeasurement(index){
+  const [after,vals]=EXAMPLE_FORLOP[index];
+  const v={...vals,gcs:null,conscious:'A',oxygen:false,scale:1,confusion:false};
+  return {v,after,savedAt:Date.now(),news:calculateNEWS2(v),q:calculateQSOFA(v)};
+}
+function startForlopQuiz(){
+  if(measurements.length)return;
+  dropUndo();
+  measurements.push(exampleMeasurement(0));
+  quiz={step:0,answers:{},checked:false,correct:0,asked:0};
+  persistMeasurements();
+  $('forlopCaption').textContent='Øving med spørsmål: tenkt kvinne, 78 år, innlagt med lungebetennelse. Les målingen, svar på spørsmålene og gå videre til neste måling.';
+  $('forlopCaption').hidden=false;
+  renderHistory();
+  $('forlopQuiz')?.querySelector('input,button')?.focus({preventScroll:true});
+  $('forlopQuiz')?.scrollIntoView({block:'nearest',behavior:'auto'});
+}
+function quizQuestions(step){
+  const now=measurements[step],before=measurements[step-1];
+  const list=[{id:'news',type:'number',label:`Hva er NEWS2 i ${step===0?'måling 1':'måling '+(step+1)}?`,answer:now.news.total,
+    explain:`NEWS2 er ${now.news.total}: `+Object.entries(now.news.parts).filter(([,p])=>p>0).map(([k,p])=>`${NEWS_PART_NAMES[k]} ${p}`).join(', ')+'.'}];
+  if(before){
+    const diff=now.news.total-before.news.total,trend=diff>0?'worse':diff<0?'better':'same';
+    list.push({id:'trend',type:'choice',label:'Hvordan har NEWS2 endret seg siden forrige måling?',
+      options:[['better','Lavere skår'],['same','Uendret'],['worse','Høyere skår']],answer:[trend],
+      explain:`Fra ${before.news.total} til ${now.news.total} poeng.`});
+    const deltas=Object.keys(NEWS_PART_NAMES).map(k=>[k,(now.news.parts[k]||0)-(before.news.parts[k]||0)]);
+    const top=Math.max(...deltas.map(([,d])=>d));
+    if(top>0){
+      const winners=deltas.filter(([,d])=>d===top).map(([k])=>k);
+      list.push({id:'part',type:'choice',label:'Hvilken måling ga flest nye poeng siden forrige gang?',
+        options:['rr','spo','sbp','hr','temp'].map(k=>[k,NEWS_PART_NAMES[k]]),answer:winners,
+        explain:winners.length>1?`Flere økte like mye (+${top}): ${winners.map(k=>NEWS_PART_NAMES[k]).join(', ')}. Alle disse regnes som riktige.`:
+          `${NEWS_PART_NAMES[winners[0]]} økte med ${top} poeng.`});
+    }
+  }
+  return list;
+}
+function renderForlopQuiz(){
+  const box=$('forlopQuiz');if(!box)return;
+  box.hidden=!quiz;box.replaceChildren();
+  if(!quiz)return;
+  const step=quiz.step,last=step===EXAMPLE_FORLOP.length-1,questions=quizQuestions(step);
+  box.append(makeElement('span',`Spørsmål · måling ${step+1} av ${EXAMPLE_FORLOP.length}`,'forlop-quiz-kicker'));
+  box.append(makeElement('h3',step===0?'Hva viser startmålingen?':'Hva har skjedd siden forrige måling?'));
+  const formEl=makeElement('form',undefined,'forlop-quiz-form');formEl.noValidate=true;
+  for(const q of questions){
+    const field=makeElement('fieldset',undefined,'forlop-quiz-q');field.append(makeElement('legend',q.label));
+    const given=quiz.answers[q.id];
+    if(q.type==='number'){
+      const input=makeElement('input',undefined,'forlop-quiz-number');input.type='number';input.min='0';input.max='20';input.step='1';input.inputMode='numeric';
+      input.name=q.id;input.setAttribute('aria-label',q.label);if(given!==undefined)input.value=String(given);input.disabled=quiz.checked;
+      field.append(input);
+    }else{
+      const opts=makeElement('div',undefined,'forlop-quiz-options');
+      for(const [value,text] of q.options){
+        const label=makeElement('label',undefined,'forlop-quiz-option'),radio=makeElement('input');
+        radio.type='radio';radio.name=q.id;radio.value=value;radio.checked=given===value;radio.disabled=quiz.checked;
+        label.append(radio,makeElement('span',text));opts.append(label);
+      }
+      field.append(opts);
+    }
+    if(quiz.checked){
+      const ok=q.type==='number'?Number(given)===q.answer:q.answer.includes(given);
+      field.dataset.result=ok?'ok':'wrong';
+      field.append(makeElement('p',(ok?'✓ Riktig. ':'✗ Ikke helt. ')+(q.type==='number'&&!ok?`Riktig svar er ${q.answer}. `:'')+q.explain,'forlop-quiz-feedback'));
+    }
+    formEl.append(field);
+  }
+  const status=makeElement('p','','forlop-quiz-status');status.setAttribute('role','status');
+  const actions=makeElement('div',undefined,'forlop-quiz-actions');
+  if(!quiz.checked){
+    const check=makeElement('button','Sjekk svarene','btn btn-primary');check.type='submit';actions.append(check);
+  }else{
+    if(step>0||questions.length)formEl.append(makeElement('p',step===0?'Tenk over: Hvilke målinger vil du følge ekstra med på framover?':
+      'Tenk over: Hva betyr utviklingen for hvor ofte pasienten bør observeres, og hvem du bør si fra til? Følg lokale rutiner.','forlop-quiz-reflect'));
+    if(last){
+      const restart=makeElement('button','Avslutt øvingen','btn btn-secondary');restart.type='button';
+      restart.addEventListener('click',()=>{quiz=null;renderHistory();$('historyTableContainer').focus?.({preventScroll:true});});
+      actions.append(restart);
+    }else{
+      const next=makeElement('button',`Neste måling (etter ${formatDuration(EXAMPLE_FORLOP[step+1][0])}) →`,'btn btn-primary');next.type='button';
+      next.addEventListener('click',()=>{
+        measurements.push(exampleMeasurement(step+1));
+        quiz={...quiz,step:step+1,answers:{},checked:false};
+        persistMeasurements();renderHistory();
+        $('historyRows').lastElementChild?.scrollIntoView({block:'nearest',behavior:'auto'});
+        $('forlopQuiz')?.querySelector('input')?.focus({preventScroll:true});
+      });
+      actions.append(next);
+    }
+  }
+  formEl.append(actions,status);
+  formEl.addEventListener('submit',e=>{
+    e.preventDefault();
+    const data=new FormData(formEl),answers={};
+    for(const q of questions){const v=data.get(q.id);if(v===null||v===''){status.textContent='Svar på alle spørsmålene først.';return}answers[q.id]=q.type==='number'?Number(v):String(v);}
+    const right=questions.filter(q=>q.type==='number'?answers[q.id]===q.answer:q.answer.includes(answers[q.id])).length;
+    quiz={...quiz,answers,checked:true,correct:quiz.correct+right,asked:quiz.asked+questions.length};
+    if(last)window.KartleggLearningProgress?.record('Øvingsforløp','practice',{correct:quiz.correct,total:quiz.asked});
+    renderHistory();
+    const fb=$('forlopQuiz').querySelector('.forlop-quiz-feedback');
+    if(last)$('forlopQuiz').querySelector('.forlop-quiz-status').textContent=`Ferdig! Du svarte riktig på ${quiz.correct} av ${quiz.asked} spørsmål i hele forløpet.`;
+    (fb||$('forlopQuiz')).scrollIntoView?.({block:'nearest',behavior:'auto'});
+    $('forlopQuiz').querySelector('.forlop-quiz-actions button')?.focus({preventScroll:true});
+  });
+  box.append(formEl);
+}
 function readInterval(){const n=Number($('measureInterval')?.value);return Number.isInteger(n)&&n>0?n:60;}
 function renderForlopLine(){
   const first=measurements.length===0;
@@ -219,6 +331,8 @@ function expiryText(){
   return `Øvingsforløpet slettes automatisk ${day} kl. ${pad(d.getHours())}:${pad(d.getMinutes())}, når du logger ut, eller når du sletter det selv. Det lagres bare på denne enheten. Bruk bare tenkte pasienter.`;
 }
 function renderHistory(){
+  if(quiz&&measurements.length!==quiz.step+1)quiz=null; // Forløpet er endret for hånd. Øvingen avsluttes.
+  const hideLast=Boolean(quiz&&!quiz.checked); // Skåren på målingen det spørres om vises først etter svar.
   $('historyCounter').textContent=measurements.length===1?'1 måling':`${measurements.length} målinger`;
   if(!measurements.length)$('forlopCaption').hidden=true;
   $('page-historikk').dataset.forlopEmpty=String(!measurements.length);
@@ -226,18 +340,20 @@ function renderHistory(){
   $('historyStorageNote').textContent=expiryText();
   $('emptyHistory').hidden=measurements.length>0;
   $('historyTableContainer').hidden=measurements.length===0;
-  $('trendSection').hidden=measurements.length<2;
+  $('trendSection').hidden=measurements.length<2||hideLast;
   $('historyRows').replaceChildren();
   measurements.forEach((m,index)=>{
-    const label=measurementLabel(index),level=m.news.total>=7?'high':m.news.total>=5?'medium':'low';
+    const hidden=hideLast&&index===measurements.length-1;
+    const label=measurementLabel(index),level=hidden?'unknown':m.news.total>=7?'high':m.news.total>=5?'medium':'low';
     const item=makeElement('li',undefined,'forlop-item');item.dataset.level=level;
     const head=makeElement('div',undefined,'forlop-item-head');
     const title=makeElement('strong',label,'forlop-item-title');
-    const score=makeElement('span',`NEWS2 ${m.news.total}`,'forlop-item-score');
+    const score=makeElement('span',hidden?'NEWS2 ?':`NEWS2 ${m.news.total}`,'forlop-item-score');
+    if(hidden)score.setAttribute('aria-label','NEWS2 skjult til du har svart');
     head.append(title,score);
     const conscious=m.v.confusion?'ny forvirring':({A:'våken',V:'reagerer på tiltale',P:'reagerer på smerte',U:'reagerer ikke'}[m.v.conscious]||m.v.conscious);
     const facts=makeElement('dl',undefined,'forlop-item-facts');
-    for(const [k,v] of [['RF',`${m.v.rr}/min`],['SpO₂',`${m.v.spo2} %${m.v.oxygen?' med O₂':''}`],['BT',`${m.v.sbp}`],['Puls',`${m.v.hr}`],['Temp',`${formatNumber(m.v.temp,1)} °C`],['Bevissthet',conscious],...(m.q?[['qSOFA',`${m.q.total}`]]:[])]){
+    for(const [k,v] of [['RF',`${m.v.rr}/min`],['SpO₂',`${m.v.spo2} %${m.v.oxygen?' med O₂':''}`],['BT',`${m.v.sbp}`],['Puls',`${m.v.hr}`],['Temp',`${formatNumber(m.v.temp,1)} °C`],['Bevissthet',conscious],...(m.q&&!hidden?[['qSOFA',`${m.q.total}`]]:[])]){
       const wrap=makeElement('div');wrap.append(makeElement('dt',k),makeElement('dd',v));facts.append(wrap);
     }
     const actions=makeElement('div',undefined,'forlop-item-actions');
@@ -246,7 +362,8 @@ function renderHistory(){
     actions.append(load,remove);
     item.append(head,facts,actions);$('historyRows').append(item);
   });
-  if(measurements.length>=2) renderTrend();
+  if(measurements.length>=2&&!hideLast) renderTrend();
+  renderForlopQuiz();
 }
 function renderTrend(){
   const min=0,max=Math.max(10,...measurements.map(m=>m.news.total))+1;
@@ -425,6 +542,7 @@ $('doneIsbar').addEventListener('click',closeIsbar);
 $('clearHistory').addEventListener('click',()=>removeMeasurements([...measurements]));
 $('historyUndoButton').addEventListener('click',undoRemove);
 $('loadExampleForlop').addEventListener('click',loadExampleForlop);
+$('quizExampleForlop')?.addEventListener('click',startForlopQuiz);
 $('startOwnForlop').addEventListener('click',()=>{form.reset();setTimeout(()=>{clearResults();showNotice('');showPage('vurdering');$('rr')?.focus({preventScroll:true});},0);});
 $('copyIsbar').addEventListener('click',copyIsbar);
 for(const id of ['isbarSituation','isbarBackground','isbarExtra','isbarRequest',...PROFILE_IDS])$(id).addEventListener('input',renderIsbar);

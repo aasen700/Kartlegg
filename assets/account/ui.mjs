@@ -38,7 +38,7 @@ export function mountAccount({enabled,loadBackend}){
  <div id="accountAddPasswordBlock"><p>Vil du bruke passord på Google-kontoen din? Firebase sender en lenke til kontoens e-postadresse. Velg passord der; begge innloggingsmetodene bruker den samme kontoen.</p><button class="btn btn-secondary" type="button" id="accountAddPassword">Send lenke for å velge passord</button></div>
  <p id="accountPasswordResetNote">Du kan også tilbakestille passord med «Glemt passord». Passord håndteres bare av Firebase Authentication.</p>
  <button class="btn btn-secondary" type="button" id="accountExport">Last ned kontoinnstillinger</button>
- <label class="account-consent"><input id="accountDeleteConfirm" type="checkbox"> Jeg vil slette kontoen og alle profilinnstillinger i skyen permanent. Lokale kontoendringer på denne enheten fjernes også.</label><button class="btn btn-secondary account-danger" type="button" id="accountDelete">Slett kontoen permanent</button></div></dialog>`;
+ <label class="account-consent"><input id="accountDeleteConfirm" type="checkbox"> Jeg vil slette kontoen og alle profilinnstillinger i skyen permanent. Lokale kontoendringer og fremgangen i Lær på denne enheten fjernes også.</label><button class="btn btn-secondary account-danger" type="button" id="accountDelete">Slett kontoen permanent</button></div></dialog>`;
  const auth=document.createElement('div');auth.className='account-panel account-auth';auth.id='accountAuth';
  auth.innerHTML=`<section class="account-auth-view" data-konto-view="login" id="accountLoginView" aria-labelledby="accountLoginTitle">
  <h1 id="accountLoginTitle">Logg inn</h1><p class="account-lede">Velkommen tilbake. Logg inn for å bruke verktøyene, læringsmodulene og simuleringen.</p>
@@ -228,7 +228,7 @@ export function mountAccount({enabled,loadBackend}){
  $('accountLinkGoogle').onclick=()=>run(async()=>{await backend.linkGoogle();status('Google er koblet til den samme kontoen.')});
  $('accountAddPassword').onclick=()=>run(async()=>{await backend.addPassword();status('Lenke for å velge passord er sendt til kontoens e-postadresse. Sjekk også søppelpost.')});
  $('accountExport').onclick=()=>run(async()=>{const cloud=await backend.read(user.uid);const blob=new Blob([JSON.stringify({email:user.email,settings:cloud?.settings||null},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kartlegg-kontoinnstillinger.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Kontoinnstillingene er lastet ned.')});
- $('accountDelete').onclick=()=>run(async()=>{if(!$('accountDeleteConfirm').checked){status('Kryss av for permanent sletting først.');return}await sync.remove();status('Kontoen og profilinnholdet i skyen er slettet.');location.hash='start'});
+ $('accountDelete').onclick=()=>run(async()=>{if(!$('accountDeleteConfirm').checked){status('Kryss av for permanent sletting først.');return}await sync.remove();try{window.KartleggLearningProgress?.reset()}catch(_){}status('Kontoen og profilinnholdet i skyen er slettet.');location.hash='start'});
  function wipePending(uid){try{localStorage.removeItem('kartlegg.account.pending.v1.'+uid)}catch(_){}}
  async function changedUser(next){
   const token=++generation;

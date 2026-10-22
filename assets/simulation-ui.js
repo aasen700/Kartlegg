@@ -1,5 +1,6 @@
-/* Kartlegg Simulering v0.1 — purely client-side fictional scenario interface.
- * No network, no clinical chart writes, no patient identifiers, no persistence.
+/* Kartlegg Simulering v0.2 — purely client-side fictional scenario interface.
+ * No network, no clinical chart writes, no patient identifiers. Only which cases are finished
+ * is remembered, through KartleggLearningProgress; the case itself stays in memory.
  */
 'use strict';
 (()=>{
@@ -7,6 +8,9 @@
  const root=document.getElementById('simulationRoot');
  if(!Engine||!root)return;
  let state=Engine.start(),started=false;
+ const Progress=()=>window.KartleggLearningProgress;
+ const current=()=>Engine.getCase(state.caseId)||Engine.caseData;
+ const heading=document.getElementById('simHeading');
  const elt=(tag,cls,text)=>{
   const n=document.createElement(tag);if(cls)n.className=cls;
   if(text!==undefined)n.textContent=text;
@@ -24,7 +28,14 @@
  const sameTabLink=(label,url)=>{
   const a=elt('a','sim-reference',label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;
  };
- function begin(){started=true;state=Engine.start();render()}
+ function begin(id){started=true;state=Engine.start(typeof id==='string'?id:current().id);render()}
+ function toChooser(){started=false;state=Engine.start(current().id);render();root.scrollIntoView?.({block:'start',behavior:'auto'})}
+ function finishCase(){
+  state=Engine.finish(state);
+  const report=Engine.debrief(state);
+  Progress()?.record('sim:'+state.caseId,'test',{correct:report.items.filter(x=>x.done).length,total:report.items.length});
+  render();root.scrollIntoView({block:'start',behavior:'auto'});
+ }
  function choose(id){
   try{state=Engine.step(state,id);render();root.querySelector('#simLatest')?.focus({preventScroll:true})}
   catch(e){announce(e.message)}
@@ -32,7 +43,7 @@
  function announce(msg){const el=root.querySelector('#simAnnounce');if(el)el.textContent=msg}
  function confirmRestart(){
   if(!window.confirm('Starte øvingen på nytt? Nåværende øvingsvalg slettes fra denne fanen.'))return;
-  begin();
+  begin(state.caseId);
  }
  function latest(panel){
   const last=state.timeline.at(-1);
@@ -61,7 +72,7 @@
    ['Temperatur',v.temp.toFixed(1).replace('.',',')+' °C'],
    ['Bevissthet',v.conscious+(v.confusion?' · ny forvirring':' · ingen ny forvirring')],
    ['Oksygen',v.oxygen?'Tilført':'Romluft'],
-   ['SpO₂-skala','1']
+   ['SpO₂-skala',String(v.scale||1)]
   ]){
    const box=elt('div','sim-vital');
    box.append(elt('dt','',label),elt('dd','',value));grid.append(box);
@@ -181,28 +192,49 @@
    }
    panel.append(ref);
   }
+  if(report.lesson){const box=elt('div','sim-lesson');box.append(elt('strong','','Læringspoeng i denne casen'));addParagraph(box,report.lesson,'sim-copy');panel.append(box)}
   if(report.deteriorated)addParagraph(panel,'I dette manusstyrte forløpet oppstod forverring etter forsinket eskalering. Dette er et pedagogisk valg i casen, ikke en generell prognose.','sim-deterioration');
   addParagraph(panel,report.note,'sim-hint');
-  panel.append(button('Start øvingen på nytt','btn btn-primary',begin));
+  const again=elt('div','sim-report-actions');
+  again.append(button('Velg en annen case →','btn btn-primary',toChooser),button('Start casen på nytt','btn btn-secondary',()=>begin(state.caseId)));
+  panel.append(again);
   return panel;
+ }
+ function caseHeader(c){
+  const top=elt('div','sim-top');
+  const meta=elt('p','sim-case-meta');
+  meta.append(elt('span','sim-case-level',c.level),elt('span','sim-case-patient',c.patient+' · '+c.setting));
+  top.append(meta,elt('p','sim-copy',c.opening));
+  return top;
  }
  function render(){
   root.replaceChildren();
-  const top=elt('div','sim-top');
-  const meta=elt('div','sim-case-meta');
-  top.append(meta);
-  const intro=elt('p','sim-copy',Engine.caseData.opening);
-  root.append(top,intro);
+  const c=current();
+  if(heading)heading.textContent=started?c.title:'Velg en pasientcase';
   if(!started){
    const overview=section('Hva øver du på?','sim-overview');
    addParagraph(overview,'Du bestemmer hvilke spørsmål, observasjoner og tiltak du gjør. Noen funn er skjult til du undersøker dem. Øv på klinisk prioritering, NEWS2 og ISBAR før du sammenligner med en refleksjonssjekkliste.');
-   overview.append(button('Start pasientcasen →','btn btn-primary',begin));root.append(overview);
+   root.append(overview);
+   const list=elt('ul','sim-case-list');list.setAttribute('aria-label','Pasientcaser');
+   for(const item of Engine.cases){
+    const li=elt('li'),card=button('','sim-case-card',()=>begin(item.id));
+    card.dataset.caseId=item.id;
+    const top=elt('span','sim-case-top');top.append(elt('span','sim-case-level',item.level));
+    const done=Progress()?.get('sim:'+item.id)?.test;
+    if(done)top.append(elt('span','sim-case-done','✓ Fullført'));
+    card.append(top,elt('strong','sim-case-title',item.title),elt('span','sim-case-patient',item.patient+' · '+item.setting),elt('span','sim-case-focus',item.focus));
+    li.append(card);list.append(li);
+   }
+   root.append(list);
   }else if(state.finished){
+   root.append(caseHeader(c));
    root.append(reportPanel());
   }else{
+   root.append(caseHeader(c));
    const stat=elt('div','sim-status');
    stat.append(elt('span','sim-time','Simulert tid: '+state.minutes+' min'));
    stat.append(button('Start på nytt','sim-reset',confirmRestart));
+   stat.append(button('Bytt case','sim-reset',()=>{if(window.confirm('Bytte case? Valgene i denne casen slettes.'))toChooser()}));
    root.append(stat);
    const latestWrap=elt('div');latest(latestWrap);root.append(latestWrap);
    const columns=elt('div','sim-columns');
@@ -212,13 +244,13 @@
    columns.append(left,right);root.append(columns);
    const end=elt('div','sim-finish');
    addParagraph(end,'Du kan avslutte når som helst. Oppsummeringen viser både det du gjorde og hva som eventuelt mangler.');
-   end.append(button('Avslutt og se refleksjon →','btn btn-primary',()=>{state=Engine.finish(state);render();root.scrollIntoView({block:'start',behavior:'auto'})}));
+   end.append(button('Avslutt og se refleksjon →','btn btn-primary',finishCase));
    root.append(end);
   }
   const footer=elt('div','sim-references');
-  addParagraph(footer,Engine.caseData.warning);
+  addParagraph(footer,c.warning);
   footer.append(elt('strong','','Faglig grunnlag: '));
-  for(const s of Engine.caseData.sources)footer.append(sameTabLink(s.name+' ↗',s.url));
+  for(const s of c.sources)footer.append(sameTabLink(s.name+' ↗',s.url));
   root.append(footer);
   const announcer=elt('p','sim-sr');announcer.id='simAnnounce';
   announcer.setAttribute('role','status');announcer.setAttribute('aria-live','polite');root.append(announcer);
@@ -229,6 +261,7 @@
   get state(){return state},
   begin,
   choose,
+  toChooser,
   get root(){return root}
  });
 })();

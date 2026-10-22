@@ -1913,3 +1913,106 @@
     width: 100%;
   }
 }
+/* Spørsmål underveis i øvingsforløpet */
+.forlop-quiz {
+  margin: 4px 25px 22px;
+  padding: 16px 18px;
+  border: 2px solid var(--accent-border);
+  border-radius: 14px;
+  background: var(--accent-bg);
+  color: var(--ink);
+}
+@media(max-width:600px){
+  .forlop-quiz {
+    margin: 4px 12px 18px;
+    padding: 14px;
+  }
+}
+.forlop-quiz-kicker {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+.forlop-quiz h3 {
+  margin: 4px 0 10px;
+  font-size: 17px;
+}
+.forlop-quiz-q {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.forlop-quiz-q[data-result="ok"] {
+  border-color: var(--accent);
+}
+.forlop-quiz-q legend {
+  padding: 0 4px;
+  font-weight: 750;
+  font-size: 15px;
+}
+.forlop-quiz-number {
+  width: 6.5em;
+  min-height: 44px;
+  font: inherit;
+  font-size: 16px;
+  margin-top: 6px;
+}
+.forlop-quiz-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.forlop-quiz-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.forlop-quiz-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+.forlop-quiz-feedback,
+.forlop-quiz-reflect {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.forlop-quiz-reflect {
+  font-style: italic;
+}
+.forlop-quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.forlop-quiz-status {
+  margin: 10px 0 0;
+  font-weight: 750;
+}
+.forlop-quiz-status:empty {
+  display: none;
+}
+/* Målingen det spørres om: nøytral til svaret er gitt. */
+.forlop-item[data-level="unknown"] {
+  border-left-color: var(--accent);
+}
+.forlop-item[data-level="unknown"] .forlop-item-score,
+:root[data-theme=dark] .forlop-item[data-level="unknown"] .forlop-item-score {
+  background: var(--accent-bg);
+  color: var(--ink);
+}
+.forlop-quiz-q[data-result="wrong"] {
+  border-style: dashed;
+}
