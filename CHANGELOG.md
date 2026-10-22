@@ -1,5 +1,10 @@
 # Versjonshistorikk – Kartlegg
 
+## Tydeligere melding ved glemt passord og bekreftelse – 22. oktober 2026
+
+- Etter «Glemt passord?» og «Send ny lenke» vises en tydelig grønn boks som rulles inn i synsfeltet, med adressen e-posten sendes til og avsenderen (noreply@kartlegg.firebaseapp.com). Før kunne meldingen havne nedenfor skjermen på mobil, så det så ut som ingenting skjedde.
+- Bekreft e-post-siden sier hvem e-posten kommer fra, og at den ofte havner i søppelpost.
+
 ## Gjennomgang for mobil og PC – 21. oktober 2026
 
 - Gått gjennom alle sider og alle 19 verktøy i ti kombinasjoner (320–1440 px, lys og mørk, gjest og innlogget, solide bokser og glass). Ingen JavaScript-feil, ingen ødelagte bilder og ingen sider bredere enn skjermen.

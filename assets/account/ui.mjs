@@ -69,7 +69,7 @@ export function mountAccount({enabled,loadBackend}){
  <p class="account-switch">Har du konto? <button class="account-link" type="button" id="accountToLogin">Logg inn</button></p>
  </section>
  <section class="account-auth-view" data-konto-view="verify" id="accountVerifyView" aria-labelledby="accountVerifyTitle">
- <h1 id="accountVerifyTitle">Bekreft e-postadressen</h1><p class="account-lede">Vi har sendt en lenke til <strong id="accountVerifyEmail"></strong>. Åpne lenken, og kom tilbake hit. Sjekk også søppelpost.</p>
+ <h1 id="accountVerifyTitle">Bekreft e-postadressen</h1><p class="account-lede">Vi har sendt en lenke til <strong id="accountVerifyEmail"></strong>. Åpne lenken, og kom tilbake hit. E-posten kommer fra <strong>noreply@kartlegg.firebaseapp.com</strong>, og havner ofte i søppelpost.</p>
  <div id="accountVerification" class="account-verify-actions"><button class="btn btn-primary account-wide" type="button" id="accountRefresh">Jeg har bekreftet e-posten</button><button class="btn btn-secondary account-wide" type="button" id="accountVerify">Send ny lenke</button></div>
  <div class="account-status-slot" data-status-slot="verify"></div>
  <p class="account-switch">Feil e-postadresse? <button class="account-link" type="button" data-account-logout>Logg ut</button></p>
@@ -87,7 +87,10 @@ export function mountAccount({enabled,loadBackend}){
  let backend, sync, user, operating=false, guest=null, guestRemember=false, generation=0, signupShownAt=Date.now(), pendingView='login', pendingConsent=false;
  // Restore the guest workspace immediately after a previous account session.
  try{if(localStorage.getItem('kartlegg.account.owner.v1')){const saved=JSON.parse(localStorage.getItem('kartlegg.account.guest.v1')||'null');document.getElementById('rememberProfile').checked=!!saved?.remember;applySettings(saved?.settings||saved||settings());guest=readSettings();guestRemember=document.getElementById('rememberProfile').checked;localStorage.removeItem('kartlegg.account.owner.v1')}}catch(_){}
- function status(message){$('accountStatus').textContent=typeof message==='string'?message:errorMessage(message)}
+ // Meldingen vises i en tydelig boks og rulles inn i synsfeltet, så den ikke blir oversett på mobil.
+ function status(message,kind){const box=$('accountStatus');box.textContent=typeof message==='string'?message:errorMessage(message);
+  box.dataset.kind=kind||(typeof message==='string'?'info':'error');
+  if(box.textContent&&box.offsetParent){const r=box.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-90)box.scrollIntoView({block:'center',behavior:'smooth'})}}
  function preview(s){if(!s)return 'Ingen lagrede kontoinnstillinger.';const p=settings(s);return Object.entries(p.profile).map(([k,v])=>({name:'Navn',role:'Stilling',work:'Arbeidssted',department:'Avdeling'}[k])+': '+(v||'–')).join('\n')+'\nFavoritter: '+(p.favorites.join(', ')||'–')+'\nUtseende: '+Object.values(p.appearance).join(' · ')}
 
  // Skjermene på #konto. Vakten bestemmer hvilken som gjelder for innloggede som mangler noe.
@@ -212,8 +215,8 @@ export function mountAccount({enabled,loadBackend}){
  rememberBoxes.forEach(b=>b.checked=remembered());
  rememberBoxes.forEach(b=>b.addEventListener('change',()=>{rememberBoxes.forEach(x=>x.checked=b.checked);try{b.checked?localStorage.setItem(REMEMBER_KEY,'1'):localStorage.removeItem(REMEMBER_KEY)}catch(_){}backend?.remember?.(b.checked)}));
 
- $('accountReset').onclick=()=>{if(!fieldError($('accountEmail'),'accountEmailError',emailOk(email())?'':'Skriv inn e-postadressen din først, så sender vi en lenke.')){$('accountEmail').focus();return}run(async()=>{try{await backend.reset(email())}catch(e){if(!['auth/user-not-found','auth/invalid-credential'].includes(e.code))throw e}status('Hvis adressen har en konto, får du en e-post med lenke for å velge nytt passord. Sjekk også søppelpost.')})};
- $('accountVerify').onclick=()=>run(async()=>{await backend.verify();status('Ny lenke er sendt. Sjekk også søppelpost.')});
+ $('accountReset').onclick=()=>{if(!fieldError($('accountEmail'),'accountEmailError',emailOk(email())?'':'Skriv inn e-postadressen din først, så sender vi en lenke.')){$('accountEmail').focus();return}run(async()=>{try{await backend.reset(email())}catch(e){if(!['auth/user-not-found','auth/invalid-credential'].includes(e.code))throw e}status('Sendt! Hvis '+email()+' har en konto, kommer det en e-post fra noreply@kartlegg.firebaseapp.com i løpet av noen minutter. Sjekk også søppelpost og «Andre»/«Kampanjer». Kommer den ikke, kontroller at adressen er skrevet riktig.','ok')})};
+ $('accountVerify').onclick=()=>run(async()=>{await backend.verify();status('Ny lenke er sendt til '+(backend.user?.email||'e-postadressen din')+' fra noreply@kartlegg.firebaseapp.com. Sjekk også søppelpost og «Andre»/«Kampanjer». Det kan ta noen minutter.','ok')});
  $('accountRefresh').onclick=()=>run(async()=>{await backend.refresh();await changedUser(backend.user);if(gate?.state==='verify')status('E-postadressen er ikke bekreftet ennå. Åpne lenken i e-posten, og prøv igjen.')});
  $('accountSync').onclick=()=>run(()=>sync.retry());
  $('accountUseLocal').onclick=()=>run(()=>sync.choose('local'));
