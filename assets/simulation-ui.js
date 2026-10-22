@@ -16,6 +16,24 @@
   if(text!==undefined)n.textContent=text;
   return n;
  };
+ const ICONS={
+  symptoms:'<path d="M4 5h16v11H9l-5 4Z"/>',
+  history:'<path d="M7 3h8l4 4v14H7Z"/><path d="M10 11h6M10 15h6"/>',
+  relative:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M15 14c3 0 6 2 6 5"/>',
+  abcde:'<path d="M8 4h8v3H8Z"/><path d="M6 6H5v15h14V6h-1"/><path d="m9 14 2 2 4-5"/>',
+  vitals:'<path d="M3 12h4l2-5 4 10 2-5h6"/>',
+  mental:'<path d="M12 3a7 7 0 0 0-7 7c0 3 2 4 2 6v4h7v-3h3l1-4h2l-2-4a7 7 0 0 0-6-6Z"/>',
+  skin:'<path d="M8 21v-9l-2-3a1.5 1.5 0 0 1 2.5-1.6L10 10V4a1.5 1.5 0 0 1 3 0v6-1.5a1.5 1.5 0 0 1 3 0V10a1.5 1.5 0 0 1 3 0v5c0 3-2 6-5 6Z"/>',
+  glucose:'<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/>',
+  contact:'<path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+  reevaluate:'<path d="M20 11a8 8 0 1 0-2 5"/><path d="M20 4v7h-7"/>',
+  wait:'<path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9s8 4 8 9"/>'
+ };
+ function icon(id){
+  const span=document.createElement('span');span.className='sim-action-icon';span.setAttribute('aria-hidden','true');
+  span.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+(ICONS[id]||'')+'</svg>';
+  return span;
+ }
  const button=(text,cls,cb)=>{
   const b=elt('button',cls,text);b.type='button';b.addEventListener('click',cb);return b;
  };
@@ -195,7 +213,8 @@
    const group=elt('div','sim-action-list');
    for(const a of Engine.actions.filter(x=>x.category===category)){
     const allowed=Engine.can(state,a.id);
-    const b=button(a.label+(allowed?'':' ✓'),'sim-action',()=>choose(a.id));
+    const b=button('','sim-action',()=>choose(a.id));
+    b.append(icon(a.id),elt('span','sim-action-label',a.label+(allowed?'':' ✓')));
     b.disabled=!allowed;b.setAttribute('aria-label',a.label+(allowed?'':' – allerede utført eller ikke tilgjengelig'));
     group.append(b);
    }
@@ -245,7 +264,20 @@
    d.append(elt('span','',map[n]+': '+v+' p'));
   }
   details.append(d);panel.append(details);
-  if(state.isbar){
+  if(report.isbarExample){
+   const ex=elt('details','sim-details sim-isbar-example');
+   ex.append(elt('summary','',state.isbar?'Sammenlign ISBAR-utkastet ditt med et eksempel':'Se et eksempel på ISBAR for denne casen'));
+   addParagraph(ex,'Et eksempel er ikke en fasit. Poenget er at mottakeren raskt forstår hva som skjer, hva du har sett, og hva du ber om.','sim-hint');
+   const grid=elt('div','sim-isbar-compare');
+   for(const [key,title] of [['s','S – Situasjon'],['b','B – Bakgrunn'],['a','A – Aktuell vurdering'],['r','R – Råd / respons']]){
+    const row=elt('div','sim-isbar-row');row.append(elt('strong','',title));
+    if(state.isbar){const mine=elt('div','sim-isbar-mine');mine.append(elt('small','','Ditt utkast'),elt('p','',state.isbar[key]));row.append(mine)}
+    const theirs=elt('div','sim-isbar-theirs');theirs.append(elt('small','','Eksempel'),elt('p','',report.isbarExample[key]));row.append(theirs);
+    grid.append(row);
+   }
+   ex.append(grid);panel.append(ex);
+  }
+  if(state.isbar&&!report.isbarExample){
    const ref=elt('details','sim-details');
    ref.append(elt('summary','','Se og sammenlign ditt ISBAR-utkast'));
    for(const [key,title] of [['s','Situasjon'],['b','Bakgrunn'],['a','Aktuell vurdering'],['r','Råd / respons']]){
@@ -265,7 +297,14 @@
   const top=elt('div','sim-top');
   const meta=elt('p','sim-case-meta');
   meta.append(elt('span','sim-case-level',c.level),elt('span','sim-case-patient',c.patient+' · '+c.setting));
-  top.append(meta,elt('p','sim-copy',c.opening));
+  const worse=Boolean(started&&state.worsened);
+  const fig=elt('figure','sim-scene'+(worse?' is-worse':''));
+  const img=elt('img','sim-scene-img');img.src=c.images[worse?'worse':'stable'];img.decoding='async';
+  img.alt='Illustrasjon av '+c.patient.replace(' (fiktiv)','')+(worse?', som nå er tydelig dårligere':'')+'. Fiktiv og stilisert.';
+  img.width=720;img.height=400;
+  fig.append(img);
+  if(worse)fig.append(elt('figcaption','sim-scene-caption','Pasienten er blitt dårligere'));
+  top.append(fig,meta,elt('p','sim-copy',c.opening));
   return top;
  }
  function render(){
@@ -283,7 +322,8 @@
     const top=elt('span','sim-case-top');top.append(elt('span','sim-case-level',item.level));
     const done=Progress()?.get('sim:'+item.id)?.test;
     if(done)top.append(elt('span','sim-case-done','✓ Fullført'));
-    card.append(top,elt('strong','sim-case-title',item.title),elt('span','sim-case-patient',item.patient+' · '+item.setting),elt('span','sim-case-focus',item.focus));
+    const thumb=elt('img','sim-case-thumb');thumb.src=item.images.stable;thumb.alt='';thumb.loading='lazy';thumb.width=720;thumb.height=400;
+    card.append(thumb,top,elt('strong','sim-case-title',item.title),elt('span','sim-case-patient',item.patient+' · '+item.setting),elt('span','sim-case-focus',item.focus));
     li.append(card);list.append(li);
    }
    root.append(list);

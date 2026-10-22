@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Bilder og mer innhold i simuleringen – 22. oktober 2026
+
+- Hver pasientcase har fått en illustrasjon i samme stil som GCS-bildene i Lær. Bildet bytter til en forverret versjon når pasienten blir dårligere i forløpet: blekere, svett og med raskere pust. Casevelgeren viser et lite bilde av hver case.
+- Handlingsknappene har fått ikoner, så det er lettere å finne fram, særlig på mobil.
+- Tre nye handlinger: «Spør pårørende eller kollega», «Se på hud og sirkulasjon» og «Mål blodsukker». Hver case har egne funn som bare kommer fram hvis du spør eller undersøker. For eksempel bekrefter Olavs datter at forvirringen er ny, og Noras bandasje er mer gjennomfuktet.
+- Oppsummeringen sjekker om du fant det viktigste funnet i hver case, og forklarer hvorfor det betyr noe.
+- Oppsummeringen viser et eksempel på ISBAR for hver case, side om side med ditt eget utkast.
+
 ## NEWS2-skjema rett i simuleringen – 22. oktober 2026
 
 - I simuleringen skårer du NEWS2 direkte i det samme poengskjemaet som i Lær. Du trykker på riktig felt i hver rad, og summen regnes ut mens du skårer. Feltet der man skrev inn totalskåren, og lenken til NEWS2 i en ny fane, er fjernet. Det gjør det mye enklere på mobil, der skjemaet vises som kort.

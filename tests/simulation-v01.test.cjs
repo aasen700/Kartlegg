@@ -22,7 +22,8 @@ test('pilot uses canonical NEWS2 arithmetic and an explicitly fictional case',()
  assert.deepEqual(S.referenceNews(state),reference);
  assert.equal(S.caseData.id,'home-acute-001');
  assert.match(S.caseData.warning,/fiktive/);
- assert.equal(S.actions.length,8);
+ assert.equal(S.actions.length,11,'åtte opprinnelige handlinger og tre nye');
+ for(const id of ['symptoms','history','abcde','vitals','mental','contact','reevaluate','wait'])assert.ok(S.actions.some(a=>a.id===id),id);
 });
 test('observed measurements stay unchanged until user repeats them',()=>{
  let s=S.step(S.start(),'vitals');
@@ -87,7 +88,7 @@ test('ISBAR text is mandatory but not machine-graded; case can finish early',()=
 });
 test('a simulation route, source and front-end assets are integrated',()=>{
  const html=read('index.html'),app=read('assets/app.js');
- for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=skjema1','assets/simulation-ui.js?v=skjema1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
+ for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=bilder1','assets/simulation-ui.js?v=bilder1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
   assert.ok(html.includes(element),element);
  assert.ok(app.includes("'simulering'"));
  assert.doesNotMatch(read('assets/simulation-engine.js'),/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);
@@ -117,4 +118,29 @@ test('NEWS2 is scored in the chart, one field per row, with a fresh chart after 
  const both=S.debrief(S.finish(s));
  assert.deepEqual(both.charts.map(c=>[c.total,c.entered]),[[11,11],[17,17]]);
  assert.ok(!read('assets/simulation-ui.js').includes('tool=news2'),'no detour to a new tab');
+});
+test('every case has stable and worse illustrations, hidden findings, a key finding and an ISBAR example',()=>{
+ for(const c of S.cases){
+  for(const which of ['stable','worse']){
+   const svg=read(c.images[which]);
+   assert.match(svg,/^<svg [^>]*role="img"/,c.id+' '+which);
+   assert.match(svg,/<title[^>]*>[^<]+<\/title>/);
+   assert.match(svg,/ikke-diagnostisk/);
+   assert.doesNotMatch(svg,/<script|href=|https?:\/\/(?!www\.w3\.org)/,'no scripts or external links in '+c.images[which]);
+  }
+  for(const id of ['relative','skin','glucose']){
+   let s=S.step(S.start(c.id),id);
+   assert.ok(s.timeline.at(-1).text.length>20,c.id+' '+id);
+  }
+  assert.ok(S.actions.some(a=>a.id===c.key.action),c.id+' key action exists');
+  for(const k of ['s','b','a','r'])assert.ok(c.isbar[k].length>20,c.id+' isbar '+k);
+  const before=S.debrief(S.start(c.id)).items.find(x=>x.id==='key');
+  assert.equal(before.done,false);
+  const after=S.debrief(S.step(S.start(c.id),c.key.action)).items.find(x=>x.id==='key');
+  assert.equal(after.done,true);
+  assert.deepEqual(S.debrief(S.start(c.id)).isbarExample,c.isbar);
+ }
+ const ui=read('assets/simulation-ui.js');
+ assert.match(ui,/c\.images\[worse\?'worse':'stable'\]/);
+ assert.match(ui,/Sammenlign ISBAR-utkastet ditt med et eksempel/);
 });

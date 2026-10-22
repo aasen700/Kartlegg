@@ -24,9 +24,12 @@
  const actions=Object.freeze([
   Object.freeze({id:'symptoms',category:'Samtale',label:'Spør om symptomforløpet',minutes:2}),
   Object.freeze({id:'history',category:'Samtale',label:'Spør om tidligere sykdom og medisiner',minutes:2}),
+  Object.freeze({id:'relative',category:'Samtale',label:'Spør pårørende eller kollega',minutes:2}),
   Object.freeze({id:'abcde',category:'Undersøkelser',label:'Utfør en ABCDE-orientert observasjon',minutes:3}),
   Object.freeze({id:'vitals',category:'Undersøkelser',label:'Mål vitale parametere',minutes:3}),
   Object.freeze({id:'mental',category:'Undersøkelser',label:'Vurder bevissthet og forvirring',minutes:2}),
+  Object.freeze({id:'skin',category:'Undersøkelser',label:'Se på hud og sirkulasjon',minutes:2}),
+  Object.freeze({id:'glucose',category:'Undersøkelser',label:'Mål blodsukker',minutes:2}),
   Object.freeze({id:'contact',category:'Kommunikasjon',label:'Tilkall ansvarlig helsehjelp',minutes:1}),
   Object.freeze({id:'reevaluate',category:'Undersøkelser',label:'Gjenta observasjoner',minutes:3}),
   Object.freeze({id:'wait',category:'Prioritering',label:'Avvent og observer uten nye tiltak',minutes:5})
@@ -38,7 +41,8 @@
  // Hver kasus: faste, fiktive målinger før og etter en manusstyrt forverring, og en tekst per handling.
  // [vanlig, etter forverring]. Tekstene beskriver funn, ikke behandling.
  const freezeCase=c=>Object.freeze({...c,vitals:Object.freeze(c.vitals),worse:Object.freeze(c.worse),
-  text:Object.freeze(c.text),sources:SOURCES,warning:WARNING,worsenAt:c.worsenAt||12});
+  text:Object.freeze(c.text),key:Object.freeze(c.key),isbar:Object.freeze(c.isbar),
+  images:Object.freeze({stable:'assets/sim/'+c.id+'-stable.svg',worse:'assets/sim/'+c.id+'-worse.svg'}),sources:SOURCES,warning:WARNING,worsenAt:c.worsenAt||12});
  const cases=Object.freeze([
   freezeCase({
    id:'home-acute-001',title:'Akutt forverring i hjemmesykepleien',short:'Akutt forverring hjemme',level:'Middels',
@@ -52,9 +56,14 @@
     abcde:['A: snakker i korte setninger og har fri luftvei. B: rask, anstrengt pust. C: rask puls og blek hud. D: våken og orientert. E: føles varm.',
      'A: fri luftvei. B: rask, anstrengt pust. C: rask puls og kaldsvette. D: ny desorientering. E: varm og medtatt. Dette er en akutt forverring i det fiktive forløpet.'],
     mental:['Pasienten er våken, kjenner igjen sted og person, og har ingen nyoppstått forvirring.','Pasienten er våken, men virker nå nyoppstått forvirret.'],
-    wait:['Du avventer i fem simulerte minutter. Pasienten er fortsatt tungpustet.','Mens du avventer, blir pasienten mer medtatt og nyoppstått forvirret i dette forhåndsdefinerte scenarioet.']
+    wait:['Du avventer i fem simulerte minutter. Pasienten er fortsatt tungpustet.','Mens du avventer, blir pasienten mer medtatt og nyoppstått forvirret i dette forhåndsdefinerte scenarioet.'],
+    relative:['Datteren ringte i går og syntes Kari virket mer slapp enn vanlig. Hun har spist og drukket lite de siste to dagene.'],
+    skin:['Huden er varm og litt blek. Kapillær fylningstid er omtrent 2 sekunder.','Hender og føtter er kalde og klamme, og kapillær fylningstid er forlenget, over 3 sekunder.'],
+    glucose:['Blodsukkeret er 7,2 mmol/L.']
    },
-   lesson:'Høy samlet skår og flere avvikende målinger samtidig. Poenget er å se helheten tidlig og ikke vente med å si fra.'
+   lesson:'Høy samlet skår og flere avvikende målinger samtidig. Poenget er å se helheten tidlig og ikke vente med å si fra.',
+   key:{action:'abcde',label:'Fikk oversikt med ABCDE tidlig',reason:'Her er det flere avvik samtidig: rask pust, lav SpO₂, lavt blodtrykk, høy puls og feber. En rask ABCDE-gjennomgang gir helheten før du ringer.'},
+   isbar:{s:'Jeg ringer om Kari, 82 år, som jeg er hos på hjemmebesøk. Hun er blitt mye tyngre i pusten i dag, og NEWS2 er 11.',b:'Hun har høyt blodtrykk og er vanligvis i stand til å gå korte turer. Siden i går har hun hatt økende tungpust, hoste og frostanfall.',a:'RF 28, SpO₂ 91 % på romluft, BT 98 systolisk, puls 118, temperatur 38,6. Hun er våken og orientert, men snakker i korte setninger. Jeg er bekymret for at hun er alvorlig syk.',r:'Jeg ber deg vurdere henne nå. Hva ønsker du at jeg gjør og observerer til du kommer, og når skal jeg måle på nytt?'}
   }),
   freezeCase({
    id:'nursing-home-confusion-002',title:'Ny forvirring på sykehjemmet',short:'Ny forvirring på sykehjem',level:'Middels',
@@ -70,9 +79,14 @@
      'A: fri luftvei. B: rask pust. C: rask, svak puls og marmorert hud på knærne. D: desorientert og urolig. E: varm. Dette er en forverring i det fiktive forløpet.'],
     mental:['Olav er våken, men vet ikke hvor han er og kjenner ikke igjen kollegaen. Dette er en endring fra slik han vanligvis er, altså ny forvirring.',
      'Olav er fortsatt ny forvirret og nå mer urolig enn tidligere.'],
-    wait:['Du avventer i fem simulerte minutter. Olav fortsetter å prøve å gå ut av rommet.','Mens du avventer, blir Olav blekere og mer medtatt i dette forhåndsdefinerte scenarioet.']
+    wait:['Du avventer i fem simulerte minutter. Olav fortsetter å prøve å gå ut av rommet.','Mens du avventer, blir Olav blekere og mer medtatt i dette forhåndsdefinerte scenarioet.'],
+    relative:['Datteren forteller på telefon at Olav var klar og spøkte med henne i går formiddag. Hun synes dette er en tydelig endring fra hvordan han pleier å være.'],
+    skin:['Huden er varm og tørr, og munnen er tørr. Urinen i bleien er mørk og lukter sterkt.','Huden er marmorert på knærne, og hender og føtter er kalde.'],
+    glucose:['Blodsukkeret er 9,8 mmol/L. Ifølge dokumentasjonen ligger det vanligvis litt lavere.']
    },
-   lesson:'Ny forvirring gir alene 3 poeng i NEWS2. Sammenlign alltid med hvordan pasienten pleier å være. Kjent kognitiv svikt er ikke det samme som ny forvirring.'
+   lesson:'Ny forvirring gir alene 3 poeng i NEWS2. Sammenlign alltid med hvordan pasienten pleier å være. Kjent kognitiv svikt er ikke det samme som ny forvirring.',
+   key:{action:'relative',label:'Fant ut hvordan Olav pleier å være',reason:'Datteren bekrefter at forvirringen er ny. Uten å vite hvordan pasienten pleier å være, er det lett å tro at forvirringen skyldes kjent kognitiv svikt.'},
+   isbar:{s:'Jeg ringer fra sykehjemmet om Olav, 88 år. Han er blitt akutt forvirret i kveld, og NEWS2 er 9.',b:'Han har lett kognitiv svikt, men er vanligvis orientert for sted. Datteren bekrefter at han var klar i går. Han har hjertesvikt og diabetes type 2, har drukket lite i to dager og har mørk urin.',a:'RF 22, SpO₂ 95 %, BT 104 systolisk, puls 108, temperatur 38,4. Han er våken, men desorientert og urolig. Ny forvirring gir 3 poeng.',r:'Jeg ber deg vurdere ham i kveld. Hvor ofte vil du at vi observerer ham, og når skal vi ringe igjen?'}
   }),
   freezeCase({
    id:'postop-ward-003',title:'Svimmel dagen etter operasjon',short:'Svimmel etter operasjon',level:'Krevende',
@@ -87,9 +101,14 @@
     abcde:['A: fri luftvei. B: rolig pust. C: rask puls, blek og litt klam. Bandasjen over operasjonssåret er mer gjennomfuktet enn ved forrige stell. D: våken og orientert. E: kald på hender og føtter.',
      'A: fri luftvei. B: raskere pust. C: rask, svak puls, blek og klam. Bandasjen er tydelig mer gjennomfuktet. D: våken, men slapp. E: kald på hender og føtter. Dette er en forverring i det fiktive forløpet.'],
     mental:['Nora er våken og orientert, og har ingen ny forvirring.','Nora er våken og orientert, men svarer tregere enn før.'],
-    wait:['Du avventer i fem simulerte minutter. Nora ligger nå i sengen og sier at det går litt bedre når hun ligger.','Mens du avventer, blir Nora blekere og mer slapp i dette forhåndsdefinerte scenarioet.']
+    wait:['Du avventer i fem simulerte minutter. Nora ligger nå i sengen og sier at det går litt bedre når hun ligger.','Mens du avventer, blir Nora blekere og mer slapp i dette forhåndsdefinerte scenarioet.'],
+    relative:['Nattevakten forteller at Nora hadde lite urin i natt og var tørst. Hun sa at hun følte seg svimmel allerede da.'],
+    skin:['Nora er blek og litt klam. Kapillær fylningstid er omtrent 3 sekunder. Bandasjen er mer gjennomfuktet enn ved forrige stell.','Nora er blek, kald og klam. Kapillær fylningstid er over 3 sekunder, og bandasjen er tydelig mer gjennomfuktet.'],
+    glucose:['Blodsukkeret er 6,1 mmol/L, innenfor vanlig område.']
    },
-   lesson:'NEWS2 er lav i starten, men pulsen er mye høyere enn i går, og det er nye funn ved bandasjen. En lav skår utelukker ikke at noe er galt. Se på trend og helhet, og si fra om det du ser.'
+   lesson:'NEWS2 er lav i starten, men pulsen er mye høyere enn i går, og det er nye funn ved bandasjen. En lav skår utelukker ikke at noe er galt. Se på trend og helhet, og si fra om det du ser.',
+   key:{action:'skin',label:'Så på hud, sirkulasjon og bandasje',reason:'Blek og klam hud, forlenget kapillær fylningstid og en bandasje som er mer gjennomfuktet er viktige funn. Her sier de mer enn den lave NEWS2-skåren.'},
+   isbar:{s:'Jeg ringer om Nora, 67 år, dag 1 etter hofteoperasjon. Hun er svimmel og blek, og pulsen har steget fra rundt 85 i går til 112 nå.',b:'Hun er vanligvis frisk og bruker blodtrykksmedisin. I natt hadde hun lite urin og var tørst.',a:'NEWS2 er 3, men puls 112 og BT 102 systolisk. Hun er blek og klam, kapillær fylningstid er omtrent 3 sekunder, og bandasjen er mer gjennomfuktet enn ved forrige stell. Jeg er bekymret selv om skåren er lav.',r:'Jeg ber deg se på henne nå. Hva vil du at jeg skal observere og måle til du kommer?'}
   }),
   freezeCase({
    id:'copd-scale2-004',title:'Tungpust hos pasient med SpO₂-skala 2',short:'KOLS og SpO₂-skala 2',level:'Krevende',
@@ -104,9 +123,14 @@
     abcde:['A: fri luftvei. B: rask pust med bruk av hjelpemuskulatur. C: litt rask puls, varm hud. D: våken og orientert. E: ingen ødemer.',
      'A: fri luftvei. B: rask, anstrengt pust. C: rask puls. D: trøtt, omtåket og ny forvirret. E: varm hud. Dette er en forverring i det fiktive forløpet.'],
     mental:['Turid er våken, orientert og svarer klart.','Turid er trøtt, svarer langsomt og vet ikke helt hvilken dag det er. Dette er ny forvirring.'],
-    wait:['Du avventer i fem simulerte minutter. Turid er fortsatt tungpust.','Mens du avventer, blir Turid trøttere og mer omtåket i dette forhåndsdefinerte scenarioet.']
+    wait:['Du avventer i fem simulerte minutter. Turid er fortsatt tungpust.','Mens du avventer, blir Turid trøttere og mer omtåket i dette forhåndsdefinerte scenarioet.'],
+    relative:['Mannen hennes forteller at Turid har vært trøttere de siste dagene og har brukt inhalatoren oftere enn vanlig.'],
+    skin:['Huden er varm, og leppene har vanlig farge.','Leppene er blålige, og hun er varm og svett.'],
+    glucose:['Blodsukkeret er 8,4 mmol/L.']
    },
-   lesson:'Med SpO₂-skala 2 gir 88–92 % på oksygen 0 poeng for SpO₂, men oksygentilførselen gir alltid 2 poeng. Skala 2 brukes bare når det er bestemt og dokumentert. Ny forvirring hos en pasient med KOLS er viktig å si fra om.'
+   lesson:'Med SpO₂-skala 2 gir 88–92 % på oksygen 0 poeng for SpO₂, men oksygentilførselen gir alltid 2 poeng. Skala 2 brukes bare når det er bestemt og dokumentert. Ny forvirring hos en pasient med KOLS er viktig å si fra om.',
+   key:{action:'mental',label:'Vurderte om Turid er blitt trøtt eller forvirret',reason:'Økende trøtthet og ny forvirring hos en pasient med KOLS og kjent hyperkapnisk respirasjonssvikt er viktig å fange opp og si fra om.'},
+   isbar:{s:'Jeg ringer om Turid, 74 år, på lungeavdelingen. Hun er mer tungpust i dag, og NEWS2 er 5 med SpO₂-skala 2.',b:'Hun har alvorlig KOLS med kjent hyperkapnisk respirasjonssvikt. Skala 2 er bestemt og dokumentert av lege. Hun får oksygen på nesekateter etter ordinasjon.',a:'RF 24, SpO₂ 89 % på oksygen, BT 128 systolisk, puls 98, temperatur 37,6. Hun bruker hjelpemuskulatur, men er våken og orientert.',r:'Jeg ber deg vurdere henne i løpet av morgenrunden. Skal jeg observere oftere, og hva vil du at jeg skal se særlig etter?'}
   })
  ]);
  const byId=new Map(cases.map(c=>[c.id,c]));
@@ -208,9 +232,10 @@
    {id:'mental',label:'Vurderte bevissthetsnivå/ny forvirring',done:has(s,'mental'),reason:'Mentale endringer må vurderes eksplisitt, ikke antas ut fra de øvrige målingene.'},
    {id:'news',label:'Skåret NEWS2 riktig',done:Boolean(newsDone),reason:newsReason},
    {id:'contact',label:'Tilkalt helsehjelp ved alvorlig forverring',done:contacted,reason:'I dette fiktive scenarioet tilsier funnene akutt klinisk oppfølging etter lokale rutiner.'},
+   {id:'key',label:c.key.label,done:has(s,c.key.action),reason:c.key.reason},
    {id:'isbar',label:'Strukturerte overleveringen med ISBAR',done:Boolean(s.isbar),reason:'Sjekk selv at du beskriver situasjon, bakgrunn, observasjoner og hva du ber om. Friteksten er ikke maskinvurdert.'}
   ];
-  return Object.freeze({caseId:c.id,lesson:c.lesson,charts:Object.freeze(charts),score:objective.total,parts:objective.parts,entered:s.enteredNews,
+  return Object.freeze({caseId:c.id,lesson:c.lesson,isbarExample:c.isbar,charts:Object.freeze(charts),score:objective.total,parts:objective.parts,entered:s.enteredNews,
    deteriorated:s.worsened,minutes:s.minutes,items:Object.freeze(items.map(x=>Object.freeze(x))),
    note:'Dette er refleksjonsstøtte, ikke vurdering av klinisk kompetanse. Hendelsesforløpet er manusstyrt, og hvert trinn representerer ikke fysiologiske prognoser.'});
  }
