@@ -172,11 +172,21 @@
 [data-theme=dark] input,
 [data-theme=dark] select,
 [data-theme=dark] textarea,
-[data-theme=dark] .btn-secondary,
-[data-theme=dark] .btn-inline {
+[data-theme=dark] .btn-secondary {
   background: #172e45;
   color: #f0f6ff;
   border-color: #40607d;
+}
+/* Tekstknapper (som «Åpne i skjemaet» og «Slett») er lenkeaktige. En mørk fyllfarge uten luft rundt teksten
+   så ut som en avkuttet boks, særlig i Liquid Glass. */
+[data-theme=dark] .btn-inline {
+  background: transparent;
+  color: #f0f6ff;
+  border-color: #40607d;
+}
+/* Lenkene nederst på siden: lysere blå i nattmodus, så de kan leses mot mørk bakgrunn. */
+[data-theme=dark] .footer a {
+  color: #8cc4ee;
 }
 /* Regel fra «tools» som må komme etter reglene over for å vinne */
 .tool-field select {
@@ -1205,10 +1215,11 @@
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-service-theme="custom"][data-season-theme="none"][data-theme="dark"]:not([data-personal-mode]) body{background:radial-gradient(70% 55% at 85% 0%,rgba(60,100,160,.35),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(40,70,120,.28),transparent 70%),linear-gradient(160deg,#1a2230 0%,#121820 50%,#0a0d12 100%)!important;background-attachment:fixed!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.30)!important;-webkit-backdrop-filter:blur(5px) saturate(150%)!important;backdrop-filter:blur(5px) saturate(150%)!important}
 :root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.next-step-card){background:rgba(255,255,255,.045)!important}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.header,.sidebar){background:rgba(255,255,255,.28)!important;-webkit-backdrop-filter:blur(8px) saturate(180%)!important;backdrop-filter:blur(8px) saturate(180%)!important}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.header,.sidebar){background:rgba(16,20,26,.38)!important}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] .mobile-primary-nav{background:rgba(255,255,255,.30)!important;-webkit-backdrop-filter:blur(6px) saturate(190%)!important;backdrop-filter:blur(6px) saturate(190%)!important}
-:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] .mobile-primary-nav{background:rgba(20,25,32,.35)!important}
+/* Toppfelt og bunnmeny er tettere enn kortene: innhold som ruller under dem skal ikke skinne gjennom teksten. */
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] :is(.header,.sidebar){background:rgba(255,255,255,.72)!important;-webkit-backdrop-filter:blur(16px) saturate(180%)!important;backdrop-filter:blur(16px) saturate(180%)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] :is(.header,.sidebar){background:rgba(16,20,26,.74)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"] .mobile-primary-nav{background:rgba(255,255,255,.78)!important;-webkit-backdrop-filter:blur(18px) saturate(190%)!important;backdrop-filter:blur(18px) saturate(190%)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-surface-style="glass"][data-theme="dark"] .mobile-primary-nav{background:rgba(20,25,32,.80)!important}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   :root[data-surface-style="glass"]:not([data-base-theme="philip"]) :is(.section,.toolbox,.v081-tool-search,.settings-card,.account-card,.home-entry,.header,.sidebar,.mobile-primary-nav) {
     background: var(--g-solid) !important;

@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Rettet: blaing av seg selv, kontrast i Liquid Glass og kutt på telefon – 22. oktober 2026
+
+- Telefon: siden kunne blafre eller rulle nedover av seg selv når man trykket i et felt, for eksempel målingene i NEWS2. Feltet flyttes nå inn i synsfeltet bare én gang når tastaturet åpnes, i stedet for hver gang skjermen beveget seg.
+- Liquid Glass: bunnmenyen og toppfeltet er tettere, så tekst og farger som ruller under dem ikke lenger skinner gjennom knappene.
+- Nattmodus: tekstknapper som «Åpne i skjemaet» og «Slett» har ikke lenger en mørk boks som så avkuttet ut. Lenkene nederst på siden er lysere og lettere å lese.
+- Kliniske verktøy på telefon: kategoriknappene, antallet og overskriftene ligger ikke lenger inntil kanten av boksen, og kategoriraden toner ut mot høyre, så det synes at den kan sveipes.
+- Øvingsforløp i Liquid Glass: den fargede kanten som viser NEWS2-nivået på hver måling, synes igjen.
+
 ## Bedre på telefon og tydeligere tilbakemelding i simuleringen – 22. oktober 2026
 
 - Simulering på telefon: delene ligger i faner (Gjør, Målinger, NEWS2, ISBAR, Logg), så du ser én ting om gangen i stedet for å bla gjennom alt. Fanene viser status, for eksempel 3/7 rader skåret i NEWS2. Etter en måling åpnes NEWS2-fanen av seg selv. Siden er omtrent halvparten så lang som før.

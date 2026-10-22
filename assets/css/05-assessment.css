@@ -2042,3 +2042,16 @@
     line-height: 1.4;
   }
 }
+/* Liquid Glass overstyrer kantene på kortene. Fargen som viser NEWS2-nivået skal likevel synes. */
+:root[data-surface-style="glass"] .forlop-item {
+  border-left: 4px solid var(--ui-success) !important;
+}
+:root[data-surface-style="glass"] .forlop-item[data-level="medium"] {
+  border-left-color: var(--ui-attention) !important;
+}
+:root[data-surface-style="glass"] .forlop-item[data-level="high"] {
+  border-left-color: var(--ui-danger) !important;
+}
+:root[data-surface-style="glass"] .forlop-item[data-level="unknown"] {
+  border-left-color: var(--accent) !important;
+}
