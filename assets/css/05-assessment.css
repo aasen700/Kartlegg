@@ -2016,3 +2016,29 @@
 .forlop-quiz-q[data-result="wrong"] {
   border-style: dashed;
 }
+/* Telefon: tallfeltene i to kolonner, så skjemaet blir halvparten så langt.
+   Respirasjonsfrekvens (med «Tell pust»), nedtrekkslister og brede felt får hele bredden. */
+@media(max-width:480px){
+  #page-vurdering .fields {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  #page-vurdering .field:has(select),
+  #page-vurdering .field.wide,
+  #page-vurdering .field:has(#rr) {
+    grid-column: 1 / -1;
+  }
+  #page-vurdering .field:not(:has(#rr)):not(:has(select)):not(.wide) .field-icon {
+    display: none;
+  }
+  #page-vurdering .field label {
+    font-size: 13px;
+  }
+  #page-vurdering .field .hint {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+  #vitalsForm .forlop-line .forlop-first {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}

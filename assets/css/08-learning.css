@@ -2899,3 +2899,23 @@
   color: var(--ink);
   font-weight: 750;
 }
+/* Telefon: mindre å bla forbi før oppgaven */
+.learn12-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-height: 44px;
+}
+@media(max-width:760px){
+  #page-laer section.is-learning-active > .section-header p,
+  #page-laer .learning-flow-hint {
+    display: none;
+  }
+  #page-laer section.is-learning-active > .section-header {
+    padding-bottom: 6px;
+  }
+  #page-laer .learning-progress {
+    margin-bottom: 4px;
+  }
+}

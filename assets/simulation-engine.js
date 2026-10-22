@@ -37,7 +37,7 @@
  const map=new Map(actions.map(a=>[a.id,a]));
  const CONTACT='Du varsler ansvarlig helsehjelp og beskriver akutt forverring. Videre respons og tiltak må styres av klinisk vurdering og lokale akuttprosedyrer.';
  const REEVALUATE='Du tar nye målinger. Les oppdaterte verdier i øvingspanelet og vurder endringene.';
- const VITALS='Du registrerer et fullt sett med vitale parametere. Målingene vises i øvingspanelet.';
+ const VITALS='Du registrerer et fullt sett med vitale parametere. Verdiene står i NEWS2-skjemaet og under «Målinger».';
  // Hver kasus: faste, fiktive målinger før og etter en manusstyrt forverring, og en tekst per handling.
  // [vanlig, etter forverring]. Tekstene beskriver funn, ikke behandling.
  const freezeCase=c=>Object.freeze({...c,vitals:Object.freeze(c.vitals),worse:Object.freeze(c.worse),
@@ -164,7 +164,7 @@
   // Scripted branch: the patient worsens if assessment is delayed without
   // contacting appropriate help. This is narrative logic, not a medical forecast.
   const worsened=s.worsened||(!has(s,'contact')&&id!=='contact'&&minutes>=c.worsenAt);
-  const now={...s,minutes,worsened,done:Object.freeze([...s.done,id]),
+  const now={...s,minutes,worsened,worsenedAt:s.worsenedAt??(worsened&&!s.worsened?minutes:null),done:Object.freeze([...s.done,id]),
    lastVitals:(id==='vitals'||id==='reevaluate')?Object.freeze({...(worsened?c.worse:c.vitals)}):s.lastVitals};
   // Hver nye måling får sitt eget NEWS2-skjema. Det forrige beholdes til oppsummeringen.
   if(id==='vitals'||id==='reevaluate'){
@@ -235,9 +235,57 @@
    {id:'key',label:c.key.label,done:has(s,c.key.action),reason:c.key.reason},
    {id:'isbar',label:'Strukturerte overleveringen med ISBAR',done:Boolean(s.isbar),reason:'Sjekk selv at du beskriver situasjon, bakgrunn, observasjoner og hva du ber om. Friteksten er ikke maskinvurdert.'}
   ];
-  return Object.freeze({caseId:c.id,lesson:c.lesson,isbarExample:c.isbar,charts:Object.freeze(charts),score:objective.total,parts:objective.parts,entered:s.enteredNews,
+  const fb=feedback(s,c,{charts,lastChart,objective});
+  return Object.freeze({caseId:c.id,lesson:c.lesson,isbarExample:c.isbar,charts:Object.freeze(charts),
+   good:fb.good,improve:fb.improve,timeline:fb.timeline,worsenedAt:s.worsenedAt??null,
+   achieved:items.filter(x=>x.done).length,score:objective.total,parts:objective.parts,entered:s.enteredNews,
    deteriorated:s.worsened,minutes:s.minutes,items:Object.freeze(items.map(x=>Object.freeze(x))),
    note:'Dette er refleksjonsstøtte, ikke vurdering av klinisk kompetanse. Hendelsesforløpet er manusstyrt, og hvert trinn representerer ikke fysiologiske prognoser.'});
+ }
+ // Konkret tilbakemelding: hva som gikk bra, hva som kan bli bedre, og en tidslinje med merknader.
+ // Reglene er de samme for alle casene. Tekstene beskriver øvingen, ikke klinisk kompetanse.
+ function feedback(s,c,{charts,lastChart,objective}){
+  const good=[],improve=[];
+  const at=id=>s.timeline.find(e=>e.id===id)?.minute??null;
+  const add=(list,id,title,text)=>list.push(Object.freeze({id,title,text}));
+  const worseAt=s.worsenedAt??null;
+  const vitalsAt=at('vitals'),contactAt=at('contact');
+  if(vitalsAt!==null)add(good,'vitals','Du målte vitale parametere'+(vitalsAt<=6?' tidlig':''),'Etter '+vitalsAt+' min. Målingene ga grunnlaget for NEWS2.');
+  else add(improve,'vitals','Mål vitale parametere','Du tok ingen målinger. Uten dem kan du ikke regne ut NEWS2 eller se hvordan pasienten utvikler seg.');
+  // Det viktigste funnet i casen får egen tekst, så det ikke står to ganger.
+  if(c.key.action==='abcde');
+  else if(has(s,'abcde'))add(good,'abcde','Du gikk systematisk gjennom ABCDE','Det gir oversikt over truede funksjoner før du bestemmer deg.');
+  else add(improve,'abcde','Gå gjennom ABCDE','En rask ABCDE-gjennomgang gir helheten og avslører funn som ikke vises i tallene.');
+  if(c.key.action==='mental');
+  else if(has(s,'mental'))add(good,'mental','Du vurderte bevissthet og forvirring','Ny forvirring gir 3 poeng i NEWS2 og må vurderes direkte.');
+  else add(improve,'mental','Vurder bevissthet og forvirring','Du sjekket ikke dette. Ny forvirring gir 3 poeng og er lett å overse hvis du ikke spør og observerer.');
+  if(has(s,c.key.action))add(good,'key',c.key.label,c.key.reason);
+  else add(improve,'key',c.key.label.replace(/^Fikk|^Fant|^Så|^Vurderte/,m=>({Fikk:'Få',Fant:'Finn',Så:'Se',Vurderte:'Vurder'})[m]),c.key.reason);
+  // NEWS2: rad for rad.
+  if(lastChart&&lastChart.complete&&lastChart.correctRows===ROWS.length)add(good,'news','Du skåret NEWS2 riktig','Alle sju radene var riktige. NEWS2 var '+lastChart.total+' poeng.');
+  else if(charts.length){
+   const last=charts.at(-1),wrong=last.rows.filter(r=>!r.ok);
+   add(improve,'news','Se over NEWS2-skåringen',(last.complete?'Din sum var '+last.entered+', riktig er '+last.total+'. ':'Skjemaet ble ikke fullført. ')+
+    (wrong.length?'Sjekk '+wrong.map(r=>r.name.toLowerCase()+(r.chosen?' (du valgte '+r.chosen+', riktig er '+r.correct+')':' (ikke valgt, riktig er '+r.correct+')')).join(', ')+'.':''));
+  }else if(vitalsAt!==null)add(improve,'news','Skår NEWS2','Du målte, men skåret ikke NEWS2 i skjemaet. Riktig skår var '+objective.total+'.');
+  // Når ringte du?
+  if(contactAt!==null&&(worseAt===null||contactAt<worseAt))add(good,'contact','Du tilkalte hjelp i tide','Etter '+contactAt+' min, før pasienten ble dårligere.');
+  else if(contactAt!==null)add(improve,'contact','Si fra tidligere','Du tilkalte hjelp etter '+contactAt+' min, men pasienten ble dårligere etter '+worseAt+' min. Funnene var tydelige tidligere.');
+  else add(improve,'contact','Tilkall hjelp','Du ringet ikke etter hjelp. I denne casen tilsier funnene at noen med mer kompetanse vurderer pasienten raskt.');
+  const waits=s.done.filter(x=>x==='wait').length;
+  if(waits)add(improve,'wait','Vær forsiktig med å avvente','Du valgte å avvente '+(waits===1?'én gang':waits+' ganger')+' uten nye tiltak mens pasienten var tydelig syk'+(worseAt!==null?', og pasienten ble dårligere':'')+'.');
+  if(worseAt!==null&&has(s,'reevaluate')&&at('reevaluate')>=worseAt)add(good,'reevaluate','Du målte på nytt etter forverringen','Nye målinger viste hvor mye pasienten hadde endret seg.');
+  else if(worseAt!==null)add(improve,'reevaluate','Mål på nytt når pasienten endrer seg','Pasienten ble dårligere etter '+worseAt+' min, men du tok ikke nye målinger etterpå.');
+  if(s.isbar)add(good,'isbar','Du skrev en ISBAR','Sammenlign med eksempelet nedenfor. Fikk du med det mottakeren trenger?');
+  else add(improve,'isbar','Øv på ISBAR','Du skrev ikke ISBAR. Prøv neste gang, og sammenlign med eksempelet nedenfor.');
+  // Tidslinje med merknader.
+  const note={vitals:'good',abcde:'good',mental:'good',contact:worseAt===null||contactAt<worseAt?'good':'late',wait:'warn',reevaluate:'good',[c.key.action]:'good'};
+  const timeline=[];
+  for(const e of s.timeline){
+   if(worseAt!==null&&e.minute>=worseAt&&!timeline.some(x=>x.id==='worse'))timeline.push(Object.freeze({minute:worseAt,id:'worse',label:'Pasienten ble dårligere',tag:'event'}));
+   timeline.push(Object.freeze({minute:e.minute,id:e.id,label:e.label,tag:note[e.id]||'neutral'}));
+  }
+  return {good:Object.freeze(good),improve:Object.freeze(improve),timeline:Object.freeze(timeline)};
  }
  function finish(s){if(s.finished)return s;return Object.freeze({...s,finished:true})}
  return Object.freeze({caseData,cases,getCase:id=>byId.get(id)||null,actions,start,has,can,step,recordNews,recordNewsCell,chartRow,chartSum,gradeChart,rowNames:ROW_NAMES,rows:ROWS,recordIsbar,finish,debrief,currentVitals,

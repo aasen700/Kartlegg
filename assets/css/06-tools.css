@@ -2247,3 +2247,54 @@
 #libraryFavorites {
   margin: 0 0 18px;
 }
+/* Telefon: lavere verktøykort. Beskrivelsen kortes til to linjer, og «Lær» og «Kilde og lisens»
+   står på samme linje. Hele beskrivelsen finnes i verktøyet. */
+@media(max-width:600px){
+  #page-verktoy .tool-card {
+    /* Et eldre lag setter display:flex med !important på verktøykortene. */
+    display: grid !important;
+    grid-template-columns: auto minmax(0,1fr);
+    align-content: start;
+    gap: 8px 16px;
+    padding: 14px;
+  }
+  #page-verktoy .tool-card > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+    margin: 0;
+  }
+  #page-verktoy .tool-card:has(> .tool-card-learn) > .tool-card-learn {
+    grid-column: 1;
+  }
+  #page-verktoy .tool-card:has(> .tool-card-learn) > .tool-card-license {
+    grid-column: 2;
+    justify-self: start;
+  }
+  #page-verktoy .tool-card-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  #page-verktoy .tool-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+  #page-verktoy .tool-card-head {
+    align-items: center;
+  }
+  #page-verktoy .tool-card-titles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+  }
+  #page-verktoy .tool-card-titles > * {
+    margin: 0;
+  }
+  #page-verktoy .tool-card-footer {
+    padding-top: 10px;
+  }
+}

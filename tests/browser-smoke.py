@@ -852,7 +852,8 @@ script=r"""
   assert(!!done,'simulation end/debrief button missing');done.click();
   assert(sim.state.finished,'simulation did not finish');
   assert(document.querySelector('#simulationRoot').textContent.includes('11'),'calculated NEWS2 debrief missing');
-  assert(document.querySelector('#simulationRoot').textContent.includes('Målinger')||document.querySelector('#simulationRoot').textContent.includes('Observerte vitale'),'debrief checklist missing');
+  assert(document.querySelector('#simulationRoot .sim-result')&&document.querySelector('#simulationRoot .sim-good')&&document.querySelector('#simulationRoot .sim-improve'),'debrief with result, what went well and what to improve missing');
+  assert(document.querySelector('#simulationRoot .sim-good').textContent.includes('vitale parametere'),'measuring vitals should be praised');
   assert(document.querySelector('#rr').value===simulatedBaseline,'training must not change normal patient assessment');
   document.querySelector('[data-page=vurdering]').click();
   assert(document.querySelector('#page-simulering').hidden,'training page not hidden when navigating away');

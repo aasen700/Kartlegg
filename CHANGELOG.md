@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## Bedre på telefon og tydeligere tilbakemelding i simuleringen – 22. oktober 2026
+
+- Simulering på telefon: delene ligger i faner (Gjør, Målinger, NEWS2, ISBAR, Logg), så du ser én ting om gangen i stedet for å bla gjennom alt. Fanene viser status, for eksempel 3/7 rader skåret i NEWS2. Etter en måling åpnes NEWS2-fanen av seg selv. Siden er omtrent halvparten så lang som før.
+- Simulering på telefon: bildet blir et lite miniatyrbilde ved siden av pasientinformasjonen, introteksten skjules når casen er i gang, og handlingene står i to kolonner med kortere tekst.
+- Ny oppsummering i simuleringen: resultat øverst (for eksempel 5 av 7 viktige punkter) og når pasienten ble dårligere. Så kommer «Dette gjorde du bra» og «Dette kan du gjøre bedre» med konkrete forklaringer, for eksempel hvilke NEWS2-rader som var feil, og om du ringet før eller etter at pasienten ble verre. «Slik gikk det, steg for steg» viser tidslinjen med merknader.
+- Kliniske verktøy på telefon: lavere kort. Beskrivelsen er kortet til to linjer, og kategorien står ved siden av navnet. «Lær» og «Kilde og lisens» står på samme linje.
+- NEWS2-skjemaet på telefon: tallfeltene (SpO₂, blodtrykk, puls og temperatur) står i to kolonner.
+- Lær på telefon: introteksten til modulen skjules når du er i gang med en oppgave, og pilen i «Til oversikten» står på samme linje som teksten.
+
 ## Flere caser i Lær og «Øv på feilene dine» – 22. oktober 2026
 
 - NEWS2: fem nye caser, fra 6 til 11. Fire nye i Øv: lave verdier (lav puls, lav temperatur og lav RF), en pasient som bare reagerer på tiltale (V gir 3), oksygen på skala 1, og én rød verdi alene (systolisk BT ≥220). Én ny i Test: høy SpO₂ på oksygen med skala 2.

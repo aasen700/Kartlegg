@@ -38,6 +38,8 @@ window.KartleggLearningFlow=(()=>{
    wrap.append(make('p','learning-flow-hint',phase==='learn'?'Les forklaringen og gå videre i ditt tempo.':phase==='practice'?'Øv med forklaring etter hvert svar.':'Svar på alle oppgavene. Fasit og forklaringer vises til slutt.'));
   }
   root.prepend(wrap);
+  // På mobil skjules introteksten til modulen når du er i gang med Lær, Øv eller Test.
+  root.closest('section')?.classList.toggle('is-learning-active',phase!=='home');
   root.querySelectorAll('.gcs-learn-progress,.learn12-progress').forEach(el=>el.remove());
   const heading=root.querySelector('h3');
   if(heading)heading.tabIndex=-1;

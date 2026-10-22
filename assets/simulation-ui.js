@@ -11,6 +11,14 @@
  const Progress=()=>window.KartleggLearningProgress;
  const current=()=>Engine.getCase(state.caseId)||Engine.caseData;
  const heading=document.getElementById('simHeading');
+ const page=document.getElementById('page-simulering');
+ // På mobil vises én del av simuleringen om gangen (faner), så man slipper å bla gjennom alt.
+ // På PC vises alle delene samtidig, som før.
+ const mobile=window.matchMedia?.('(max-width: 760px)');
+ const isMobile=()=>Boolean(mobile?.matches);
+ mobile?.addEventListener?.('change',()=>{if(started)render()});
+ const TABS=Object.freeze([['actions','Gjør'],['vitals','Målinger'],['news','NEWS2'],['isbar','ISBAR'],['log','Logg']]);
+ let tab='actions';
  const elt=(tag,cls,text)=>{
   const n=document.createElement(tag);if(cls)n.className=cls;
   if(text!==undefined)n.textContent=text;
@@ -29,6 +37,9 @@
   reevaluate:'<path d="M20 11a8 8 0 1 0-2 5"/><path d="M20 4v7h-7"/>',
   wait:'<path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9s8 4 8 9"/>'
  };
+ // Kortere tekst på knappene på mobil, der de står i to kolonner. Hele teksten ligger i aria-label.
+ const SHORT={symptoms:'Spør om symptomer',history:'Sykdom og medisiner',relative:'Spør pårørende',abcde:'ABCDE-observasjon',vitals:'Mål vitale parametere',
+  mental:'Bevissthet og forvirring',skin:'Hud og sirkulasjon',glucose:'Mål blodsukker',contact:'Tilkall hjelp',reevaluate:'Gjenta målinger',wait:'Avvent uten tiltak'};
  function icon(id){
   const span=document.createElement('span');span.className='sim-action-icon';span.setAttribute('aria-hidden','true');
   span.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+(ICONS[id]||'')+'</svg>';
@@ -46,7 +57,7 @@
  const sameTabLink=(label,url)=>{
   const a=elt('a','sim-reference',label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;
  };
- function begin(id){started=true;state=Engine.start(typeof id==='string'?id:current().id);render()}
+ function begin(id){started=true;tab='actions';state=Engine.start(typeof id==='string'?id:current().id);render();if(isMobile())root.scrollIntoView?.({block:'start',behavior:'auto'})}
  function toChooser(){started=false;state=Engine.start(current().id);render();root.scrollIntoView?.({block:'start',behavior:'auto'})}
  function finishCase(){
   state=Engine.finish(state);
@@ -55,7 +66,16 @@
   render();root.scrollIntoView({block:'start',behavior:'auto'});
  }
  function choose(id){
-  try{state=Engine.step(state,id);render();root.querySelector('#simLatest')?.focus({preventScroll:true})}
+  try{
+   state=Engine.step(state,id);
+   // Etter en måling går mobilvisningen rett til NEWS2-skjemaet.
+   if(['vitals','reevaluate'].includes(id))tab='news';
+   render();
+   const ev=root.querySelector('#simLatest');
+   ev?.focus({preventScroll:true});
+   if(isMobile()&&ev)window.scrollTo(0,ev.getBoundingClientRect().top+window.scrollY-76);
+   if(tab==='news'&&['vitals','reevaluate'].includes(id))announce('Nye målinger. NEWS2-skjemaet er åpnet.');
+  }
   catch(e){announce(e.message)}
  }
  function announce(msg){const el=root.querySelector('#simAnnounce');if(el)el.textContent=msg}
@@ -214,7 +234,10 @@
    for(const a of Engine.actions.filter(x=>x.category===category)){
     const allowed=Engine.can(state,a.id);
     const b=button('','sim-action',()=>choose(a.id));
-    b.append(icon(a.id),elt('span','sim-action-label',a.label+(allowed?'':' ✓')));
+    const text=elt('span','sim-action-label');
+    text.append(elt('span','sim-label-long',a.label),elt('span','sim-label-short',SHORT[a.id]||a.label));
+    if(!allowed)text.append(elt('span','sim-action-done',' ✓'));
+    b.append(icon(a.id),text);
     b.disabled=!allowed;b.setAttribute('aria-label',a.label+(allowed?'':' – allerede utført eller ikke tilgjengelig'));
     group.append(b);
    }
@@ -236,26 +259,46 @@
  function reportPanel(){
   const report=Engine.debrief(state);
   const panel=section('Oppsummering av øvingen','sim-report');
-  addParagraph(panel,'Dette er en pedagogisk sjekkliste mot en fast kasusmodell, ikke en automatisk faglig godkjenning.','sim-copy');
-  const summary=elt('div','sim-report-summary');
-  summary.append(elt('p','', 'Simulert tid: '+report.minutes+' minutter'));
-  summary.append(elt('p','', 'NEWS2 fra sist målte sett: '+report.score));
-  if(!report.charts.length)summary.append(elt('p','','Du skåret ikke NEWS2 i skjemaet.'));
-  else if(report.charts.length>1)summary.append(elt('p','','Riktig NEWS2 endret seg fra '+report.charts[0].total+' til '+report.charts.at(-1).total+' poeng. Din skåring: '+report.charts.map(c=>c.complete?c.entered:'ikke fullført').join(' → ')+'.'));
-  panel.append(summary);
+  // Resultat øverst: hvor mye av det viktigste du fikk med deg.
+  const total=report.items.length,got=report.achieved;
+  const result=elt('div','sim-result');
+  const big=elt('p','sim-result-score');big.append(elt('strong','',got+' av '+total),elt('span','',' viktige punkter'));
+  const meter=elt('progress','sim-result-meter');meter.max=total;meter.value=got;meter.setAttribute('aria-label',got+' av '+total+' viktige punkter');
+  result.append(big,meter,elt('p','sim-result-verdict',got>=total-1?'Godt gjennomført. Se likevel over punktene nedenfor.':got>=Math.ceil(total/2)?'Mye riktig, men noe å øve mer på.':'Her er det flere ting å øve på. Prøv casen igjen etter å ha lest tilbakemeldingen.'));
+  const facts=elt('ul','sim-result-facts');
+  facts.append(elt('li','','Simulert tid: '+report.minutes+' min'),elt('li','','Riktig NEWS2 ved siste måling: '+report.score));
+  if(report.worsenedAt!==null)facts.append(elt('li','sim-result-worse','Pasienten ble dårligere etter '+report.worsenedAt+' min'));
+  if(!report.charts.length)facts.append(elt('li','','Du skåret ikke NEWS2 i skjemaet'));
+  else if(report.charts.length>1)facts.append(elt('li','','Riktig NEWS2 endret seg fra '+report.charts[0].total+' til '+report.charts.at(-1).total+'. Din skåring: '+report.charts.map(c=>c.complete?c.entered:'ikke fullført').join(' → ')));
+  result.append(facts);panel.append(result);
+  const list=(title,cls,items,mark)=>{
+   if(!items.length)return;
+   const box=elt('section','sim-fb '+cls);box.append(elt('h4','',title));
+   const ul=elt('ul');
+   for(const it of items){const li=elt('li');li.append(elt('span','sim-fb-mark',mark),elt('strong','',it.title));addParagraph(li,it.text,'sim-fb-text');ul.append(li)}
+   box.append(ul);panel.append(box);
+  };
+  list('Dette gjorde du bra','sim-good',report.good,'✓');
+  list('Dette kan du gjøre bedre','sim-improve',report.improve,'→');
+  if(report.timeline.length){
+   const tl=elt('details','sim-details sim-review');tl.open=!isMobile();
+   tl.append(elt('summary','','Slik gikk det, steg for steg'));
+   const ol=elt('ol','sim-review-list');
+   const tagText={good:'Bra',late:'For sent',warn:'Vurder',event:'Hendelse'};
+   for(const e of report.timeline){
+    const li=elt('li','is-'+e.tag);li.append(elt('span','sim-review-min',e.minute+' min'),elt('span','sim-review-label',e.label));
+    if(tagText[e.tag])li.append(elt('span','sim-review-tag',tagText[e.tag]));
+    ol.append(li);
+   }
+   tl.append(ol);panel.append(tl);
+  }
+  if(report.lesson){const box=elt('div','sim-lesson');box.append(elt('strong','','Læringspoeng i denne casen'));addParagraph(box,report.lesson,'sim-copy');panel.append(box)}
   if(report.charts.length){
-   const details=elt('details','sim-details sim-chart-details');details.open=true;
+   const details=elt('details','sim-details sim-chart-details');details.open=!isMobile();
    details.append(elt('summary','','Se NEWS2-skjemaet ditt rad for rad'));
    report.charts.forEach((c,i)=>details.append(chartReport(c,i,report.charts.length)));
    panel.append(details);
   }
-  const ul=elt('ul','sim-feedback');
-  for(const item of report.items){
-   const li=elt('li');
-   li.append(elt('strong','', (item.done?'✓ ':'○ ')+item.label));
-   addParagraph(li,item.reason);ul.append(li);
-  }
-  panel.append(ul);
   const details=elt('details','sim-details');
   details.append(elt('summary','','Vis NEWS2-delpoengene'));
   const d=elt('div','sim-parts');
@@ -285,7 +328,6 @@
    }
    panel.append(ref);
   }
-  if(report.lesson){const box=elt('div','sim-lesson');box.append(elt('strong','','Læringspoeng i denne casen'));addParagraph(box,report.lesson,'sim-copy');panel.append(box)}
   if(report.deteriorated)addParagraph(panel,'I dette manusstyrte forløpet oppstod forverring etter forsinket eskalering. Dette er et pedagogisk valg i casen, ikke en generell prognose.','sim-deterioration');
   addParagraph(panel,report.note,'sim-hint');
   const again=elt('div','sim-report-actions');
@@ -307,8 +349,39 @@
   top.append(fig,meta,elt('p','sim-copy',c.opening));
   return top;
  }
+ function tabBadge(id){
+  const chart=state.charts?.at(-1);
+  if(id==='vitals')return state.lastVitals?'✓':'';
+  if(id==='news')return chart?Engine.rows.filter(r=>Number.isInteger(chart.cells[r])).length+'/7':'';
+  if(id==='isbar')return state.isbar?'✓':'';
+  if(id==='log')return state.timeline.length?String(state.timeline.length):'';
+  return '';
+ }
+ function showTab(id){
+  tab=id;render();
+  const bar=root.querySelector('.sim-tabs');
+  if(bar&&bar.getBoundingClientRect().top<0)window.scrollTo(0,bar.getBoundingClientRect().top+window.scrollY-70);
+  root.querySelector('#simTabBtn-'+id)?.focus({preventScroll:true});
+ }
+ function tabBar(){
+  const bar=elt('div','sim-tabs');bar.setAttribute('role','tablist');bar.setAttribute('aria-label','Deler av simuleringen');
+  TABS.forEach(([id,label],i)=>{
+   const b=button('','sim-tab',()=>showTab(id));b.id='simTabBtn-'+id;
+   b.setAttribute('role','tab');b.setAttribute('aria-controls','simTab-'+id);
+   b.setAttribute('aria-selected',String(id===tab));b.tabIndex=id===tab?0:-1;
+   b.append(elt('span','sim-tab-label',label));
+   const badge=tabBadge(id);if(badge)b.append(elt('span','sim-tab-badge',badge));
+   b.addEventListener('keydown',e=>{
+    const step={ArrowRight:1,ArrowLeft:-1}[e.key];if(!step)return;e.preventDefault();
+    showTab(TABS[(i+step+TABS.length)%TABS.length][0]);
+   });
+   bar.append(b);
+  });
+  return bar;
+ }
  function render(){
   root.replaceChildren();
+  page?.classList.toggle('sim-running',started&&!state.finished);
   const c=current();
   if(heading)heading.textContent=started?c.title:'Velg en pasientcase';
   if(!started){
@@ -338,25 +411,29 @@
    stat.append(button('Bytt case','sim-reset',()=>{if(window.confirm('Bytte case? Valgene i denne casen slettes.'))toChooser()}));
    root.append(stat);
    const latestWrap=elt('div');latest(latestWrap);root.append(latestWrap);
-   const columns=elt('div','sim-columns');
-   const left=elt('div','sim-column'),right=elt('div','sim-column');
-   left.append(actionPanel(),vitalPanel());
-   right.append(isbarPanel(),notesPanel());
-   columns.append(left,right);root.append(columns);
-   const news=newsPanel();news.classList.add('sim-news-wide');
-   // Rett etter en måling står skjemaet før kolonnene, så det er lett å finne på mobil. Det blir stående
-   // der mens du skårer, og flyttes ned under kolonnene når du velger en ny handling.
-   if(state.charts?.length&&['vitals','reevaluate'].includes(state.timeline.at(-1)?.id))columns.before(news);
-   else columns.after(news);
+   const mob=isMobile();
+   if(mob)root.append(tabBar());
+   // Rett etter en måling står NEWS2-skjemaet øverst på PC. Det blir stående der mens du skårer,
+   // og flyttes ned når du velger en ny handling.
+   const justMeasured=Boolean(state.charts?.length&&['vitals','reevaluate'].includes(state.timeline.at(-1)?.id));
+   const panels=elt('div','sim-panels'+(justMeasured?' is-just-measured':''));
+   const build={actions:actionPanel,vitals:vitalPanel,news:()=>{const n=newsPanel();n.classList.add('sim-news-wide');return n},isbar:isbarPanel,log:notesPanel};
+   for(const [id] of TABS){
+    const wrap=elt('div','sim-tabpanel sim-tabpanel-'+id);wrap.id='simTab-'+id;
+    if(mob){wrap.setAttribute('role','tabpanel');wrap.setAttribute('aria-labelledby','simTabBtn-'+id);wrap.hidden=id!==tab}
+    wrap.append(build[id]());panels.append(wrap);
+   }
+   root.append(panels);
    const end=elt('div','sim-finish');
-   addParagraph(end,'Du kan avslutte når som helst. Oppsummeringen viser både det du gjorde og hva som eventuelt mangler.');
+   addParagraph(end,'Du kan avslutte når som helst. Oppsummeringen viser hva du gjorde bra, og hva du kan gjøre bedre.');
    end.append(button('Avslutt og se refleksjon →','btn btn-primary',finishCase));
    root.append(end);
   }
   const footer=elt('div','sim-references');
   addParagraph(footer,c.warning);
-  footer.append(elt('strong','','Faglig grunnlag: '));
-  for(const s of c.sources)footer.append(sameTabLink(s.name+' ↗',s.url));
+  const src=elt('details','sim-sources');src.append(elt('summary','','Faglig grunnlag'));
+  for(const s of c.sources)src.append(sameTabLink(s.name+' ↗',s.url));
+  footer.append(src);
   root.append(footer);
   const announcer=elt('p','sim-sr');announcer.id='simAnnounce';
   announcer.setAttribute('role','status');announcer.setAttribute('aria-live','polite');root.append(announcer);

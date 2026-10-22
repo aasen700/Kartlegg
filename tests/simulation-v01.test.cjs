@@ -88,7 +88,7 @@ test('ISBAR text is mandatory but not machine-graded; case can finish early',()=
 });
 test('a simulation route, source and front-end assets are integrated',()=>{
  const html=read('index.html'),app=read('assets/app.js');
- for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=bilder1','assets/simulation-ui.js?v=bilder1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
+ for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=mobil1','assets/simulation-ui.js?v=mobil1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
   assert.ok(html.includes(element),element);
  assert.ok(app.includes("'simulering'"));
  assert.doesNotMatch(read('assets/simulation-engine.js'),/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);
@@ -143,4 +143,26 @@ test('every case has stable and worse illustrations, hidden findings, a key find
  const ui=read('assets/simulation-ui.js');
  assert.match(ui,/c\.images\[worse\?'worse':'stable'\]/);
  assert.match(ui,/Sammenlign ISBAR-utkastet ditt med et eksempel/);
+});
+test('debrief says concretely what went well, what to improve and when the patient got worse',()=>{
+ let s=S.start('nursing-home-confusion-002');
+ for(const a of ['symptoms','vitals','wait','abcde','reevaluate','contact'])s=S.step(s,a);
+ for(const r of S.rows)s=S.recordNewsCell(s,r,r==='hr'?3:S.chartRow(r,s.lastVitals).answerIndex);
+ const d=S.debrief(S.finish(s));
+ assert.equal(d.worsenedAt,13);
+ const good=d.good.map(x=>x.id),improve=d.improve.map(x=>x.id);
+ assert.ok(good.includes('vitals')&&good.includes('reevaluate'));
+ assert.ok(improve.includes('contact'),'calling after the deterioration is flagged as late');
+ assert.match(d.improve.find(x=>x.id==='contact').text,/etter 17 min.*etter 13 min/);
+ assert.match(d.improve.find(x=>x.id==='news').text,/puls \(du valgte 51–90, riktig er 111–130\)/);
+ assert.ok(improve.includes('wait')&&improve.includes('key')&&improve.includes('isbar'));
+ assert.equal(d.achieved,d.items.filter(x=>x.done).length);
+ const tl=d.timeline.map(t=>t.id+':'+t.tag);
+ assert.deepEqual(tl,['symptoms:neutral','vitals:good','wait:warn','worse:event','abcde:good','reevaluate:good','contact:late']);
+ // Ringer du tidlig, får du ros for det.
+ let early=S.step(S.step(S.start(),'vitals'),'contact');
+ assert.ok(S.debrief(early).good.some(x=>x.id==='contact'));
+ const ui=read('assets/simulation-ui.js');
+ assert.match(ui,/Dette gjorde du bra/);assert.match(ui,/Dette kan du gjøre bedre/);
+ assert.match(ui,/role','tablist'/,'mobile tabs');
 });
