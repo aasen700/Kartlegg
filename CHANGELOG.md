@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Om Kartlegg skrevet om – 25. oktober 2026
+
+- «Hvorfor Kartlegg?» og «Hvem står bak?» er skrevet i førsteperson, av Philip selv.
+- Utviklingsstatus er oppdatert: fire pasientcaser, fremgang og «Øv på feilene dine» i Lær, spørsmål i øvingsforløpet, og at Kartlegg kan brukes som app uten nett. Under arbeid står nå «Øv på feilene dine» i flere moduler og egen e-postadresse.
+- ISBAR-vinduet heter «ISBAR-manus».
+
 ## Skårlinje i NEWS2 på mobil – 25. oktober 2026
 
 - Mens du fyller ut NEWS2 på telefonen, viser en linje nederst hvor mange felt som er fylt ut. Når alt er fylt ut, viser den skåren og nivået (for eksempel «NEWS2 5 · Middels risiko») med samme farge som resultatkortet, og qSOFA hvis GCS er fylt inn.

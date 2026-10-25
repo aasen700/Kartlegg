@@ -597,17 +597,17 @@
         </article>
       </div><!-- /page-lisenser -->
       <div class="page" id="page-om" hidden>
-        <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som står bak, hvorfor, og hva som skjer med opplysningene du skriver inn.</p></div></div>
+        <div class="intro"><div><h1>Om Kartlegg</h1><p>Hvem som lager Kartlegg, og hva som skjer med det du skriver inn.</p></div></div>
         <section class="section about-v0993-hero" aria-labelledby="about-purpose-title">
           <div class="about-v0993-hero-inner">
             <h2 id="about-purpose-title">Hvorfor Kartlegg?</h2>
-            <p>Kartlegg startet som et forsøk på å samle NEWS2 og qSOFA på ett sted, med en rask måte å føre inn målingene. Etter hvert har det kommet flere kalkulatorer, kartleggingsverktøy og veiledere, blant annet for hjemmesykepleien.</p>
-            <p>Tanken er at du skal se hvordan en skår henger sammen med det du har observert, og hvor grensene kommer fra – ikke bare få et tall.</p>
+            <p>Jeg begynte med Kartlegg fordi jeg ville ha NEWS2 og qSOFA samlet på ett sted, og en rask måte å føre inn målingene på. Etter hvert kom det flere verktøy, blant annet for hjemmesykepleien, og så læringsmoduler og simulering.</p>
+            <p>Jeg vil at du skal se hvordan skåren henger sammen med det du har observert, og hvor grensene kommer fra. Ikke bare få et tall.</p>
           </div>
         </section>
         <section class="section about-v0993-card" aria-labelledby="about-developer-title">
           <h2 id="about-developer-title">Hvem står bak?</h2>
-          <p>Kartlegg er laget av Philip Aasen, sykepleierstudent ved Høgskulen på Vestlandet. Det er et eget lærings- og utviklingsprosjekt og representerer ikke høgskolen eller noen helsetjeneste.</p>
+          <p>Jeg heter Philip Aasen og er sykepleierstudent ved Høgskulen på Vestlandet. Kartlegg er et prosjekt jeg lager på fritiden. Det er gratis, uten reklame, og representerer ikke høgskolen eller noen helsetjeneste.</p>
           <p>Har du innspill eller ser en feil? Se <a href="#meld-feil">Meld feil</a> lenger ned.</p>
         </section>
         <section class="section about-v0993-card about-status" aria-labelledby="about-status-title">
@@ -618,15 +618,16 @@
               <h3>Tilgjengelig nå</h3>
               <ul>
                 <li>18 kliniske verktøy, blant annet NEWS2, qSOFA, GCS, 4AT, NRS, MST, TUG, ESAS-r, ankel–arm-indeks, TIMES og ABCDE. Åpne for alle.</li>
-                <li>Lær: GCS, 4AT, NEWS2, TIMES og legemiddelregning (med konto).</li>
-                <li>Én simulering fra hjemmesykepleien (med konto).</li>
-                <li>Øvingsforløp med eksempel og sammenligning av målinger, og ISBAR-manus.</li>
+                <li>Lær: GCS, 4AT, NEWS2, TIMES og legemiddelregning, med fremgang som lagres og «Øv på feilene dine» i NEWS2 og 4AT (med konto).</li>
+                <li>Fire pasientcaser i simuleringen, med NEWS2-skjema og tilbakemelding på hva du gjorde (med konto).</li>
+                <li>Øvingsforløp med spørsmål mellom målingene og sammenligning av to målinger, og ISBAR-manus.</li>
+                <li>Kan legges på hjemskjermen som app og brukes uten nett.</li>
               </ul>
             </div>
             <div class="about-status-item">
               <h3>Kontrollert</h3>
               <ul>
-                <li>Over 250 automatiske tester kjøres ved hver endring, blant annet av grenseverdiene i NEWS2 (RCP 2017) og qSOFA (Sepsis-3).</li>
+                <li>Over 270 automatiske tester kjøres ved hver endring, blant annet av grenseverdiene i NEWS2 (RCP 2017) og qSOFA (Sepsis-3).</li>
                 <li>Alle sider testes i nettleser på mobil og PC, i lys og mørk modus.</li>
                 <li>Tilgjengelighet gjennomgått i oktober 2026: kontrast etter WCAG AA og bruk med bare tastatur.</li>
                 <li>Ikke kontrollert: uavhengig klinisk validering. Kartlegg er ikke et medisinsk utstyr.</li>
@@ -635,9 +636,8 @@
             <div class="about-status-item">
               <h3>Under arbeid</h3>
               <ul>
-                <li>Spørsmål underveis i øvingsforløpet («Hva ville du observert nå?»).</li>
-                <li>Fremdrift og resultathistorikk i Lær.</li>
-                <li>Flere simuleringskasus med tilbakemelding på prioritering.</li>
+                <li>«Øv på feilene dine» også i GCS, TIMES og legemiddelregning.</li>
+                <li>E-post fra en egen adresse på kartlegg.com, så bekreftelser og nye passord kommer fram til flere, blant annet iCloud.</li>
               </ul>
             </div>
           </div>
@@ -692,7 +692,7 @@
     </nav>
   </div>
   <dialog id="isbarDialog" aria-labelledby="isbarModalTitle">
-    <div class="dialog-head"><div class="section-symbol coral">▣</div><div><h2 id="isbarModalTitle">ISBAR – klart til å lese høyt</h2><p>Et sammenhengende samtalemanus, ikke et huskekort.</p></div><button class="dialog-close" id="closeIsbar" type="button" aria-label="Lukk ISBAR">×</button></div>
+    <div class="dialog-head"><div class="section-symbol coral">▣</div><div><h2 id="isbarModalTitle">ISBAR-manus</h2><p>Et sammenhengende samtalemanus, ikke et huskekort.</p></div><button class="dialog-close" id="closeIsbar" type="button" aria-label="Lukk ISBAR">×</button></div>
     <div class="dialog-body">
       <p class="isbar-preamble">Les det som står under som en telefonsamtale. Tekst i [klammer] må fylles inn muntlig eller via «Tilpass manus». Opplysninger som ikke er målt, fylles ikke inn automatisk.</p>
       <div class="script-paper"><div id="isbarOutput" class="spoken-script" aria-live="polite"></div></div>
