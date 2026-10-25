@@ -23,3 +23,14 @@ test('glass header and bottom menu are dense enough to read over scrolling conte
  assert.ok(alpha(/\[data-surface-style="glass"\] :is\(\.header,\.sidebar\)\{background:rgba\(255,255,255,(\.\d+)\)/)>=.65);
  assert.match(css,/\[data-theme=dark\] \.footer a \{\n  color: #8cc4ee;/);
 });
+test('the mobile score dock only reads the result cards and never shows on PC',()=>{
+ const js=read('assets/score-dock.js'),css=read('assets/css/05-assessment.css'),html=read('index.html');
+ assert.match(html,/assets\/score-dock\.js\?v=/);
+ assert.ok(html.indexOf('score-dock.js')>html.indexOf('assets/app.js'),'loads after app.js');
+ assert.doesNotMatch(js,/news2\(|calculateNEWS2|Scoring\./,'no scoring of its own');
+ assert.match(js,/newsNumber/);
+ assert.match(js,/IntersectionObserver/,'hidden when the results are visible');
+ assert.match(css,/@media\(min-width:771px\)\{\n  \.score-dock \{\n    display: none !important;/);
+ assert.match(css,/\.keyboard-open \.score-dock \{\n    display: none;/);
+ assert.doesNotMatch(css,/score-dock-open #page-vurdering/,'page height must not toggle while scrolling');
+});

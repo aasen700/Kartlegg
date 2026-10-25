@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Skårlinje i NEWS2 på mobil – 25. oktober 2026
+
+- Mens du fyller ut NEWS2 på telefonen, viser en linje nederst hvor mange felt som er fylt ut. Når alt er fylt ut, viser den skåren og nivået (for eksempel «NEWS2 5 · Middels risiko») med samme farge som resultatkortet, og qSOFA hvis GCS er fylt inn.
+- «Se skår» tar deg rett ned til resultatet.
+- Linjen skjules når tastaturet er oppe, når resultatet allerede synes på skjermen, og på PC.
+
 ## Språkrunde: mindre malpreg – 25. oktober 2026
 
 - Pilene (→) bak knappetekstene er fjernet. Pil tilbake (←) og pil for lenker til andre nettsteder (↗) står fortsatt.
