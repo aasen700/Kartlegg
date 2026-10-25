@@ -11,7 +11,7 @@
   card.querySelectorAll('.tool-tag').forEach(el=>{el.classList.remove('soon');el.textContent='Separat kalkulator'});
   const p=card.querySelector('p');if(p)p.textContent=desc;
   card.querySelector('.criteria-wrap,details')?.remove();
-  const btn=document.createElement('button');btn.className='btn btn-primary tool-launch';btn.type='button';btn.textContent='Åpne '+title+' →';btn.addEventListener('click',()=>openTool(id));
+  const btn=document.createElement('button');btn.className='btn btn-primary tool-launch';btn.type='button';btn.textContent='Åpne '+title+'';btn.addEventListener('click',()=>openTool(id));
   card.append(btn);
  }
  if(cards.length>=4){
@@ -22,7 +22,7 @@
  const h=document.createElement('h3');h.textContent='🩹 NRS – smerte';
  const tag=document.createElement('span');tag.className='tool-tag';tag.textContent='Separat kalkulator';
  const para=document.createElement('p');para.textContent='Pasienten oppgir selv smerteintensitet fra 0 til 10. Registrer hvile eller bevegelse.';
- const launch=document.createElement('button');launch.className='btn btn-primary tool-launch';launch.type='button';launch.textContent='Åpne NRS →';launch.onclick=()=>openTool('nrs');
+ const launch=document.createElement('button');launch.className='btn btn-primary tool-launch';launch.type='button';launch.textContent='Åpne NRS';launch.onclick=()=>openTool('nrs');
  nrsCard.append(h,tag,para,launch);toolGrid.append(nrsCard);
  const chip=document.querySelector('#page-verktoy .intro .chip');if(chip)chip.textContent='5 tilgjengelige verktøy';
  const intro=document.querySelector('#page-verktoy .intro p:not(.eyebrow)');
@@ -50,14 +50,14 @@
   if(!['gcs','4at','nrs'].includes(id))return;
   active=id;fields.replaceChildren();result.replaceChildren();result.hidden=true;source.replaceChildren();
   if(id==='gcs'){
-   title.textContent='GCS – Glasgow Coma Scale';
+   title.textContent='Glasgow Coma Scale (GCS)';
    lead.textContent='Vurder hver komponent. NT betyr «kan ikke testes» og gir ingen totalskår. Dokumenter alltid E, V og M.';
    select('toolEyes','Øyeåpning (E)',[['4','4 – Spontant'],['3','3 – Ved tiltale/lyd'],['2','2 – Ved trykkstimulus'],['1','1 – Ingen'],['NT','NT – Kan ikke testes']]);
    select('toolVerbal','Verbal respons (V)',[['5','5 – Orientert'],['4','4 – Forvirret'],['3','3 – Enkelte ord'],['2','2 – Lyder'],['1','1 – Ingen'],['NT','NT – Kan ikke testes']]);
    select('toolMotor','Motorisk respons (M)',[['6','6 – Følger oppfordringer'],['5','5 – Lokaliserer trykkstimulus'],['4','4 – Normal fleksjon'],['3','3 – Unormal fleksjon'],['2','2 – Ekstensjon'],['1','1 – Ingen'],['NT','NT – Kan ikke testes']]);
    sourceLink('Kilde: Glasgow Coma Scale – offisiell veiledning','https://www.glasgowcomascale.org/recording-gcs/');
   }else if(id==='4at'){
-   title.textContent='4AT – deliriumvurdering';
+   title.textContent='4AT for delirium';
    lead.textContent='Fire elementer – vurderes separat. Dette er Kartleggs norskspråklige tilpasning av 4AT v1.2, ikke et selvstendig validert verktøy.';
    select('toolAlert','1. Årvåkenhet', [['0','0 – Normalt våken, eller kortvarig søvnighet <10 sekunder'],['4','4 – Tydelig unormalt årvåken/agiterte eller påfallende søvnig']]);
    select('toolOrientation','2. AMT4 – alder, fødselsdato, sted og år', [['0','0 – Ingen feil'],['1','1 – Én feil'],['2','2 – To eller flere feil, eller ikke testbar']],'Ikke skriv pasientens fødselsdato inn i Kartlegg. Noter bare antall feil.');
@@ -67,7 +67,7 @@
    const credit=document.createElement('p');credit.className='tool-license';credit.textContent='Norsk tilpasning av 4AT © 2011–2014 Alasdair MacLullich, Tracy Ryan og Helen Cash. CC BY 4.0. Endringer: norsk språk, digitalt inndataskjema og korte svarbeskrivelser. Publisert validering av originalen gjelder ikke automatisk denne tilpasningen. Ingen tilknytning til eller godkjenning fra opphavspersonene.';
    source.append(credit);sourceLink('Lisens: CC BY 4.0','https://creativecommons.org/licenses/by/4.0/');
   }else{
-   title.textContent='NRS – smerteintensitet';
+   title.textContent='NRS for smerte';
    lead.textContent='Numerisk smerteskala 0–10. Skåren skal være pasientens egen rapportering, ikke observatørens anslag.';
    select('toolNRS','Pasientrapportert smerte (0–10)',Array.from({length:11},(_,i)=>[String(i),i===0?'0 – Ingen smerter':i===10?'10 – Verst tenkelige smerter':String(i)]));
    select('toolContext','Situasjon',[['hvile','I hvile'],['bevegelse','Ved bevegelse'],['annet','Annen situasjon']]);
@@ -95,7 +95,7 @@
    body.textContent=out.report+(out.testable?'':' · Ikke beregn totalskår ved NT.');
    result.append(heading,body);
    if(out.testable){
-    const b=document.createElement('button');b.type='button';b.className='btn btn-tertiary';b.textContent='Bruk GCS '+out.total+' i hovedskjemaet →';
+    const b=document.createElement('button');b.type='button';b.className='btn btn-tertiary';b.textContent='Bruk GCS '+out.total+' i hovedskjemaet';
     b.onclick=()=>{
      $('gcs').value=String(out.total);
      $('gcs').dispatchEvent(new Event('input',{bubbles:true}));

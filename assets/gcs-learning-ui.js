@@ -91,8 +91,8 @@
   const actions=h('nav','gcs-learn-steps');actions.setAttribute('aria-label','Gå mellom læringssteg');
   const prev=btn('← Forrige','gcs-learn-secondary',()=>{state.lesson--;state.learnChoice=null;render()});
   prev.disabled=state.lesson===0;actions.append(prev);
-  if(state.lesson===n-1)actions.append(btn('Fortsett til øving →','gcs-learn-primary',()=>open('practice')));
-  else actions.append(btn('Neste tema →','gcs-learn-primary',()=>{state.lesson++;state.learnChoice=null;render()}));
+  if(state.lesson===n-1)actions.append(btn('Fortsett til øving','gcs-learn-primary',()=>open('practice')));
+  else actions.append(btn('Neste tema','gcs-learn-primary',()=>{state.lesson++;state.learnChoice=null;render()}));
   root.append(actions);
  }
  function progress(current,total){
@@ -133,18 +133,18 @@
    feedback.append(h('strong','',result.correct?'Riktig observasjon!':'Det riktige svaret er '+readablePart(q.part,result.expected)+'.'));
    para(feedback,result.why);root.append(feedback);
    window.KartleggLearningFlow.feedback(feedback);
-   root.append(btn('Neste oppgave →','gcs-learn-primary',()=>{state.practiceIndex++;state.practiceChoice=null;render()}));
+   root.append(btn('Neste oppgave','gcs-learn-primary',()=>{state.practiceIndex++;state.practiceChoice=null;render()}));
   }
  }
  function practiceSummary(){
   const count=state.practiceMarks.filter(Boolean).length;
-  root.append(heading('Bra jobbet – øvingen er fullført','Øv · Oppsummering','practice'));
+  root.append(heading('Øvingen er fullført','Øv · Oppsummering','practice'));
   const card=h('section','gcs-learn-summary');
   card.append(h('strong','gcs-learn-big-score',count+' av '+D.practice.length));
-  para(card,'Svarene er kontrollert mot de forhåndsdefinerte eksemplene. Dette sier ikke alene noe om din praktiske kompetanse.');
+  para(card,'Svarene er rettet mot fasiten for hvert eksempel.');
   const actions=h('div','gcs-learn-summary-actions');
   actions.append(btn('Øv en gang til','gcs-learn-secondary',()=>open('practice')),
-   btn('Test deg selv →','gcs-learn-primary',()=>open('exam')));
+   btn('Test deg selv','gcs-learn-primary',()=>open('exam')));
   card.append(actions);root.append(card);
  }
  function examScreen(){
@@ -168,7 +168,7 @@
    label.append(input);form.append(label);
   }
   const note=h('p','gcs-learn-form-error');note.setAttribute('role','status');form.append(note);
-  const b=h('button','gcs-learn-primary',state.examIndex===D.exams.length-1?'Fullfør testen →':'Lagre og neste case →');
+  const b=h('button','gcs-learn-primary',state.examIndex===D.exams.length-1?'Fullfør testen':'Lagre og neste case');
   b.type='submit';form.append(b);
   form.addEventListener('submit',e=>{
    e.preventDefault();const response=Object.fromEntries([...form.querySelectorAll('select')].map(x=>[x.name,x.value]));
@@ -188,7 +188,7 @@
   root.append(heading('Resultat og forklaringer','Test deg selv · Ferdig','exam'));
   const top=h('section','gcs-learn-summary');
   top.append(h('strong','gcs-learn-big-score',correct+' / '+(result.cases.length*3)));
-  para(top,'Riktige E-, V- og M-komponenter. Dette er en læringstest med fiktive caser, ikke en autorisert kompetanseprøve.');
+  para(top,'Antall riktige E-, V- og M-komponenter. Dette er en øvingstest, ikke en autorisert kompetanseprøve.');
   root.append(top);
   for(const item of result.cases){
    const q=D.exams.find(x=>x.id===item.id),card=h('article','gcs-learn-exam-report');
@@ -216,9 +216,9 @@
   root.append(hero);
   const modes=h('div','gcs-learn-modes');
   for(const spec of [
-   {id:'learn',icon:'01',title:'Lær',subtitle:'Forstå E, V, M og NT',desc:'Seks korte temaer med illustrasjoner og små kontrollspørsmål.',button:'Start læringen →'},
-   {id:'practice',icon:'02',title:'Øv',subtitle:'Få hjelp mens du lærer',desc:'Ni fiktive funn med tilbakemelding på hvert svar.',button:'Start øving →'},
-   {id:'exam',icon:'03',title:'Test deg selv',subtitle:'Tenk selv før fasiten',desc:'Fire pasientcaser. Skår E, V og M, og få samlet resultat.',button:'Ta testen →'}
+   {id:'learn',icon:'01',title:'Lær',subtitle:'Forstå E, V, M og NT',desc:'Seks korte temaer med illustrasjoner og små kontrollspørsmål.',button:'Start læringen'},
+   {id:'practice',icon:'02',title:'Øv',subtitle:'Få hjelp mens du lærer',desc:'Ni fiktive funn med tilbakemelding på hvert svar.',button:'Start øving'},
+   {id:'exam',icon:'03',title:'Test deg selv',subtitle:'Tenk selv før fasiten',desc:'Fire pasientcaser. Skår E, V og M, og få samlet resultat.',button:'Ta testen'}
   ]){
    const card=h('section','gcs-learn-mode-card');
    card.append(h('span','gcs-learn-mode-num',spec.icon),h('h4','',spec.title),

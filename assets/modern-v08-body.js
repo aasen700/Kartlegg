@@ -5,7 +5,7 @@ const $=id=>document.getElementById(id),grid=document.querySelector('#page-verkt
 if(!grid||!V)return;
 const card=document.createElement('article');card.className='toolbox v08-bmi-card';
 card.innerHTML='<div class="v08-tool-icon" aria-hidden="true">▤</div><h3>BMI og BSA</h3><span class="tool-tag">Selvstendig kalkulator</span><p>Kroppsmasseindeks og kroppsoverflate basert på høyde og vekt.</p>';
-const launch=document.createElement('button');launch.className='btn btn-primary v08-body-launch';launch.type='button';launch.textContent='Åpne BMI / BSA →';card.append(launch);
+const launch=document.createElement('button');launch.className='btn btn-primary v08-body-launch';launch.type='button';launch.textContent='Åpne BMI / BSA';card.append(launch);
 const before=[...grid.querySelectorAll('.toolbox')].find(x=>/NEWS2/.test(x.querySelector('h3')?.textContent||''));
 if(before)grid.insertBefore(card,before);else grid.append(card);
 const quick=document.querySelector('#quickTools .quick-tool-buttons');
@@ -41,7 +41,7 @@ form.addEventListener('submit',e=>{
   box.append(head,strong,small);cards.append(box);
  }
  result.append(cards);
- const hint=document.createElement('p');hint.textContent='Beregnet fra '+fmt(data.cm,1)+' cm og '+fmt(data.kg,1)+' kg. Bruk resultatene i riktig faglig sammenheng – ingen automatisk doseringsanbefaling.';
+ const hint=document.createElement('p');hint.textContent='Beregnet fra '+fmt(data.cm,1)+' cm og '+fmt(data.kg,1)+' kg. Kalkulatoren gir ingen doseringsanbefaling.';
  result.append(hint);
 });
 })();

@@ -82,7 +82,7 @@ window.KartleggLearningFlow=(()=>{
    reset.addEventListener('click',()=>{if(window.confirm('Nullstille fremgangen i Lær og simuleringen på denne enheten?'))Progress()?.reset()});
    bar.append(reset);chooser.after(bar);
   }
-  bar.querySelector('.learn-progress-text').textContent=complete===cards.length?'Du har fullført Lær, Øv og Test i alle '+cards.length+' modulene. Bra jobbet!':
+  bar.querySelector('.learn-progress-text').textContent=complete===cards.length?'Du har fullført Lær, Øv og Test i alle '+cards.length+' modulene.':
    'Fullført: '+complete+' av '+cards.length+' moduler. Fremgangen lagres på denne enheten.';
  }
  if(chooser){

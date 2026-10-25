@@ -9,7 +9,7 @@
  const title=h('h3','','Ankel–arm-indeks');
  const tag=h('span','tool-tag','Sirkulasjon og sår');
  const description=h('p','','Beregn indeks for hvert bein fra dopplermålte systoliske trykk i begge armer og fotarterier.');
- const launch=h('button','btn btn-primary hc-launch','Åpne ankel–arm-indeks →');launch.type='button';launch.id='launchAbi';
+ const launch=h('button','btn btn-primary hc-launch','Åpne ankel–arm-indeks');launch.type='button';launch.id='launchAbi';
  card.append(icon,title,tag,description,launch);grid.append(card);
 
  const dialog=h('dialog','v08-dialog hc-dialog abi12-dialog');dialog.id='abiDialog';dialog.setAttribute('aria-labelledby','abiTitle');document.body.append(dialog);
@@ -56,7 +56,7 @@
     const missing=[...form.querySelectorAll('input')].find(input=>!input.value||!input.checkValidity());if(missing){missing.setAttribute('aria-invalid','true');missing.focus()}
    }
   });
-  const times=h('button','btn btn-secondary abi12-times','Åpne TIMES – sårvurdering');times.type='button';times.addEventListener('click',()=>{close();window.KartleggToolNavigation?.open('times')});body.append(times);
+  const times=h('button','btn btn-secondary abi12-times','Åpne TIMES');times.type='button';times.addEventListener('click',()=>{close();window.KartleggToolNavigation?.open('times')});body.append(times);
   const caveat=h('div','abi12-caveat');caveat.append(h('strong','','Viktige forbehold'),h('p','','Normal eller høy indeks utelukker ikke perifer arteriesykdom hos personer med diabetes. Sår, hvilesmerter, gangren eller andre tegn på truet sirkulasjon krever rask klinisk vurdering uavhengig av beregnet indeks.'));body.append(caveat);
   const refs=h('div','times-v091-sources');refs.append(source('https://www.nice.org.uk/guidance/cg147/chapter/recommendations','NICE – målemetode ↗'),source('https://www.ahajournals.org/doi/full/10.1161/CIR.0000000000001251','AHA/ACC 2024 – rapportering ↗'),source('https://www.helsedirektoratet.no/retningslinjer/diabetes/diabetisk-fot-og-nevropati','Helsedirektoratet – diabetisk fot ↗'));body.append(refs);
   dialog.append(head,body);dialog.showModal();

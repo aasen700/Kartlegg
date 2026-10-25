@@ -13,7 +13,7 @@
  const icon=h('div','hc-card-icon','◇');icon.setAttribute('aria-hidden','true');
  const title=h('h3','','Legemiddelregning'),tag=h('span','tool-tag','Ferdighetstrening');
  const copy=h('p','','Regn ut volum, velg treningssprøyte og dra stempelet til riktig mengde i fiktive oppgaver.');
- const launch=button('Åpne Legemiddelregning →','btn btn-primary hc-launch',()=>open('home'));launch.id='launchMedicationLab';
+ const launch=button('Åpne Legemiddelregning','btn btn-primary hc-launch',()=>open('home'));launch.id='launchMedicationLab';
  card.append(icon,title,tag,copy,launch);library.append(card);
 
  const course=button('','learn12-course-card medication12-course',()=>open('home'));course.dataset.learnTool='medication';course.setAttribute('aria-pressed','false');
@@ -46,7 +46,7 @@
   const mini=h('div','medication12-mini-ampoule');mini.append(h('span','','ØVING'),h('strong','','1 mg/ml'),h('small','','2 ml'));hero.append(heroCopy,mini);root.append(hero);
   const modes=h('div','wound12-modes');
   for(const [key,num,name,text] of [['learn','01','Lær','Fem korte steg om formelen, enheter, ampulleetikett, sprøytevalg og kontroll.'],['practice','02','Øv','Tre oppgaver med fasit og forklaring etter hver oppgave.'],['test','03','Test deg selv','Tre oppgaver uten fasit før hele testen er levert.']]){
-   const item=h('article','wound12-mode medication12-mode');item.append(h('span','wound12-num',num),h('h4','',name),h('p','',text),button('Start '+name.toLowerCase()+' →','learn12-primary',()=>reset(key)));modes.append(item);
+   const item=h('article','wound12-mode medication12-mode');item.append(h('span','wound12-num',num),h('h4','',name),h('p','',text),button('Start '+name.toLowerCase()+'','learn12-primary',()=>reset(key)));modes.append(item);
   }
   root.append(modes,h('p','medication12-disclaimer','Treningsmodulen erstatter ikke ordinasjon, produktinformasjon, lokale prosedyrer, praktisk veiledning eller krav til dobbeltkontroll. Ikke bruk oppgavene til reell legemiddelhåndtering.'));
  }
@@ -54,7 +54,7 @@
   const item=D.lessons[lesson];heading('Lær · '+(lesson+1)+' av '+D.lessons.length,item.title);
   const sheet=h('article','medication12-lesson');sheet.append(h('span','medication12-lesson-number','0'+(lesson+1)),h('p','',item.body),h('strong','medication12-formula',item.formula));root.append(sheet);
   const actions=h('div','wound12-actions');if(lesson)actions.append(button('← Forrige','learn12-secondary',()=>{lesson--;render()}));
-  actions.append(button(lesson===D.lessons.length-1?'Start øving →':'Neste →','learn12-primary',()=>{if(lesson===D.lessons.length-1)reset('practice');else{lesson++;render()}}));root.append(actions);
+  actions.append(button(lesson===D.lessons.length-1?'Start øving':'Neste','learn12-primary',()=>{if(lesson===D.lessons.length-1)reset('practice');else{lesson++;render()}}));root.append(actions);
  }
  function ampoule(item){
   const figure=h('figure','medication12-ampoule');figure.setAttribute('aria-label','Fiktiv ampulle: '+item.medicine+', '+strengthText(item)+', totalt '+formatMl(item.ampouleMl));
@@ -104,7 +104,7 @@
   const actions=h('div','wound12-actions');
   if(mode==='practice'&&graded){
    root.append(feedback(item,graded,answer));
-   actions.append(button(caseIndex===list.length-1?'Se oppsummering →':'Neste oppgave →','learn12-primary',()=>{if(caseIndex===list.length-1)finished=true;else caseIndex++;render()}));
+   actions.append(button(caseIndex===list.length-1?'Se oppsummering':'Neste oppgave','learn12-primary',()=>{if(caseIndex===list.length-1)finished=true;else caseIndex++;render()}));
   }else{
    const submit=button(mode==='practice'?'Sjekk opptrekket':'Lever oppgaven','learn12-primary',()=>{
     if(input.value===''||!answer.syringeId){status.textContent='Fyll inn beregnet volum og velg en sprøyte.';if(input.value==='')input.focus();return}
@@ -118,9 +118,9 @@
  function summary(){
   const list=cases(),total=list.reduce((sum,item)=>sum+(results[item.id]?.score||0),0),max=list.length*3;
   heading('Fullført · '+(mode==='practice'?'Øv':'Test'),'Resultater og forklaringer');
-  const top=h('section','learn12-summary medication12-summary');top.append(h('strong','learn12-big-score',total+' / '+max),h('p','','Beregning, sprøytevalg og opptrekk vurderes separat. Dette er pedagogisk tilbakemelding, ikke dokumentasjon på praktisk kompetanse.'));root.append(top);
+  const top=h('section','learn12-summary medication12-summary');top.append(h('strong','learn12-big-score',total+' / '+max),h('p','','Beregning, sprøytevalg og opptrekk rettes hver for seg.'));root.append(top);
   for(const item of list)root.append(feedback(item,results[item.id],answers[item.id]));
-  const actions=h('div','wound12-actions');actions.append(button('Prøv igjen','learn12-secondary',()=>reset(mode)),button(mode==='practice'?'Fortsett til test →':'Til oversikten','learn12-primary',()=>reset(mode==='practice'?'test':'home')));root.append(actions);
+  const actions=h('div','wound12-actions');actions.append(button('Prøv igjen','learn12-secondary',()=>reset(mode)),button(mode==='practice'?'Fortsett til test':'Til oversikten','learn12-primary',()=>reset(mode==='practice'?'test':'home')));root.append(actions);
  }
  function sources(){
   const box=h('div','learn12-references medication12-sources');box.append(h('strong','','Sikkerhetsramme og kilder'),h('p','','Oppgavene bruker fiktive preparater og konstruerte doser. Sprøyteinndelingen er definert i øvingen og må kontrolleres mot faktisk utstyr i praksis. Modulen gir ikke ordinasjon eller klarsignal for administrasjon.'));

@@ -28,7 +28,7 @@ function fourAT(items){
  if(![0,4].includes(acute))throw new RangeError('Ugyldig akutt endring');
  const total=alertness+orientation+attention+acute;
  return {total,parts:{alertness,orientation,attention,acute},
- interpretation:total>=4?'Forenlig med mulig delirium – krever klinisk vurdering':total>=1?'Mulig kognitiv svikt, uten at delirium kan utelukkes':'Negativ skår utelukker ikke delirium'};
+ interpretation:total>=4?'Mulig delirium. Krever klinisk vurdering':total>=1?'Mulig kognitiv svikt, uten at delirium kan utelukkes':'Negativ skår utelukker ikke delirium'};
 }
 function nrs(value){
  numeric(value,0,10,'NRS');

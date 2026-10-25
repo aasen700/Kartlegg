@@ -7,7 +7,7 @@ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const html=read('index.html');
 
 test('v1.1 exposes a direct accessible assessment path and release identity',()=>{
- assert.match(html,/v1\.1 · Demo/);
+ assert.match(html,/Versjon 1\.1/);
  assert.match(html,/class="skip-link" href="#top"/);
  assert.doesNotMatch(html,/class="assessment-flow"|data-assessment-step|assessmentFlowStatus/);
  assert.match(html,/id="reviewResponse"[^>]*disabled/);

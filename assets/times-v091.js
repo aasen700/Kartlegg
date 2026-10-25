@@ -15,16 +15,16 @@ const topics=[
 ];
 const card=H('article','toolbox hc-tool-card times-v091-card');card.dataset.homecareCard='times';
 const icon=H('div','hc-card-icon','▦');icon.setAttribute('aria-hidden','true');
-const label=H('h3','','TIMES – sårvurdering'),tag=H('span','tool-tag','Sår');
+const label=H('h3','','TIMES for sårvurdering'),tag=H('span','tool-tag','Sår');
 const p=H('p','','Vurder vev, infeksjon, sårvæske, sårkanter og hud. Inkluderer sårmål og kalibrerbar skjermlinjal.');
-const launch=H('button','btn btn-primary hc-launch','Åpne TIMES →');launch.id='launchTIMES';launch.type='button';
+const launch=H('button','btn btn-primary hc-launch','Åpne TIMES');launch.id='launchTIMES';launch.type='button';
 card.append(icon,label,tag,p,launch);grid.insertBefore(card,grid.querySelector('.toolbox'));
 const dialog=H('dialog','v08-dialog hc-dialog times-v091-dialog');dialog.id='timesDialog';dialog.setAttribute('aria-labelledby','timesTitle');document.body.append(dialog);
 function url(href,text){const a=H('a','hc-source',text);a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a}
 function open(){
  dialog.replaceChildren();
  const header=H('div','v08-dialog-head'),heading=H('div');
- const title=H('h2','','TIMES – sårvurdering');title.id='timesTitle';heading.append(title);
+ const title=H('h2','','TIMES for sårvurdering');title.id='timesTitle';heading.append(title);
  const close=H('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk TIMES');close.addEventListener('click',()=>dialog.close());
  header.append(heading,close);
  const body=H('div','v08-dialog-content times-v091-content');
@@ -66,7 +66,7 @@ function open(){
   try{
    const data=calc.estimate({lengthMm:read('timesLength'),widthMm:read('timesWidth'),depthMm:read('timesDepth')});
    output.append(H('strong','hc-big-result',data.rectangleCm2.toLocaleString('nb-NO',{maximumFractionDigits:2})+' cm²'));
-   output.append(H('p','hc-hint','Omkransende rektangel – ikke faktisk sårareal. Ingen klinisk konklusjon følger av beregningen.'));
+   output.append(H('p','hc-hint','Rektangelet rundt såret, ikke det faktiske sårarealet.'));
   }catch(error){output.append(H('p','hc-alert',error.message))}
  });
  dim.append(form,output);body.append(dim);

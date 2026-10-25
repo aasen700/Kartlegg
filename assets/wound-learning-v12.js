@@ -57,7 +57,7 @@
   if(e.target.closest('[data-learn-tool]')!==course)panel.hidden=true;
  },true);
  function home(){
-  header('','TIMES – lær, øv og test');
+  header('','Lær TIMES');
   root.append(h('p','wound13-lead','Seks fiktive sårkasus med klinisk inspirerte medisinske undervisningsillustrasjoner. Lær å beskrive sårbunn, infeksjons-/inflammasjonstegn, fuktbalanse, sårkant og huden rundt. Ingen pasientfoto, journalføring eller behandlingsråd.'));
   const hero=h('section','wound13-home-hero');
   hero.append(picture(D.cases[0],true));
@@ -65,7 +65,7 @@
   hero.append(expl);root.append(hero);
   const cols=h('div','wound12-modes');
   for(const [key,num,title,detail] of [['learn','01','Lær','Seks korte leksjoner om TIMES og vurderingsbegrepene.'],['practice','02','Øv','Tre kasus med forklaring etter innlevering.'],['test','03','Test deg selv','Tre kasus der fasiten vises samlet til slutt.']]){
-    const c=h('article','wound12-mode wound13-mode');c.append(h('span','wound12-num',num),h('h4','',title),h('p','',detail),b('Start '+title.toLowerCase()+' →','learn12-primary',()=>setMode(key)));cols.append(c);
+    const c=h('article','wound12-mode wound13-mode');c.append(h('span','wound12-num',num),h('h4','',title),h('p','',detail),b('Start '+title.toLowerCase()+'','learn12-primary',()=>setMode(key)));cols.append(c);
   }
   root.append(cols);
   const gallery=h('section','wound13-gallery');gallery.append(h('h4','','De seks øvingskasusene'));
@@ -79,7 +79,7 @@
   const ul=h('ul','wound12-tips');x.tips.forEach(y=>ul.append(h('li','',y)));root.append(ul);
   const actions=h('div','wound12-actions');
   if(lesson)actions.append(b('← Forrige','learn12-secondary',()=>{lesson--;render()}));
-  actions.append(b(lesson===D.lessons.length-1?'Start å øve →':'Neste tema →','learn12-primary',()=>{
+  actions.append(b(lesson===D.lessons.length-1?'Start å øve':'Neste tema','learn12-primary',()=>{
    if(lesson===D.lessons.length-1)setMode('practice');else{lesson++;render()}
   }));root.append(actions);
  }
@@ -145,7 +145,7 @@
   right.append(article);
   const actions=h('div','wound12-actions wound13-actions');
   if(!submitted){
-    const submit=b('Lever TIMES-vurdering →','learn12-primary',()=>{
+    const submit=b('Lever TIMES-vurdering','learn12-primary',()=>{
       if(D.parts.some(p=>!(answers[q.id]||{})[p.id])){
        document.getElementById('wound12Status').textContent='Svar på alle fem TIMES-områdene før du leverer.';
        view='analyse';const missing=[...root.querySelectorAll('.wound13-select')].find(x=>!x.value);if(missing){missing.setAttribute('aria-invalid','true');missing.focus()}return;
@@ -157,7 +157,7 @@
     actions.append(submit);
   }else{
     actions.append(h('strong','wound12-total',submitted.score+' / '+submitted.max+' riktige'));
-    actions.append(b(caseIndex===cases().length-1?'Se oppsummering →':'Neste kasus →','learn12-primary',()=>{
+    actions.append(b(caseIndex===cases().length-1?'Se oppsummering':'Neste kasus','learn12-primary',()=>{
       if(caseIndex===cases().length-1)finished=true;else caseIndex++;
       view='analyse';render();
     }));
@@ -168,13 +168,12 @@
   header('Fullført · '+(mode==='practice'?'Øv':'Test'),'Resultater og fasit');
   const list=cases(),total=list.reduce((sum,c)=>sum+(grades[c.id]?.score||0),0);
   root.append(h('p','wound12-score',total+' / '+(list.length*D.parts.length)+' riktige observasjonsvalg'));
-  root.append(h('p','wound12-intro','Resultatet er pedagogisk tilbakemelding, ikke en kompetansevurdering eller klinisk godkjenning.'));
-  list.forEach(q=>{
+    list.forEach(q=>{
    const g=grades[q.id],card=h('article','wound12-report');card.append(h('h4','',q.title),h('strong','',g.score+' av 5 riktige'));
    const ul=h('ul');D.parts.forEach(p=>ul.append(h('li','',(g.match[p.id]?'✓ ':'○ ')+p.letter+': '+D.optionLabel(p.id,g.truth[p.id])+' · Ditt svar: '+D.optionLabel(p.id,answers[q.id][p.id])+' – '+q.why[p.id])));
    card.append(ul);root.append(card);
   });
-  const actions=h('div','wound12-actions');actions.append(b('Prøv på nytt','learn12-secondary',()=>setMode(mode)),b(mode==='practice'?'Fortsett til test →':'Til oversikten','learn12-primary',()=>setMode(mode==='practice'?'test':'home')));root.append(actions);
+  const actions=h('div','wound12-actions');actions.append(b('Prøv på nytt','learn12-secondary',()=>setMode(mode)),b(mode==='practice'?'Fortsett til test':'Til oversikten','learn12-primary',()=>setMode(mode==='practice'?'test':'home')));root.append(actions);
  }
  function render(){
   root.replaceChildren();

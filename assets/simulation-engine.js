@@ -240,7 +240,7 @@
    good:fb.good,improve:fb.improve,timeline:fb.timeline,worsenedAt:s.worsenedAt??null,
    achieved:items.filter(x=>x.done).length,score:objective.total,parts:objective.parts,entered:s.enteredNews,
    deteriorated:s.worsened,minutes:s.minutes,items:Object.freeze(items.map(x=>Object.freeze(x))),
-   note:'Dette er refleksjonsstøtte, ikke vurdering av klinisk kompetanse. Hendelsesforløpet er manusstyrt, og hvert trinn representerer ikke fysiologiske prognoser.'});
+   note:'Casen følger et fast manus. Tilbakemeldingen er for øving, ikke vurdering av klinisk kompetanse.'});
  }
  // Konkret tilbakemelding: hva som gikk bra, hva som kan bli bedre, og en tidslinje med merknader.
  // Reglene er de samme for alle casene. Tekstene beskriver øvingen, ikke klinisk kompetanse.

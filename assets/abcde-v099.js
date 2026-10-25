@@ -30,9 +30,9 @@
  const h=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
  const card=h('article','toolbox hc-tool-card abcde-v099-card');card.dataset.homecareCard='abcde';
  const icon=h('div','hc-card-icon','A–E');icon.setAttribute('aria-hidden','true');
- const title=h('h3','','ABCDE – systematisk vurdering'),tag=h('span','tool-tag','Akutt observasjon');
+ const title=h('h3','','ABCDE-vurdering'),tag=h('span','tool-tag','Akutt observasjon');
  const desc=h('p','','Interaktiv gjennomgang av luftvei, respirasjon, sirkulasjon, nevrologi og helkropp – i prioritert rekkefølge.');
- const launch=h('button','btn btn-primary hc-launch','Åpne ABCDE →');launch.type='button';launch.id='launchABCDE';
+ const launch=h('button','btn btn-primary hc-launch','Åpne ABCDE');launch.type='button';launch.id='launchABCDE';
  card.append(icon,title,tag,desc,launch);grid.insertBefore(card,grid.querySelector('.toolbox'));
  const dialog=h('dialog','v08-dialog hc-dialog abcde-v099-dialog');dialog.id='abcdeDialog';dialog.setAttribute('aria-labelledby','abcdeTitle');document.body.append(dialog);
  let active=0,tabs=[],panel,stepInfo;
@@ -47,19 +47,19 @@
   header.append(h('span','abcde-v099-current-letter',stage.key));
   const text=h('div');text.append(h('h3','',stage.name+' – '+stage.norwegian),h('p','',stage.summary));header.append(text);panel.append(header);
   section(panel,'Observer / undersøk',stage.checks);
-  section(panel,'Alvorlige tegn – tilkall hjelp',stage.danger);
+  section(panel,'Alvorlige tegn: tilkall hjelp',stage.danger);
   section(panel,'Prioritering og videre tiltak',stage.response);
   const foot=h('p','abcde-v099-reassess','Ved truet A, B eller C: håndter problemet og tilkall hjelp FØR neste steg. Gjenta hele ABCDE etter tiltak.');
   panel.append(foot);
   stepInfo.textContent=(n+1)+' av '+stages.length+' – '+stage.norwegian;
   const previous=document.getElementById('abcdePrevious'),next=document.getElementById('abcdeNext');
-  if(previous)previous.disabled=n===0;if(next)next.textContent=n===stages.length-1?'Tilbake til A ↺':'Neste: '+stages[n+1].key+' →';
+  if(previous)previous.disabled=n===0;if(next)next.textContent=n===stages.length-1?'Tilbake til A ↺':'Neste: '+stages[n+1].key+'';
   if(shouldFocus)tabs[n].focus();
  }
  function open(){
   dialog.replaceChildren();
   const head=h('div','v08-dialog-head');const copy=h('div');
-  const heading=h('h2','','ABCDE – systematisk primærvurdering');heading.id='abcdeTitle';copy.append(heading);
+  const heading=h('h2','','Systematisk primærvurdering med ABCDE');heading.id='abcdeTitle';copy.append(heading);
   const close=h('button','dialog-close','×');close.type='button';close.setAttribute('aria-label','Lukk ABCDE');
   close.addEventListener('click',()=>dialog.close());head.append(copy,close);
   const body=h('div','v08-dialog-content abcde-v099-content');
@@ -82,7 +82,7 @@
   stepInfo=h('span','abcde-v099-step','');
   const footer=h('div','abcde-v099-actions');
   const previous=h('button','btn btn-secondary','← Forrige');previous.type='button';previous.id='abcdePrevious';previous.addEventListener('click',()=>select(Math.max(0,active-1)));
-  const next=h('button','btn btn-primary','Neste: B →');next.type='button';next.id='abcdeNext';next.addEventListener('click',()=>select(active===4?0:active+1));
+  const next=h('button','btn btn-primary','Neste: B');next.type='button';next.id='abcdeNext';next.addEventListener('click',()=>select(active===4?0:active+1));
   footer.append(previous,stepInfo,next);
   const disclaimer=h('p','hc-hint','Ingen resultater lagres. Funn må dokumenteres i ordinært journalsystem. Denne demoen erstatter ikke opplæring, akuttprosedyrer eller klinisk hjelp.');
   const link=h('a','hc-source','Faggrunnlag: Resuscitation Council UK – ABCDE');

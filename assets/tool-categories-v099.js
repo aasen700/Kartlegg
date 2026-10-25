@@ -12,7 +12,7 @@
  const icon=h('div','hc-card-icon','◷');icon.setAttribute('aria-hidden','true');
  const title=h('h3','','Respirasjonstimer');const tag=h('span','tool-tag','Målehjelp');
  const desc=h('p','','Tell pust over 15, 30 eller 60 sekunder. Overfør et ferdig resultat til NEWS2 bare etter eget valg.');
- const launch=h('button','btn btn-primary hc-launch','Åpne respirasjonstimer →');launch.type='button';launch.id='launchRespTimer';
+ const launch=h('button','btn btn-primary hc-launch','Åpne respirasjonstimer');launch.type='button';launch.id='launchRespTimer';
  launch.addEventListener('click',()=>document.getElementById('respTimerLaunch')?.click());
  timer.append(icon,title,tag,desc,launch);grid.append(timer);
  const classification=[

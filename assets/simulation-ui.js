@@ -91,14 +91,14 @@
   event.append(elt('strong','',last.label));
   addParagraph(event,last.text,'sim-copy');
   if(state.worsened&&!Engine.has(state,'contact')){
-   addParagraph(event,'Merk: Det fiktive scenarioet har gått over i en forhåndsdefinert forverringsfase. Vurder å gjenta observasjoner og tilkalle hjelp.','sim-deterioration');
+   addParagraph(event,'Pasienten er blitt dårligere. Vurder å måle på nytt og å tilkalle hjelp.','sim-deterioration');
   }
   panel.append(event);
  }
  function vitalPanel(){
   const panel=section('Observerte målinger','sim-vitals');
   if(!state.lastVitals){
-   addParagraph(panel,'Ingen vitale målinger er tatt i denne øvingen. Velg «Mål vitale parametere» før du vurderer skår.');return panel;
+   addParagraph(panel,'Du har ikke målt ennå. Velg «Mål vitale parametere».');return panel;
   }
   const v=state.lastVitals;
   const grid=elt('dl','sim-vital-grid');
@@ -116,7 +116,7 @@
    box.append(elt('dt','',label),elt('dd','',value));grid.append(box);
   }
   panel.append(grid);
-  addParagraph(panel,'Dette er siste målte sett med syntetiske data. Ved forverring må du selv velge nye observasjoner for å oppdatere verdiene.','sim-hint');
+  addParagraph(panel,'Verdiene endres ikke før du måler på nytt.','sim-hint');
   return panel;
  }
  // Verdien som står i hver rad i NEWS2-skjemaet.
@@ -198,8 +198,8 @@
   return box;
  }
  function isbarPanel(){
-  const panel=section('ISBAR – øv på strukturert kommunikasjon','sim-isbar');
-  addParagraph(panel,'Skriv kort hva du ville formidlet. Ingen KI vurderer teksten, og den sendes ikke til noen tjeneste. Sammenlign med sjekklisten etterpå.');
+  const panel=section('Øv på ISBAR','sim-isbar');
+  addParagraph(panel,'Skriv kort hva du ville sagt. Teksten blir på denne enheten, og du kan sammenligne med et eksempel etterpå.');
   const f=elt('form','sim-isbar-form'),vals=state.isbar||{};
   for(const [id,lab,prompt] of [
    ['s','S – Situasjon','Hva skjer nå, og hvorfor ringer du?'],
@@ -225,7 +225,7 @@
  }
  function actionPanel(){
   const panel=section('Velg neste handling','sim-actions');
-  addParagraph(panel,'Velg hva du ønsker å undersøke eller gjøre. Ingen handling er automatisk riktig i alle situasjoner. Hendelsesforløpet følger et forhåndsskrevet manus.');
+  addParagraph(panel,'Velg hva du vil spørre om, undersøke eller gjøre.');
   const categories=[...new Set(Engine.actions.map(a=>a.category))];
   for(const category of categories){
    const list=elt('div','sim-action-group');
@@ -328,10 +328,9 @@
    }
    panel.append(ref);
   }
-  if(report.deteriorated)addParagraph(panel,'I dette manusstyrte forløpet oppstod forverring etter forsinket eskalering. Dette er et pedagogisk valg i casen, ikke en generell prognose.','sim-deterioration');
   addParagraph(panel,report.note,'sim-hint');
   const again=elt('div','sim-report-actions');
-  again.append(button('Velg en annen case →','btn btn-primary',toChooser),button('Start casen på nytt','btn btn-secondary',()=>begin(state.caseId)));
+  again.append(button('Velg en annen case','btn btn-primary',toChooser),button('Start casen på nytt','btn btn-secondary',()=>begin(state.caseId)));
   panel.append(again);
   return panel;
  }
@@ -385,8 +384,8 @@
   const c=current();
   if(heading)heading.textContent=started?c.title:'Velg en pasientcase';
   if(!started){
-   const overview=section('Hva øver du på?','sim-overview');
-   addParagraph(overview,'Du bestemmer hvilke spørsmål, observasjoner og tiltak du gjør. Noen funn er skjult til du undersøker dem. Øv på klinisk prioritering, NEWS2 og ISBAR før du sammenligner med en refleksjonssjekkliste.');
+   const overview=section('Slik fungerer det','sim-overview');
+   addParagraph(overview,'Du velger selv hva du spør om og undersøker. Noen funn kommer først fram når du ser etter dem. Til slutt får du vite hva du gjorde bra, og hva du kan gjøre bedre.');
    root.append(overview);
    const list=elt('ul','sim-case-list');list.setAttribute('aria-label','Pasientcaser');
    for(const item of Engine.cases){
@@ -426,7 +425,7 @@
    root.append(panels);
    const end=elt('div','sim-finish');
    addParagraph(end,'Du kan avslutte når som helst. Oppsummeringen viser hva du gjorde bra, og hva du kan gjøre bedre.');
-   end.append(button('Avslutt og se refleksjon →','btn btn-primary',finishCase));
+   end.append(button('Avslutt og se tilbakemelding','btn btn-primary',finishCase));
    root.append(end);
   }
   const footer=elt('div','sim-references');

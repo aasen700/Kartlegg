@@ -142,7 +142,7 @@
  }
  function landing(){
   const isFour=state.tool==='four';
-  heading('',isFour?'4AT – lær deliriumvurdering':'NEWS2 – lær poengskåring');
+  heading('',isFour?'Lær 4AT':'Lær NEWS2');
   const hero=h('section','learn12-hero learn12-hero-'+state.tool);
   const copy=h('div','learn12-hero-copy');
   copy.append(h('h4','',isFour?'Lær å bruke 4AT':
@@ -163,18 +163,18 @@
   root.append(hero);
   const specs=isFour?[
    {mode:'learn',number:'01',name:'Lær',subtitle:'Bli kjent med de fire delene',
-    desc:'Seks korte læringssteg: årvåkenhet, AMT4, oppmerksomhet, akutt endring og tolkning.',action:'Start læringen →'},
+    desc:'Seks korte læringssteg: årvåkenhet, AMT4, oppmerksomhet, akutt endring og tolkning.',action:'Start læringen'},
    {mode:'practice',number:'02',name:'Øv',subtitle:'Skår med forklaringer',
-    desc:'Tre fiktive pasientsituasjoner. Sjekk svar og lær hvorfor hvert poeng er riktig.',action:'Start øving →'},
+    desc:'Tre fiktive pasientsituasjoner. Sjekk svar og lær hvorfor hvert poeng er riktig.',action:'Start øving'},
    {mode:'test',number:'03',name:'Test deg selv',subtitle:'Finn poengene på egen hånd',
-    desc:'Tre kasus med fire vurderinger hver. Fasit og forklaringer kommer når hele testen er levert.',action:'Ta testen →'}
+    desc:'Tre kasus med fire vurderinger hver. Fasit og forklaringer kommer når hele testen er levert.',action:'Ta testen'}
   ]:[
    {mode:'learn',number:'01',name:'Lær',subtitle:'Forstå grensene og skalaene',
-    desc:'Fem steg om delpoeng, SpO₂-skala 1 og 2, oksygen og klinisk helhetsvurdering.',action:'Start læringen →'},
+    desc:'Fem steg om delpoeng, SpO₂-skala 1 og 2, oksygen og klinisk helhetsvurdering.',action:'Start læringen'},
    {mode:'practice',number:'02',name:'Øv',subtitle:'Finn riktig poengfelt',
-    desc:'Tre fiktive caser i et klikkbart NEWS2-skjema. Se fasit og forklaring underveis.',action:'Start øving →'},
+    desc:'Tre fiktive caser i et klikkbart NEWS2-skjema. Se fasit og forklaring underveis.',action:'Start øving'},
    {mode:'test',number:'03',name:'Test deg selv',subtitle:'Skår alle observasjonene',
-    desc:'Tre kasus med sju delområder. Se poeng, intervallvalg og forklaringer samlet etter testen.',action:'Ta testen →'}
+    desc:'Tre kasus med sju delområder. Se poeng, intervallvalg og forklaringer samlet etter testen.',action:'Ta testen'}
   ];
   const modes=h('div','learn12-modes learn12-premium-modes');
   for(const spec of specs){
@@ -209,7 +209,7 @@
   }
   const footer=h('div','learn12-actions');
   const prev=button('← Tilbake','learn12-secondary',()=>{state.lesson--;render()});prev.disabled=state.lesson===0;footer.append(prev);
-  footer.append(button(state.lesson===list.length-1?'Start øving →':'Neste →','learn12-primary',()=>{
+  footer.append(button(state.lesson===list.length-1?'Start øving':'Neste','learn12-primary',()=>{
    if(state.lesson===list.length-1)setMode('practice');else{state.lesson++;render()}
   }));root.append(footer);
  }
@@ -321,7 +321,7 @@
    state.results[q.id]=grade;render();
   });
   check.disabled=!complete||graded;if(state.mode==='practice')footer.append(check);
-  const next=button(state.caseIndex===list.length-1?'Se oppsummeringen →':'Gå videre →','learn12-primary',()=>{
+  const next=button(state.caseIndex===list.length-1?'Se oppsummeringen':'Gå videre','learn12-primary',()=>{
    const grade=state.results[q.id]||validate();if(!grade)return;
    state.results[q.id]=grade;
    if(state.caseIndex===list.length-1){state.finished=true;render()}
@@ -367,7 +367,7 @@
   heading('Oppsummering · '+titles[state.tool],state.mode==='test'?'Testen er levert':'Øvingen er fullført');
   const top=h('div','learn12-summary');
   top.append(h('strong','learn12-big-score',correct+' / '+max));
-  text(top,'Antall korrekt plasserte poengvalg – ikke en formell kompetansevurdering.');root.append(top);
+  text(top,'Antall riktige poengfelt.');root.append(top);
   for(let i=0;i<cases.length;i++){
    const q=cases[i],r=results[i],card=h('article','learn12-report');
    card.append(h('h4','',q.name),h('p','',r.score+' av '+r.max+' delområder riktige'),
@@ -385,9 +385,9 @@
    const retry=button('Øv på feilene dine ('+wrong.length+')','learn12-primary learn12-retry',()=>retryMistakes(wrong));
    retry.setAttribute('aria-label','Øv på nytt på de '+wrong.length+' casene du hadde feil på');
    bar.append(retry);
-  }else if(state.retry)text(root,'Alle riktige nå. Bra jobbet!','learn12-retry-done');
+  }else if(state.retry)text(root,'Alle riktige nå.','learn12-retry-done');
   bar.append(button(state.retry?'Hele øvingen på nytt':'Prøv igjen','learn12-secondary',()=>setMode(state.retry?'practice':state.mode)),
-   button(state.mode==='practice'?'Fortsett til test →':'Til oversikten',wrong.length?'learn12-secondary':'learn12-primary',()=>setMode(state.mode==='practice'?'test':'home')));root.append(bar);
+   button(state.mode==='practice'?'Fortsett til test':'Til oversikten',wrong.length?'learn12-secondary':'learn12-primary',()=>setMode(state.mode==='practice'?'test':'home')));root.append(bar);
  }
  function render(){
   root.replaceChildren();

@@ -72,7 +72,7 @@
  const title=document.createElement('h3');title.textContent='Lindring ved livets slutt';
  const tag=document.createElement('span');tag.className='tool-tag';tag.textContent='Palliasjon';
  const desc=document.createElement('p');desc.textContent='Tegn du kan observere, vurderingspunkter, pleietiltak og kildebasert legemiddelkunnskap.';
- const launch=document.createElement('button');launch.type='button';launch.className='btn btn-primary hc-launch';launch.id='launchPalliation';launch.textContent='Åpne symptomveileder →';
+ const launch=document.createElement('button');launch.type='button';launch.className='btn btn-primary hc-launch';launch.id='launchPalliation';launch.textContent='Åpne symptomveileder';
  card.append(icon,title,tag,desc,launch);
  const anchor=library.querySelector('.toolbox');library.insertBefore(card,anchor);
  const dialog=document.createElement('dialog');dialog.id='palliationDialog';dialog.className='v08-dialog hc-dialog clinical-v091-dialog';dialog.setAttribute('aria-labelledby','pallDialogTitle');document.body.append(dialog);
@@ -119,7 +119,7 @@
    section(article,'Tegn og symptomer du kan se etter',topic.signs);
    section(article,'Hva bør du vurdere?',topic.assess);
    section(article,'Aktuelle pleietiltak',topic.care);
-   section(article,'Legemiddelkunnskap – ingen automatisk ordinasjon',topic.meds);
+   section(article,'Legemiddelkunnskap (ingen ordinasjon)',topic.meds);
    section(article,'Evaluering og videreformidling',topic.review);
    const refs=h('div','pall-references');refs.append(h('strong','','Faglige kilder: '));
    for(const key of topic.refs){refs.append(link(urls[key],key==='four'?'Helse Bergen: fire legemidler':key==='dementia'?'Helsedirektoratet: demens og palliasjon':'Helsedirektoratet: nasjonale råd'));refs.append(document.createTextNode(' · '))}

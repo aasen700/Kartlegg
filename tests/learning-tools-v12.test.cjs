@@ -94,7 +94,7 @@ test('learning modules have exact asset references, clinician-origin sources and
   assert.ok(fs.existsSync(path.join(__dirname,'..',file)),file);
  for(const s of ['id="learningHubChooser"','id="learn4atModule"','id="learnNews2Module"','id="learnToolExerciseRoot"'])
   assert.ok(html.includes(s),s);
- assert.ok(html.includes('learning-content-v12.js?v=caser1')&&html.includes('learning-tools-v12.js?v=caser1'));
+ assert.ok(html.includes('learning-content-v12.js?v=sprak1')&&html.includes('learning-tools-v12.js?v=sprak1'));
  assert.ok(html.includes('assets/css/08-learning.css'));
  assert.match(js,/data-part/);
  assert.match(js,/aria-pressed/);

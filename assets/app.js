@@ -124,7 +124,7 @@ function renderForlopQuiz(){
       restart.addEventListener('click',()=>{quiz=null;renderHistory();$('historyTableContainer').focus?.({preventScroll:true});});
       actions.append(restart);
     }else{
-      const next=makeElement('button',`Neste måling (etter ${formatDuration(EXAMPLE_FORLOP[step+1][0])}) →`,'btn btn-primary');next.type='button';
+      const next=makeElement('button',`Neste måling (etter ${formatDuration(EXAMPLE_FORLOP[step+1][0])})`,'btn btn-primary');next.type='button';
       next.addEventListener('click',()=>{
         measurements.push(exampleMeasurement(step+1));
         quiz={...quiz,step:step+1,answers:{},checked:false};

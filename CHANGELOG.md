@@ -1,5 +1,16 @@
 # Versjonshistorikk – Kartlegg
 
+## Språkrunde: mindre malpreg – 25. oktober 2026
+
+- Pilene (→) bak knappetekstene er fjernet. Pil tilbake (←) og pil for lenker til andre nettsteder (↗) står fortsatt.
+- Feltene i NEWS2-skjemaet har fått ordentlige ikoner i stedet for tegn som ◍, ♧ og ◉.
+- Overskrifter med tankestrek er skrevet om, for eksempel «Glasgow Coma Scale (GCS)», «4AT for delirium», «Lær TIMES» og «Øv på ISBAR».
+- Gjentatte forbehold i oppsummeringene i Lær og simuleringen er fjernet eller kortet ned. Formålet (kun opplæring og øving, ikke medisinsk utstyr) står fortsatt ved resultatene, i bunnteksten og i vilkårene.
+- Malaktige overskrifter er skrevet om: «Dette får du», «Viktig å vite», «Kort fortalt», «Hva øver du på?» og «Bra jobbet».
+- Forsiden forteller at Kartlegg er gratis og laget av en sykepleierstudent.
+- «Kartlegg v1.1 · Demo» er fjernet fra bunnteksten. Versjonen står under Om Kartlegg, og at Kartlegg er en demoversjon, står i boksen «Kartlegg er til øving» på forsiden.
+- Rettet: knappen for å legge GCS i øvingsforløpet kjente igjen verktøyet på tittelen. Den bruker nå feltene, så den virker selv om tittelen endres.
+
 ## Kartlegg som app – 25. oktober 2026
 
 - Kartlegg kan installeres som app. På iPhone og iPad velger du Del → «Legg til på Hjem-skjerm» i Safari. I Chrome og Edge kommer det et valg om å installere. Appen åpnes i fullskjerm, uten adressefelt, og har eget ikon og egen plass i appveksleren.

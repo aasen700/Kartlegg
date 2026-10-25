@@ -11,7 +11,7 @@ updateScores=function(){const ok=oldUpdate();if(!ok){const v=partialQ();if(v){co
 const dialog=document.createElement('dialog');dialog.id='scoreDialog';dialog.setAttribute('aria-labelledby','scoreDetailTitle');dialog.innerHTML='<div class="dialog-head"><div class="section-symbol cyan">▥</div><div><h2 id="scoreDetailTitle">Delpoeng</h2><p>Kontroller målinger og beregning</p></div><button type="button" class="dialog-close" id="closeDetail" aria-label="Lukk">×</button></div><div class="dialog-body"><div id="scoreDetailContent"></div><p class="isbar-smallprint">Demoversjon med syntetiske data, ikke validert for klinisk bruk.</p></div>';document.body.append(dialog);$('closeDetail').onclick=()=>dialog.close();
 function showDetails(which){
 const v=readVitals(),q=partialQ();const isNews=which==='news';const available=isNews?!!v:!!q;
-$('scoreDetailTitle').textContent=isNews?'NEWS2 – delpoeng':'qSOFA – kriterier';
+$('scoreDetailTitle').textContent=isNews?'Delpoeng i NEWS2':'Kriterier i qSOFA';
 const mount=$('scoreDetailContent');mount.replaceChildren();
 if(!available){mount.textContent=isNews?'Fyll inn alle nødvendige NEWS2-verdier først.':'Fyll inn RF, systolisk BT og separat GCS først.';dialog.showModal();return}
 const r=isNews?Scoring.news2(v):Scoring.qsofa(q);
@@ -23,7 +23,7 @@ const tbody=document.createElement('tbody');
 for(const [key,points] of Object.entries(r.parts)){const tr=document.createElement('tr');for(const val of [labels[key],values[key],String(points)]){const td=document.createElement('td');td.textContent=val;tr.append(td)}tbody.append(tr)}
 table.append(tbody);const foot=document.createElement('tfoot');const tr=document.createElement('tr');let label=document.createElement('th');label.colSpan=2;label.textContent='Totalskår';let sum=document.createElement('th');sum.textContent=r.total;tr.append(label,sum);foot.append(tr);table.append(foot);mount.append(table);dialog.showModal();
 }
-for(const [id,which] of [['newsCard','news'],['qCard','q']]){const btn=document.createElement('button');btn.type='button';btn.className='detail-button';btn.textContent='Se beregning og delpoeng →';btn.addEventListener('click',()=>showDetails(which));$(id).append(btn)}
+for(const [id,which] of [['newsCard','news'],['qCard','q']]){const btn=document.createElement('button');btn.type='button';btn.className='detail-button';btn.textContent='Se beregning og delpoeng';btn.addEventListener('click',()=>showDetails(which));$(id).append(btn)}
 const selectLabel=document.createElement('label');selectLabel.className='metric-select';selectLabel.textContent='Graf for';
 const select=document.createElement('select');select.id='chartMetric';
 const metrics={news:['NEWS2','poeng',m=>m.news.total],q:['qSOFA','poeng',m=>m.q?.total??null],rr:['Respirasjonsfrekvens','/min',m=>m.v.rr],spo2:['SpO₂','%',m=>m.v.spo2],sbp:['Systolisk BT','mmHg',m=>m.v.sbp],hr:['Puls','/min',m=>m.v.hr],temp:['Temperatur','°C',m=>m.v.temp]};
@@ -51,7 +51,7 @@ renderComparison();
 };select.addEventListener('change',()=>{if(measurements.length>=2)renderTrend()});
 let trendWidth=0;window.addEventListener('resize',()=>{const w=$('trendChart').clientWidth;if(!$('trendSection').hidden&&measurements.length>=2&&Math.abs(w-trendWidth)>40){trendWidth=w;renderTrend()}});
 const observ=document.createElement('label');observ.textContent='Andre observasjoner';const textarea=document.createElement('textarea');textarea.id='isbarObservations';textarea.rows=2;textarea.maxLength=600;textarea.placeholder='Skriv observasjoner uten pasientidentitet';observ.append(textarea);document.querySelector('.isbar-inputs').append(observ);
-$('isbarModalTitle').textContent='ISBAR – samtalemanus';
+$('isbarModalTitle').textContent='ISBAR-manus';
 document.querySelector('.isbar-preamble').textContent='Les manuset høyt. Fyll muntlig inn tekst i [klammer]. Ikke skriv inn pasientnavn eller fødselsdato i demoversjonen.';
 const phrase=(id,fallback)=>$(id).value.trim().replace(/[.!?]+$/,'')||fallback;
 buildIsbarText=function(){

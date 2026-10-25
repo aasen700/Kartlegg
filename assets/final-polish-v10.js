@@ -126,7 +126,7 @@ function renderParts(event){
   chip.append(name,num);breakdown.append(chip);
  }
  if(anyThree){
-  const note=document.createElement('p');note.className='v10-part-warning';note.textContent='Minst én enkeltparameter gir 3 poeng – vurder separat eskaleringsbehov.';
+  const note=document.createElement('p');note.className='v10-part-warning';note.textContent='Minst én enkeltparameter gir 3 poeng. Vurder denne for seg.';
   breakdown.append(note);
  }
  breakdown.hidden=false;

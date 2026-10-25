@@ -24,7 +24,7 @@
  input.setAttribute('aria-controls','homeToolResults');
  input.setAttribute('aria-expanded','false');
  const all=document.createElement('button');all.type='button';all.className='v081-view-all';
- all.textContent='Se alle verktøy →';
+ all.textContent='Se alle verktøy';
  all.addEventListener('click',()=>{hide();document.querySelector('[data-page=verktoy]')?.click()});
  inputWrap.append(icon,input);
  const result=document.createElement('div');result.className='v081-search-results';result.id='homeToolResults';result.hidden=true;

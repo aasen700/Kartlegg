@@ -8,8 +8,10 @@ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const html=read('index.html');
 const css=require('./css-helper.cjs').all();
 const app=read('assets/app.js');
-test('official v1.1 clearly labelled as demonstration only',()=>{
- assert.match(html,/v1\.1 · Demo/);
+test('official v1.1 clearly labelled as education and practice only',()=>{
+ // Versjonen står under Om Kartlegg; formålet står i bunnteksten på alle sider.
+ assert.match(html,/Versjon 1\.1/);
+ assert.match(html,/Kun til opplæring og øving\. Ikke medisinsk utstyr/);
  assert.match(html,/Ikke for reell pasientbehandling/);
 });
 test('all local stylesheet and script references exist exactly once',()=>{
@@ -142,5 +144,5 @@ test('single canonical registry drives search and direct-linkable 18 tools',()=>
  assert.doesNotMatch(read('assets/modern-v08-body.js'),/stopImmediatePropagation\(\)/);
  assert.match(read('assets/tool-navigation.js'),/addEventListener\('load',openDeepLink/);
  assert.match(html,/assets\/tool-navigation\.js\?v=sma1/);
- assert.match(html,/assets\/tool-registry\.js\?v=1201/);
+ assert.match(html,/assets\/tool-registry\.js\?v=sprak1/);
 });

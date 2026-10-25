@@ -263,7 +263,7 @@ script=r"""
   assert(document.querySelector('#hcResult').textContent.includes('Ugyldig eller manglende'),'incomplete ESAS-r should be rejected');
   for(const el of document.querySelectorAll('.hc-esas-list .hc-esas-item:not([data-symptom=other]) .hc-esas-number'))put(el.id,'4');
   document.querySelector('#hcEsasForm').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
-  assert(document.querySelector('#hcResult').textContent.includes('ESAS-r – symptomer nå'),'complete ESAS-r not shown');
+  assert(document.querySelector('#hcResult').textContent.includes('ESAS-r: symptomer nå'),'complete ESAS-r not shown');
   assert(!document.querySelector('#hcResult').textContent.includes('totalskår'),'ESAS-r must not show an aggregate score');
   put('hcEsasNumber_smerte','6');
   assert(document.querySelector('#hcResult').hidden,'editing ESAS-r must hide stale symptom assessment');
@@ -848,7 +848,7 @@ script=r"""
   for(const textarea of formIsbar.querySelectorAll('textarea'))textarea.value='Fiktiv øvingsinformasjon '+textarea.name;
   formIsbar.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
   assert(!!sim.state.isbar,'ISBAR exercise text not captured');
-  const done=[...document.querySelectorAll('#simulationRoot button')].find(b=>b.textContent.includes('Avslutt og se refleksjon'));
+  const done=[...document.querySelectorAll('#simulationRoot button')].find(b=>b.textContent.includes('Avslutt og se'));
   assert(!!done,'simulation end/debrief button missing');done.click();
   assert(sim.state.finished,'simulation did not finish');
   assert(document.querySelector('#simulationRoot').textContent.includes('11'),'calculated NEWS2 debrief missing');

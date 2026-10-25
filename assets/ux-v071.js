@@ -127,11 +127,12 @@
   const title=$('clinicalToolTitle')?.textContent||'';
   let current=null;
   try{
-   if(title.startsWith('GCS')){
+   // Gjenkjenn verktøyet på feltene, ikke på tittelen (tittelen kan skrives om).
+   if($('toolEyes')&&$('toolMotor')){
     const toScore=id=>$(id)?.value==='NT'?'NT':Number($(id)?.value);
     const score=KartleggTools.gcs({eyes:toScore('toolEyes'),verbal:toScore('toolVerbal'),motor:toScore('toolMotor')});
-    current={kind:'GCS',title:score.total===null?'GCS – ikke fullstendig':'GCS '+score.total+'/15',detail:score.report+(score.total===null?' · Ikke testbar':'')};
-   }else if(title.startsWith('NRS')){
+    current={kind:'GCS',title:score.total===null?'GCS ikke fullstendig':'GCS '+score.total+'/15',detail:score.report+(score.total===null?' · Ikke testbar':'')};
+   }else if($('toolNRS')){
     const val=Number($('toolNRS').value);const nrs=KartleggTools.nrs(val);
     current={kind:'NRS',title:'NRS '+nrs.total+'/10',detail:$('toolContext').selectedOptions[0]?.textContent||'Uspesifisert'};
    }

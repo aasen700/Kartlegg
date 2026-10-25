@@ -20,7 +20,7 @@
   {id:'tug',name:'TUG',sub:'Timed Up and Go',desc:'3-meters mobilitetstest med stoppeklokke og valgfri manuell tid.',tag:'Fall og mobilitet',icon:'◷'},
   {id:'esas',name:'ESAS-r',sub:'Symptomkartlegging',desc:'Ni symptomskalaer (0–10) og ett valgfritt tilleggssymptom.',tag:'Palliasjon',icon:'♡'},
   {id:'ortho',name:'Ortostatisk BT',sub:'Blodtrykksendring',desc:'Se systolisk og diastolisk endring fra liggende til stående.',tag:'Sirkulasjon',icon:'↕'},
-  {id:'fast',name:'FAST',sub:'Tegn på hjerneslag',desc:'Prate, smile, løfte – med umiddelbar 113-informasjon.',tag:'Akutt',icon:'!'},
+  {id:'fast',name:'FAST',sub:'Tegn på hjerneslag',desc:'Prate, smile, løfte, med informasjon om når du ringer 113.',tag:'Akutt',icon:'!'},
   {id:'skuv',name:'SKUV',sub:'Systematisk klinisk undersøkelse',desc:'Faglig guide til observasjoner og undersøkelsesteknikker.',tag:'Undersøkelse',icon:'⌕'}
  ];
  const refCard=[...library.querySelectorAll('.toolbox')].find(el=>/NEWS2/.test(el.querySelector('h3')?.textContent||''))||null;
@@ -31,7 +31,7 @@
   const tag=document.createElement('span');tag.className='tool-tag';tag.textContent=item.tag;
   const desc=document.createElement('p');desc.textContent=item.desc;
   const action=document.createElement('button');action.type='button';action.className='btn btn-primary hc-launch';
-  action.dataset.homecare=item.id;action.textContent='Åpne '+item.name+' →';
+  action.dataset.homecare=item.id;action.textContent='Åpne '+item.name+'';
   action.addEventListener('click',()=>open(item.id));
   card.append(symbol,heading,tag,desc,action);
   library.insertBefore(card,refCard);
@@ -244,7 +244,7 @@
     if(other.number.value!==''){values.other=Number(other.number.value);values.otherName=otherName.value}
     else if(otherName.value.trim())throw new RangeError('Oppgi en verdi for annet symptom, eller tøm symptomnavnet.');
     const data=V.esas(values);
-    out.append(elem('strong','hc-big-result','ESAS-r – symptomer nå'));
+    out.append(elem('strong','hc-big-result','ESAS-r: symptomer nå'));
     for(const [key,title] of symptoms)out.append(row(title,data[key]+'/10'));
     if(data.other!==undefined)out.append(row(data.otherName,data.other+'/10'));
     para(out,'Ingen sumskår: hvert symptom tolkes separat. Skjemaet er ikke lagret.');
@@ -317,7 +317,7 @@
   const systems=[
    {name:'Respirasjon',steps:['Inspeksjon: frekvens, rytme, dybde, symmetri og tegn på økt pustearbeid.','Palpasjon: vurder relevante brystkassebevegelser ved behov.','Perkusjon og auskultasjon: gjennomfør bare ved opplæring og relevant indikasjon.','Relater funn til SpO₂, oksygentilførsel, allmenntilstand og NEWS2.']},
    {name:'Sirkulasjon',steps:['Inspeksjon: hudfarge, perifere ødemer og tegn på sirkulasjonssvikt.','Palpasjon: radialpuls, frekvens, rytme og perifer hudtemperatur.','Mål blodtrykk og andre relevante vitale parametere.','Ved klinisk forverring: vurder helheten og behov for rask eskalering.']},
-   {name:'Nevrologi',steps:['Undersøk våkenhet, orientering og eventuelle nye endringer i mental status.','Observer ansiktssymmetri, tale, kraft og bevegelse ved mistanke om akutt nevrologisk hendelse.','Ved mistanke om hjerneslag: ring 113 straks, også ved negative FAST-funn.','GCS og 4AT er egne vurderinger – ikke automatisk utledet fra vitalparametere.']},
+   {name:'Nevrologi',steps:['Undersøk våkenhet, orientering og eventuelle nye endringer i mental status.','Observer ansiktssymmetri, tale, kraft og bevegelse ved mistanke om akutt nevrologisk hendelse.','Ved mistanke om hjerneslag: ring 113 straks, også ved negative FAST-funn.','GCS og 4AT er egne vurderinger. De regnes ikke ut fra vitale parametere.']},
    {name:'Abdomen',steps:['Spør om smerter, kvalme, appetitt, avføring og vannlating.','Inspiser abdominal form, distensjon og synlige forandringer.','Auskultasjon, perkusjon og palpasjon brukes bare med kompetanse og klinisk begrunnelse.','Relevante faresignaler vurderes og videreformidles etter gjeldende rutiner.']},
    {name:'Hud og funksjon',steps:['Observer hudens farge, fuktighet, temperatur og eventuelle sår.','Se etter trykkutsatte områder ved indikasjon og vurder forflytnings- og mobilitetsbehov.','Kartlegg fallhistorikk, funksjonsnivå og hjelpemidler.','Ta utgangspunkt i pasientens vanlige funksjon og nye endringer.']}
   ];
