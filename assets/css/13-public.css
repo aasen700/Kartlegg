@@ -555,3 +555,42 @@
     min-height: 44px;
   }
 }
+/* Kartlegg som app: melding når du er uten nett, og veiledning under Om Kartlegg. */
+.offline-note {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(var(--ui-nav-height, 72px) + 20px + env(safe-area-inset-bottom));
+  z-index: 95;
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #1f3347;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+@media(min-width:771px){
+  .offline-note {
+    bottom: 20px;
+  }
+}
+.install-app {
+  padding: 20px 24px;
+}
+.install-app h2 {
+  margin: 0 0 8px;
+}
+.install-app p {
+  margin: 0 0 10px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.install-app-how {
+  font-weight: 650;
+}
+.install-app [hidden] {
+  display: none !important;
+}

@@ -1,5 +1,13 @@
 # Versjonshistorikk – Kartlegg
 
+## Kartlegg som app – 25. oktober 2026
+
+- Kartlegg kan installeres som app. På iPhone og iPad velger du Del → «Legg til på Hjem-skjerm» i Safari. I Chrome og Edge kommer det et valg om å installere. Appen åpnes i fullskjerm, uten adressefelt, og har eget ikon og egen plass i appveksleren.
+- Kartlegg virker uten nett: NEWS2 og qSOFA, Kliniske verktøy og Lær (med bilder) fungerer når siden har vært åpnet én gang på enheten. Innlogging og lagring i kontoen trenger fortsatt nett. Når du er uten nett, vises en melding om det nederst.
+- Nye versjoner kommer fram med en gang du er på nett. Siden sjekker alltid med serveren først, og bruker den lagrede versjonen bare hvis nettet ikke svarer innen 4 sekunder.
+- Under Om Kartlegg står det hvordan du legger Kartlegg på hjemskjermen.
+- Personvernerklæringen forklarer at sidens egne filer lagres i nettleseren for bruk uten nett. Det er de samme filene for alle, uten personopplysninger.
+
 ## Raskere lasting – 25. oktober 2026
 
 - Forsiden vises nesten tre ganger så raskt på mobil. Før ble hele siden skjult bak et lastehjul til innloggingstjenesten (Firebase) var lastet ned og hadde svart. Nå vises siden med en gang hvis det ikke finnes noen lagret innlogging på enheten. Målt på simulert 4G med treg telefon kom overskriften etter 1,2 s i stedet for 3,3 s.

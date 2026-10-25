@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kartlegg">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="description" content="Kartlegg – norsk opplærings- og øvingsverktøy med NEWS2, qSOFA, ankel–arm-indeks, kliniske kalkulatorer og interaktiv ferdighetstrening. Kun fiktive data.">
   <title>Kartlegg | Kliniske verktøy samlet</title>
   <link rel="canonical" href="https://kartlegg.com/">
@@ -39,7 +44,7 @@
   <link rel="stylesheet" href="assets/css/10-themes.css?v=glass4">
   <link rel="stylesheet" href="assets/css/11-clinical.css?v=uu1">
   <link rel="stylesheet" href="assets/css/12-account.css?v=epost1">
-  <link rel="stylesheet" href="assets/css/13-public.css?v=opt2">
+  <link rel="stylesheet" href="assets/css/13-public.css?v=pwa2">
 </head>
 <body>
   <a class="skip-link" href="#top">Hopp til hovedinnhold</a>
@@ -402,6 +407,9 @@
             <li><strong>Innlogging:</strong> varer til du lukker nettleseren, eller til du logger ut hvis du har krysset av for «Husk meg på denne enheten».</li>
             <li><strong>Innstillinger:</strong> utseende, favoritter, at du har lukket velkomstmeldingen, og eventuelt avsenderprofilen hvis du har valgt «Husk profilen».</li>
           </ul>
+          <ul>
+            <li><strong>Appfiler (for bruk uten nett):</strong> når du åpner Kartlegg, lagres sidens egne filer (sider, skript, bilder og skrift) i nettleseren, så verktøyene og Lær virker uten nett og åpner raskere. Dette er de samme filene for alle, uten personopplysninger. De oppdateres når siden endres, og kan slettes ved å fjerne nettstedsdata for kartlegg.com i nettleseren.</li>
+          </ul>
           <p>Dette er lagring som er nødvendig for at tjenesten skal virke slik du har valgt. Kartlegg bruker ikke informasjonskapsler til sporing eller markedsføring.</p>
           <h2>Formål og behandlingsgrunnlag</h2>
           <ul>
@@ -748,6 +756,7 @@
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
   <script src="assets/formal.js?v=1"></script>
+  <script src="assets/pwa.js?v=pwa1"></script>
   <script type="module" src="assets/account/entry.mjs?v=raskt1"></script>
 </body>
 </html>
