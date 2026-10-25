@@ -1,5 +1,15 @@
 # Versjonshistorikk – Kartlegg
 
+## Temaene ryddet opp – 25. oktober 2026
+
+- Felles flater i alle temaer: siden, kortene, de indre boksene og feltene har én sammenhengende familie av farger, utledet fra temaets egne farger. Før kunne bokser på samme side være svarte, blå og hvite om hverandre, særlig i mørk modus og Liquid Glass.
+- Ikonboksene har samme svake aksentfarge overalt, i stedet for pastellfarger (lyseblå, rosa, grønn) laget for lys modus.
+- Feltene: tall, enhet og nedtrekkslister har samme farge, uten egen kant eller dobbel farge. Ja/Nei-knappene, «+ GCS», «Tell pust» og sekundærknappene følger feltene.
+- Mørk modus: NEWS2-poengskjemaet og måleflisene i Lær og simuleringen er ikke lenger hvite. Valgte poengfelt beholder fargene sine.
+- «Les mer»-feltet og lappen om formålet har samme flate som resten.
+- Før skåren er regnet ut, står det en liten, dempet strek i stedet for en stor grå blokk.
+- Alle temavalgene er beholdt.
+
 ## Om Kartlegg skrevet om – 25. oktober 2026
 
 - «Hvorfor Kartlegg?» og «Hvem står bak?» er skrevet i førsteperson, av Philip selv.

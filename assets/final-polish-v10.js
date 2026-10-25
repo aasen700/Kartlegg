@@ -16,14 +16,14 @@ const fields=[
 const gcs=$('gcs'),originalGCS=gcs.closest('.field');
 const extra=document.createElement('details');extra.id='optionalGCS';extra.className='v10-optional-gcs';
 const summary=document.createElement('summary');summary.id='optionalGCSSummary';
-summary.textContent='＋ GCS – valgfritt for qSOFA';
+summary.textContent='＋ GCS (valgfritt, for qSOFA)';
 const hint=document.createElement('span');hint.textContent='NEWS2 kan beregnes uten GCS. Bruk GCS bare dersom den er vurdert separat.';
 extra.append(summary,hint);
 originalGCS.parentElement.after(extra);extra.append(originalGCS);
-function openGcsIfPopulated(){if(gcs.value.trim()){extra.open=true;summary.textContent='GCS – valgfritt for qSOFA'}}
+function openGcsIfPopulated(){if(gcs.value.trim()){extra.open=true;summary.textContent='GCS (valgfritt, for qSOFA)'}}
 gcs.addEventListener('input',openGcsIfPopulated);
 gcs.addEventListener('focus',()=>{extra.open=true});
-extra.addEventListener('toggle',()=>{summary.textContent=extra.open?'GCS – valgfritt for qSOFA':'＋ GCS – valgfritt for qSOFA'});
+extra.addEventListener('toggle',()=>{summary.textContent=extra.open?'GCS (valgfritt, for qSOFA)':'＋ GCS (valgfritt, for qSOFA)'});
 openGcsIfPopulated();
 // Øvingsforløpet har ikke ekte dato eller klokkeslett, så det finnes ingen «Nå»-knapp.
 const meta=form.querySelector('.meta-line');

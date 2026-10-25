@@ -1262,3 +1262,89 @@
   border: 0 !important;
   box-shadow: none !important;
 }
+
+/* ===== Felles flater (oktober 2026) =====================================================================
+ * Ett system for alle temaer: side → kort → indre boks → felt. Fargene utledes fra hvert temas egne
+ * --paper, --ink, --line og --accent, så de passer i lys, mørk, tjenestetemaer og sesongtemaer.
+ * Ikonbokser har samme svake aksentfarge overalt i stedet for pastellfarger laget for lys modus.
+ * Philip-temaet har sitt eget uttrykk og er unntatt. Kliniske statusfarger (11-clinical.css) røres ikke. */
+:root{
+ --k-inner:color-mix(in srgb,var(--paper) 95%,var(--accent) 5%);
+ --k-control:var(--paper);
+ --k-control-line:var(--line);
+ --k-icon-bg:color-mix(in srgb,var(--accent) 13%,var(--paper));
+ --k-icon-fg:var(--accent);
+}
+:root[data-theme="dark"]{
+ --k-inner:color-mix(in srgb,var(--paper) 92%,var(--ink) 8%);
+ --k-control:color-mix(in srgb,var(--paper) 86%,var(--ink) 14%);
+ --k-control-line:color-mix(in srgb,var(--line) 80%,var(--ink) 20%);
+ --k-icon-bg:color-mix(in srgb,var(--accent) 16%,var(--paper));
+}
+:root:not([data-base-theme="philip"]) :is(#vitalsForm .field-icon,.section-symbol,.score-icon,.learn12-course-symbol,.tool-card-icon,.gcs-learn-symbol){
+ background:var(--k-icon-bg)!important;color:var(--k-icon-fg)!important;border-color:transparent!important;
+}
+:root:not([data-base-theme="philip"]) :is(#vitalsForm .field-icon,.section-symbol,.score-icon,.learn12-course-symbol,.tool-card-icon) svg{color:inherit!important;stroke:currentColor}
+/* Indre bokser: felt, linjen over skjemaet, måleren og sammenligningen. */
+:root:not([data-base-theme="philip"]):not([data-surface-style="glass"]) :is(.field,.meta-line,.forlop-line,.score-meter-block,.compare-box){background:var(--k-inner)!important}
+/* Felt: inndata, nedtrekkslister og enheten har samme farge, uten egen kant mellom tall og enhet. */
+:root:not([data-base-theme="philip"]):not([data-surface-style="glass"]) :is(.control-wrap,#vitalsForm input:not([type=radio]):not([type=checkbox]),#vitalsForm select,.tool-field select,.tool-field input){background:var(--k-control)!important;border-color:var(--k-control-line)!important}
+:root:not([data-base-theme="philip"]) .control-wrap :is(input,select){background:transparent!important;border-color:transparent!important}
+:root:not([data-base-theme="philip"]) .control-wrap .unit{background:transparent!important;border:0!important;border-left:1px solid var(--k-control-line)!important}
+/* Sekundærknapper: samme flate som feltene, ikke egne blå- og turkisnyanser. */
+:root:not([data-base-theme="philip"]):not([data-surface-style="glass"])[data-theme="dark"] :is(.btn-secondary,.detail-button,.v08-timer-launch,.sim-reset,.v081-view-all){background:var(--k-control)!important;color:var(--ink)!important;border-color:var(--k-control-line)!important}
+
+/* Liquid Glass: kort, indre bokser og felt i samme gjennomsiktige familie. Indre bokser og felt er litt
+   tettere enn kortene, så tall er lette å lese, men aldri svarte eller i en annen farge. */
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"]{
+ --k-glass-inner:rgba(255,255,255,.62);--k-glass-control:rgba(255,255,255,.86);--k-glass-line:rgba(23,59,88,.14);
+ --k-icon-bg:color-mix(in srgb,var(--accent) 14%,transparent);
+}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"][data-theme="dark"]{
+ --k-glass-inner:rgba(255,255,255,.055);--k-glass-control:rgba(255,255,255,.09);--k-glass-line:rgba(255,255,255,.16);
+ --k-icon-bg:color-mix(in srgb,var(--accent) 18%,transparent);
+}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] :is(.field,.meta-line,.score,.score-meter,.score-meter-block,.forlop-line,.compare-box){
+ background:var(--k-glass-inner)!important;border-color:var(--k-glass-line)!important;
+}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] :is(.control-wrap,.v081-search-field,.tool-field select,.tool-field input){
+ background:var(--k-glass-control)!important;border:1px solid var(--k-glass-line)!important;box-shadow:none!important;
+}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] .control-wrap .unit{border-left-color:var(--k-glass-line)!important}
+/* Nedtrekkslister ligger inne i en feltramme som allerede har fargen. */
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] .control-wrap :is(select,input){background:transparent!important;border-color:transparent!important}
+/* Valgknapper (Ja/Nei) og «+ GCS» har samme flate som feltene. */
+:root:not([data-base-theme="philip"]):not([data-surface-style="glass"]) :is(.choice span,.v10-optional-gcs>summary){background:var(--k-control)!important;border-color:var(--k-control-line)!important;color:var(--ink)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] :is(.choice span,.v10-optional-gcs>summary){background:var(--k-glass-control)!important;border-color:var(--k-glass-line)!important;color:var(--ink)!important}
+:root:not([data-base-theme="philip"]) .choice input:checked+span{background:var(--k-icon-bg)!important;border-color:var(--accent)!important}
+:root:not([data-base-theme="philip"]) .v10-optional-gcs{background:transparent!important;border:0!important;box-shadow:none!important}
+/* «Les mer»-felter og formålslappen: samme indre flate som resten, ikke egen marineblå. */
+:root:not([data-base-theme="philip"]):not([data-surface-style="glass"])[data-theme="dark"] :is(.read-more>summary,.purpose-note){background:var(--k-inner)!important;border-color:var(--k-control-line)!important}
+:root[data-surface-style="glass"]:not([data-base-theme="philip"])[data-surface-style="glass"] :is(.read-more>summary,.purpose-note){background:var(--k-glass-inner)!important;border-color:var(--k-glass-line)!important}
+:root:not([data-base-theme="philip"]) .purpose-note{border-left:4px solid var(--ui-attention)!important}
+/* Lær og simulering i mørk modus: poengskjemaet og måleflisene følger temaet i stedet for å være hvite.
+   Valgte poengfelt beholder fargen sin (grønn, gul, oransje, rød) med mørk tekst. */
+:root[data-theme="dark"]:not([data-base-theme="philip"]){--k-chart-cell:var(--k-control);--k-chart-head:var(--k-inner);--k-chart-void:color-mix(in srgb,var(--paper) 96%,#000 4%)}
+:root[data-theme="dark"][data-surface-style="glass"]:not([data-base-theme="philip"]){--k-chart-cell:rgba(255,255,255,.07);--k-chart-head:rgba(255,255,255,.04);--k-chart-void:rgba(0,0,0,.18)}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-vital-tile{background:var(--k-chart-cell)!important;border-color:var(--k-control-line)!important;color:var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-vital-tile :is(small){color:var(--muted)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-vital-tile strong{color:var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-scroll{border-color:var(--k-control-line)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-score-grid.learn12-news-chart{background:transparent!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-score-head{background:var(--k-chart-head)!important;color:var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-score-head span,
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-score-row{border-color:var(--k-control-line)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-row-name{background:var(--k-chart-head)!important;border-color:var(--k-control-line)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-row-name strong{color:var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-row-name small{color:var(--muted)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-score-option.learn12-news-cell{background:var(--k-chart-cell)!important;color:var(--ink)!important;border-color:var(--k-control-line)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell .learn12-news-range{color:var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell:not(:disabled):hover{background:color-mix(in srgb,var(--accent) 18%,var(--paper))!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-score-void{background:var(--k-chart-void)!important;color:var(--muted)!important;border-color:var(--k-control-line)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected{box-shadow:inset 0 0 0 3px var(--ink)!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected.is-score-0{background:#9fd8b8!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected.is-score-1{background:#f3df6f!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected.is-score-2{background:#f4ad6e!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected.is-score-3{background:#ef7777!important}
+:root[data-theme="dark"]:not([data-base-theme="philip"]) .learn12-news-chart .learn12-news-cell.is-selected :is(.learn12-news-range,*){color:#1b2736!important}
+:root:not([data-base-theme="philip"]) .v10-optional-gcs>summary{border:1px solid var(--k-control-line)!important;border-radius:14px}

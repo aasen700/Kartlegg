@@ -115,3 +115,15 @@ test('theme previews and the Philip glass theme keep their styling',()=>{
  assert.match(profile,/dataset\.themePreview/);
  assert.match(profile,/seasonThemePreview/);
 });
+test('shared surfaces: one icon tint and one family of boxes and fields in every theme',()=>{
+ const fs=require('node:fs'),path=require('node:path');
+ const css=fs.readFileSync(path.join(__dirname,'..','assets','css','10-themes.css'),'utf8');
+ const block=css.slice(css.indexOf('/* ===== Felles flater'));
+ assert.ok(block.length>0,'shared surface layer exists');
+ assert.match(block,/--k-icon-bg:color-mix\(in srgb,var\(--accent\)/,'icon boxes derive from the theme accent');
+ assert.match(block,/#vitalsForm \.field-icon,\.section-symbol,\.score-icon/);
+ assert.match(block,/--k-glass-inner/);
+ assert.match(block,/\.control-wrap :is\(select,input\)\{background:transparent!important/,'no double fill inside a field frame');
+ assert.match(block,/learn12-news-chart \.learn12-news-cell\.is-selected\.is-score-3\{background:#ef7777!important\}/,'selected score cells keep their colours in dark mode');
+ assert.doesNotMatch(block,/\.score\.(warning|danger|ok)|\.news-alert|\.point-3/,'clinical status colours are left to 11-clinical.css');
+});

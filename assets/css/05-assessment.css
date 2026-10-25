@@ -2133,3 +2133,10 @@
     display: none !important;
   }
 }
+/* Før skåren er regnet ut: en liten, dempet strek i stedet for en stor grå blokk. */
+.score-number.muted {
+  font-size: 32px !important;
+  line-height: 1.2;
+  color: var(--muted) !important;
+  opacity: .6;
+}
