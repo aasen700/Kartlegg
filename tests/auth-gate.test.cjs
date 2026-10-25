@@ -59,3 +59,12 @@ test('logging in from Profil lands on the front page with NEWS2',()=>{
  g.setState('member','u');
  assert.equal(g.resolve('konto'),'vurdering');
 });
+test('a guest with no stored session starts as guest; otherwise the gate waits for Firebase',()=>{
+
+ assert.equal(createGate({}).state,'checking');
+ assert.equal(createGate({initial:'guest'}).state,'guest');
+ assert.equal(createGate({initial:'guest',test:'member'}).state,'member','test setup still wins');
+ const src=require('node:fs').readFileSync(require('node:path').join(__dirname,'..','assets','auth-gate.js'),'utf8');
+ assert.match(src,/kartlegg\.account\.remember\.v1/);
+ assert.match(src,/firebase:authUser:/);
+});

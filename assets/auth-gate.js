@@ -15,8 +15,9 @@
  // verify/consent: innlogget, men e-post eller vilkår mangler. member: full tilgang. open: kontoer er slått av.
  const STATES=Object.freeze(['checking','guest','verify','consent','member','open']);
 
- function createGate({doc,storage,test}={}){
-  let state=STATES.includes(test)?test:'checking',owner=null,reason='';
+ function createGate({doc,storage,test,initial}={}){
+  // initial:'guest' brukes når det ikke finnes noen lagret innlogging å vente på (se nederst).
+  let state=STATES.includes(test)?test:initial==='guest'?'guest':'checking',owner=null,reason='';
   const listeners=new Set();
   const full=()=>state==='member'||state==='open';
   function read(){try{return storage?.getItem(RETURN_KEY)||''}catch(_){return ''}}
@@ -52,7 +53,17 @@
  if(typeof module==='object'&&module.exports){module.exports={createGate,PUBLIC,OPEN,NAMES};return}
  let storage;try{storage=root.sessionStorage}catch(_){}
  // Testoppsett kan sette window.__KARTLEGG_TEST_AUTH__ før denne filen lastes. Det gir ingen tilgang til data.
- const gate=createGate({doc:root.document,storage,test:root.__KARTLEGG_TEST_AUTH__});
+ // Uten «Husk meg» og uten innlogging i denne fanen finnes det ingen lagret innlogging. Da starter vi som gjest,
+ // så forsiden vises med en gang i stedet for et lastehjul til Firebase er lastet ned. Finner Firebase likevel
+ // en bruker, byttes visningen når den svarer.
+ function noStoredSession(){
+  try{
+   if(root.localStorage.getItem('kartlegg.account.remember.v1')==='1')return false;
+   for(let i=0;i<storage.length;i++)if(storage.key(i)?.startsWith('firebase:authUser:'))return false;
+   return true;
+  }catch(_){return false}
+ }
+ const gate=createGate({doc:root.document,storage,test:root.__KARTLEGG_TEST_AUTH__,initial:noStoredSession()?'guest':undefined});
  root.KartleggGate=gate;
  // Når status endres, vises siden brukeren egentlig ville til.
  gate.onChange(()=>{

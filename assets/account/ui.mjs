@@ -256,6 +256,11 @@ export function mountAccount({enabled,loadBackend}){
  showView(pendingView);
  if(!enabled){buttons().forEach(b=>b.disabled=true);status('Konto er ikke aktivert. Verktøyene er åpne inntil videre.');gate?.setState('open');return {host,auth}}
  status('Kobler til kontotjenesten …');buttons().forEach(b=>b.disabled=true);
+ // Rask vei for gjester: uten «Husk meg» og uten innlogging i denne fanen finnes det ingen lagret innlogging
+ // å vente på. Da vises siden med en gang, i stedet for et lastehjul til Firebase er lastet ned.
+ // Hvis Firebase likevel finner en bruker, byttes visningen når den svarer.
+ const storedSession=()=>{try{if(remembered())return true;for(let i=0;i<sessionStorage.length;i++)if(sessionStorage.key(i)?.startsWith('firebase:authUser:'))return true;return false}catch(_){return true}};
+ if(gate?.state==='checking'&&!storedSession())gate.setState('guest');
  loadBackend().then(async b=>{backend=b;try{await b.remember?.(remembered())}catch(_){}let storage;try{storage=localStorage}catch(_){}sync=new SyncSession({backend,read:readSettings,apply:applySettings,storage,notify(message){noteSync(message);status(message);render()}});buttons().forEach(x=>x.disabled=false);status('');backend.observe(changedUser)}).catch(()=>{status('Innloggingstjenesten kunne ikke lastes. Kontroller nettet og last siden på nytt.');gate?.setState('guest')});
  return {host,auth,get sync(){return sync}};
 }

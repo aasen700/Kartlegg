@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## Raskere lasting – 25. oktober 2026
+
+- Forsiden vises nesten tre ganger så raskt på mobil. Før ble hele siden skjult bak et lastehjul til innloggingstjenesten (Firebase) var lastet ned og hadde svart. Nå vises siden med en gang hvis det ikke finnes noen lagret innlogging på enheten. Målt på simulert 4G med treg telefon kom overskriften etter 1,2 s i stedet for 3,3 s.
+- Databasen (Firestore, ca. 180 kB) lastes bare ned når noen er logget inn. Gjester slipper den helt, og innloggingssjekken venter ikke lenger på den.
+- Nettleseren kobler seg til Firebase og begynner å hente innloggingsfilene tidlig, så innlogging med «Husk meg» også går raskere.
+
 ## Rettet: mindre hopping når du skriver inn målinger på telefon – 22. oktober 2026
 
 - Myk rulling er slått av på telefon. Når iPhone flytter et felt over tastaturet, skjer det nå med én gang, ikke som en animasjon som kunne havne et annet sted.

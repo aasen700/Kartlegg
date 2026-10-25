@@ -21,6 +21,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/kartlegg-mark.svg?v=2026" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Innloggingen (Firebase) hentes fra gstatic. Koble til og begynn nedlastingen tidlig, så den ikke venter på resten av siden. -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js" crossorigin>
+  <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js" crossorigin>
   <link rel="apple-touch-icon" href="assets/kartlegg-touch-icon.png">
   <link rel="stylesheet" href="assets/css/00-tokens.css?v=uu1">
   <link rel="stylesheet" href="assets/css/01-base.css?v=fokus2">
@@ -698,7 +702,7 @@
     </div>
   </dialog>
   <script src="assets/scoring.js?v=061a"></script>
-  <script src="assets/auth-gate.js?v=forlop1"></script>
+  <script src="assets/auth-gate.js?v=raskt1"></script>
   <script src="assets/measurement-store.js?v=2"></script>
   <script src="assets/app.js?v=laer1"></script>
   <script src="assets/welcome.js?v=1"></script>
@@ -744,6 +748,6 @@
   <script src="assets/assessment-flow-v11.js?v=home1"></script>
   <script src="assets/design-system-v4.js?v=1801"></script>
   <script src="assets/formal.js?v=1"></script>
-  <script type="module" src="assets/account/entry.mjs?v=laer1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=raskt1"></script>
 </body>
 </html>
