@@ -5,6 +5,7 @@
 - Samtalene i casen (Randi, AMK, Hege og de andre) bruker Claude Haiku 5.5. Tilbakemeldingen etter casen bruker Claude Sonnet 5.5. Modellene står i `CHAT_MODEL` og `DEBRIEF_MODEL` i `worker/wrangler.toml`.
 - Ingen automatisk reserve-modell lenger. Loggen viser modell og tokens per forespørsel, aldri innholdet.
 - Nytt testskript `worker/scripts/live-check.mjs` som sjekker modellene, rollene og tilbakemeldingen mot den ekte API-en.
+- Randi forteller bare det studenten spør om, så nøkkelfunnene må hentes fram med gode spørsmål. Linjen om tid og tilstand som bare er ment for Claude, vises aldri i svarene.
 
 ## AI-pasient: AI-tilbakemelding og åpen beta, 27. oktober 2026
 

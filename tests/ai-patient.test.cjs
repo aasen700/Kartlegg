@@ -43,7 +43,7 @@ test('every role keeps the AI in character and away from real patients and diagn
 });
 test('the AI patient is hidden unless beta is on and a service address is set, and holds no key',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),html=read('index.html');
- assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai5"><\/script>/);
+ assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai6"><\/script>/);
  assert.match(ui,/const available = \(\) => read\(BETA_KEY\) === '1' && Boolean\(service\(\)\)/);
  assert.match(ui,/const SERVICE = '(https:\/\/[^']+)?';/,'the production address is https or empty');
  assert.match(ui,/Ikke skriv ekte pasientopplysninger/);
@@ -127,4 +127,12 @@ test('chat and feedback use separate, configurable models with no automatic fall
  const d=m.debriefParams({},randi,'referat');
  assert.equal(d.model,'claude-sonnet-5-5');assert.ok(d.max_tokens>=8000);
  assert.equal(d.output_config.format.type,'json_schema');assert.equal(d.output_config.format.schema.additionalProperties,false);
+});
+test('the hidden time/state line is never shown, and Randi only reveals findings when asked',async()=>{
+ const ui=read('assets/ai/ai-sim.mjs');
+ const {randi}=await import('../assets/ai/randi.mjs');
+ assert.match(ui,/const untag = t => /);
+ assert.match(ui,/onText\(untag\(text\)\)/);
+ for(const [id,text] of Object.entries(randi.roles))assert.match(text,/Ikke gjenta den linjen/,id);
+ assert.match(randi.roles.patient,/Ikke nevn utstråling, kvalme, oppkast, svette/);
 });

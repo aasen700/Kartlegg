@@ -9,7 +9,7 @@
  *
  * Synlig bare når beta er slått på (?beta=ai, av med ?beta=av) og tjenesten har en adresse.
  */
-import { randi } from './randi.mjs?v=ai5';
+import { randi } from './randi.mjs?v=ai6';
 
 const C = randi;
 // Adressen til tjenesten på Cloudflare. Tom = AI-pasienten er skjult.
@@ -132,6 +132,9 @@ function tick(n) {
 async function idToken() {
  try { return await window.KartleggAccount?.idToken?.(); } catch (_) { return null; }
 }
+// Linjen i hakeparentes om tid og tilstand er bare til Claude. Gjentar modellen den, fjernes den
+// før svaret vises og før det sendes tilbake i samtalen.
+const untag = t => t.replace(/^\s*\[(?:Kl\.|Tid|tilstand)[^\]\n]*\]\s*/i, '').trim();
 async function ask(role, messages, onText) {
  const url = service();
  const token = await idToken();
@@ -153,15 +156,16 @@ async function ask(role, messages, onText) {
    const line = buf.slice(0, i); buf = buf.slice(i + 1);
    if (!line.trim()) continue;
    let m; try { m = JSON.parse(line); } catch (_) { continue; }
-   if (m.t === 'd') { text += m.v; onText(text); }
+   if (m.t === 'd') { text += m.v; onText(untag(text)); }
    else if (m.t === 'reset') { text = ''; onText(text); }
    else if (m.t === 'refusal') throw failure('refusal');
    else if (m.t === 'err') throw failure(m.msg);
    else if (m.t === 'end') ended = true;
   }
  }
- if (!ended || !text.trim()) throw failure('empty');
- return text.trim().slice(0, 1500);
+ text = untag(text);
+ if (!ended || !text) throw failure('empty');
+ return text.slice(0, 1500);
 }
 
 async function send(text) {
