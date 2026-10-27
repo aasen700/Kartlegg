@@ -1,5 +1,14 @@
 # Versjonshistorikk – Kartlegg
 
+## AI-pasient (beta), 27. oktober 2026
+
+- Ny case i Simulering: «Trygghetsalarm hos Randi». Randi og de du ringer (113, legevakt, sykepleier på vakt, datteren) svarer med egne ord, laget av Claude.
+- Gangen: trygghetsalarm, valg mellom å lese journal først eller dra rett ut, og så samtale, målinger, funn, tiltak, tenkt journal og medisinkort. Klokken går, og Randi blir dårligere hvis ingen handler.
+- Målinger, funn, forverring og fasit kommer fra casefilen (`assets/ai/randi.mjs`), ikke fra AI-en. Tilbakemeldingen viser hva du gjorde, hva du kan gjøre bedre, når du ringte 113 og om NEWS2 var riktig.
+- Ny tjeneste på Cloudflare (`worker/`) holder nøkkelen, sjekker innlogging og teller meldinger per bruker. Samtalen lagres ikke.
+- Skjult til den slås på med `?beta=ai`. Personvernerklæringen beskriver AI-pasienten, Cloudflare og Anthropic.
+- E-post fra Kartlegg kommer nå fra noreply@kartlegg.com, og teksten på innloggingssiden sier det.
+
 ## Temaene ryddet opp – 25. oktober 2026
 
 - Felles flater i alle temaer: siden, kortene, de indre boksene og feltene har én sammenhengende familie av farger, utledet fra temaets egne farger. Før kunne bokser på samme side være svarte, blå og hvite om hverandre, særlig i mørk modus og Liquid Glass.

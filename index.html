@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="assets/css/04-profile.css?v=sma1">
   <link rel="stylesheet" href="assets/css/05-assessment.css?v=flater2">
   <link rel="stylesheet" href="assets/css/06-tools.css?v=mobil2">
-  <link rel="stylesheet" href="assets/css/07-simulation.css?v=mobil1">
+  <link rel="stylesheet" href="assets/css/07-simulation.css?v=ai1">
   <link rel="stylesheet" href="assets/css/08-learning.css?v=mobil1">
   <link rel="stylesheet" href="assets/css/09-decor.css?v=sesong4">
   <link rel="stylesheet" href="assets/css/10-themes.css?v=flater5">
@@ -382,14 +382,14 @@
       <div class="page legal-page" id="page-personvern" hidden>
         <article class="legal-doc" aria-labelledby="privacyTitle">
           <h1 id="privacyTitle">Personvernerklæring</h1>
-          <p class="legal-meta">Versjon 2026-10-21</p>
+          <p class="legal-meta">Versjon 2026-10-27</p>
           <h2>Hvem er ansvarlig?</h2>
           <p>Philip Aasen er behandlingsansvarlig for Kartlegg. Spørsmål om personvern, innsyn, retting eller sletting sendes til <a href="mailto:kontaktkartlegg@gmail.com">kontaktkartlegg@gmail.com</a>. Du får svar innen 30 dager.</p>
           <h2>Det viktigste først</h2>
           <ul>
             <li>Uten konto: Kartlegg lagrer ingenting om deg på en server. Beregningene skjer i nettleseren din.</li>
             <li>Med konto: vi lagrer e-postadressen din, det du selv fyller inn i profilen, favoritter, utseende og at du har godtatt vilkårene.</li>
-            <li>Måleverdier, skårer, ISBAR-tekst og svar i øvinger sendes aldri til Kartlegg, Firebase eller andre.</li>
+            <li>Måleverdier, skårer, ISBAR-tekst og svar i øvinger sendes aldri til Kartlegg, Firebase eller andre. Unntaket er AI-pasienten (beta): det du skriver der, sendes til Anthropic for å lage svaret, se under.</li>
             <li>Ingen reklame, ingen analyseverktøy og ingen sporing.</li>
           </ul>
           <h2>Når du besøker nettstedet</h2>
@@ -417,10 +417,19 @@
             <li>Å dokumentere at du har godtatt vilkårene og sikre tjenesten mot misbruk: berettiget interesse (artikkel 6 nr. 1 bokstav f).</li>
           </ul>
           <p>Bekreftelsene du gir ved registrering, er avtalevilkår og bekreftelser. De er ikke samtykke etter personvernforordningen, og de fritar ikke Kartlegg for ansvar for å behandle opplysninger lovlig.</p>
+          <h2>AI-pasienten (beta)</h2>
+          <p>I AI-pasienten snakker du med en tenkt pasient og ringer tenkte kolleger. Svarene lages av Claude, en språkmodell fra Anthropic. For å få et svar sendes samtalen i casen (det du har skrevet og svarene så langt) via Kartleggs egen tjeneste på Cloudflare til Anthropic. Tjenesten sjekker at du er innlogget og teller hvor mange meldinger du sender per døgn, knyttet til bruker-ID-en din. Telleren slettes etter to døgn. E-postadressen din sendes ikke til Anthropic.</p>
+          <ul>
+            <li>Samtalen lagres ikke i Kartlegg, og forsvinner når du lukker casen. Bare at casen er fullført og resultatet huskes, som i de andre casene.</li>
+            <li>Kartlegg logger ikke innholdet i samtalene, bare hvor mange tegn (tokens) som ble brukt, for å følge med på kostnaden.</li>
+            <li>Ikke skriv ekte pasientopplysninger eller opplysninger om deg selv. Casen er fiktiv, og det du skriver, skal være det også.</li>
+          </ul>
           <h2>Databehandlere og hvor dataene ligger</h2>
           <ul>
             <li><strong>Google (Firebase)</strong> behandler kontoopplysningene på vegne av Kartlegg etter <a href="https://firebase.google.com/terms/data-processing-terms" target="_blank" rel="noopener noreferrer">Firebase sine databehandlingsvilkår</a>. Kontoinnstillingene og bekreftelsene ligger i Cloud Firestore i EU (Stockholm, europe-north2). Innloggingstjenesten (Firebase Authentication) er en global tjeneste, og opplysningene der kan behandles utenfor EØS. Google bruker da EUs standardkontrakter og er sertifisert under EU–US Data Privacy Framework. Se <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase sin personverninformasjon</a> for underleverandører og sikkerhetskopier.</li>
             <li><strong>GitHub</strong> leverer nettsidene og får IP-adresser i sine logger, se <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHubs personvernerklæring</a>.</li>
+            <li><strong>Cloudflare</strong> kjører tjenesten mellom Kartlegg og Anthropic for AI-pasienten, og får IP-adresser i sine logger, se <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflares personvernerklæring</a>.</li>
+            <li><strong>Anthropic</strong> mottar samtalene i AI-pasienten for å lage svarene, etter <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank" rel="noopener noreferrer">Anthropics kommersielle vilkår</a>. Behandlingen skjer i USA. Anthropic bruker ikke slike API-data til å trene modellene sine.</li>
           </ul>
           <h2>Hvor lenge</h2>
           <p>Kontoopplysninger beholdes til du sletter kontoen. Ved sletting fjernes innstillingene før innloggingen slettes. En teknisk slettemarkør med bruker-ID og tidspunkt beholdes kort for å hindre gjenoppretting, og fjernes manuelt. Bekreftelsen av vilkårene kan beholdes så lenge det er nødvendig for å dokumentere avtalen. Google kan beholde sikkerhetslogger og sikkerhetskopier etter sine vilkår.</p>
@@ -743,7 +752,8 @@
   <script src="assets/tool-navigation.js?v=sma1"></script>
   <script src="assets/learning-progress.js?v=laer1"></script>
   <script src="assets/simulation-engine.js?v=sprak1"></script>
-  <script src="assets/simulation-ui.js?v=sprak1"></script>
+  <script src="assets/simulation-ui.js?v=ai1"></script>
+  <script type="module" src="assets/ai/ai-sim.mjs?v=ai1"></script>
   <script src="assets/gcs-learning-data.js?v=101"></script>
   <script src="assets/learning-flow.js?v=sprak1"></script>
   <script src="assets/gcs-learning-ui.js?v=sprak1"></script>
@@ -758,6 +768,6 @@
   <script src="assets/design-system-v4.js?v=1801"></script>
   <script src="assets/formal.js?v=1"></script>
   <script src="assets/pwa.js?v=pwa1"></script>
-  <script type="module" src="assets/account/entry.mjs?v=raskt1"></script>
+  <script type="module" src="assets/account/entry.mjs?v=ai1"></script>
 </body>
 </html>

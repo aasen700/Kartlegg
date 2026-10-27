@@ -88,7 +88,7 @@ test('ISBAR text is mandatory but not machine-graded; case can finish early',()=
 });
 test('a simulation route, source and front-end assets are integrated',()=>{
  const html=read('index.html'),app=read('assets/app.js');
- for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=sprak1','assets/simulation-ui.js?v=sprak1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
+ for(const element of ['data-page="simulering"','id="page-simulering"','id="simulationRoot"','assets/simulation-engine.js?v=sprak1','assets/simulation-ui.js?v=ai1','assets/learning-progress.js?v=laer1','assets/css/07-simulation.css'])
   assert.ok(html.includes(element),element);
  assert.ok(app.includes("'simulering'"));
  assert.doesNotMatch(read('assets/simulation-engine.js'),/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);

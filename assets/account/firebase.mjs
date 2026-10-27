@@ -43,6 +43,8 @@ export const backend={
  reset:email=>sendPasswordResetEmail(auth,email),
  verify:()=>sendEmailVerification(auth.currentUser),
  async refresh(){await reload(auth.currentUser);await getIdToken(auth.currentUser,true)},
+ // Innloggingsbevis til Kartleggs egen AI-tjeneste (worker/), som sjekker det hos Google.
+ idToken:()=>auth.currentUser?getIdToken(auth.currentUser):Promise.resolve(null),
  logout:()=>signOut(auth),
  async reauthenticate(password){
   const u=auth.currentUser;

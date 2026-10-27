@@ -69,7 +69,7 @@ export function mountAccount({enabled,loadBackend}){
  <p class="account-switch">Har du konto? <button class="account-link" type="button" id="accountToLogin">Logg inn</button></p>
  </section>
  <section class="account-auth-view" data-konto-view="verify" id="accountVerifyView" aria-labelledby="accountVerifyTitle">
- <h1 id="accountVerifyTitle">Bekreft e-postadressen</h1><p class="account-lede">Vi har sendt en lenke til <strong id="accountVerifyEmail"></strong>. Åpne lenken, og kom tilbake hit. E-posten kommer fra <strong>noreply@kartlegg.firebaseapp.com</strong>, og havner ofte i søppelpost.</p>
+ <h1 id="accountVerifyTitle">Bekreft e-postadressen</h1><p class="account-lede">Vi har sendt en lenke til <strong id="accountVerifyEmail"></strong>. Åpne lenken, og kom tilbake hit. E-posten kommer fra <strong>noreply@kartlegg.com</strong>, og havner ofte i søppelpost.</p>
  <div id="accountVerification" class="account-verify-actions"><button class="btn btn-primary account-wide" type="button" id="accountRefresh">Jeg har bekreftet e-posten</button><button class="btn btn-secondary account-wide" type="button" id="accountVerify">Send ny lenke</button></div>
  <div class="account-status-slot" data-status-slot="verify"></div>
  <p class="account-switch">Feil e-postadresse? <button class="account-link" type="button" data-account-logout>Logg ut</button></p>
@@ -215,8 +215,8 @@ export function mountAccount({enabled,loadBackend}){
  rememberBoxes.forEach(b=>b.checked=remembered());
  rememberBoxes.forEach(b=>b.addEventListener('change',()=>{rememberBoxes.forEach(x=>x.checked=b.checked);try{b.checked?localStorage.setItem(REMEMBER_KEY,'1'):localStorage.removeItem(REMEMBER_KEY)}catch(_){}backend?.remember?.(b.checked)}));
 
- $('accountReset').onclick=()=>{if(!fieldError($('accountEmail'),'accountEmailError',emailOk(email())?'':'Skriv inn e-postadressen din først, så sender vi en lenke.')){$('accountEmail').focus();return}run(async()=>{try{await backend.reset(email())}catch(e){if(!['auth/user-not-found','auth/invalid-credential'].includes(e.code))throw e}status('Sendt! Hvis '+email()+' har en konto, kommer det en e-post fra noreply@kartlegg.firebaseapp.com i løpet av noen minutter. Sjekk også søppelpost og «Andre»/«Kampanjer». Kommer den ikke, kontroller at adressen er skrevet riktig.','ok')})};
- $('accountVerify').onclick=()=>run(async()=>{await backend.verify();status('Ny lenke er sendt til '+(backend.user?.email||'e-postadressen din')+' fra noreply@kartlegg.firebaseapp.com. Sjekk også søppelpost og «Andre»/«Kampanjer». Det kan ta noen minutter.','ok')});
+ $('accountReset').onclick=()=>{if(!fieldError($('accountEmail'),'accountEmailError',emailOk(email())?'':'Skriv inn e-postadressen din først, så sender vi en lenke.')){$('accountEmail').focus();return}run(async()=>{try{await backend.reset(email())}catch(e){if(!['auth/user-not-found','auth/invalid-credential'].includes(e.code))throw e}status('Sendt! Hvis '+email()+' har en konto, kommer det en e-post fra noreply@kartlegg.com i løpet av noen minutter. Sjekk også søppelpost og «Andre»/«Kampanjer». Kommer den ikke, kontroller at adressen er skrevet riktig.','ok')})};
+ $('accountVerify').onclick=()=>run(async()=>{await backend.verify();status('Ny lenke er sendt til '+(backend.user?.email||'e-postadressen din')+' fra noreply@kartlegg.com. Sjekk også søppelpost og «Andre»/«Kampanjer». Det kan ta noen minutter.','ok')});
  $('accountRefresh').onclick=()=>run(async()=>{await backend.refresh();await changedUser(backend.user);if(gate?.state==='verify')status('E-postadressen er ikke bekreftet ennå. Åpne lenken i e-posten, og prøv igjen.')});
  $('accountSync').onclick=()=>run(()=>sync.retry());
  $('accountUseLocal').onclick=()=>run(()=>sync.choose('local'));
@@ -261,6 +261,6 @@ export function mountAccount({enabled,loadBackend}){
  // Hvis Firebase likevel finner en bruker, byttes visningen når den svarer.
  const storedSession=()=>{try{if(remembered())return true;for(let i=0;i<sessionStorage.length;i++)if(sessionStorage.key(i)?.startsWith('firebase:authUser:'))return true;return false}catch(_){return true}};
  if(gate?.state==='checking'&&!storedSession())gate.setState('guest');
- loadBackend().then(async b=>{backend=b;try{await b.remember?.(remembered())}catch(_){}let storage;try{storage=localStorage}catch(_){}sync=new SyncSession({backend,read:readSettings,apply:applySettings,storage,notify(message){noteSync(message);status(message);render()}});buttons().forEach(x=>x.disabled=false);status('');backend.observe(changedUser)}).catch(()=>{status('Innloggingstjenesten kunne ikke lastes. Kontroller nettet og last siden på nytt.');gate?.setState('guest')});
+ loadBackend().then(async b=>{backend=b;window.KartleggAccount=Object.freeze({idToken:()=>b.user&&gate?.state==='member'?b.idToken():Promise.resolve(null)});try{await b.remember?.(remembered())}catch(_){}let storage;try{storage=localStorage}catch(_){}sync=new SyncSession({backend,read:readSettings,apply:applySettings,storage,notify(message){noteSync(message);status(message);render()}});buttons().forEach(x=>x.disabled=false);status('');backend.observe(changedUser)}).catch(()=>{status('Innloggingstjenesten kunne ikke lastes. Kontroller nettet og last siden på nytt.');gate?.setState('guest')});
  return {host,auth,get sync(){return sync}};
 }

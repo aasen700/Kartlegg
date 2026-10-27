@@ -1,0 +1,21 @@
+name = "kartlegg-ai"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Nettsidene som får bruke tjenesten.
+ALLOWED_ORIGINS = "https://kartlegg.com,https://www.kartlegg.com,http://localhost:8771"
+# Under testingen: bare disse Firebase-brukerne (kommaseparert). Tom = alle innloggede med bekreftet e-post.
+ALLOWED_UIDS = ""
+# Største antall meldinger per bruker per døgn.
+DAILY_LIMIT = "200"
+MODEL = "claude-opus-5-5"
+EFFORT = "low"
+
+# Teller for grensen per bruker (Workers KV). Legges til her automatisk av:
+#   npx wrangler kv namespace create LIMITS --binding LIMITS --update-config
+# Uten den nekter tjenesten å svare (unntatt lokalt).
+
+# ANTHROPIC_API_KEY legges inn som hemmelighet, aldri her:
+#   npx wrangler secret put ANTHROPIC_API_KEY

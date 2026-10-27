@@ -7,7 +7,11 @@
  const Engine=window.KartleggSimulationEngine;
  const root=document.getElementById('simulationRoot');
  if(!Engine||!root)return;
- let state=Engine.start(),started=false;
+ let state=Engine.start(),started=false,aiActive=false;
+ // AI-pasienten (assets/ai/ai-sim.mjs) lastes som modul etter denne filen og tegner sin egen skjerm.
+ const AI=()=>window.KartleggAISim;
+ window.addEventListener('kartlegg:ai-sim-ready',()=>{if(!started&&!aiActive)render()});
+ function startAI(){aiActive=true;AI().mount(root,{onExit(){aiActive=false;render();root.scrollIntoView?.({block:'start',behavior:'auto'})}})}
  const Progress=()=>window.KartleggLearningProgress;
  const current=()=>Engine.getCase(state.caseId)||Engine.caseData;
  const heading=document.getElementById('simHeading');
@@ -379,6 +383,7 @@
   return bar;
  }
  function render(){
+  if(aiActive)return;
   root.replaceChildren();
   page?.classList.toggle('sim-running',started&&!state.finished);
   const c=current();
@@ -397,6 +402,16 @@
     const thumb=elt('img','sim-case-thumb');thumb.src=item.images.stable;thumb.alt='';thumb.loading='lazy';thumb.width=720;thumb.height=400;
     card.append(thumb,top,elt('strong','sim-case-title',item.title),elt('span','sim-case-patient',item.patient+' · '+item.setting),elt('span','sim-case-focus',item.focus));
     li.append(card);list.append(li);
+   }
+   if(AI()?.available()){
+    const a=AI().card,li=elt('li'),card=button('','sim-case-card sim-case-ai',startAI);
+    card.dataset.caseId=a.id;
+    const top=elt('span','sim-case-top');top.append(elt('span','sim-case-level',a.level),elt('span','sim-case-beta','AI-pasient · beta'));
+    if(Progress()?.get('sim:'+a.id)?.test)top.append(elt('span','sim-case-done','✓ Fullført'));
+    const art=elt('span','sim-case-ai-art');art.setAttribute('aria-hidden','true');
+    art.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>';
+    card.append(art,top,elt('strong','sim-case-title',a.title),elt('span','sim-case-patient',a.patient+' · '+a.setting),elt('span','sim-case-focus',a.focus));
+    li.append(card);list.prepend(li);
    }
    root.append(list);
   }else if(state.finished){
