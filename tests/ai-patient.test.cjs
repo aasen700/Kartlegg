@@ -43,7 +43,7 @@ test('every role keeps the AI in character and away from real patients and diagn
 });
 test('the AI patient is hidden unless beta is on and a service address is set, and holds no key',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),html=read('index.html');
- assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai1"><\/script>/);
+ assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai2"><\/script>/);
  assert.match(ui,/const available = \(\) => read\(BETA_KEY\) === '1' && Boolean\(service\(\)\)/);
  assert.match(ui,/const SERVICE = '(https:\/\/[^']+)?';/,'the production address is https or empty');
  assert.match(ui,/Ikke skriv ekte pasientopplysninger/);

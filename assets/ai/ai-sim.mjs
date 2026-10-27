@@ -13,7 +13,7 @@ import { randi } from './randi.mjs?v=ai1';
 
 const C = randi;
 // Adressen til tjenesten på Cloudflare. Tom = AI-pasienten er skjult.
-const SERVICE = '';
+const SERVICE = 'https://kartlegg-ai.kartlegg.workers.dev';
 const BETA_KEY = 'kartlegg.ai.beta';
 const LOCAL_SERVICE_KEY = 'kartlegg.ai.endpoint';
 const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
