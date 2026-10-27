@@ -10,7 +10,7 @@ casene og rollene i `assets/ai/`. Innholdet i samtalene logges ikke.
 cd worker
 npm install
 npx wrangler login
-npx wrangler kv namespace create LIMITS --binding LIMITS --update-config
+# (telleren LIMITS finnes allerede, se wrangler.toml)
 npx wrangler deploy
 npx wrangler secret put ANTHROPIC_API_KEY
 ```

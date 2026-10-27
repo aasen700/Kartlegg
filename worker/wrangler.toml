@@ -13,9 +13,11 @@ DAILY_LIMIT = "200"
 MODEL = "claude-opus-5-5"
 EFFORT = "low"
 
-# Teller for grensen per bruker (Workers KV). Legges til her automatisk av:
-#   npx wrangler kv namespace create LIMITS --binding LIMITS --update-config
+# Teller for grensen per bruker (Workers KV), opprettet 27.10.2026. Id-en er ikke hemmelig.
 # Uten den nekter tjenesten å svare (unntatt lokalt).
+[[kv_namespaces]]
+binding = "LIMITS"
+id = "58a5c30a56c44e348b18dbef7bb6bdf9"
 
 # ANTHROPIC_API_KEY legges inn som hemmelighet, aldri her:
 #   npx wrangler secret put ANTHROPIC_API_KEY
