@@ -43,7 +43,7 @@ test('every role keeps the AI in character and away from real patients and diagn
 });
 test('the AI patient is hidden unless beta is on and a service address is set, and holds no key',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),html=read('index.html');
- assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai3"><\/script>/);
+ assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai4"><\/script>/);
  assert.match(ui,/const available = \(\) => read\(BETA_KEY\) === '1' && Boolean\(service\(\)\)/);
  assert.match(ui,/const SERVICE = '(https:\/\/[^']+)?';/,'the production address is https or empty');
  assert.match(ui,/Ikke skriv ekte pasientopplysninger/);
@@ -80,4 +80,11 @@ test('phone calls can insert address, measured values and medication without sen
  assert.match(ui,/MEASURES\.filter\(\(\[k\]\) => S\.measured\[k\]\)/,'only values the student actually measured');
  assert.match(ui,/function insert\(text\) \{[\s\S]*?ta\.value = /);
  assert.doesNotMatch(ui.match(/function insert\(text\) \{[\s\S]*?\n\}/)[0],/send\(/);
+});
+test('focus mode hides the page behind it and keeps the chat at the latest message',()=>{
+ const ui=read('assets/ai/ai-sim.mjs'),css=read('assets/css/07-simulation.css');
+ assert.match(css,/html\.ai-focus body > :not\(\.ai-focus-host\) \{ display: none !important; \}/);
+ assert.match(css,/html\.ai-focus\.keyboard-open \.ai-chips:not\(:has\(\.ai-insert\)\) \{ display: none; \}/);
+ assert.match(ui,/visualViewport\?\.addEventListener\('resize', keepAtBottom\)/);
+ assert.match(ui,/stick = log\.scrollHeight - log\.scrollTop - log\.clientHeight < 48/);
 });

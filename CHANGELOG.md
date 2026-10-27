@@ -6,6 +6,7 @@
 - I telefonsamtaler kan du sette inn adresse, målingene du har tatt og medisinlisten i skrivefeltet uten å sende, og rette før du sender.
 - Randi har fått adresse (Granveien 14, 2. etasje), som vises i varselet og øverst i casen.
 - Betakode under casene i Simulering, så AI-pasienten også kan slås på i appen på hjemskjermen.
+- Fokusmodus på iPhone: resten av siden skjules helt, så den ikke blinker fram når tastaturet åpnes. Samtalen blir stående ved siste melding, og forslagene skjules mens du skriver.
 
 ## AI-pasient (beta), 27. oktober 2026
 

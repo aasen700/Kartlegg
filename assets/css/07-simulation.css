@@ -1289,7 +1289,14 @@
 /* Fokusmodus på mobil (html.ai-focus settes av ai-sim.mjs mens casen pågår): casen dekker skjermen,
    menylinjen og siden bak er skjult, og høyden følger det synlige området også når tastaturet er oppe. */
 @media (max-width: 760px) {
-  html.ai-focus, html.ai-focus body { overflow: hidden; overscroll-behavior: none; }
+  html.ai-focus, html.ai-focus body { overflow: hidden; overscroll-behavior: none; background: var(--bg) !important; }
+  /* Alt annet på siden skjules. Når iPhone skyver siden opp for tastaturet, er det da ingenting bak casen å se. */
+  html.ai-focus body > :not(.ai-focus-host) { display: none !important; }
+  html.ai-focus body::before, html.ai-focus body::after { display: none !important; }
+  html.ai-focus .ai-who .ai-muted { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html.ai-focus .ai-head { gap: 10px; padding: 10px 12px; }
+  /* Mens du skriver: forslagene skjules for å gi plass til samtalen. «Sett inn» i telefonen blir stående. */
+  html.ai-focus.keyboard-open .ai-chips:not(:has(.ai-insert)) { display: none; }
   html.ai-focus .mobile-primary-nav { display: none !important; }
   html.ai-focus .ai-scene {
     position: fixed;

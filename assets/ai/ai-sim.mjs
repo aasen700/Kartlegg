@@ -191,10 +191,18 @@ function paintPending(reply) {
  const el = view().querySelector('[data-pending="1"] .ai-bubble-text');
  if (el) { el.textContent = reply.text; scrollChat(); }
 }
+// Samtalen blir stående nederst ved siste melding, også når tastaturet åpnes og samtalen krymper,
+// med mindre du selv har rullet opp for å lese.
+let stick = true;
 function scrollChat() {
- const log = view().querySelector('.ai-log');
- if (log) log.scrollTop = log.scrollHeight;
+ const log = view()?.querySelector('.ai-log');
+ if (log) { log.scrollTop = log.scrollHeight; stick = true; }
 }
+function keepAtBottom() {
+ if (stick && S?.phase === 'scene') requestAnimationFrame(scrollChat);
+}
+window.visualViewport?.addEventListener('resize', keepAtBottom);
+window.addEventListener('resize', keepAtBottom);
 
 // ——— Handlinger ———
 function measure(key) {
@@ -460,6 +468,7 @@ function buildChips() {
 function buildLog() {
  const contact = C.contacts.find(c => c.id === S.channel);
  const log = h('div', 'ai-log'); log.setAttribute('aria-live', 'polite');
+ log.addEventListener('scroll', () => { stick = log.scrollHeight - log.scrollTop - log.clientHeight < 48; }, { passive: true });
  const items = S.views[S.channel];
  if (!items.length) log.append(h('p', 'ai-muted ai-empty', contact ? 'Det ringer … Si hvem du er og hvorfor du ringer.' : 'Snakk med Randi med dine egne ord.'));
  const name = contact ? contact.short : 'Randi';
