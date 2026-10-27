@@ -46,8 +46,12 @@ const textOf = r => r.content.filter(b => b.type === 'text').map(b => b.text).jo
 const LEAK = /hjerteinfarkt|infarkt|koronar|angina|diagnos|news ?2|fasit|språkmodell|som en ai|jeg er en ai|claude|anthropic|øvingssimulering|instruks/i;
 const BP = /\b\d{2,3}\s*\/\s*\d{2,3}\b/;
 
-const key = process.env.ANTHROPIC_API_KEY || await askHidden('Lim inn API-nøkkelen (vises ikke) og trykk Enter: ');
+// Innliming i Terminal kan sende med usynlige markører (\x1b[200~ … \x1b[201~) og mellomrom. De fjernes.
+const clean = k => String(k || '').replace(/\x1b\[20[01]~/g, '').replace(/[^\x21-\x7e]/g, '');
+const key = clean(process.env.ANTHROPIC_API_KEY || await askHidden('Lim inn API-nøkkelen (vises ikke) og trykk Enter: '));
 if (!key) { console.log('Ingen nøkkel.'); process.exit(1); }
+// Bare start og slutt vises, så du kan se at det er riktig nøkkel.
+console.log('Nøkkel: ' + key.slice(0, 11) + '…' + key.slice(-4) + ' (' + key.length + ' tegn)');
 const client = new Anthropic({ apiKey: key });
 const c = Object.values(cases)[0];
 
