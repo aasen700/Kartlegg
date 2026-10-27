@@ -43,7 +43,8 @@ const cost = r => {
 const textOf = r => r.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
 
 // Ord som ikke skal komme fra pasienten eller de du ringer: diagnosen, fasiten, at det er en AI.
-const LEAK = /hjerteinfarkt|infarkt|koronar|angina|diagnos|news ?2|fasit|språkmodell|som en ai|jeg er en ai|claude|anthropic|øvingssimulering|instruks/i;
+// («Diagnose» og «NEWS» alene er lov: Randi kan gjenta ordet forvirret når studenten bruker det.)
+const LEAK = /hjerteinfarkt|infarkt|koronar|angina|fasit|språkmodell|som en ai|jeg er en ai|claude|anthropic|øvingssimulering|instruks|news ?2[- ]?(skår|score)? (er|på) \d/i;
 const BP = /\b\d{2,3}\s*\/\s*\d{2,3}\b/;
 
 // Innliming i Terminal kan sende med usynlige markører (\x1b[200~ … \x1b[201~) og mellomrom. De fjernes.
@@ -63,10 +64,10 @@ for (const id of [env.CHAT_MODEL, env.DEBRIEF_MODEL]) {
 if (failed) { console.log('\nStopper: modellene må finnes før resten kan testes.'); process.exit(1); }
 
 const log = [];
-async function talk(role, name, lines, checks) {
+async function talk(role, name, lines, checks, start = 9) {
  console.log(`\n2. Samtale: ${name} (${env.CHAT_MODEL})`);
  const raw = [];
- let minute = 9;
+ let minute = start;
  for (const [i, line] of lines.entries()) {
   raw.push({ role: 'user', text: line, minute, worse: false, ambulance: role === 'amk' });
   log.push({ minute, who: 'Studenten til ' + name, text: line });
@@ -105,7 +106,7 @@ await talk('amk', 'AMK-operatør', [
  'BT 134/82, puls 96, SpO2 96 % på romluft, RF 20. Hun har angst, diabetes og høyt blodtrykk, og tok en ekstra Sobril i morges.'
 ], {
  1: r => ok(/ambulanse|bil|sendt|på vei/i.test(r), 'sender ambulanse etter god ISBAR')
-});
+}, 15);
 
 console.log(`\n3. Tilbakemelding (${env.DEBRIEF_MODEL})`);
 const body = {
