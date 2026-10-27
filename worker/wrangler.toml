@@ -7,7 +7,7 @@ compatibility_flags = ["nodejs_compat"]
 # Nettsidene som får bruke tjenesten.
 ALLOWED_ORIGINS = "https://kartlegg.com,https://www.kartlegg.com,http://localhost:8771"
 # Under testingen: bare disse Firebase-brukerne (kommaseparert). Tom = alle innloggede med bekreftet e-post.
-ALLOWED_UIDS = ""
+ALLOWED_UIDS = "cV1baiJ2NfcNqakuUvhaJndAq842"
 # Største antall meldinger per bruker per døgn.
 DAILY_LIMIT = "200"
 MODEL = "claude-opus-5-5"
