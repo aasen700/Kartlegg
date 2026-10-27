@@ -10,8 +10,12 @@ ALLOWED_ORIGINS = "https://kartlegg.com,https://www.kartlegg.com,http://localhos
 ALLOWED_UIDS = "cV1baiJ2NfcNqakuUvhaJndAq842"
 # Største antall meldinger per bruker per døgn.
 DAILY_LIMIT = "80"
-MODEL = "claude-opus-5-5"
-EFFORT = "low"
+# Modellene. Samtalene i casen (pasienten, AMK, Hege og de andre) og tilbakemeldingen etter casen.
+# Endre her og kjør «npx wrangler deploy». Ingen automatisk reserve-modell.
+CHAT_MODEL = "claude-haiku-5-5"
+CHAT_EFFORT = "low"
+DEBRIEF_MODEL = "claude-sonnet-5-5"
+DEBRIEF_EFFORT = "medium"
 
 # Teller for grensen per bruker (Workers KV), opprettet 27.10.2026. Id-en er ikke hemmelig.
 # Uten den nekter tjenesten å svare (unntatt lokalt).

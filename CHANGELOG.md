@@ -1,5 +1,11 @@
 # Versjonshistorikk – Kartlegg
 
+## AI-pasient: billigere modeller, 27. oktober 2026
+
+- Samtalene i casen (Randi, AMK, Hege og de andre) bruker Claude Haiku 5.5. Tilbakemeldingen etter casen bruker Claude Sonnet 5.5. Modellene står i `CHAT_MODEL` og `DEBRIEF_MODEL` i `worker/wrangler.toml`.
+- Ingen automatisk reserve-modell lenger. Loggen viser modell og tokens per forespørsel, aldri innholdet.
+- Nytt testskript `worker/scripts/live-check.mjs` som sjekker modellene, rollene og tilbakemeldingen mot den ekte API-en.
+
 ## AI-pasient: AI-tilbakemelding og åpen beta, 27. oktober 2026
 
 - Etter casen skriver Claude en tilbakemelding: kort oppsummering, hva du gjorde bra med sitater fra det du skrev, hva som kan bli bedre, spørsmål du kunne stilt, tidsbruk, ISBAR til AMK og kommunikasjon. Merket «Kommentar fra AI. Kan ta feil».

@@ -98,7 +98,7 @@ test('the service lets in the owner list or a correct beta code, and fails close
  for(const p of ['/chat','/debrief','/beta'])assert.ok(w.includes("path === '"+p+"'"),p);
 });
 test('AI feedback reads the whole case, keeps the score from the answer key, and is labelled',async()=>{
- const w=read('worker/src/index.js'),ui=read('assets/ai/ai-sim.mjs');
+ const w=read('worker/src/build.js'),ui=read('assets/ai/ai-sim.mjs');
  const {randi}=await import('../assets/ai/randi.mjs');
  assert.match(randi.debriefGuide,/Finn aldri på noe studenten sa eller gjorde/);
  assert.match(w,/system: c\.debriefGuide/,'the grading instruction comes from the case file');
@@ -106,4 +106,25 @@ test('AI feedback reads the whole case, keeps the score from the answer key, and
  assert.match(w,/enum: guessIds/,'the AI may only correct keyword-based checks');
  assert.match(ui,/const ai = guess \? S\.ai\?\.data\?\.checks/);
  assert.match(ui,/'Kommentar fra AI'\), h\('span', 'ai-muted', 'Kan ta feil'\)/);
+});
+test('chat and feedback use separate, configurable models with no automatic fallback',async()=>{
+ const b=read('worker/src/build.js'),w=read('worker/src/index.js'),toml=read('worker/wrangler.toml');
+ assert.match(toml,/^CHAT_MODEL = "claude-haiku-5-5"$/m);
+ assert.match(toml,/^DEBRIEF_MODEL = "claude-sonnet-5-5"$/m);
+ assert.doesNotMatch(toml,/^MODEL = /m);
+ assert.match(b,/model: setting\(env, 'CHAT_MODEL'\)/);
+ assert.match(b,/model: setting\(env, 'DEBRIEF_MODEL'\)/);
+ for(const src of [b,w]){assert.doesNotMatch(src,/fallbacks|server-side-fallback/);assert.doesNotMatch(src,/temperature|top_p|top_k|budget_tokens/)}
+ assert.match(w,/client\.messages\.stream\(chatParams\(env, system, messages\)\)/);
+ assert.match(w,/client\.messages\.create\(debriefParams\(env, c, text\)\)/);
+ assert.match(w,/console\.log\(usageLine\('chat:' \+ body\.role, final\)\)/);
+ assert.match(w,/console\.log\(usageLine\('debrief', r\)\)/);
+ assert.doesNotMatch(b.match(/export function usageLine[\s\S]*?\n\}/)[0],/content|text/,'the usage log never includes conversation text');
+ const m=await import('../worker/src/build.js');
+ const chat=m.chatParams({},'x',[{role:'user',content:'hei'}]);
+ assert.equal(chat.model,'claude-haiku-5-5');assert.ok(chat.max_tokens>=1024&&chat.max_tokens<=2048);
+ const {randi}=await import('../assets/ai/randi.mjs');
+ const d=m.debriefParams({},randi,'referat');
+ assert.equal(d.model,'claude-sonnet-5-5');assert.ok(d.max_tokens>=8000);
+ assert.equal(d.output_config.format.type,'json_schema');assert.equal(d.output_config.format.schema.additionalProperties,false);
 });

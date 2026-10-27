@@ -15,14 +15,10 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { cases } from '../../assets/ai/randi.mjs';
+import { toMessages, chatParams, referat, tidy, debriefParams, usageLine } from './build.js';
 
 const FIREBASE_PROJECT = 'kartlegg';
 const JWKS = createRemoteJWKSet(new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'));
-const MAX_MESSAGES = 60;
-const MAX_USER_TEXT = 600;
-const MAX_ASSISTANT_TEXT = 1500;
-const MAX_LOG_ENTRIES = 300;
-const MAX_LOG_CHARS = 40000;
 
 const enc = new TextEncoder();
 const list = value => String(value || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -96,32 +92,16 @@ async function limit(env, uid, local) {
 }
 const limited = (code, headers) => json(code === 'limit' ? 429 : 503, { error: code }, headers);
 
-const clock = (start, minute) => {
- const t = start + minute;
- return String(Math.floor(t / 60) % 24).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0');
+const MOCK_DEBRIEF = {
+ summary: 'Testsvar: Du møtte Randi rolig og fant ut at dette ikke var som angsten hennes.',
+ strengths: [{ point: 'Du spurte om dette var som angsten hennes pleier å være.', quote: 'Er dette som angsten din pleier å være?' }],
+ improvements: [{ point: 'Spør tidlig om hvor smerten sitter og om den stråler ut.', why: 'Utstråling til arm og kjeve er et typisk tegn på hjerteinfarkt.' }],
+ missedQuestions: ['Når begynte smertene?'],
+ timing: 'Testsvar om tid.',
+ isbar: 'Testsvar om ISBAR.',
+ communication: 'Testsvar om kommunikasjon.',
+ checks: []
 };
-
-// Gjør om samtalen fra nettleseren til meldinger til Claude. Hver melding fra studenten får en fast
-// linje om tid og tilstand foran, laget av tallene som fulgte med den meldingen. Den samme meldingen
-// gir derfor alltid samme tekst, så tidligere deler av samtalen ikke endres fra gang til gang.
-function toMessages(c, raw) {
- if (!Array.isArray(raw) || raw.length < 1 || raw.length > MAX_MESSAGES) return null;
- const out = [];
- for (let i = 0; i < raw.length; i++) {
-  const m = raw[i];
-  const role = i % 2 === 0 ? 'user' : 'assistant';
-  if (!m || m.role !== role || typeof m.text !== 'string') return null;
-  const text = m.text.trim();
-  if (!text || text.length > (role === 'user' ? MAX_USER_TEXT : MAX_ASSISTANT_TEXT)) return null;
-  if (role === 'assistant') { out.push({ role, content: text }); continue; }
-  const minute = Number(m.minute);
-  if (!Number.isInteger(minute) || minute < 0 || minute > 240) return null;
-  const tag = '[Kl. ' + clock(c.clock.startMinutes, minute) + ' · tilstand: ' + (m.worse ? 'dårligere' : 'som da du kom') + ' · ambulanse: ' + (m.ambulance ? 'bestilt' : 'ikke bestilt') + ']';
-  out.push({ role, content: tag + '\n' + text });
- }
- return out.length % 2 === 1 ? out : null;
-}
-
 const MOCK = {
  patient: 'Unnskyld at jeg ringte igjen … *tar seg til brystet* Det er sikkert bare nervene.',
  amk: '113, hva har skjedd?',
@@ -129,9 +109,6 @@ const MOCK = {
  nurse: 'Hei, det er Kari. Hva skjer?',
  daughter: 'Er det mamma igjen? Hun har gjort dette mange ganger.'
 };
-
-// Ved et sikkerhetsavslag kjøres svaret på nytt på en annen modell (gjelder ikke Haiku).
-const withFallback = model => /^claude-(opus-5|fable-5|sonnet-5-5)/.test(model);
 
 function stream(run) {
  const { readable, writable } = new TransformStream();
@@ -165,27 +142,13 @@ async function chat(request, env, ctx, headers) {
    return;
   }
   const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
-  const model = env.MODEL || 'claude-opus-5-5';
-  const params = {
-   model,
-   max_tokens: 2048,
-   output_config: { effort: env.EFFORT || 'low' },
-   cache_control: { type: 'ephemeral' },
-   system,
-   messages
-  };
-  const s = withFallback(model)
-   ? client.beta.messages.stream({ ...params, betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' })
-   : client.messages.stream(params);
+  const s = client.messages.stream(chatParams(env, system, messages));
   try {
    for await (const ev of s) {
-    // En annen modell tar over midt i svaret: teksten så langt forkastes.
-    if (ev.type === 'content_block_start' && ev.content_block?.type === 'fallback') await send({ t: 'reset' });
     if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta') await send({ t: 'd', v: ev.delta.text });
    }
    const final = await s.finalMessage();
-   const u = final.usage || {};
-   console.log(JSON.stringify({ model: final.model, role: body.role, in: u.input_tokens, cacheRead: u.cache_read_input_tokens, cacheWrite: u.cache_creation_input_tokens, out: u.output_tokens, stop: final.stop_reason }));
+   console.log(usageLine('chat:' + body.role, final));
    await send(final.stop_reason === 'refusal' ? { t: 'refusal' } : { t: 'end', stop: final.stop_reason });
   } catch (e) {
    if (e instanceof Anthropic.RateLimitError) await send({ t: 'err', msg: 'busy' });
@@ -204,81 +167,6 @@ async function beta(request, env, headers) {
  return error || json(200, { ok: true }, headers);
 }
 
-// ——— Tilbakemelding på hele casen ———
-// Nettleseren sender et kronologisk referat: hvem som sa eller gjorde hva, og når, og sjekklisten slik
-// ordsøket vurderte den. Instruksen og fasiten kommer fra casefilen. Svaret har alltid samme oppsett.
-function debriefSchema(c) {
- const str = { type: 'string' };
- const guessIds = c.debrief.filter(d => d.ask || d.amk).map(d => d.id);
- return {
-  type: 'object',
-  additionalProperties: false,
-  required: ['summary', 'strengths', 'improvements', 'missedQuestions', 'timing', 'isbar', 'communication', 'checks'],
-  properties: {
-   summary: str,
-   strengths: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['point', 'quote'], properties: { point: str, quote: str } } },
-   improvements: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['point', 'why'], properties: { point: str, why: str } } },
-   missedQuestions: { type: 'array', items: str },
-   timing: str,
-   isbar: str,
-   communication: str,
-   checks: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['id', 'done'], properties: { id: { type: 'string', enum: guessIds }, done: { type: 'boolean' } } } }
-  }
- };
-}
-function referat(c, body) {
- const log = body?.log;
- if (!Array.isArray(log) || log.length < 1 || log.length > MAX_LOG_ENTRIES) return null;
- let chars = 0;
- const lines = [];
- for (const e of log) {
-  const minute = Number(e?.minute);
-  if (!Number.isInteger(minute) || minute < 0 || minute > 240) return null;
-  if (typeof e.who !== 'string' || typeof e.text !== 'string' || e.who.length > 60) return null;
-  const text = e.text.trim().slice(0, MAX_ASSISTANT_TEXT);
-  chars += text.length;
-  if (chars > MAX_LOG_CHARS) return null;
-  lines.push('[' + clock(c.clock.startMinutes, minute) + '] ' + e.who.trim() + ': ' + text);
- }
- const checks = Array.isArray(body.checks) ? body.checks.filter(x => c.debrief.some(d => d.id === x?.id)).map(x => {
-  const d = c.debrief.find(y => y.id === x.id);
-  return '- ' + d.id + ': ' + d.label + ' → ' + (x.done ? 'ja' : 'nei') + (d.ask || d.amk ? ' (ordsøk, kan ta feil)' : '');
- }) : [];
- const f = body.facts || {};
- const num = v => (Number.isInteger(v) ? v : null);
- const facts = [
-  'Alarmen gikk kl. ' + c.clock.alarmAt + '.',
-  num(f.arrivedAt) !== null ? 'Studenten kom fram kl. ' + clock(c.clock.startMinutes, f.arrivedAt) + (f.readFirst ? ' (leste journal og medisinkort før de dro).' : ' (dro rett ut uten å lese journalen først).') : '',
-  num(f.called113At) !== null ? 'Studenten ringte 113 kl. ' + clock(c.clock.startMinutes, f.called113At) + '.' : 'Studenten ringte ikke 113.',
-  'Randi ble dårligere kl. ' + clock(c.clock.startMinutes, c.worsensAt) + (num(f.endedAt) !== null && f.endedAt >= c.worsensAt ? ', og dette skjedde før casen ble avsluttet.' : ', men casen ble avsluttet før det.'),
-  num(f.endedAt) !== null ? 'Casen ble avsluttet kl. ' + clock(c.clock.startMinutes, f.endedAt) + '.' : '',
-  num(f.newsGuess) !== null ? 'Studenten skrev NEWS2 ' + f.newsGuess + (num(f.expectedNews) !== null ? ', riktig var ' + f.expectedNews : '') + '.' : 'Studenten skrev ikke inn NEWS2.'
- ].filter(Boolean);
- return 'FAKTA\n' + facts.join('\n') + '\n\nSJEKKLISTE (automatisk)\n' + checks.join('\n') + '\n\nREFERAT AV CASEN, I REKKEFØLGE\n' + lines.join('\n');
-}
-const MOCK_DEBRIEF = {
- summary: 'Testsvar: Du møtte Randi rolig og fant ut at dette ikke var som angsten hennes.',
- strengths: [{ point: 'Du spurte om dette var som angsten hennes pleier å være.', quote: 'Er dette som angsten din pleier å være?' }],
- improvements: [{ point: 'Spør tidlig om hvor smerten sitter og om den stråler ut.', why: 'Utstråling til arm og kjeve er et typisk tegn på hjerteinfarkt.' }],
- missedQuestions: ['Når begynte smertene?'],
- timing: 'Testsvar om tid.',
- isbar: 'Testsvar om ISBAR.',
- communication: 'Testsvar om kommunikasjon.',
- checks: []
-};
-const clip = (s, n) => String(s || '').slice(0, n);
-function tidy(r) {
- return {
-  summary: clip(r.summary, 800),
-  strengths: (r.strengths || []).slice(0, 5).map(x => ({ point: clip(x.point, 400), quote: clip(x.quote, 300) })),
-  improvements: (r.improvements || []).slice(0, 5).map(x => ({ point: clip(x.point, 400), why: clip(x.why, 400) })),
-  missedQuestions: (r.missedQuestions || []).slice(0, 6).map(x => clip(x, 200)),
-  timing: clip(r.timing, 600),
-  isbar: clip(r.isbar, 600),
-  communication: clip(r.communication, 600),
-  checks: (r.checks || []).slice(0, 20).map(x => ({ id: clip(x.id, 40), done: x.done === true }))
- };
-}
 async function debrief(request, env, headers) {
  const { who, error } = await gate(request, env, headers);
  if (error) return error;
@@ -292,21 +180,11 @@ async function debrief(request, env, headers) {
  if (over) return limited(over, headers);
  if (env.MOCK === '1') return json(200, MOCK_DEBRIEF, headers);
  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
- const model = env.MODEL || 'claude-opus-5-5';
- const params = {
-  model,
-  max_tokens: 8000,
-  output_config: { effort: env.DEBRIEF_EFFORT || 'medium', format: { type: 'json_schema', schema: debriefSchema(c) } },
-  system: c.debriefGuide,
-  messages: [{ role: 'user', content: text }]
- };
  try {
-  const r = withFallback(model)
-   ? await client.beta.messages.create({ ...params, betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' })
-   : await client.messages.create(params);
-  const u = r.usage || {};
-  console.log(JSON.stringify({ model: r.model, role: 'debrief', in: u.input_tokens, out: u.output_tokens, stop: r.stop_reason }));
+  const r = await client.messages.create(debriefParams(env, c, text));
+  console.log(usageLine('debrief', r));
   if (r.stop_reason === 'refusal') return json(502, { error: 'refusal' }, headers);
+  if (r.stop_reason === 'max_tokens') return json(502, { error: 'api' }, headers);
   const out = r.content.filter(b => b.type === 'text').map(b => b.text).join('');
   let parsed;
   try { parsed = JSON.parse(out); } catch (_) { return json(502, { error: 'api' }, headers); }
