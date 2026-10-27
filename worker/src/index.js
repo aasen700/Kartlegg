@@ -37,7 +37,7 @@ const json = (status, body, headers) => new Response(JSON.stringify(body), { sta
 
 // Firebase-innloggingen: tokenet er signert av Google og gjelder i én time.
 async function user(request, env) {
- if (env.DEV_NO_AUTH === '1' && isLocal(request.url)) return { uid: 'lokal-test' };
+ if (env.DEV_NO_AUTH === '1' && isLocal(request.url)) return { uid: 'lokal-test', local: true };
  const token = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
  if (!token) return null;
  try {
@@ -108,7 +108,7 @@ async function chat(request, env, ctx, headers) {
  const who = await user(request, env);
  if (!who) return json(401, { error: 'login' }, headers);
  const allow = list(env.ALLOWED_UIDS);
- if (allow.length && !allow.includes(who.uid)) return json(403, { error: 'beta' }, headers);
+ if (allow.length && !who.local && !allow.includes(who.uid)) return json(403, { error: 'beta' }, headers);
 
  let body;
  try { body = await request.json(); } catch (_) { return json(400, { error: 'bad' }, headers); }

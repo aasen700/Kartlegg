@@ -9,7 +9,7 @@
  *
  * Synlig bare når beta er slått på (?beta=ai, av med ?beta=av) og tjenesten har en adresse.
  */
-import { randi } from './randi.mjs?v=ai1';
+import { randi } from './randi.mjs?v=ai3';
 
 const C = randi;
 // Adressen til tjenesten på Cloudflare. Tom = AI-pasienten er skjult.
@@ -28,6 +28,14 @@ const write = (k, v) => { try { v === null ? localStorage.removeItem(k) : localS
 })();
 const service = () => (LOCAL && read(LOCAL_SERVICE_KEY)) || SERVICE;
 const available = () => read(BETA_KEY) === '1' && Boolean(service());
+// Betakoden slår på AI-pasienten i denne nettleseren, også i appen på hjemskjermen, som har egen lagring.
+// Den er ikke hemmelig og gir ingen tilgang i seg selv: tjenesten slipper bare inn kontoene i ALLOWED_UIDS.
+const BETA_CODE = 'randi';
+function unlock(code) {
+ if (String(code || '').trim().toLowerCase() !== BETA_CODE) return false;
+ write(BETA_KEY, '1');
+ return true;
+}
 
 // ——— Hjelpere ———
 const h = (tag, cls, text) => {
@@ -170,21 +178,21 @@ async function send(text) {
 }
 // Oppdaterer bare samtalen, ikke hele skjermen, så skrivefeltet beholder fokus og tastaturet blir stående.
 function refreshChat() {
- const log = root?.querySelector('.ai-log');
+ const log = view()?.querySelector('.ai-log');
  if (!log || S.ambulanceShown) { render(); return; }
  log.replaceWith(buildLog());
- root.querySelector('.ai-chips')?.replaceWith(buildChips() || h('div', 'ai-chips'));
- const go = root.querySelector('.ai-send'); if (go) go.disabled = S.busy;
- const time = root.querySelector('.ai-clock'); if (time) { time.replaceWith(clockView()); }
- const foot = root.querySelector('.ai-foot-time'); if (foot) foot.textContent = footText();
+ view().querySelector('.ai-chips')?.replaceWith(buildChips() || h('div', 'ai-chips'));
+ const go = view().querySelector('.ai-send'); if (go) go.disabled = S.busy;
+ const time = view().querySelector('.ai-clock'); if (time) { time.replaceWith(clockView()); }
+ const foot = view().querySelector('.ai-foot-time'); if (foot) foot.textContent = footText();
  scrollChat();
 }
 function paintPending(reply) {
- const el = root.querySelector('[data-pending="1"] .ai-bubble-text');
+ const el = view().querySelector('[data-pending="1"] .ai-bubble-text');
  if (el) { el.textContent = reply.text; scrollChat(); }
 }
 function scrollChat() {
- const log = root.querySelector('.ai-log');
+ const log = view().querySelector('.ai-log');
  if (log) log.scrollTop = log.scrollHeight;
 }
 
@@ -229,8 +237,12 @@ function arrive(readFirst) {
  event(C.events.arrive);
  render();
 }
+function confirmFinish() {
+ if (S.ambulanceShown || window.confirm('Avslutte casen og se tilbakemeldingen?')) finish();
+}
 function finish() {
  S.phase = 'debrief';
+ focus(false);
  const r = report();
  try { window.KartleggLearningProgress?.record('sim:' + C.id, 'test', { correct: r.items.filter(x => x.done).length, total: r.items.length }); } catch (_) {}
  render();
@@ -264,28 +276,42 @@ function report() {
 }
 
 // ——— Visning ———
+// I fokusmodus tegnes casen i en egen boks rett i <body>. Inne i siden kan kort med glasseffekt
+// låse «position: fixed» til kortet i stedet for skjermen.
+let host = null;
+const view = () => (host?.isConnected ? host : root);
 function render() {
  if (!root) return;
- const keepScroll = root.querySelector('.ai-log')?.scrollTop;
+ const keepScroll = view()?.querySelector('.ai-log')?.scrollTop;
+ const on = S.phase === 'scene' && isMobile();
+ focus(on);
  root.replaceChildren();
+ if (on && !host?.isConnected) { host = h('div', 'ai-focus-host'); document.body.append(host); }
+ if (!on && host) { host.remove(); host = null; }
+ host?.replaceChildren();
  const wrap = h('div', 'ai-sim ai-phase-' + S.phase);
  if (S.phase === 'alarm') wrap.append(alarmView());
  else if (S.phase === 'choice') wrap.append(choiceView());
  else if (S.phase === 'prep') wrap.append(prepView());
  else if (S.phase === 'debrief') wrap.append(debriefView());
  else wrap.append(sceneView());
- root.append(wrap);
+ (host || root).append(wrap);
  if (S.phase === 'scene') {
-  const log = root.querySelector('.ai-log');
+  const log = view().querySelector('.ai-log');
   if (log) log.scrollTop = keepScroll !== undefined && !S.busy && S.tab !== 'chat' ? keepScroll : log.scrollHeight;
  }
 }
 
+// Fokusmodus på mobil: casen fyller skjermen, og menylinjen og resten av siden er skjult.
+// Høyden følger den synlige delen av skjermen (mobile-ux.js), også når tastaturet er oppe.
+function focus(on) {
+ document.documentElement.classList.toggle('ai-focus', Boolean(on));
+}
 function alarmView() {
  const box = h('section', 'ai-card ai-alarm');
  box.setAttribute('role', 'alert');
  const head = h('p', 'ai-alarm-head'); head.append(icon('bell'), h('span', '', C.alarm.title + ' · ' + C.clock.alarmAt));
- box.append(head, h('p', 'ai-alarm-name', C.patient.name + ', ' + C.patient.age + ' år'), h('p', 'ai-alarm-text', C.alarm.text));
+ box.append(head, h('p', 'ai-alarm-name', C.patient.name + ', ' + C.patient.age + ' år'), h('p', 'ai-alarm-text', C.patient.address + '. ' + C.alarm.text));
  const outer = h('div', 'ai-stack');
  outer.append(box, h('p', 'ai-muted', C.alarm.note));
  outer.append(btn('Svar på alarmen', 'btn btn-primary ai-wide', () => { S.phase = 'choice'; render(); }));
@@ -322,8 +348,12 @@ function headerView() {
  const head = h('header', 'ai-head');
  const av = h('span', 'ai-avatar', C.patient.initials); av.setAttribute('aria-hidden', 'true');
  const who = h('div', 'ai-who');
- who.append(h('strong', '', C.patient.name), h('span', 'ai-muted', C.patient.age + ' år · fiktiv pasient'));
+ who.append(h('strong', '', C.patient.name), h('span', 'ai-muted', C.patient.age + ' år · ' + C.patient.address));
  head.append(av, who, clockView());
+ if (isMobile()) {
+  const x = btn('', 'ai-exit', confirmFinish); x.setAttribute('aria-label', 'Avslutt casen'); x.textContent = 'Avslutt';
+  head.append(x);
+ }
  return head;
 }
 function clockView() {
@@ -350,7 +380,7 @@ function sceneView() {
  out.append(body);
  const foot = h('footer', 'ai-foot');
  foot.append(h('span', 'ai-muted ai-foot-time', footText()));
- foot.append(btn('Avslutt casen', 'ai-link', () => { if (S.ambulanceShown || window.confirm('Avslutte casen og se tilbakemeldingen?')) finish(); }));
+ foot.append(btn('Avslutt casen', 'ai-link', confirmFinish));
  out.append(foot);
  return out;
 }
@@ -396,8 +426,31 @@ function chatPanel() {
  return panel;
 }
 
+// I telefonen: legg inn adresse, målinger og medisiner i skrivefeltet uten å sende, så du kan rette først.
+function inserts() {
+ const out = [['Adresse', C.patient.name + ', ' + C.patient.age + ' år, ' + C.patient.address + '.']];
+ const measured = MEASURES.filter(([k]) => S.measured[k]).map(([k, label]) => label + ' ' + S.measured[k].text);
+ if (measured.length) out.push(['Målinger', 'Målt kl. ' + clock(Math.max(...MEASURES.filter(([k]) => S.measured[k]).map(([k]) => S.measured[k].minute))) + ': ' + measured.join(', ') + '.' + (S.newsGuess !== null ? ' NEWS2 ' + S.newsGuess + '.' : '')]);
+ const m = C.medication;
+ out.push(['Medisiner', 'Faste medisiner: ' + m.fixed.map(x => x.name + ' ' + x.form.replace(/^\S+ /, '') + ' ×' + Object.values(x.times).reduce((a, b) => a + b, 0)).join(', ') + '. ' + m.prn.filter(x => x.lastGiven).map(x => x.name + ' ' + x.form.replace(/^\S+ /, '') + ' gitt ' + x.lastGiven.toLowerCase()).join('. ') + '. Allergier: ' + m.allergies.toLowerCase() + '.']);
+ return out;
+}
+function insert(text) {
+ const ta = view().querySelector('.ai-input textarea');
+ if (!ta) return;
+ const now = ta.value.trimEnd();
+ ta.value = (now ? now + ' ' : '') + text;
+ ta.focus({ preventScroll: true });
+ ta.setSelectionRange(ta.value.length, ta.value.length);
+ ta.scrollTop = ta.scrollHeight;
+}
 function buildChips() {
- if (S.channel !== 'patient') return null;
+ if (S.channel !== 'patient') {
+  const chips = h('div', 'ai-chips');
+  chips.append(h('span', 'ai-chips-label', 'Sett inn:'));
+  for (const [label, text] of inserts()) chips.append(btn(label, 'ai-chip ai-insert', () => insert(text)));
+  return chips;
+ }
  const used = new Set(S.chats.patient.filter(m => m.role === 'user').map(m => m.text));
  const chips = h('div', 'ai-chips');
  for (const q of C.suggestions.filter(q => !used.has(q)).slice(0, 3)) chips.append(btn(q, 'ai-chip', () => send(q)));
@@ -557,6 +610,8 @@ function debriefView() {
 }
 
 function exit() {
+ focus(false);
+ host?.remove(); host = null;
  root = null;
  document.getElementById('page-simulering')?.classList.remove('sim-running', 'ai-running');
  onExit?.();
@@ -575,6 +630,8 @@ function mount(target, options = {}) {
 
 window.KartleggAISim = Object.freeze({
  available,
+ unlock,
+ get offered() { return Boolean(service()) && !available(); },
  mount,
  card: Object.freeze({ id: C.id, title: C.title, level: C.level, setting: C.setting, patient: C.patient.name + ', ' + C.patient.age + ' år', focus: C.focus }),
  get state() { return S; }

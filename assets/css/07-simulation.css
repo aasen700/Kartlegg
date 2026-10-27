@@ -1273,3 +1273,54 @@
   .ai-med-time { display: none; }
   .ai-med-when { display: block; grid-column: 2; grid-row: 1; font-weight: 750; font-size: 13px; }
 }
+.ai-chips-label { flex: none; align-self: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+.ai-insert { border-style: dashed; }
+.ai-chip { white-space: nowrap; }
+.ai-exit {
+  flex: none;
+  border: 1px solid var(--k-control-line, var(--line));
+  background: var(--k-control, var(--paper));
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font: inherit; font-size: 13px; font-weight: 700;
+  cursor: pointer;
+}
+/* Fokusmodus på mobil (html.ai-focus settes av ai-sim.mjs mens casen pågår): casen dekker skjermen,
+   menylinjen og siden bak er skjult, og høyden følger det synlige området også når tastaturet er oppe. */
+@media (max-width: 760px) {
+  html.ai-focus, html.ai-focus body { overflow: hidden; overscroll-behavior: none; }
+  html.ai-focus .mobile-primary-nav { display: none !important; }
+  html.ai-focus .ai-scene {
+    position: fixed;
+    z-index: 10050;
+    left: 0; right: 0;
+    top: var(--visible-top, 0px);
+    height: var(--visible-height, 100dvh);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    padding-top: env(safe-area-inset-top);
+  }
+  html.ai-focus .ai-scene > .ai-tabs { flex: none; }
+  html.ai-focus .ai-head { flex: none; }
+  html.ai-focus .ai-foot { display: none; }
+  html.ai-focus .ai-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  html.ai-focus .ai-body > .ai-panel { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+  html.ai-focus .ai-chat { flex: 1; min-height: 0; }
+  html.ai-focus .ai-log { flex: 1; height: auto; min-height: 0; }
+  html.ai-focus .ai-input { padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+  html.ai-focus.keyboard-open .ai-input { padding-bottom: 10px; }
+}
+.sim-beta { margin: 18px 0 4px; font-size: 14px; }
+.sim-beta summary { cursor: pointer; color: var(--muted); font-weight: 650; }
+.sim-beta-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 10px; }
+.sim-beta-form input {
+  height: 42px; width: 160px; padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--k-control-line, var(--line));
+  background: var(--k-control, var(--paper));
+  color: var(--ink);
+  font: inherit; font-size: 16px;
+}

@@ -43,7 +43,7 @@ test('every role keeps the AI in character and away from real patients and diagn
 });
 test('the AI patient is hidden unless beta is on and a service address is set, and holds no key',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),html=read('index.html');
- assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai2"><\/script>/);
+ assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai3"><\/script>/);
  assert.match(ui,/const available = \(\) => read\(BETA_KEY\) === '1' && Boolean\(service\(\)\)/);
  assert.match(ui,/const SERVICE = '(https:\/\/[^']+)?';/,'the production address is https or empty');
  assert.match(ui,/Ikke skriv ekte pasientopplysninger/);
@@ -60,4 +60,24 @@ test('the service checks login, origin, case, role and size before calling Claud
  assert.match(w,/if \(!env\.LIMITS\) return local;/,'no limit store means no answers outside localhost');
  assert.doesNotMatch(w,/console\.log\([^)]*text/,'conversation text is never logged');
  assert.match(read('worker/.gitignore'),/\.dev\.vars/);
+});
+test('beta code unlocks the AI patient per browser, and focus mode covers the screen on phones',()=>{
+ const ui=read('assets/ai/ai-sim.mjs'),sim=read('assets/simulation-ui.js'),css=read('assets/css/07-simulation.css');
+ assert.match(ui,/const BETA_CODE = '[a-z0-9-]+';/);
+ assert.match(ui,/write\(BETA_KEY, '1'\)/);
+ assert.match(sim,/AI\(\)\.unlock\(input\.value\)/);
+ assert.match(ui,/document\.documentElement\.classList\.toggle\('ai-focus'/);
+ assert.match(ui,/host = h\('div', 'ai-focus-host'\); document\.body\.append\(host\)/,'focus mode renders outside cards that could trap position: fixed');
+ assert.match(css,/html\.ai-focus \.mobile-primary-nav \{ display: none !important; \}/);
+ assert.match(css,/height: var\(--visible-height, 100dvh\)/);
+});
+test('phone calls can insert address, measured values and medication without sending',async()=>{
+ const ui=read('assets/ai/ai-sim.mjs');
+ const {randi}=await import('../assets/ai/randi.mjs');
+ assert.ok(randi.patient.address);
+ assert.match(randi.roles.patient,new RegExp(randi.patient.address.split(',')[0]));
+ assert.match(ui,/\['Adresse', /);
+ assert.match(ui,/MEASURES\.filter\(\(\[k\]\) => S\.measured\[k\]\)/,'only values the student actually measured');
+ assert.match(ui,/function insert\(text\) \{[\s\S]*?ta\.value = /);
+ assert.doesNotMatch(ui.match(/function insert\(text\) \{[\s\S]*?\n\}/)[0],/send\(/);
 });

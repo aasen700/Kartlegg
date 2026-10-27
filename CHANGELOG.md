@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## AI-pasient: fokusmodus og betakode, 27. oktober 2026
+
+- På mobil fyller casen hele skjermen mens den pågår. Menylinjen nederst og resten av siden er skjult, og skrivefeltet følger tastaturet. «Avslutt» ligger øverst.
+- I telefonsamtaler kan du sette inn adresse, målingene du har tatt og medisinlisten i skrivefeltet uten å sende, og rette før du sender.
+- Randi har fått adresse (Granveien 14, 2. etasje), som vises i varselet og øverst i casen.
+- Betakode under casene i Simulering, så AI-pasienten også kan slås på i appen på hjemskjermen.
+
 ## AI-pasient (beta), 27. oktober 2026
 
 - Ny case i Simulering: «Trygghetsalarm hos Randi». Randi og de du ringer (113, legevakt, sykepleier på vakt, datteren) svarer med egne ord, laget av Claude.

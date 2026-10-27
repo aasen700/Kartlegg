@@ -414,6 +414,15 @@
     li.append(card);list.prepend(li);
    }
    root.append(list);
+   if(AI()?.offered){
+    const beta=elt('details','sim-beta');beta.append(elt('summary','','Har du en betakode?'));
+    const form=elt('form','sim-beta-form'),input=elt('input');input.type='text';input.autocomplete='off';input.autocapitalize='off';input.id='simBetaCode';
+    const label=elt('label','','Betakode');label.htmlFor=input.id;
+    const msg=elt('p','sim-hint');msg.setAttribute('role','status');
+    form.append(label,input,button('Lås opp','btn btn-secondary',()=>form.requestSubmit()));
+    form.addEventListener('submit',e=>{e.preventDefault();if(AI().unlock(input.value))render();else msg.textContent='Feil kode. Sjekk stavingen og prøv igjen.'});
+    beta.append(form,msg);root.append(beta);
+   }
   }else if(state.finished){
    root.append(caseHeader(c));
    root.append(reportPanel());

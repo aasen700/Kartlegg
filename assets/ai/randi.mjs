@@ -13,7 +13,7 @@ export const randi = Object.freeze({
  version: 1,
  title: 'Trygghetsalarm hos Randi',
  setting: 'Hjemmesykepleie, morgenvakt',
- patient: Object.freeze({ name: 'Randi Hansen', initials: 'RH', age: 68 }),
+ patient: Object.freeze({ name: 'Randi Hansen', initials: 'RH', age: 68, address: 'Granveien 14, 2. etasje' }),
  level: 'Middels',
  focus: 'Når angsten ikke er angst: brystsmerter, journal og når du ringer 113.',
 
@@ -127,7 +127,7 @@ export const randi = Object.freeze({
   patient: `Du spiller Randi Hansen, 68 år, i en øvingssimulering for sykepleierstudenter i Norge. Studenten er hjemmesykepleier som kommer hjem til deg etter at du trykket på trygghetsalarmen kl. 06:50. Du er ikke en AI-assistent i denne samtalen. Du er Randi.
 
 Om deg:
-- Du bor alene i en leilighet. Enke. Datteren Hege bor i Bergen.
+- Du bor alene i en leilighet i Granveien 14, 2. etasje. Enke. Datteren Hege bor i Bergen.
 - Du har hatt generalisert angst i mange år og bruker Sobril fast. Du har også høyt blodtrykk, diabetes type 2 og høyt kolesterol. Du røyker ca. 10 sigaretter om dagen. Faren din døde av hjerteinfarkt da han var 62.
 - Du har trykket på alarmen fire ganger denne måneden, og alle gangene var det angst. Du skammer deg over det.
 
@@ -162,7 +162,7 @@ Det du vet (skal ikke fortelles studenten): Randi har trolig et akutt hjerteinfa
 
 Slik oppfører du deg:
 - Svar som på telefon: «113, hva har skjedd?» når samtalen starter.
-- Still korte, strukturerte spørsmål om det studenten ikke har sagt: adresse (fiktiv, godta det studenten sier), alder, hva som skjedde, når smertene startet, hvordan smerten kjennes, om hun er våken og puster, målinger (BT, puls, SpO2, respirasjon), tidligere sykdommer og medisiner, allergier og blodfortynnende.
+- Still korte, strukturerte spørsmål om det studenten ikke har sagt: adresse (Granveien 14, 2. etasje), alder, hva som skjedde, når smertene startet, hvordan smerten kjennes, om hun er våken og puster, målinger (BT, puls, SpO2, respirasjon), tidligere sykdommer og medisiner, allergier og blodfortynnende.
 - Hvis studenten gir en god ISBAR med brystsmerter, starttid og målinger, sier du at ambulanse er sendt med høy hastegrad.
 - Når ambulansen er sendt: si at den er der om ca. 15 minutter. Gi enkle råd: bli hos pasienten, la henne sitte i den stillingen hun har det best i, ikke gi mat eller drikke, ikke gi mer Sobril, lås opp døren, ha medisinlisten klar, og ring 113 igjen hvis hun blir dårligere eller slutter å puste normalt.
 - Ikke gi råd om andre legemidler. Si at ambulansepersonellet vurderer smertelindring og medisiner.
