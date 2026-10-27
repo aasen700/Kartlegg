@@ -43,7 +43,7 @@ test('every role keeps the AI in character and away from real patients and diagn
 });
 test('the AI patient is hidden unless beta is on and a service address is set, and holds no key',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),html=read('index.html');
- assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai4"><\/script>/);
+ assert.match(html,/<script type="module" src="assets\/ai\/ai-sim\.mjs\?v=ai5"><\/script>/);
  assert.match(ui,/const available = \(\) => read\(BETA_KEY\) === '1' && Boolean\(service\(\)\)/);
  assert.match(ui,/const SERVICE = '(https:\/\/[^']+)?';/,'the production address is https or empty');
  assert.match(ui,/Ikke skriv ekte pasientopplysninger/);
@@ -56,16 +56,16 @@ test('the service checks login, origin, case, role and size before calling Claud
  assert.match(w,/payload\.email_verified !== true/);
  assert.match(w,/env\.DEV_NO_AUTH === '1' && isLocal\(request\.url\)/,'auth bypass only on localhost');
  assert.match(w,/const system = c\?\.roles\?\.\[body\?\.role\]/,'the instruction always comes from the case file');
- assert.match(w,/withinLimit\(env, who\.uid, isLocal\(request\.url\)\)/);
- assert.match(w,/if \(!env\.LIMITS\) return local;/,'no limit store means no answers outside localhost');
+ assert.match(w,/const over = await limit\(env, who\.uid, isLocal\(request\.url\)\);/);
  assert.doesNotMatch(w,/console\.log\([^)]*text/,'conversation text is never logged');
  assert.match(read('worker/.gitignore'),/\.dev\.vars/);
 });
 test('beta code unlocks the AI patient per browser, and focus mode covers the screen on phones',()=>{
  const ui=read('assets/ai/ai-sim.mjs'),sim=read('assets/simulation-ui.js'),css=read('assets/css/07-simulation.css');
- assert.match(ui,/const BETA_CODE = '[a-z0-9-]+';/);
+ assert.doesNotMatch(ui,/BETA_CODE/,'the beta code is checked by the service and never shipped in the page');
+ assert.match(ui,/'\/beta', \{ method: 'POST'/);
  assert.match(ui,/write\(BETA_KEY, '1'\)/);
- assert.match(sim,/AI\(\)\.unlock\(input\.value\)/);
+ assert.match(sim,/await AI\(\)\.unlock\(input\.value\)/);
  assert.match(ui,/document\.documentElement\.classList\.toggle\('ai-focus'/);
  assert.match(ui,/host = h\('div', 'ai-focus-host'\); document\.body\.append\(host\)/,'focus mode renders outside cards that could trap position: fixed');
  assert.match(css,/html\.ai-focus \.mobile-primary-nav \{ display: none !important; \}/);
@@ -87,4 +87,23 @@ test('focus mode hides the page behind it and keeps the chat at the latest messa
  assert.match(css,/html\.ai-focus\.keyboard-open \.ai-chips:not\(:has\(\.ai-insert\)\) \{ display: none; \}/);
  assert.match(ui,/visualViewport\?\.addEventListener\('resize', keepAtBottom\)/);
  assert.match(ui,/stick = log\.scrollHeight - log\.scrollTop - log\.clientHeight < 48/);
+});
+test('the service lets in the owner list or a correct beta code, and fails closed without a counter',()=>{
+ const w=read('worker/src/index.js'),toml=read('worker/wrangler.toml');
+ assert.match(w,/list\(env\.ALLOWED_UIDS\)\.includes\(who\.uid\)/);
+ assert.match(w,/env\.BETA_CODE && code && await sameText\(code, env\.BETA_CODE\)/);
+ assert.doesNotMatch(toml,/^BETA_CODE\s*=/m,'the beta code is a secret, not a var');
+ assert.match(w,/if \(!env\.LIMITS\) return local \? null : 'busy';/);
+ assert.match(w,/catch \(_\) \{\n  return 'busy';/);
+ for(const p of ['/chat','/debrief','/beta'])assert.ok(w.includes("path === '"+p+"'"),p);
+});
+test('AI feedback reads the whole case, keeps the score from the answer key, and is labelled',async()=>{
+ const w=read('worker/src/index.js'),ui=read('assets/ai/ai-sim.mjs');
+ const {randi}=await import('../assets/ai/randi.mjs');
+ assert.match(randi.debriefGuide,/Finn aldri på noe studenten sa eller gjorde/);
+ assert.match(w,/system: c\.debriefGuide/,'the grading instruction comes from the case file');
+ assert.match(w,/format: \{ type: 'json_schema', schema: debriefSchema\(c\) \}/);
+ assert.match(w,/enum: guessIds/,'the AI may only correct keyword-based checks');
+ assert.match(ui,/const ai = guess \? S\.ai\?\.data\?\.checks/);
+ assert.match(ui,/'Kommentar fra AI'\), h\('span', 'ai-muted', 'Kan ta feil'\)/);
 });

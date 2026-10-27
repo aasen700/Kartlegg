@@ -1331,3 +1331,17 @@
   color: var(--ink);
   font: inherit; font-size: 16px;
 }
+/* AI-tilbakemelding */
+.ai-feedback { border: 1px solid var(--accent-border); border-radius: 14px; padding: 14px 16px; background: var(--paper); }
+.ai-feedback-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ai-feedback-head h4 { margin: 0; font-size: 16px; }
+.ai-feedback h5 { margin: 14px 0 4px; font-size: 14px; }
+.ai-feedback p { margin: 4px 0; font-size: 14px; line-height: 1.6; }
+.ai-feedback-summary { font-size: 15px !important; }
+.ai-feedback-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.55; }
+.ai-feedback-list li > * { display: block; }
+.ai-quote { margin-top: 3px; color: var(--muted); font-style: italic; }
+.ai-quote::before { content: "«"; } .ai-quote::after { content: "»"; }
+.ai-why { color: var(--muted); }
+.ai-feedback.is-loading p::after { content: ""; display: inline-block; width: 1em; animation: ai-dots 1.2s steps(4) infinite; overflow: hidden; vertical-align: bottom; }
+@keyframes ai-dots { from { width: 0 } to { width: 1em } }

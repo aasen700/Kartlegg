@@ -13,6 +13,7 @@ npx wrangler login
 # (telleren LIMITS finnes allerede, se wrangler.toml)
 npx wrangler deploy
 npx wrangler secret put ANTHROPIC_API_KEY
+npx wrangler secret put BETA_CODE
 ```
 
 `deploy` skriver ut adressen (`https://kartlegg-ai.<navn>.workers.dev`). Den settes som `SERVICE` i
@@ -20,8 +21,9 @@ npx wrangler secret put ANTHROPIC_API_KEY
 
 ## Innstillinger (wrangler.toml)
 
-- `ALLOWED_UIDS`: under testing bare disse Firebase-brukerne. Tom = alle med bekreftet e-post.
-- `DAILY_LIMIT`: meldinger per bruker per døgn.
+- `ALLOWED_UIDS`: kontoer som slipper inn uten betakode. Alle andre innloggede med bekreftet e-post trenger betakoden (hemmeligheten `BETA_CODE`). Bytt kode med `npx wrangler secret put BETA_CODE`.
+- `DAILY_LIMIT`: meldinger per bruker per døgn (en tilbakemelding teller som én). Gratiskvoten i Workers KV er 1000 skrivinger per døgn, så tjenesten stopper ved ca. 1000 meldinger totalt per døgn.
+- `DEBRIEF_EFFORT` (valgfri): hvor grundig AI-tilbakemeldingen tenker. Standard `medium`.
 - `MODEL`, `EFFORT`: hvilken Claude-modell og hvor grundig den tenker.
 
 Sett også et månedstak på kostnaden i platform.claude.com (Billing → Limits).

@@ -6,10 +6,10 @@ compatibility_flags = ["nodejs_compat"]
 [vars]
 # Nettsidene som får bruke tjenesten.
 ALLOWED_ORIGINS = "https://kartlegg.com,https://www.kartlegg.com,http://localhost:8771"
-# Under testingen: bare disse Firebase-brukerne (kommaseparert). Tom = alle innloggede med bekreftet e-post.
+# Disse kontoene slipper inn uten betakode (kommaseparert). Alle andre trenger betakoden (hemmelighet BETA_CODE).
 ALLOWED_UIDS = "cV1baiJ2NfcNqakuUvhaJndAq842"
 # Største antall meldinger per bruker per døgn.
-DAILY_LIMIT = "200"
+DAILY_LIMIT = "80"
 MODEL = "claude-opus-5-5"
 EFFORT = "low"
 
@@ -21,3 +21,5 @@ id = "58a5c30a56c44e348b18dbef7bb6bdf9"
 
 # ANTHROPIC_API_KEY legges inn som hemmelighet, aldri her:
 #   npx wrangler secret put ANTHROPIC_API_KEY
+# Betakoden legges inn som hemmelighet:
+#   npx wrangler secret put BETA_CODE

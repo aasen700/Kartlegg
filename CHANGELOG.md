@@ -1,5 +1,12 @@
 # Versjonshistorikk – Kartlegg
 
+## AI-pasient: AI-tilbakemelding og åpen beta, 27. oktober 2026
+
+- Etter casen skriver Claude en tilbakemelding: kort oppsummering, hva du gjorde bra med sitater fra det du skrev, hva som kan bli bedre, spørsmål du kunne stilt, tidsbruk, ISBAR til AMK og kommunikasjon. Merket «Kommentar fra AI. Kan ta feil».
+- Poengene regnes fortsatt ut av fasiten i casefilen. AI-en kan bare rette punktene som bygger på ordsøk, og de merkes «vurdert av AI».
+- Fasiten for tilbakemeldingen står i `assets/ai/randi.mjs` (`debriefGuide`).
+- Alle innloggede med betakoden kan prøve AI-pasienten. Koden sjekkes av tjenesten og står ikke i nettsiden. Grensen er 80 meldinger per bruker per døgn.
+
 ## AI-pasient: fokusmodus og betakode, 27. oktober 2026
 
 - På mobil fyller casen hele skjermen mens den pågår. Menylinjen nederst og resten av siden er skjult, og skrivefeltet følger tastaturet. «Avslutt» ligger øverst.

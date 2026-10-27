@@ -9,7 +9,7 @@
  *
  * Synlig bare når beta er slått på (?beta=ai, av med ?beta=av) og tjenesten har en adresse.
  */
-import { randi } from './randi.mjs?v=ai3';
+import { randi } from './randi.mjs?v=ai5';
 
 const C = randi;
 // Adressen til tjenesten på Cloudflare. Tom = AI-pasienten er skjult.
@@ -28,11 +28,20 @@ const write = (k, v) => { try { v === null ? localStorage.removeItem(k) : localS
 })();
 const service = () => (LOCAL && read(LOCAL_SERVICE_KEY)) || SERVICE;
 const available = () => read(BETA_KEY) === '1' && Boolean(service());
-// Betakoden slår på AI-pasienten i denne nettleseren, også i appen på hjemskjermen, som har egen lagring.
-// Den er ikke hemmelig og gir ingen tilgang i seg selv: tjenesten slipper bare inn kontoene i ALLOWED_UIDS.
-const BETA_CODE = 'randi';
-function unlock(code) {
- if (String(code || '').trim().toLowerCase() !== BETA_CODE) return false;
+// Betakoden sjekkes av tjenesten, ikke her: den står ikke i nettsiden. Riktig kode lagres i denne
+// nettleseren (også i appen på hjemskjermen, som har egen lagring) og sendes med hver forespørsel.
+const CODE_KEY = 'kartlegg.ai.code';
+const betaHeader = () => { const c = read(CODE_KEY); return c ? { 'X-Kartlegg-Beta': c } : {}; };
+async function unlock(code) {
+ code = String(code || '').trim().slice(0, 60);
+ if (!code) return 'beta';
+ const token = await idToken();
+ if (!token) return 'login';
+ try {
+  const res = await fetch(service().replace(/\/$/, '') + '/beta', { method: 'POST', headers: { Authorization: 'Bearer ' + token, 'X-Kartlegg-Beta': code } });
+  if (!res.ok) return (await res.json().catch(() => ({}))).error || 'http';
+ } catch (_) { return 'net'; }
+ write(CODE_KEY, code);
  write(BETA_KEY, '1');
  return true;
 }
@@ -82,7 +91,7 @@ const TABS_MOBILE = Object.freeze([['chat', 'Samtale'], ['exam', 'Undersøk'], [
 const TABS_WIDE = Object.freeze([['exam', 'Undersøk'], ['act', 'Tiltak'], ['journal', 'Journal'], ['meds', 'Medisiner']]);
 const ERRORS = {
  login: 'Logg inn for å snakke med AI-pasienten.',
- beta: 'AI-pasienten er bare åpen for testbrukere ennå.',
+ beta: 'Betakoden din gjelder ikke lenger. Skriv inn ny kode under casene.',
  limit: 'Du har brukt dagens kvote med meldinger. Prøv igjen i morgen.',
  busy: 'Tjenesten har mye å gjøre akkurat nå. Prøv igjen om litt.',
  refusal: 'Svaret ble stoppet. Prøv å si det på en annen måte.',
@@ -99,13 +108,17 @@ function fresh() {
  return {
   phase: 'alarm', minute: 0, arrivedAt: null, tab: 'chat', side: 'exam', channel: 'patient',
   chats, views, measured: {}, looked: {}, opened: { journal: false, medication: false }, did: {},
-  called: {}, ambulanceAt: null, worseShown: false, ambulanceShown: false, newsGuess: null, busy: false
+  called: {}, ambulanceAt: null, worseShown: false, ambulanceShown: false, newsGuess: null, busy: false,
+  readFirst: false, log: [], ai: { state: 'idle', data: null, error: '' }, endedAt: null
  };
 }
 const worse = () => S.minute >= C.worsensAt;
 const vitalsNow = () => (worse() ? C.vitals.after : C.vitals.before);
 const isMobile = () => Boolean(mobileQuery?.matches);
-const event = (text, kind = 'event') => S.views.patient.push({ kind, minute: S.minute, text });
+// Referatet til AI-tilbakemeldingen: alt som ble sagt og gjort, i rekkefølge.
+const note = (who, text) => S.log.push({ minute: S.minute, who, text });
+const nameOf = ch => (ch === 'patient' ? 'Randi' : C.contacts.find(c => c.id === ch)?.who || ch);
+const event = (text, kind = 'event') => { S.views.patient.push({ kind, minute: S.minute, text }); note('Hendelse', text); };
 
 function tick(n) {
  S.minute += n;
@@ -125,7 +138,7 @@ async function ask(role, messages, onText) {
  if (!token && !/^http:\/\/(localhost|127\.0\.0\.1)/.test(url)) throw failure('login');
  const res = await fetch(url.replace(/\/$/, '') + '/chat', {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) },
+  headers: { 'Content-Type': 'application/json', ...betaHeader(), ...(token ? { Authorization: 'Bearer ' + token } : {}) },
   body: JSON.stringify({ caseId: C.id, role, messages })
  });
  if (!res.ok) { const e = await res.json().catch(() => ({})); throw failure(e.error || 'http'); }
@@ -159,6 +172,7 @@ async function send(text) {
  const msg = { role: 'user', text, minute: S.minute, worse: worse(), ambulance: S.ambulanceAt !== null };
  S.chats[ch].push(msg);
  S.views[ch].push({ kind: 'msg', role: 'user', text });
+ note('Studenten til ' + nameOf(ch), text);
  const reply = { kind: 'msg', role: 'assistant', text: '', pending: true };
  S.views[ch].push(reply);
  S.busy = true;
@@ -166,9 +180,11 @@ async function send(text) {
  try {
   reply.text = await ask(ch, S.chats[ch], t => { reply.text = t; paintPending(reply); });
   S.chats[ch].push({ role: 'assistant', text: reply.text });
+  note(nameOf(ch), reply.text);
   tick(C.cost.message);
  } catch (e) {
   S.chats[ch].pop();
+  S.log.pop();
   reply.error = errorText(e.code);
   reply.retry = text;
  }
@@ -233,8 +249,8 @@ function call(contact) {
  render();
 }
 function openTab(id) {
- if (id === 'journal' && !S.opened.journal) { S.opened.journal = true; tick(C.cost.firstJournal); }
- if (id === 'meds' && !S.opened.medication) { S.opened.medication = true; tick(C.cost.firstMedication); }
+ if (id === 'journal' && !S.opened.journal) { S.opened.journal = true; note('Hendelse', 'Studenten åpnet journalen.'); tick(C.cost.firstJournal); }
+ if (id === 'meds' && !S.opened.medication) { S.opened.medication = true; note('Hendelse', 'Studenten åpnet medisinkortet.'); tick(C.cost.firstMedication); }
  if (isMobile()) S.tab = id; else if (id !== 'chat') S.side = id;
  render();
 }
@@ -250,11 +266,48 @@ function confirmFinish() {
 }
 function finish() {
  S.phase = 'debrief';
+ S.endedAt = S.minute;
  focus(false);
- const r = report();
- try { window.KartleggLearningProgress?.record('sim:' + C.id, 'test', { correct: r.items.filter(x => x.done).length, total: r.items.length }); } catch (_) {}
+ saveProgress();
  render();
  root.scrollIntoView?.({ block: 'start', behavior: 'auto' });
+ askDebrief();
+}
+function saveProgress() {
+ const r = report();
+ try { window.KartleggLearningProgress?.record('sim:' + C.id, 'test', { correct: r.items.filter(x => x.done).length, total: r.items.length }); } catch (_) {}
+}
+// AI-tilbakemeldingen: ett kall når casen er ferdig. Poengene over regnes fortsatt ut av fasiten.
+async function askDebrief() {
+ const said = S.log.some(e => e.who.startsWith('Studenten til '));
+ if (!said) { S.ai = { state: 'skip', data: null, error: '' }; render(); return; }
+ S.ai = { state: 'loading', data: null, error: '' };
+ render();
+ const r = report();
+ const body = {
+  caseId: C.id,
+  log: S.log.slice(-300),
+  checks: r.items.map(i => ({ id: i.id, done: i.keyword })),
+  facts: { arrivedAt: S.arrivedAt, readFirst: S.readFirst, called113At: S.called.amk ?? null, endedAt: S.endedAt, newsGuess: S.newsGuess, expectedNews: r.expectedNews }
+ };
+ try {
+  const url = service(), token = await idToken();
+  if (!token && !/^http:\/\/(localhost|127\.0\.0\.1)/.test(url)) throw failure('login');
+  const res = await fetch(url.replace(/\/$/, '') + '/debrief', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json', ...betaHeader(), ...(token ? { Authorization: 'Bearer ' + token } : {}) },
+   body: JSON.stringify(body)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw failure(data.error || 'http');
+  if (!root || S.phase !== 'debrief') return;
+  S.ai = { state: 'done', data, error: '' };
+  saveProgress();
+ } catch (e) {
+  if (!root || S.phase !== 'debrief') return;
+  S.ai = { state: 'error', data: null, error: errorText(e.code) };
+ }
+ render();
 }
 
 // ——— Tilbakemelding ———
@@ -271,7 +324,11 @@ function report() {
   if (d.call) done = S.chats[d.call].some(m => m.role === 'user');
   if (d.not) done = !S.did[d.not];
   if (d.amk) { done = d.amk.every(group => has(amk, group)); guess = true; }
-  return { ...d, done, guess };
+  // Ordsøket er grovt. Har AI-en lest samtalen og kommet til noe annet, gjelder dens vurdering.
+  const keyword = done;
+  const ai = guess ? S.ai?.data?.checks?.find(x => x.id === d.id) : null;
+  if (ai && ai.done !== done) done = ai.done;
+  return { ...d, done, guess, keyword, byAI: Boolean(ai && ai.done !== keyword) };
  });
  const latest = NEWS_KEYS.map(k => S.measured[k]).filter(Boolean);
  const expectedNews = latest.length ? C.news2[latest.some(m => m.worse) ? 'after' : 'before'] : null;
@@ -331,7 +388,7 @@ function alarmView() {
 function choiceView() {
  const box = h('section', 'ai-card ai-stack');
  box.append(h('h3', 'ai-title', 'Hva gjør du først?'));
- const a = btn('', 'ai-choice', () => { S.phase = 'prep'; S.opened.journal = true; S.opened.medication = true; render(); });
+ const a = btn('', 'ai-choice', () => { S.phase = 'prep'; S.readFirst = true; S.opened.journal = true; S.opened.medication = true; render(); });
  a.append(icon('notes'), h('span', 'ai-choice-text', 'Les journal og medisinkort'), h('span', 'ai-choice-meta', 'Fremme kl. ' + clock(C.travel.readFirst)));
  const b = btn('', 'ai-choice', () => arrive(false));
  b.append(icon('car'), h('span', 'ai-choice-text', 'Dra rett ut'), h('span', 'ai-choice-meta', 'Fremme kl. ' + clock(C.travel.direct)));
@@ -514,7 +571,7 @@ function examPanel() {
  const inp = h('input'); inp.type = 'number'; inp.inputMode = 'numeric'; inp.min = '0'; inp.max = '20'; inp.id = 'aiNewsGuess';
  lab.htmlFor = inp.id;
  if (S.newsGuess !== null) inp.value = String(S.newsGuess);
- inp.addEventListener('change', () => { const n = parseInt(inp.value, 10); S.newsGuess = Number.isInteger(n) && n >= 0 && n <= 20 ? n : null; });
+ inp.addEventListener('change', () => { const n = parseInt(inp.value, 10); S.newsGuess = Number.isInteger(n) && n >= 0 && n <= 20 ? n : null; if (S.newsGuess !== null) note('Hendelse', 'Studenten skrev inn NEWS2 ' + S.newsGuess + '.'); });
  news.append(lab, inp, h('span', 'ai-muted', 'Rettes i tilbakemeldingen.'));
  p.append(news);
  p.append(h('h3', 'ai-panel-title', 'Se etter'));
@@ -598,7 +655,7 @@ function debriefView() {
  const good = h('ul', 'ai-list is-good'), improve = h('ul', 'ai-list is-improve');
  for (const it of r.items) {
   const li = h('li');
-  li.append(icon(it.done ? 'check' : 'alert'), h('span', '', it.done ? it.label + (it.guess ? ' (ser ut til det)' : '') : it.miss + '.'));
+  li.append(icon(it.done ? 'check' : 'alert'), h('span', '', (it.done ? it.label : it.miss + '.') + (it.byAI ? ' (vurdert av AI)' : it.done && it.guess && S.ai.state !== 'done' ? ' (ser ut til det)' : '')));
   (it.done ? good : improve).append(li);
  }
  if (good.childElementCount) box.append(h('h4', '', 'Dette gjorde du'), good);
@@ -610,11 +667,35 @@ function debriefView() {
   facts.append(h('p', '', 'NEWS2 for målingene dine: ' + r.expectedNews + '. ' + (r.newsGuess === null ? 'Du skrev ikke inn en skår.' : ok ? 'Du hadde riktig skår.' : 'Du skrev ' + r.newsGuess + '.')));
  }
  box.append(facts);
+ box.append(aiView());
  const lesson = h('div', 'ai-lesson'); lesson.append(h('strong', '', 'Det viktigste fra casen'), h('p', '', C.lesson));
  box.append(lesson);
  const actions = h('div', 'ai-row-actions');
  actions.append(btn('Prøv casen igjen', 'btn btn-primary', () => { S = fresh(); render(); }), btn('Tilbake til casene', 'btn btn-secondary', () => exit()));
  box.append(actions);
+ return box;
+}
+
+function aiView() {
+ const box = h('section', 'ai-feedback');
+ const head = h('div', 'ai-feedback-head');
+ head.append(h('h4', '', 'Kommentar fra AI'), h('span', 'ai-muted', 'Kan ta feil'));
+ box.append(head);
+ const a = S.ai;
+ if (a.state === 'loading') { box.classList.add('is-loading'); box.append(h('p', 'ai-muted', 'Leser gjennom samtalen din …')); return box; }
+ if (a.state === 'skip') { box.append(h('p', 'ai-muted', 'Du snakket ikke med noen i casen, så det er ingen samtale å kommentere.')); return box; }
+ if (a.state === 'error') { box.append(h('p', 'ai-muted', a.error), btn('Prøv igjen', 'ai-link', askDebrief)); return box; }
+ if (a.state !== 'done') return box;
+ const d = a.data;
+ if (d.summary) box.append(h('p', 'ai-feedback-summary', d.summary));
+ const part = (title, nodes) => { if (!nodes.length) return; box.append(h('h5', '', title)); const ul = h('ul', 'ai-feedback-list'); nodes.forEach(n => ul.append(n)); box.append(ul); };
+ part('Bra', (d.strengths || []).map(s => { const li = h('li'); li.append(h('span', '', s.point)); if (s.quote) li.append(h('q', 'ai-quote', s.quote)); return li; }));
+ part('Kan bli bedre', (d.improvements || []).map(s => { const li = h('li'); li.append(h('strong', '', s.point)); if (s.why) li.append(h('span', 'ai-why', s.why)); return li; }));
+ part('Spørsmål du kunne stilt', (d.missedQuestions || []).map(q => h('li', 'ai-question', q)));
+ for (const [title, text] of [['Tid', d.timing], ['ISBAR til AMK', d.isbar], ['Kommunikasjon', d.communication]]) {
+  if (!text) continue;
+  box.append(h('h5', '', title), h('p', '', text));
+ }
  return box;
 }
 

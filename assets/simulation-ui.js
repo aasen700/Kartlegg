@@ -420,7 +420,13 @@
     const label=elt('label','','Betakode');label.htmlFor=input.id;
     const msg=elt('p','sim-hint');msg.setAttribute('role','status');
     form.append(label,input,button('Lås opp','btn btn-secondary',()=>form.requestSubmit()));
-    form.addEventListener('submit',e=>{e.preventDefault();if(AI().unlock(input.value))render();else msg.textContent='Feil kode. Sjekk stavingen og prøv igjen.'});
+    const go=form.querySelector('button');
+    form.addEventListener('submit',async e=>{
+     e.preventDefault();if(go.disabled)return;go.disabled=true;msg.textContent='Sjekker koden …';
+     const r=await AI().unlock(input.value);go.disabled=false;
+     if(r===true){render();return}
+     msg.textContent=r==='login'?'Logg inn først, så kan du bruke betakoden.':r==='beta'?'Feil kode. Sjekk stavingen og prøv igjen.':'Fikk ikke sjekket koden. Sjekk nettet og prøv igjen.';
+    });
     beta.append(form,msg);root.append(beta);
    }
   }else if(state.finished){
